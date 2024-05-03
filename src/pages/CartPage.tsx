@@ -22,8 +22,9 @@ const CartPage: React.FC = () => {
     };
 
     return (
+      <div className='container-my-cart'>
         <div className="cart-page">
-            <h1>Cart Page</h1>
+            <h1>My Cart</h1>
             <div className="cart">
                 <Cart />
             </div>
@@ -36,6 +37,7 @@ const CartPage: React.FC = () => {
                 <input type="text" name="postalCode" placeholder="Postal Code" value={formData.postalCode} onChange={handleChange} required />
                 <button type="submit">Checkout</button>
             </form>
+        </div>
         </div>
     );
 };

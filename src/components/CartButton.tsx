@@ -9,7 +9,7 @@ const CartButton = () => {
 
   return (
     <Link  to='/cart' style={{ fontFamily: 'monospace', textDecoration: 'none' }}>
-      Cart
+      My Cart
       <span className='cart-counter'>{cartItemCount}</span>
     </Link>
   );
