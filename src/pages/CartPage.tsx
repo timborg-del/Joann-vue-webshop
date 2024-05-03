@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import Cart from '../components/Cart';
-import '../App.css';
 
 const CartPage: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -25,9 +24,11 @@ const CartPage: React.FC = () => {
     return (
         <div className="cart-page">
             <h1>Cart Page</h1>
-            <Cart />
+            <div className="cart">
+                <Cart />
+            </div>
             <h2>Checkout</h2>
-            <form onSubmit={handleSubmit}>
+            <form className="form-container" onSubmit={handleSubmit}>
                 <input type="text" name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} required />
                 <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
                 <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required />
@@ -40,5 +41,6 @@ const CartPage: React.FC = () => {
 };
 
 export default CartPage;
+
 
 

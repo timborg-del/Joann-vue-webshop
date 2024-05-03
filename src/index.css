@@ -8,7 +8,7 @@
 html,
 body {
   overflow-x: hidden;
-  background-image: url('/backround.jpg'); /* Adjust the path to your background image */
+  background-image: url('/src/assets/backround.jpg'); /* Adjust the path to your background image */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -187,18 +187,22 @@ border: 1px solid rgba(255, 255, 255, 0.13);
 
 /*save this */
 .cart-button {
-  position: relative; /* Position relative for absolute positioning of the counter */
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 15px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  cursor: pointer;
-  border-radius: 4px;
-  transition: background-color 0.3s;
+  max-width: 10rem;
+
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.10);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+backdrop-filter: blur(1.1px);
+-webkit-backdrop-filter: blur(1.1px);
+border: 1px solid rgba(255, 255, 255, 0.13);
+  padding: 16px;
+  transition: transform 0.3s ease;
+}
+
+.cart-button:hover{
+  transform: translateY(-5px) rotateX(5deg) scale(1.05);
+
 }
 
 .cart-counter {
@@ -214,6 +218,62 @@ border: 1px solid rgba(255, 255, 255, 0.13);
   height: 20px; /* Counter height */
   line-height: 1; /* Center the text vertically */
 }
+
+.main-content {
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 20px;
+}
+/* CartPage.css */
+
+.cart-page {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.cart-page h1 {
+  text-align: center;
+}
+
+.cart {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.cart h2 {
+  text-align: center;
+}
+
+.form-container {
+  border: 1px solid #ccc;
+  padding: 20px;
+}
+
+.form-container input {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.form-container button {
+  width: 100%;
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.form-container button:hover {
+  background-color: #0056b3;
+}
+
+
 
 
 

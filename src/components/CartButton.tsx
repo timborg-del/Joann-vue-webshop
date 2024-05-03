@@ -8,8 +8,8 @@ const CartButton = () => {
   const [cartItemCount, setCartItemCount] = useState(6);
 
   return (
-    <Link className='cart-button' to='/cart'>
-      MyCart
+    <Link  to='/cart' style={{ fontFamily: 'monospace', textDecoration: 'none' }}>
+      Cart
       <span className='cart-counter'>{cartItemCount}</span>
     </Link>
   );
