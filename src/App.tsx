@@ -1,46 +1,64 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; // Import Routes and Route from react-router-dom
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
 import CartPage from './pages/CartPage';
 import CartButton from './components/CartButton';
-import { CartProvider } from '../src/context/CartContext'; // Import CartProvider from CartContext
+import { CartProvider } from './context/CartContext'; // Corrected import path
 import Product from './components/Products';
 
 const App: React.FC = () => {
   return (
-    <body>
     <Router>
-      <CartProvider> {/* Wrap your entire application with CartProvider */}
-        <div>
+      <CartProvider>
+        <div className='container'>
           {/* Navigation */}
-          <nav>
-            <ul>
-              <li>
-                <CartButton /> {/* Assuming CartButton is a component for cart navigation */}
-              </li>
-            </ul>
+          <nav className="navbar">
+            <div className="dropdown">
+              <span className="dropbtn">
+                Shop
+                <div className="dropdownContent">
+                  <Link to="./store">Mugs</Link>
+                  <Link to="./store">Paintings</Link>
+                  <Link to="./store">Download</Link>
+                  <Link to="./store">Pencils</Link>
+                </div>
+              </span>
+            </div>
+            <div className='centerLinks'>
+              <Link to="/">Home</Link>
+              <Link to="/about">About</Link>
+              <Link to="/cart">Cart</Link>
+            </div>
+            <div className="cart-button">
+              <CartButton />
+            </div>
           </nav>
-            <main>
-              <div>
-                <Product id={'8'} name={'MyProduct'} price={200} quantity={11}></Product>
-
-              </div>
-            </main>
-         
 
           {/* Main content */}
-          <Routes> {/* Wrap your routes inside <Routes> */}
-            <Route path="/home" element={<Home />} /> {/* Use element prop to specify the component */}
+          <main className="main-content">
+            <div className="card">
+              {/* Render your products or other components here */}
+              <Product id={'8'} name={'MyProduct'} price={200} quantity={11}></Product>
+            </div>
+          </main>
+
+          {/* Routes */}
+          <Routes>
+            <Route path="/home" element={<Home />} />
             <Route path="/cart" element={<CartPage />} />
           </Routes>
         </div>
       </CartProvider>
     </Router>
-    </body>
   );
 };
 
 export default App;
+
+
+
+
+
 
 
