@@ -222,20 +222,28 @@ border: 1px solid rgba(255, 255, 255, 0.13);
   position: fixed;
   background: none;
   align-items: left;
-  justify-content: space-between;
+  justify-content: center;
   font-family:monospace;
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
   text-decoration: none;
-  padding: 0px;
-  margin: 0px; /* Align items to the right */
+  padding: 0rem;
+  margin: 72%; /* Align items to the right */
 }
+.toggle-cart-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  /* Additional styles */
+}
+
 
 .cart-page {
 
   max-height: auto;
   max-width: 600px;
+  min-width: 600px;
   margin-top: 20px; /* Add margin to create space between navbar and cart page */
   padding: 20px;
   background: rgba(0, 0, 0, 0.539);
