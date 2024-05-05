@@ -372,11 +372,16 @@ border: 1px solid rgba(255, 255, 255, 0.197);
 
 .form-container {
   max-height: 400px; /* or any height you prefer */
-  overflow-y: auto;
-  border: 2px solid #8B4513; /* Brown border color resembling leather */
-  border-radius: 10px; /* Border radius for rounded corners */
+
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
+  overflow-y: auto;
+  background: rgba(0, 0, 0, 0.539);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  transition: transform 0.3s ease; /* Optional: Add shadow for depth */
 }
 
 
