@@ -1,5 +1,4 @@
 import React from 'react';
-import productImage from '../assets/joann.jpg'; // Adjust the path as per your project structure
 
 export interface CartItemProps {
   id: string;
@@ -11,15 +10,26 @@ export interface CartItemProps {
 
 const CartItems = ({ id, name, price, productImage, quantity }: CartItemProps) => (
   <div>
-    <p>Key: {id}</p>
-    <p>Name: {name}</p>
-    <p>Price: ${price}</p>
-    <img src={productImage} alt={name} /> {/* Render the image */}
+    
+    <p>{name}</p>
+    <p>${price}</p>
+    <img 
+      src={productImage} 
+      alt={name} 
+      style={{
+        width: '30%',
+        height: 'auto',
+        borderRadius: '8px',
+        boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        transition: 'transform 0.3s ease',
+      }} 
+    /> {/* Render the image */}
     <p>Quantity: {quantity}</p>
   </div>
 );
 
 export default CartItems;
+
 
 
 

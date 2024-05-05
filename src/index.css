@@ -266,12 +266,76 @@ border: 1px solid rgba(255, 255, 255, 0.13);
   padding: 0rem;
   margin: 50%; /* Align items to the right */
 }
-.toggle-cart-button {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  /* Additional styles */
+.toggle-cart-page-button {
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 5px;
+  margin: 15px;
+  width: 20%;
+  padding: 10px;
+  background: rgba(0, 7, 216, 0.415);
+  border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+backdrop-filter: blur(1.1px);
+-webkit-backdrop-filter: blur(1.1px);
+border: 1px solid rgba(255, 255, 255, 0.13);
+  padding: 16px;
+  transition: transform 0.3s ease;
 }
+.deleteCart{
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  margin-top: 5px;
+  padding: 5px;
+  margin: 5px;
+  width: 15%;
+  height: 15%;
+  padding: 5px;
+  background: rgba(251, 4, 4, 0.25);
+  border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+backdrop-filter: blur(1.1px);
+-webkit-backdrop-filter: blur(1.1px);
+border: 1px solid rgba(255, 255, 255, 0.13);
+  padding: 16px;
+  transition: transform 0.3s ease;
+
+}
+
+.clearCart{
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 5px;
+  margin: 5px;
+  width: 22%;
+  padding: 5px;
+  background: rgba(251, 202, 4, 0.242);
+  border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+backdrop-filter: blur(1.1px);
+-webkit-backdrop-filter: blur(1.1px);
+border: 1px solid rgba(255, 255, 255, 0.197);
+  padding: 16px;
+  transition: transform 0.3s ease;
+
+}
+.cart-product-container {
+  max-height: 400px; /* or any height you prefer */
+  overflow-y: auto;
+}
+
+.cart-items-container {
+  /* Optional: Add padding or margin to the items container if needed */
+}
+
 
 
 .cart-page {
@@ -291,6 +355,7 @@ border: 1px solid rgba(255, 255, 255, 0.13);
 }
 
 
+
 .cart-page h1 {
   text-align: center;
 }
@@ -306,11 +371,14 @@ border: 1px solid rgba(255, 255, 255, 0.13);
 }
 
 .form-container {
-  border: none;
-  border: 1px solid #ccc;
+  max-height: 400px; /* or any height you prefer */
+  overflow-y: auto;
+  border: 2px solid #8B4513; /* Brown border color resembling leather */
+  border-radius: 10px; /* Border radius for rounded corners */
   padding: 20px;
-  
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Add shadow for depth */
 }
+
 
 .form-container input {
   width: 100%;
@@ -320,7 +388,9 @@ border: 1px solid rgba(255, 255, 255, 0.13);
 }
 
 .form-container button {
+  cursor: pointer;
   width: 100%;
+  height: auto;
   font-size: larger;
   padding: 10px;
   background: rgba(164, 251, 4, 0.397);

@@ -15,6 +15,10 @@
       max-height: none; /* Reset max-height */
       padding: 20px;
     }
+
+    .product-details{
+        font-size: larger;
+    }
   
     .cart {
         

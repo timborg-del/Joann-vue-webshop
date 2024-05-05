@@ -3,6 +3,7 @@ import { useCart } from '../context/CartContext';
 import CartItems from './CartItems';
 import useCartActions from '../hooks/useCartActions';
 
+
 const Cart = () => {
   const { state } = useCart();
   const { removeItemFromCart, clearCart } = useCartActions();
@@ -11,12 +12,11 @@ const Cart = () => {
   const totalPrice = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
-    <div>
-      <h2>Cart</h2>
+    <div className="cart-product-container">
       {state.items.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
-        <div>
+        <div className="cart-items-container">
           {state.items.map((item) => (
             <div key={item.id}>
               <CartItems
@@ -26,18 +26,20 @@ const Cart = () => {
                 productImage={item.productImage} 
                 quantity={item.quantity}
               />
-              <button onClick={() => removeItemFromCart(item.id)}>Delete</button>
+              <button className='deleteCart' onClick={() => removeItemFromCart(item.id)}>Delete</button>
             </div>
           ))}
-          <button onClick={() => clearCart()}>Clear Cart</button>
-          <p>Total Price: ${totalPrice.toFixed(2)}</p>
         </div>
       )}
+      <button className='clearCart' onClick={() => clearCart()}>Clear Cart</button>
+      <p>Total Price: ${totalPrice.toFixed(2)}</p>
     </div>
   );
 };
 
 export default Cart;
+
+
 
 
 
