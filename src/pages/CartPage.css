@@ -1,0 +1,41 @@
+@media screen and (max-width: 768px) {
+    .container-my-cart {
+        text-align: center;
+        max-width: auto;
+        display: flex;
+      max-width: 0%;
+      max-height:70% ;
+      padding: 10px;
+      justify-content: center;
+    }
+  
+    .cart-page {
+       
+      max-width: 100%;
+      max-height: none; /* Reset max-height */
+      padding: 20px;
+    }
+  
+    .cart {
+        
+      margin-bottom: 20px;
+    }
+  
+    .form-container {
+        
+      max-height: none; /* Reset max-height */
+        
+      padding: 20px;
+    }
+  
+    .toggle-cart-page-button {
+
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      padding: 5px;
+      margin: 15px;
+    }
+  }
+  
+  
