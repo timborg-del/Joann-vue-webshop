@@ -28,7 +28,7 @@ const CartPage: React.FC = () => {
     };
 
     return (
-        <div className='container'>
+        
             <div className={`container-my-cart ${isCartPageVisible ? '' : 'hidden'}`}>
                 <div className="cart-page">
                     <h1>My Cart</h1>
@@ -55,7 +55,7 @@ const CartPage: React.FC = () => {
                     </button>
                 </div>
             </div>
-        </div>
+        
     );
 };
 

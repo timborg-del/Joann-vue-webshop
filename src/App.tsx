@@ -4,8 +4,8 @@ import './App.css';
 import Home from './pages/Home';
 import CartPage from './pages/CartPage';
 import CartButton from './components/CartButton';
-import { CartProvider } from './context/CartContext'; // Corrected import path
-import Product from './components/Products';
+import { CartProvider } from './context/CartContext';
+import ShopPage from './pages/ShopPage'; // Import the ShopPage component
 
 const App: React.FC = () => {
   return (
@@ -15,15 +15,15 @@ const App: React.FC = () => {
           {/* Navigation */}
           <nav className="navbar">
             <div className="dropdown">
-              <span className="dropbtn">
+              <h1 className='h1shop'><span>
                 Shop
                 <div className="dropdownContent">
-                  <Link to="./store">Mugs</Link>
-                  <Link to="./store">Paintings</Link>
-                  <Link to="./store">Download</Link>
-                  <Link to="./store">Pencils</Link>
+                  <Link to="/shoppage">Mugs</Link> {/* Link to ShopPage */}
+                  <Link to="/store">Paintings</Link>
+                  <Link to="/store">Download</Link>
+                  <Link to="/store">Pencils</Link>
                 </div>
-              </span>
+              </span></h1>
             </div>
             <div className='centerLinks'>
               <Link to="/">Home</Link>
@@ -39,7 +39,8 @@ const App: React.FC = () => {
           <main className="main-content">
             <div className="card">
               {/* Render your products or other components here */}
-              <Product id={'8'} name={'MyProduct'} price={200} quantity={11}></Product>
+              {/* <Product id={'8'} name={'MyProduct'} price={200} quantity={11} productImage={''}></Product> */}
+              {/* You can remove or comment out the Product component rendering */}
             </div>
           </main>
 
@@ -47,6 +48,7 @@ const App: React.FC = () => {
           <Routes>
             <Route path="/home" element={<Home />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/shoppage" element={<ShopPage />} /> {/* Route for ShopPage */}
           </Routes>
         </div>
       </CartProvider>
@@ -55,6 +57,7 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 
 
 

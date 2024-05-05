@@ -7,15 +7,12 @@ const Cart = () => {
   const { state } = useCart();
   const { removeItemFromCart, clearCart } = useCartActions();
 
-
-
-
   // Calculate total price of items in the cart
   const totalPrice = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
 
   return (
     <div>
-      <h2></h2>
+      <h2>Cart</h2>
       {state.items.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
@@ -26,9 +23,10 @@ const Cart = () => {
                 id={item.id}
                 name={item.name}
                 price={item.price}
+                productImage={item.productImage} 
                 quantity={item.quantity}
               />
-      6        <button onClick={() => removeItemFromCart(item.id)}>Delete</button>
+              <button onClick={() => removeItemFromCart(item.id)}>Delete</button>
             </div>
           ))}
           <button onClick={() => clearCart()}>Clear Cart</button>
@@ -40,6 +38,7 @@ const Cart = () => {
 };
 
 export default Cart;
+
 
 
 
