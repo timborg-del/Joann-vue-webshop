@@ -6,12 +6,13 @@ import CartPage from './pages/CartPage';
 import CartButton from './components/CartButton';
 import { CartProvider } from './context/CartContext';
 import ShopPage from './pages/ShopPage'; // Import the ShopPage component
+import About from './pages/About';
 
 const App: React.FC = () => {
   return (
     <Router>
       <CartProvider>
-        <div className='container'>
+        
           {/* Navigation */}
           <nav className="navbar">
             <div className="dropdown">
@@ -29,23 +30,20 @@ const App: React.FC = () => {
               <Link to="/">Home</Link>
               <Link to="/about">About</Link>
             </div>
-            <div className="cart-button">
+            <div >
               <CartButton />
             </div>
           </nav>
 
-          {/* Main content */}
-          <main className="main-content">
-
-          </main>
 
           {/* Routes */}
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/shoppage" element={<ShopPage />} /> {/* Route for ShopPage */}
+            <Route path="/about" element={<About/>}></Route>
           </Routes>
-        </div>
+        
       </CartProvider>
     </Router>
   );

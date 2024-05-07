@@ -94,12 +94,15 @@ body {
 }
 
 .cart-button {
+  display: block;
   max-width: 100%;
-  background: rgba(255, 255, 255, 0.10);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-  padding: 16px;
-  transition: transform 0.3s ease;
+  margin: 0 0px;
+  justify-items: center;
+  padding: 10px;
+  color: rgb(255, 255, 255);
+  border: 2px solid rgb(255, 255, 255);
+  border-radius: 5px;
+  
 }
 
 .cart-button:hover {
@@ -108,9 +111,9 @@ body {
 
 .cart-counter {
   position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: red;
+  top: 0px;
+  right: 15px;
+  background: rgb(1, 127, 110);
   color: white;
   border-radius: 50%;
   padding: 5px;
@@ -138,10 +141,51 @@ body {
   background-color: #0069d958;
 }
 
+.shop-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-height: 500px;
+  overflow-x: auto;
+  padding: 20px;
+}
+
+.shop-container img {
+  width: 100%;
+  border-radius: 16px;
+}
+
 .main-content {
   position: relative;
   padding: 20px;
 }
 
+@media screen and (max-width: 768px) {
+  .container {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .centerLinks {
+    justify-content: flex-start;
+    margin-top: 20px;
+  }
+
+  .centerLinks a {
+    font-size: 1.2rem;
+  }
+
+  .h1shop {
+    font-size: 1.2rem;
+  }
+
+  .card {
+    max-width: 100%;
+  }
+
+  .shop-container {
+    width: 100%;
+  }
+}
 
 

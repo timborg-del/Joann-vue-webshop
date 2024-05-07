@@ -10,7 +10,8 @@
   flex-direction: column;
   align-items: center;
   max-width: 1500px; /* Adjust max-width based on your design */
-  max-height: 1000px;
+  max-height: auto;
+  min-height: auto;
   margin: 0 auto;
   padding: 20px;
   background: rgba(0, 0, 0, 0.539);
@@ -20,9 +21,11 @@
   -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.13);
   transition: transform 0.3s ease;
+  
+  overflow-y:visible;
 }
 .form-container{
-  display: block;
+  display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
@@ -55,11 +58,11 @@
 
 .cartexit_btn{
   position: fixed;
-  top: 20px;
-  right: 20px;
+  top: 5px;
+  right: 5px;
   width: 30px; /* Set width and height to make a square button */
   height: 30px;
-  background-color: #d47800b7;
+  background: rgb(251, 189, 4);
   color: #fff;
   border: none;
   border-radius: 50%; /* Make a circle */
@@ -69,17 +72,32 @@
   text-decoration: none;
   cursor: pointer;
 }
+.hideform_btn{
+  cursor: pointer;
+  font-size: 30px;
+  width: 100%;
+  height: auto;
+  color: white;
+  font-size: larger;
+  padding: 10px;
+  background: rgba(164, 251, 4, 0.397);
+  border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+backdrop-filter: blur(1.1px);
+-webkit-backdrop-filter: blur(1.1px);
+border: 1px solid rgba(255, 255, 255, 0.13);
+  padding: 16px;
+  transition: transform 0.3s ease;
+}
 
 .cartclear_btn{
   cursor: pointer;
-  
   display: flex;
   justify-content: center;
   margin-top: 10px;
-  padding: 3px;
-  margin: 3px;
+  padding: 0;
+  margin: 15px;
   width: 30%;
-  padding: 3px;
   color: white;
   background: rgba(251, 202, 4, 0.242);
   border-radius: 16px;

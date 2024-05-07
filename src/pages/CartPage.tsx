@@ -1,4 +1,3 @@
-// CartPage.tsx
 import React, { useState } from 'react';
 import Cart from '../components/Cart';
 import './CartPage.css'; // Import CSS file for CartPage styles
@@ -15,6 +14,7 @@ const CartPage: React.FC = () => {
         postalCode: '',
     });
 
+    const [isFormVisible, setIsFormVisible] = useState(true); // State to track form visibility
     const [isCartPageVisible, setIsCartPageVisible] = useState(true); // State to track cart page visibility
     const { clearCart, removeItemFromCart } = useCartActions(); // Include removeItemFromCart from useCartActions
     const { state } = useCart();
@@ -33,6 +33,10 @@ const CartPage: React.FC = () => {
         console.log(formData);
     };
 
+    const toggleFormVisibility = () => {
+        setIsFormVisible(!isFormVisible); // Toggle form visibility
+    };
+
     const toggleCartPageVisibility = () => {
         setIsCartPageVisible(!isCartPageVisible); // Toggle cart page visibility
     };
@@ -48,7 +52,7 @@ const CartPage: React.FC = () => {
                     </div>
                 )}
                 
-                {isCartPageVisible && (
+                {isFormVisible && (
                     <form className="form-container" onSubmit={handleSubmit}>
                         <input type="text" name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} required />
                         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
@@ -58,6 +62,10 @@ const CartPage: React.FC = () => {
                         <button className='checkout_btn' type="submit">Checkout</button>
                     </form>
                 )}
+
+                {/* Button to toggle form visibility */}
+                <button className="hideform_btn" onClick={toggleFormVisibility}>{isFormVisible ? 'Hide Checkout' : 'Checkout'}</button>
+
                 {/* Button to toggle visibility */}
                 <Link to="/" className="cartexit_btn">X</Link>
 
@@ -72,6 +80,7 @@ const CartPage: React.FC = () => {
 };
 
 export default CartPage;
+
 
 
 

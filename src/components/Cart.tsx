@@ -22,9 +22,10 @@ const Cart = () => {
             <div key={item.id} className="cart-item">
               <CartItems
                 id={item.id}
+                productImage={item.productImage} 
                 name={item.name}
                 price={item.price}
-                productImage={item.productImage} 
+                
                 quantity={item.quantity}
               />
               <div className="cart-buttons">
