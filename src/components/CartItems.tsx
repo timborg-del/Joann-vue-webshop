@@ -17,7 +17,7 @@ const CartItems = ({ id, name, price, productImage, quantity }: CartItemProps) =
       src={productImage} 
       alt={name} 
       style={{
-        width: '30%',
+        width: '20%',
         height: 'auto',
         borderRadius: '8px',
         boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',

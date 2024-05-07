@@ -28,7 +28,6 @@ const App: React.FC = () => {
             <div className='centerLinks'>
               <Link to="/">Home</Link>
               <Link to="/about">About</Link>
-              <Link to="/cart">Cart</Link>
             </div>
             <div className="cart-button">
               <CartButton />
@@ -37,16 +36,12 @@ const App: React.FC = () => {
 
           {/* Main content */}
           <main className="main-content">
-            <div className="card">
-              {/* Render your products or other components here */}
-              {/* <Product id={'8'} name={'MyProduct'} price={200} quantity={11} productImage={''}></Product> */}
-              {/* You can remove or comment out the Product component rendering */}
-            </div>
+
           </main>
 
           {/* Routes */}
           <Routes>
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/shoppage" element={<ShopPage />} /> {/* Route for ShopPage */}
           </Routes>

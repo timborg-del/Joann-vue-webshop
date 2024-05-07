@@ -1,45 +1,131 @@
-@media screen and (max-width: 768px) {
-    .container-my-cart {
-        text-align: center;
-        max-width: auto;
-        display: flex;
-      max-width: 0%;
-      max-height:70% ;
-      padding: 10px;
-      justify-content: center;
-    }
-  
-    .cart-page {
-       
-      max-width: 100%;
-      max-height: none; /* Reset max-height */
-      padding: 20px;
-    }
+/* CartPage.css */
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-    .product-details{
-        font-size: larger;
-    }
-  
-    .cart {
-        
-      margin-bottom: 20px;
-    }
-  
-    .form-container {
-        
-      max-height: none; /* Reset max-height */
-        
-      padding: 20px;
-    }
-  
-    .toggle-cart-page-button {
+.cart-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 1500px; /* Adjust max-width based on your design */
+  max-height: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.539);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  transition: transform 0.3s ease;
+}
+.form-container{
+  display: block;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin-bottom: 20px;
+  margin: 50px;
 
-      display: flex;
-      justify-content: center;
-      margin-top: 10px;
-      padding: 5px;
-      margin: 15px;
-    }
+}
+
+.form-container input {
+  width: 100%;
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 16px;
+  border: none;
+  color: white;
+  background-color: rgb(91, 90, 90);
+}
+
+
+
+.cart {
+  width: 100%;
+  margin-bottom: 20px; /* Add some spacing between cart and form */
+  margin: 50px;
+}
+
+
+
+.cartexit_btn{
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  width: 30px; /* Set width and height to make a square button */
+  height: 30px;
+  background-color: #d47800b7;
+  color: #fff;
+  border: none;
+  border-radius: 50%; /* Make a circle */
+  font-size: 20px;
+  text-align: center;
+  line-height: 30px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cartclear_btn{
+  cursor: pointer;
+  
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+  padding: 3px;
+  margin: 3px;
+  width: 30%;
+  padding: 3px;
+  color: white;
+  background: rgba(251, 202, 4, 0.242);
+  border-radius: 16px;
+box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+backdrop-filter: blur(1.1px);
+-webkit-backdrop-filter: blur(1.1px);
+border: 1px solid rgba(255, 255, 255, 0.197);
+  padding: 16px;
+  transition: transform 0.3s ease;
+}
+.checkout_btn{
+  cursor: pointer;
+  width: 100%;
+  height: auto;
+  color: white;
+  font-size: larger;
+  padding: 10px;
+  background: rgba(164, 251, 4, 0.397);
+  border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+backdrop-filter: blur(1.1px);
+-webkit-backdrop-filter: blur(1.1px);
+border: 1px solid rgba(255, 255, 255, 0.13);
+  padding: 16px;
+  transition: transform 0.3s ease;
+}
+
+/* Add responsive styles for larger screens */
+@media screen and (min-width: 768px) {
+  .cart-page {
+    flex-direction: row;
+    justify-content: space-between;
   }
+
+  .cart {
+    width: 60%; /* Adjust width based on your design */
+    margin-bottom: 0;
+  }
+
+  .form-container {
+    width: 35%; /* Adjust width based on your design */
+  }
+}
+
+
+
+
   
   

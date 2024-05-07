@@ -1,6 +1,10 @@
+// CartPage.tsx
 import React, { useState } from 'react';
 import Cart from '../components/Cart';
 import './CartPage.css'; // Import CSS file for CartPage styles
+import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import useCartActions from '../hooks/useCartActions';
 
 const CartPage: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -12,6 +16,11 @@ const CartPage: React.FC = () => {
     });
 
     const [isCartPageVisible, setIsCartPageVisible] = useState(true); // State to track cart page visibility
+    const { clearCart, removeItemFromCart } = useCartActions(); // Include removeItemFromCart from useCartActions
+    const { state } = useCart();
+
+    // Calculate total price of items in the cart
+    const totalPrice = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -29,8 +38,8 @@ const CartPage: React.FC = () => {
     };
 
     return (
-        <div className={`container-my-cart ${isCartPageVisible ? '' : 'hidden'}`}>
-            <div className="cart-page">
+        <div className="container">
+            <div className='cart-page'>
                 <h1>My Cart</h1>
                 {/* Render Cart and checkout form based on visibility state */}
                 {isCartPageVisible && (
@@ -38,7 +47,7 @@ const CartPage: React.FC = () => {
                         <Cart />
                     </div>
                 )}
-                <h2>Checkout</h2>
+                
                 {isCartPageVisible && (
                     <form className="form-container" onSubmit={handleSubmit}>
                         <input type="text" name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} required />
@@ -46,19 +55,27 @@ const CartPage: React.FC = () => {
                         <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required />
                         <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} required />
                         <input type="text" name="postalCode" placeholder="Postal Code" value={formData.postalCode} onChange={handleChange} required />
-                        <button type="submit">Checkout</button>
+                        <button className='checkout_btn' type="submit">Checkout</button>
                     </form>
                 )}
                 {/* Button to toggle visibility */}
-                <button className="toggle-cart-page-button" onClick={toggleCartPageVisibility}>
-                    {isCartPageVisible ? 'Hide Cart' : 'Show Cart'}
-                </button>
+                <Link to="/" className="cartexit_btn">X</Link>
+
+                {/* Clear Cart Button */}
+                <button className="cartclear_btn" onClick={clearCart}>Clear Cart</button>
+                
+                {/* Total Price */}
+                <p>Total Price: ${totalPrice.toFixed(2)}</p>
             </div>
         </div>
     );
 };
 
 export default CartPage;
+
+
+
+
 
 
 

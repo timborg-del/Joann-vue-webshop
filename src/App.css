@@ -1,38 +1,18 @@
-* {
-  box-sizing: border-box;
-  align-content: center;
-  padding: 0;
-  margin: 0;
-}
+/* App.css */
 
-html,
-body {
-  overflow-x: hidden;
-  background-image: url('/backround.jpg'); /* Adjust the path to your background image */
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  height: 100%;
-  width: 100%;
-  z-index: 2000
-}
-
-
-  
-main {
-  position: fixed;
-  /* Additional background image styles */
-}
-/* Navbar.module.css */
+/* Styles for the header/navigation bar */
 .container {
   display: flex;
-  flex-direction: row;
-  position: fixed;
+  flex-direction: column;
+  width: 100%;
+  height: 100px;
+  top: 0;
+  left: 0;
+  position: relative;
   background: none;
   align-items: center;
   justify-content: space-between;
-  font-family:monospace;
+  font-family: monospace;
   font-size: 1.5rem;
   font-weight: bold;
   color: white;
@@ -51,18 +31,16 @@ main {
 
 .navbar {
   display: flex;
-  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px;
-  /* From https://css.glass */
+  padding: 10px;
   background: none;
   border-radius: none;
   border: none;
 }
 
-.centerLinks{
+.centerLinks {
   display: flex;
   flex: 1; /* Add this line */
   justify-content: center;
@@ -76,111 +54,11 @@ main {
   margin: 0 10px;
 }
 
-
-
 .centerLinks a:hover {
   color: lightgray;
 }
 
-/* navbar.module.css */
+/* Other layout-related styles */
 
 
-.grid {
-  position: fixed;
-  bottom: 1rem;
-  left: 50%; /* Place the grid at the horizontal center */
-  transform: translateX(-50%); /* Adjust to center the grid relative to its own width */
-  width: calc(100% - 50rem); /* Adjust the width based on your layout */
-  display: flex;
-  justify-content: center;
-  align-items: center;  
-  flex-wrap: wrap;
-  gap: 50px;
-  margin: 0 auto;
-  max-width: 1000px;
-}
-
-.card {
-  max-width: 10rem;
-/* From https://css.glass */
-background: rgba(255, 255, 255, 0.10);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.13);
-  padding: 15px;
-  transition: transform 0.3s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px) rotateX(5deg) scale(1.05);
-}
-
-.cart-sidebar {
-  background-color: #f7f7f7;
-  border: 1px solid #ddd;
-  border-radius: 5px;
-  padding: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.cart-empty {
-  font-size: 1.2rem;
-  color: #555;
-  text-align: center;
-}
-
-
-
-.productImage {
-  width: 100%;
-  border-radius: 8px;
-  margin-bottom: 10px;
-}
-.home_h1{
-  font-size: 2rem;
-  margin-bottom: 10px;
-}
-
-.home_h2 {
-  font-size: 1.5rem;
-  margin-bottom: 10px;
-}
-
-.home_p {
-  margin-bottom: 10px;
-}
-
-
-
-.buy_btn {
-  width: 100%;
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  align-content: center;
-  background: rgba(22, 77, 77, 0.281);
-border-radius: 15px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.13);
-  padding: 15px;
-  transition: transform 0.3s ease;
-  transition: background-color 0.3s ease;
-}
-
-.buy_btn:hover {
-  background-color: #10f80c2c;
-}
-
-.cart-sidebar-container {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-}
 

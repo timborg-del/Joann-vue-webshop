@@ -1,8 +1,9 @@
+// Cart.tsx
 import React from 'react';
 import { useCart } from '../context/CartContext';
 import CartItems from './CartItems';
 import useCartActions from '../hooks/useCartActions';
-
+import './Cart.css';
 
 const Cart = () => {
   const { state } = useCart();
@@ -18,7 +19,7 @@ const Cart = () => {
       ) : (
         <div className="cart-items-container">
           {state.items.map((item) => (
-            <div key={item.id}>
+            <div key={item.id} className="cart-item">
               <CartItems
                 id={item.id}
                 name={item.name}
@@ -26,18 +27,21 @@ const Cart = () => {
                 productImage={item.productImage} 
                 quantity={item.quantity}
               />
-              <button className='deleteCart' onClick={() => removeItemFromCart(item.id)}>Delete</button>
+              <div className="cart-buttons">
+                <button className='delete_btn' onClick={() => removeItemFromCart(item.id)}>Delete</button>
+              </div>
             </div>
           ))}
         </div>
+
       )}
-      <button className='clearCart' onClick={() => clearCart()}>Clear Cart</button>
-      <p>Total Price: ${totalPrice.toFixed(2)}</p>
     </div>
+    
   );
 };
 
 export default Cart;
+
 
 
 

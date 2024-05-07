@@ -1,6 +1,5 @@
 * {
   box-sizing: border-box;
-  align-content: center;
   padding: 0;
   margin: 0;
 }
@@ -8,198 +7,84 @@
 html,
 body {
   overflow-x: hidden;
-  background-image: url('/src/assets/backround.jpg'); /* Adjust the path to your background image */
+  background-image: url('/src/assets/backround.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   height: 100%;
   width: 100%;
-  z-index: 2000
+  font-family: monospace;
+  color: white;
 }
 
-
-  
-main {
-  position: fixed;
-  /* Additional background image styles */
-}
-/* Navbar.module.css */
 .container {
   display: flex;
-  flex-direction: row;
-  position: fixed;
-  background: none;
-  align-items: center;
   justify-content: space-between;
-  font-family:monospace;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  text-decoration: none;
-  padding: 0px;
-  margin: 0px;
-}
-
-.logoImage {
-  display: flex;
-  width: 100px;
-  height: 100px;
+  align-items: center;
   padding: 20px;
-  border-radius: 20rem;
 }
 
 .navbar {
-  display: flex;
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px;
-  /* From https://css.glass */
   background: none;
-  border-radius: none;
-  border: none;
 }
 
-.centerLinks{
+.centerLinks {
   display: flex;
-  flex: 1; /* Add this line */
+  flex: 1;
   justify-content: center;
-  align-items: center;
 }
 
 .centerLinks a {
-  color: white;
   text-decoration: none;
-  font-size: 2.5rem;
-  margin: 0 30px;
+  font-size: 1.5rem;
+  margin: 0 10px;
+  color: white;
 }
 
-
-
-.centerLinks a:hover {
-  color:rgb(251, 222, 0);
-}
-
-/* navbar.module.css */
-
-/* Styling for the dropdown container */
 .dropdown {
   position: relative;
   display: inline-block;
-  transition: transform 1.3s ease; 
-  
 }
 
-/* Styling for the dropdown trigger */
 .dropdown > span {
   cursor: pointer;
   padding: 10px;
-  transition: transform 0.3s ease; /* Add transition for sliding effect */
-
 }
 
-/* Styling for the dropdown content */
 .dropdownContent {
   display: none;
   position: absolute;
-  margin-top: 10px;
-  justify-content: center;
+  top: 100%;
+  left: 0;
   background: rgba(0, 0, 174, 0.401);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(1.1px);
-  -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.13);
-    padding: 15px;
-    transition: transform 1.3s ease;
-  padding: 30px; /* Add padding */
-  z-index: 1;
-  transition: transform 0.3s ease; /* Add transition for sliding effect */
-  transform: translateY(-20px); /* Initially slide up */
-}
-.dropdown:hover .dropdownContent {
-  display: block;
-  transition: transform 0.3s ease;
-  transform: translateY(0); /* Slide down */
-}
-
-.dropdownContent a {
-  color: white;
-  text-decoration: none;
-  display: block;
-  padding: 10px 0;
-  transition: background-color 0.3s ease; /* Add transition effect */
-}
-.dropdownContent a:hover {
-  color:rgb(251, 222, 0);
-  text-decoration: none;
-  display: block;
-  padding: 10px 0;
-  transition: background-color 0.3s ease; /* Add transition effect */
-}
-/*NAVBAR SHOP TEXT */
-.h1shop{
-  display: inline;
-  font-size: 41px;
-  font-family:monospace;
-  font-weight: bold;
-  color: white;
-  padding: 10px;
-  transition: transform 1.3s ease; 
-
-}
-
-.h1shop:hover a:hover .dropdownContent:hover{
-  color:rgb(251, 222, 0)}
-
-/* Styling for dropdown content links on hover */
-.dropdownContent a:hover .h1shop {
-  color: rgb(251, 222, 0);
-  background: rgba(255, 255, 255, 0.10);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.13);
   padding: 15px;
-  transition: transform 0.3s ease; /* Add hover background color */
 }
 
-/* Show the dropdown content when the dropdown trigger is hovered over */
 .dropdown:hover .dropdownContent {
   display: block;
 }
 
-
-@media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-}
-
-/*ShopPage */
-.shop-container {
-  display: flex;
-  justify-content: center; /* Center the cards horizontally */
-  align-items: center;
-}
-.product-details {
-  padding: 10px;
-  text-align: center;
+.h1shop {
+  font-size: 1.5rem;
+  font-weight: bold;
+  padding: 0px;
 }
 
 .card {
-  max-width: 10rem;
+  max-width: 8rem;
   margin: 0 10px;
-/* From https://css.glass */
-background: rgba(255, 255, 255, 0.10);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.13);
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
   padding: 15px;
   transition: transform 0.3s ease;
 }
@@ -208,230 +93,55 @@ border: 1px solid rgba(255, 255, 255, 0.13);
   transform: translateY(-5px) rotateX(5deg) scale(1.05);
 }
 
-/*save this */
 .cart-button {
-  max-width: 10rem;
-
-/* From https://css.glass */
-background: rgba(255, 255, 255, 0.10);
-border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.13);
+  max-width: 100%;
+  background: rgba(255, 255, 255, 0.10);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
   padding: 16px;
   transition: transform 0.3s ease;
 }
 
-.cart-button:hover{
+.cart-button:hover {
   transform: translateY(-5px) rotateX(5deg) scale(1.05);
-
 }
 
 .cart-counter {
-  position: absolute; /* Position absolute to position the counter */
-  top: -8px; /* Adjust top position */
-  right: -8px; /* Adjust right position */
-  background-color: red; /* Counter background color */
-  color: white; /* Counter text color */
-  border-radius: 50%; /* Make the counter circle */
-  padding: 5px; /* Add some padding */
-  font-size: 12px; /* Counter font size */
-  width: 20px; /* Counter width */
-  height: 20px; /* Counter height */
-  line-height: 1; /* Center the text vertically */
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 12px;
+  width: 20px;
+  height: 20px;
+  line-height: 1;
+}
+
+.buy_btn {
+  width: 100%;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  background: rgba(22, 77, 77, 0.281);
+  border-radius: 15px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  transition: background-color 0.3s ease;
+}
+
+.buy_btn:hover {
+  background-color: #0069d958;
 }
 
 .main-content {
-  position: fixed;
-  bottom: 0;
-  left: 50%;
-  transform: translateX(-50%);
+  position: relative;
   padding: 20px;
 }
-/* CartPage.css */
-
-.container-my-cart {
-  display: flex;
-  flex-direction: row;
-  position: fixed;
-  background: none;
-  align-items: left;
-  justify-content: center;
-  font-family:monospace;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: white;
-  text-decoration: none;
-  padding: 0rem;
-  margin: 50%; /* Align items to the right */
-}
-.toggle-cart-page-button {
-  cursor: pointer;
-
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  padding: 5px;
-  margin: 15px;
-  width: 20%;
-  padding: 10px;
-  background: rgba(0, 7, 216, 0.415);
-  border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.13);
-  padding: 16px;
-  transition: transform 0.3s ease;
-}
-.deleteCart{
-  cursor: pointer;
-
-  display: flex;
-  justify-content: center;
-  margin-top: 5px;
-  padding: 5px;
-  margin: 5px;
-  width: 15%;
-  height: 15%;
-  padding: 5px;
-  background: rgba(251, 4, 4, 0.25);
-  border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.13);
-  padding: 16px;
-  transition: transform 0.3s ease;
-
-}
-
-.clearCart{
-  cursor: pointer;
-
-  display: flex;
-  justify-content: center;
-  margin-top: 10px;
-  padding: 5px;
-  margin: 5px;
-  width: 22%;
-  padding: 5px;
-  background: rgba(251, 202, 4, 0.242);
-  border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.197);
-  padding: 16px;
-  transition: transform 0.3s ease;
-
-}
-.cart-product-container {
-  max-height: 400px; /* or any height you prefer */
-  overflow-y: auto;
-}
-
-.cart-items-container {
-  /* Optional: Add padding or margin to the items container if needed */
-}
 
 
 
-.cart-page {
-  display: block;
-  max-height: auto;
-  max-width: 600px;
-  min-width: 500px;
-  margin-top: 0px; /* Add margin to create space between navbar and cart page */
-  padding: 20px;
-  background: rgba(0, 0, 0, 0.539);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(1.1px);
-  -webkit-backdrop-filter: blur(1.1px);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  transition: transform 0.3s ease;
-}
-
-
-
-.cart-page h1 {
-  text-align: center;
-}
-
-.cart {
-  border: none;
-  padding: 10px;
-  margin-bottom: 20px;
-}
-
-.cart h2 {
-  text-align: center;
-}
-
-.form-container {
-  max-height: 400px; /* or any height you prefer */
-
-  padding: 20px;
-  overflow-y: auto;
-  background: rgba(0, 0, 0, 0.539);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(1.1px);
-  -webkit-backdrop-filter: blur(1.1px);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  transition: transform 0.3s ease; /* Optional: Add shadow for depth */
-}
-
-
-.form-container input {
-  width: 100%;
-  margin-bottom: 10px;
-  padding: 10px;
-  box-sizing: border-box;
-}
-
-.form-container button {
-  cursor: pointer;
-  width: 100%;
-  height: auto;
-  font-size: larger;
-  padding: 10px;
-  background: rgba(164, 251, 4, 0.397);
-  border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.13);
-  padding: 16px;
-  transition: transform 0.3s ease;
-}
-
-.form-container button:hover {
-  transform: translateY(-5px) rotateX(5deg) scale(1.05);
-
-}
-
-.h2shop{
-  text-align: center;
-  font-family:monospace;
-  font-size: 1.5rem;
-  font-weight: bold;
-  font-weight: 500;
-  margin-bottom: 300px;
-}
-
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
