@@ -15,6 +15,7 @@ const Products: React.FC = () => {
   ];
 
   return (
+    <div className='container'>
     <div className="products-container">
       {products.map((product) => (
         <div key={product.id} className="product-card">
@@ -28,6 +29,7 @@ const Products: React.FC = () => {
           </div>
         </div>
       ))}
+    </div>
     </div>
   );
 };

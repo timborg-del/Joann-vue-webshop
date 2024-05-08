@@ -64,7 +64,7 @@ const CartPage: React.FC = () => {
                 )}
 
                 {/* Button to toggle form visibility */}
-                <button className="hideform_btn" onClick={toggleFormVisibility}>{isFormVisible ? 'Hide Checkout' : 'Checkout'}</button>
+                <button className="hideform_btn" onClick={toggleFormVisibility}>{isFormVisible ? 'Hide Checkout' : 'Go To Checkout'}</button>
 
                 {/* Button to toggle visibility */}
                 <Link to="/" className="cartexit_btn">X</Link>

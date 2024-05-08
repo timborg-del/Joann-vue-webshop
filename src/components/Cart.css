@@ -41,7 +41,7 @@
     max-width: 90%; /* Ensure each item never exceeds the width of the cart page */
     margin-bottom: 20px; /* Add some space between items */
     border-radius: 5px;
-    border: 2px solid black;
+    border: 1px solid black;
     background: none;
     
 
