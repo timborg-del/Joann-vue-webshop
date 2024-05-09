@@ -45,9 +45,11 @@ const CartPage: React.FC = () => {
                 <h1>My Cart</h1>
                 {/* Render Cart and checkout form based on visibility state */}
                 {isCartPageVisible && (
-                    <div className="cart">
+                    <div className="cart" >
                         <Cart />
+                        
                     </div>
+                    
                 )}
                 
                 {isFormVisible && (
@@ -57,21 +59,27 @@ const CartPage: React.FC = () => {
                         <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required />
                         <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} required />
                         <input type="text" name="postalCode" placeholder="Postal Code" value={formData.postalCode} onChange={handleChange} required />
+                        <p>Total Price: ${totalPrice.toFixed(2)}</p>
                         <button className='checkout_btn' type="submit">Checkout</button>
+                        
+                        
+                        <button className="cartclear_btn" onClick={clearCart}>Clear Cart</button>
                     </form>
+                    
                 )}
 
                 {/* Button to toggle form visibility */}
                 <button className="hideform_btn" onClick={toggleFormVisibility}>{isFormVisible ? 'Hide Checkout' : 'Go To Checkout'}</button>
+                
 
                 {/* Button to toggle visibility */}
                 <Link to="/" className="cartexit_btn">X</Link>
 
                 {/* Clear Cart Button */}
-                <button className="cartclear_btn" onClick={clearCart}>Clear Cart</button>
+                
                 
                 {/* Total Price */}
-                <p>Total Price: ${totalPrice.toFixed(2)}</p>
+                
             </div>
         
     );

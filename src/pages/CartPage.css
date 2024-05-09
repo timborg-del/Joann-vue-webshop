@@ -1,12 +1,22 @@
 /* CartPage.css */
+.cart-page-container{
+  display: inline-block;
+  justify-content: center;
+  align-items: center;
+  max-width: 600px;
+  max-height: 600px;
+  min-width: 600px;
+  min-height: 800px;
+}
 
 .cart-page {
-  display: flex;
-  flex-direction: column;
+  position: flex;
+  flex-direction: row;
   align-items: center;
-  max-width: auto; /* Adjust max-width based on your design */
-  max-height: auto;
-  min-height: auto;
+  max-width: 600px; /* Adjust max-width based on your design */
+  min-width: auto;
+  max-height: 1200px;
+  min-height: 600px;
   margin: 0 auto;
   padding: 20px;
   background: rgba(0, 0, 0, 0.539);
@@ -16,32 +26,31 @@
   -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.13);
   transition: transform 0.3s ease;
-  
-  overflow-y:visible;
+  overflow-y: visible;
 }
+
 .form-container{
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   margin-bottom: 20px;
-  margin: 50px;
-
+  margin: 0;
 }
 
 .form-container input {
   width: 100%;
-  width: 100%;
+  align-items: center;
+  justify-content: center;
+  max-width: 300px; /* Set max-width to prevent it from extending too much */
   height: auto;
   margin-bottom: 10px;
   padding: 10px;
-  border-radius: 16px;
+  border-radius: 5px;
   border: none;
   color: white;
-  background-color: rgb(91, 90, 90);
+  background-color: rgb(38, 38, 38);
 }
-
-
 
 .cart {
   width: 100%;
@@ -49,7 +58,11 @@
   margin: 50px;
 }
 
-
+.form-container p{
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
 
 .cartexit_btn{
   position: fixed;
@@ -67,81 +80,82 @@
   text-decoration: none;
   cursor: pointer;
 }
+
 .hideform_btn{
   cursor: pointer;
+  
   font-size: 30px;
-  width: 100%;
+  padding: 15px;
+  width: 50%;
   height: auto;
   color: white;
   font-size: larger;
-  padding: 10px;
-  background: rgba(164, 251, 4, 0.397);
+  margin-top:  10px;
+  background: rgba(251, 251, 4, 0.397);
   border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.13);
-  padding: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  
   transition: transform 0.3s ease;
 }
 
 .cartclear_btn{
   cursor: pointer;
+  
   display: flex;
   justify-content: center;
   margin-top: 10px;
   padding: 0;
-  margin: 15px;
-  width: 30%;
+  margin-top: 15px;
+  width: 50%;
   color: white;
-  background: rgba(251, 202, 4, 0.242);
+  background: rgba(251, 193, 4, 0.395);
   border-radius: 16px;
-box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.197);
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  border: 1px solid rgba(255, 255, 255, 0.197);
   padding: 16px;
   transition: transform 0.3s ease;
 }
+
 .checkout_btn{
   cursor: pointer;
-  width: 100%;
+  max-width: 50%;
+  min-width: 50%;
+  margin-bottom: 5px;
   height: auto;
   color: white;
   font-size: larger;
   padding: 10px;
   background: rgba(164, 251, 4, 0.397);
   border-radius: 16px;
-box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-backdrop-filter: blur(1.1px);
--webkit-backdrop-filter: blur(1.1px);
-border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
   padding: 16px;
   transition: transform 0.3s ease;
 }
 
 /* Add responsive styles for larger screens */
 @media screen and (min-width: 768px) {
+  .cart-page-container {
+    /* No need to add any styles, it will remain centered */
+  }
+
   .cart-page {
     flex-direction: row;
-    align-items: center;
-    margin: 10px;
-    padding: 20px;
     justify-content: space-between;
+    padding: 20px;
     &__item {
       width: 48%;
     }
   }
-
-  .cart {
-    width: 60%; /* Adjust width based on your design */
-    margin-bottom: 0;
-  }
-
-  .form-container {
-    width: 35%; /* Adjust width based on your design */
-  }
 }
+
 
 
 
