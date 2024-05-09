@@ -15,6 +15,7 @@
     flex-direction: row;
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column size based on your design */
     grid-gap: 20px;
+    max-width: auto;
     padding: 20px;
     max-height: 500px;
     overflow-y: auto;
@@ -95,6 +96,7 @@
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column size based on your design */
       grid-gap: 20px;
       padding: 20px;
+      max-width: auto;
       max-height: 800px;
       overflow-y: auto;
     }

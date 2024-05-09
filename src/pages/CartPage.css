@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1500px; /* Adjust max-width based on your design */
+  max-width: auto; /* Adjust max-width based on your design */
   max-height: auto;
   min-height: auto;
   margin: 0 auto;
