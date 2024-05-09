@@ -5,10 +5,10 @@
     font-family: monospace;
     justify-content: center;
     padding: 20px;
-    margin: 0;
+    margin: 200px;
     margin-top: 20%;
-    max-width: 70%;
-    max-height: 100vh;
+    max-width: 200vh;
+ 
   }
   
   .home-content {

@@ -4,7 +4,7 @@ import './Home.css'; // Import CSS file for Home styles
 
 const Home = () => {
   return (
-    <div className="container">
+    
     <div className="home-container">
       <div className="home-content">
         <h2>Welcome</h2>
@@ -17,7 +17,7 @@ const Home = () => {
 
       </div>
     </div>
-    </div>
+    
   );
 };
 

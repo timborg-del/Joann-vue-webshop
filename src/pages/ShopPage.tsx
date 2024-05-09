@@ -4,7 +4,7 @@ import './ShopPage.css'; // Import the corresponding CSS file
 
 const ShopPage: React.FC = () => {
   return (
-    <div className="container">
+    <div className="shop-container">
       <h1>Shop</h1>
       <Product />
     </div>
