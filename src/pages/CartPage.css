@@ -1,9 +1,4 @@
 /* CartPage.css */
-.container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
 
 .cart-page {
   display: flex;
