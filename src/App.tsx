@@ -11,9 +11,7 @@ import About from './pages/About';
 const App: React.FC = () => {
   const [isShopOpen, setIsShopOpen] = useState(false);
 
-  const toggleShopDropdown = () => {
-    setIsShopOpen(!isShopOpen);
-  };
+
 
   return (
     <Router>

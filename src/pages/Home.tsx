@@ -1,7 +1,6 @@
-import React from 'react';
-import ItemList from '../components/ItemList';
+
 import './Home.css'; // Import CSS file for Home styles
-import Products from '../components/Products';
+
 
 const Home = () => {
   return (

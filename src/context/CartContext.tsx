@@ -1,4 +1,4 @@
-import React, { createContext, useReducer, useContext, ReactNode, Dispatch } from 'react';
+import { createContext, useReducer, useContext, ReactNode, Dispatch } from 'react';
 
 // Define types for cart items and state
 interface CartItem {

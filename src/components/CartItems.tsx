@@ -1,4 +1,4 @@
-import React from 'react';
+
 
 export interface CartItemProps {
   id: string;
@@ -8,7 +8,7 @@ export interface CartItemProps {
   quantity: number;
 }
 
-const CartItems = ({ id, name, price, productImage, quantity }: CartItemProps) => (
+const CartItems = ({ name, price, productImage, quantity }: CartItemProps) => (
   <div>
     
     <p>{name}</p>

@@ -1,5 +1,5 @@
 // Cart.tsx
-import React from 'react';
+
 import { useCart } from '../context/CartContext';
 import CartItems from './CartItems';
 import useCartActions from '../hooks/useCartActions';
@@ -7,10 +7,10 @@ import './Cart.css';
 
 const Cart = () => {
   const { state } = useCart();
-  const { removeItemFromCart, clearCart } = useCartActions();
+  const { removeItemFromCart, } = useCartActions();
 
   // Calculate total price of items in the cart
-  const totalPrice = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
+
 
   return (
     <div className="cart-product-container">

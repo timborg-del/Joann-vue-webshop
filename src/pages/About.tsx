@@ -1,4 +1,4 @@
-import React from 'react';
+
 import './About.css'; // Import CSS file for About page styles
 
 const About = () => {

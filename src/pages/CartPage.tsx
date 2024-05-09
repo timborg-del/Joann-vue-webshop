@@ -15,8 +15,8 @@ const CartPage: React.FC = () => {
     });
 
     const [isFormVisible, setIsFormVisible] = useState(true); // State to track form visibility
-    const [isCartPageVisible, setIsCartPageVisible] = useState(true); // State to track cart page visibility
-    const { clearCart, removeItemFromCart } = useCartActions(); // Include removeItemFromCart from useCartActions
+    const [isCartPageVisible, ] = useState(true); // State to track cart page visibility
+    const { clearCart, } = useCartActions(); // Include removeItemFromCart from useCartActions
     const { state } = useCart();
 
     // Calculate total price of items in the cart
@@ -37,9 +37,7 @@ const CartPage: React.FC = () => {
         setIsFormVisible(!isFormVisible); // Toggle form visibility
     };
 
-    const toggleCartPageVisibility = () => {
-        setIsCartPageVisible(!isCartPageVisible); // Toggle cart page visibility
-    };
+    
 
     return (
         <div className="container">
