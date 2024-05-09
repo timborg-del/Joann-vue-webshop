@@ -129,6 +129,9 @@ border: 1px solid rgba(255, 255, 255, 0.13);
 @media screen and (min-width: 768px) {
   .cart-page {
     flex-direction: row;
+    align-items: center;
+    margin: 10px;
+    padding: 20px;
     justify-content: space-between;
     &__item {
       width: 48%;

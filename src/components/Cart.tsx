@@ -13,6 +13,7 @@ const Cart = () => {
 
 
   return (
+    
     <div className="cart-product-container">
       {state.items.length === 0 ? (
         <p>Your cart is empty</p>
@@ -37,6 +38,7 @@ const Cart = () => {
 
       )}
     </div>
+    
     
   );
 };

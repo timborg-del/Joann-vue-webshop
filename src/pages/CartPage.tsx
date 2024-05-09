@@ -40,7 +40,7 @@ const CartPage: React.FC = () => {
     
 
     return (
-        <div className="container">
+        
             <div className='cart-page'>
                 <h1>My Cart</h1>
                 {/* Render Cart and checkout form based on visibility state */}
@@ -73,7 +73,7 @@ const CartPage: React.FC = () => {
                 {/* Total Price */}
                 <p>Total Price: ${totalPrice.toFixed(2)}</p>
             </div>
-        </div>
+        
     );
 };
 

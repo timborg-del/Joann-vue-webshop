@@ -5,7 +5,9 @@
     align-items:center;
     justify-content: center;
     margin: 0px;
-    width: 100%;
+    
+    max-width: auto;
+
   }
 
 
@@ -16,8 +18,8 @@
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column size based on your design */
     grid-gap: 20px;
     max-width: auto;
-    padding: 20px;
-    max-height: 500px;
+    padding: 0;
+    max-height: auto;
     overflow-y: auto;
     
   }
@@ -55,7 +57,7 @@
   .cart-item img {
     justify-items: center;
     width: 50%;
-    height: 30%;
+    height: auto;
     border-radius: 16px;
     margin-left: 35%;
     object-fit: cover;
@@ -95,9 +97,9 @@
   
       grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column size based on your design */
       grid-gap: 20px;
-      padding: 20px;
-      max-width: auto;
-      max-height: 800px;
+      padding: 50px;
+      max-width: 700px;
+      max-height: auto;
       overflow-y: auto;
     }
 
