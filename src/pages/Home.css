@@ -1,24 +1,18 @@
 .home-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-family: monospace;
-    justify-content: center;
-    padding: 20px;
-    margin: 200px;
-    margin-top: 20%;
-    max-width: 200vh;
+  position: relative;   
+  bottom: 25vh;
+  top: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
  
   }
   
   .home-content {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: xx-large;
-    font-family: monospace;
+    display: block;
+    max-width: 800px;
+    padding: 20px;
     background: rgba(0, 0, 0, 0.539);
     padding: 20px;
     border-radius: 16px;
@@ -28,12 +22,16 @@
     border: 1px solid rgba(255, 255, 255, 0.13);
   }
   
-  .item-list-container {
-    width: 100%;
-    display: flex;
-    color: white;
-    align-content: center;
-
+  .home-content h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 10px;
+  }
+  
+  .home-content p {
+    font-size: 2rem;
+    line-height: 1.6;
+    color: #ffffff;
   }
 
 

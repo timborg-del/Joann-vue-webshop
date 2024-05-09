@@ -13,9 +13,6 @@ const Home = () => {
           showcase featured products, or include any other relevant information here.
         </p>
       </div>
-      <div className="item-list-container">
-
-      </div>
     </div>
     
   );
