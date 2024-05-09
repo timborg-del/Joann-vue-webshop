@@ -24,9 +24,9 @@ const App: React.FC = () => {
             <h1 className='h1shop'>Shop</h1>
             <div className={`dropdownContent ${isShopOpen ? 'open' : ''}`}>
               <Link to="/shoppage">Mugs</Link>
-              <Link to="/store">Paintings</Link>
-              <Link to="/store">Download</Link>
-              <Link to="/store">Pencils</Link>
+              <Link to="/shoppage">Paintings</Link>
+              <Link to="/shoppage">Download</Link>
+              <Link to="/shoppage">Pencils</Link>
             </div>
           </div>
           {/* Center links */}
