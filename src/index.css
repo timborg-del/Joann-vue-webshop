@@ -90,7 +90,7 @@ body {
 .h1shop{
   font-size: 2.5rem;
   font-weight: bold; /* Set font weight to bold */
-  
+  font-weight: normal;/*set a span h1 to fit other font */
   margin-right:10px;
   font-family: monospace;
   color: #ffffff;
