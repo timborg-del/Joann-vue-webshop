@@ -10,7 +10,6 @@ export interface CartItemProps {
 
 const CartItems = ({ name, price, productImage, quantity }: CartItemProps) => (
   <div>
-    
     <p>{name}</p>
     <p>${price}</p>
     <img 
