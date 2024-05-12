@@ -8,8 +8,9 @@ export interface CartItemProps {
   quantity: number;
 }
 
-const CartItems = ({ name, price, productImage, quantity }: CartItemProps) => (
+const CartItems = ({id, name, price, productImage, quantity }: CartItemProps) => (
   <div>
+    <p>{id}</p>
     <p>{name}</p>
     <p>${price}</p>
     <img 
