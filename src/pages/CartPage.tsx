@@ -50,11 +50,13 @@ const CartPage: React.FC = () => {
                 
                 {isFormVisible && (
                     <form className="form-container" onSubmit={handleSubmit}>
+                        <div className='input-text'>
                         <input type="text" name="fullName" placeholder="Full Name" value={formData.fullName} onChange={handleChange} required />
                         <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
                         <input type="text" name="address" placeholder="Address" value={formData.address} onChange={handleChange} required />
                         <input type="text" name="city" placeholder="City" value={formData.city} onChange={handleChange} required />
                         <input type="text" name="postalCode" placeholder="Postal Code" value={formData.postalCode} onChange={handleChange} required />
+                        </div>
                         <p>Total Price: ${totalPrice.toFixed(2)}</p>
                         <button className='checkout_btn' type="submit">Checkout</button>
                         

@@ -19,7 +19,8 @@
   min-height: 600px;
   margin: 0 auto;
   padding: 20px;
-  background: rgba(0, 0, 0, 0.539);
+  background: rgba(249, 169, 49, 0.395);
+  /*background: rgba(0, 255, 238, 0.425);*/
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(1.1px);
@@ -36,6 +37,7 @@
   width: 100%;
   margin-bottom: 20px;
   margin: 0;
+ 
 }
 
 .form-container input {
@@ -49,8 +51,25 @@
   border-radius: 5px;
   border: none;
   color: white;
-  background-color: rgb(38, 38, 38);
+  background-color: rgba(0, 0, 0, 0.684);
 }
+
+.form-container .input-text {
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  max-width: 300px; /* Set max-width to prevent it from extending too much */
+  height: auto;
+  margin-bottom: 10px;
+  padding: 20px;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: rgba(103, 90, 70, 0.408);
+}
+
+
+
 
 
 
@@ -93,7 +112,7 @@
   margin-top:  20px;
   background: rgba(255, 27, 194, 0.368);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  box-shadow: 4px 4px 4px rgba(124, 0, 91, 0.368);
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.13);
@@ -111,9 +130,9 @@
   margin-top: 15px;
   width: 50%;
   color: white;
-  background: rgba(255, 247, 1, 0.386);
+  background: rgba(98, 255, 1, 0.386);
   border-radius: 16px;
-  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 4px 4px 4px rgba(48, 125, 0, 0.386);
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.197);
@@ -130,9 +149,9 @@
   color: white;
   font-size: larger;
   padding: 10px;
-  background: rgba(11, 248, 165, 0.397);
+  background: rgba(0, 255, 166, 0.397);
   border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  box-shadow: 4px 4px 5px rgba(0, 124, 81, 0.397);
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.13);
