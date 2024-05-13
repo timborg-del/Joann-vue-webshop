@@ -29,10 +29,10 @@ const Cart = () => {
                 
                 quantity={item.quantity}
               />
-              <div className="cart-buttons">
+              
                 <button className='delete_btn' onClick={() => removeItemFromCart(item.id)}>Delete</button>
               </div>
-            </div>
+           
           ))}
         </div>
 

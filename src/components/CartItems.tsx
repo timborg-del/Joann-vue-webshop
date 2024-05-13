@@ -9,15 +9,18 @@ export interface CartItemProps {
 }
 
 const CartItems = ({id, name, price, productImage, quantity }: CartItemProps) => (
-  <div>
-    <p>{id}</p>
-    <p>{name}</p>
-    <p>${price}</p>
+  <div className="cart-items-prop" >
     <img 
+      alt={name}
       src={productImage} 
-      alt={name} 
-    /> {/* Render the image */}
+      />
+      <div >
+      <p>{id}</p>
+      <p>{name}</p>
+      <p>${price}</p>
+     {/* Render the image */}
     <p>Quantity: {quantity}</p>
+    </div>
   </div>
 );
 
