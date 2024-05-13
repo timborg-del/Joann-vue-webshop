@@ -70,10 +70,9 @@
     padding: 5px
   }
 
-  .delete_btn {
-    cursor: pointer;
-    margin: auto;
-
+  .cart-item button {
+    padding: 5px;
+    margin-right: 5px;
     font-family: monospace;
     color: white;
     background: rgb(125, 152, 1);
@@ -85,6 +84,8 @@
     
     transition: transform 0.3s ease;
   }
+
+
   
   
   /* Add responsive styles for larger screens */

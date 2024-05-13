@@ -30,7 +30,7 @@ const Cart = () => {
                 quantity={item.quantity}
               />
               
-                <button className='delete_btn' onClick={() => removeItemFromCart(item.id)}>Delete</button>
+                <button onClick={() => removeItemFromCart(item.id)}>Delete</button>
               </div>
            
           ))}
