@@ -44,12 +44,8 @@ const CartPage: React.FC = () => {
             <div className='cart-page'>
                 <h1>My Cart</h1>
                 {/* Render Cart and checkout form based on visibility state */}
-                {isCartPageVisible && (
-                    <div className="cart" >
+                {isCartPageVisible && (                 
                         <Cart />
-                        
-                    </div>
-                    
                 )}
                 
                 {isFormVisible && (

@@ -5,7 +5,7 @@
     align-items:center;
     justify-content: center;
     margin: 0px;
-    max-height: 300px;
+    max-height: 400px;
     overflow-y: auto;
     max-width: auto;
 
@@ -19,9 +19,9 @@
     
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column size based on your design */
     grid-gap: 20px;
-    max-width: 200px;
+    max-height: auto ;
     min-height: 400px;
-    padding: 0;
+    padding: 20px;
     
     overflow-y: auto;
     

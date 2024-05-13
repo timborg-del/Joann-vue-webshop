@@ -52,14 +52,7 @@
   background-color: rgb(38, 38, 38);
 }
 
-.cart {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-bottom: 20px; /* Add some spacing between cart and form */
-  margin: 50px;
-  margin-right: 50px;
-}
+
 
 .form-container p{
   font-size: 20px;
