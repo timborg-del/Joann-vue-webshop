@@ -4,11 +4,14 @@ import { CartItemProps } from '../components/CartItems';
 import useLocalStorage from './useLocalStorage'; // Import useLocalStorage hook
 
 const useCartActions = () => {
-  const {state, dispatch } = useCart();
+  const { state, dispatch } = useCart();
   const [loading, setLoading] = useState(false);
-  
+
   // Retrieve cart items from local storage or initialize as an empty array
   const [cartItems, setCartItems] = useLocalStorage<CartItemProps[]>('cartItems', []);
+
+  // Calculate cartItemCount based on the length of items array in the cart state
+  const cartItemCount = state.items.length;
 
   const addItemToCart = (item: CartItemProps) => {
     setLoading(true);
@@ -45,6 +48,7 @@ const useCartActions = () => {
   return {
     cart: state,
     loading,
+    cartItemCount, // Include cartItemCount in the returned object
     addItemToCart,
     removeItemFromCart,
     clearCart,
@@ -52,6 +56,7 @@ const useCartActions = () => {
 };
 
 export default useCartActions;
+
 
 
 

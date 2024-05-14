@@ -1,11 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useState } from 'react';
- // Import CSS file for CartButton styles
+import { useCart } from '../context/CartContext'; // Import useCart hook
 
 const CartButton = () => {
-  // State to keep track of the number of items in the cart
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [cartItemCount, ] = useState(6);
+  // Access the cartItemCount from the context
+  const { cartItemCount } = useCart();
 
   return (
     <Link to='/cart' className="cart-button">
@@ -33,3 +31,4 @@ const CartButton = () => {
 };
 
 export default CartButton;
+
