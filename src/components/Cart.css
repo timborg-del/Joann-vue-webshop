@@ -52,8 +52,8 @@
     max-width: 100%; /* Ensure each item never exceeds the width of the cart page */
     margin-bottom: 20px; /* Add some space between items */
     border-radius: 5px;
-    background-color:  rgba(199, 199, 199, 0.827); ;
-    border: 1px solid rgba(145, 143, 143, 0.156);
+    background-color:  rgba(101, 1, 124, 0.486); ;
+    border: 1px solid rgba(162, 3, 206, 0.312);
     box-shadow: 4px 4px 4px rgba(48, 48, 48, 0.5);
     backdrop-filter: blur(1.1px);
     -webkit-backdrop-filter: blur(1.1px);

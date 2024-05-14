@@ -24,10 +24,6 @@ const initialState: CartState = {
   items: [],
 };
 
-// Custom hook to consume CartContext
-export const useCart = () => useContext(CartContext);
-export const useCartDispatch = () => useContext(CartContext).dispatch;
-
 // Create context
 const CartContext = createContext<{
   state: CartState;
@@ -76,3 +72,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     </CartContext.Provider>
   );
 };
+
+// Custom hook to consume CartContext
+export const useCart = () => useContext(CartContext);
+export const useCartDispatch = () => useContext(CartContext).dispatch;
+
+export default CartContext;

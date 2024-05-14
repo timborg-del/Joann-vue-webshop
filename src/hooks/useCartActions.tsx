@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useCart } from '../context/CartContext';
-import { CartItemProps } from '../components/CartItems';
+import CartItems, { CartItemProps } from '../components/CartItems';
 import useLocalStorage from './useLocalStorage'; // Import useLocalStorage hook
 
 const useCartActions = () => {
@@ -10,19 +10,26 @@ const useCartActions = () => {
   // Retrieve cart items from local storage or initialize as an empty array
   const [cartItems, setCartItems] = useLocalStorage<CartItemProps[]>('cartItems', []);
 
-  // Calculate cartItemCount based on the length of items array in the cart state
-  const cartItemCount = state.items.length;
-
   const addItemToCart = (item: CartItemProps) => {
     setLoading(true);
     // Simulate asynchronous action (e.g., API call)
     setTimeout(() => {
+      const existingItemIndex = cartItems.findIndex(cartItem => cartItem.id === item.id);
+      if (existingItemIndex !== -1) {
+        // Item already exists in the cart, increment quantity by 1
+        const updatedCartItems = [...cartItems];
+        updatedCartItems[existingItemIndex].quantity += 1;
+        setCartItems(updatedCartItems); // Update local storage
+      } else {
+        // Item is new to the cart, set quantity to 1
+      
+      }
       dispatch({ type: 'ADD_ITEM', payload: item });
-      const updatedCartItems = [...cartItems, item];
-      setCartItems(updatedCartItems); // Update local storage
       setLoading(false);
     }, 1000);
   };
+  
+  
 
   const removeItemFromCart = (itemId: string) => {
     setLoading(true);
@@ -48,7 +55,6 @@ const useCartActions = () => {
   return {
     cart: state,
     loading,
-    cartItemCount, // Include cartItemCount in the returned object
     addItemToCart,
     removeItemFromCart,
     clearCart,
@@ -56,6 +62,8 @@ const useCartActions = () => {
 };
 
 export default useCartActions;
+
+
 
 
 

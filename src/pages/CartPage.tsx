@@ -40,7 +40,7 @@ const CartPage: React.FC = () => {
     return (
         <div className='cart-page'>
             <div className='cart-container'>
-                <h1>My Cart</h1>
+                <h1>Cart</h1>
                 {/* Render Cart and checkout form based on visibility state */}
                 {isCartPageVisible && (                 
                     <Cart />
