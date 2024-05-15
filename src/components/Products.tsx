@@ -17,7 +17,7 @@ const Products: React.FC = () => {
   }
 
   // Explicitly specify the type of products
-  const productsArray: (CartItemProps & {productImage: string })[] = products || [];
+  const productsArray: (CartItemProps & { productImage: string })[] = products || [];
 
   return (
     <div className='container'>

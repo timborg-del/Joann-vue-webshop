@@ -1,36 +1,19 @@
-import { useCart } from '../context/CartContext';
+import { useCart, useCartDispatch } from '../context/CartContext';
 import CartItems from './CartItems';
-import useCartActions from '../hooks/useCartActions';
 import './Cart.css';
-import { useState } from 'react';
 
 const Cart = () => {
   const { state } = useCart();
-  const { removeItemFromCart } = useCartActions();
-  const [updatedQuantities, setUpdatedQuantities] = useState<{ [key: string]: number }>({});
-
-  // Calculate total price of items in the cart
-  const total = state.items.reduce((acc, item) => acc + item.price * (updatedQuantities[item.id] || item.quantity), -1);
-
-  const handleQuantityChange = (itemId: string, quantity: number) => {
-    setUpdatedQuantities((prevState) => ({
-      ...prevState,
-      [itemId]: quantity,
-    }));
-  };
+  const dispatch = useCartDispatch(); // Access the dispatch function from CartContext
 
   const decrementQuantity = (itemId: string) => {
-    setUpdatedQuantities((prevState) => ({
-      ...prevState,
-      [itemId]: Math.max((prevState[itemId] || state.items.find(item => item.id === itemId)?.quantity || 1) - 1, 1),
-    }));
+    // Dispatch the DECREMENT_QUANTITY action
+    dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
   };
 
   const incrementQuantity = (itemId: string) => {
-    setUpdatedQuantities((prevState) => ({
-      ...prevState,
-      [itemId]: (prevState[itemId] || state.items.find(item => item.id === itemId)?.quantity || 1) +1,
-    }));
+    // Dispatch the INCREMENT_QUANTITY action
+    dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
   };
 
   return (
@@ -46,19 +29,18 @@ const Cart = () => {
                 productImage={item.productImage}
                 name={item.name}
                 price={item.price}
-                quantity={updatedQuantities[item.id] || item.quantity}
+                quantity={item.quantity}
               />
               <div className="cart-item-actions">
-                <button onClick={() => removeItemFromCart(item.id)}>Delete</button>
+                <button onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.id })}>Delete</button> {/* Dispatch REMOVE_ITEM action */}
                 <div className="quantity-controls">
                   <button onClick={() => decrementQuantity(item.id)}>-</button>
-                  <span>{updatedQuantities[item.id] || item.quantity}</span>
+                  <span>{item.quantity}</span>
                   <button onClick={() => incrementQuantity(item.id)}>+</button>
                 </div>
               </div>
             </div>
           ))}
-          <div className="cart-total">Total: ${total}</div>
         </div>
       )}
     </div>
@@ -66,6 +48,7 @@ const Cart = () => {
 };
 
 export default Cart;
+
 
 
 

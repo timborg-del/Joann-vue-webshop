@@ -1,4 +1,5 @@
-import { createContext, useReducer, useContext, ReactNode, Dispatch } from 'react';
+import { createContext, useReducer, useContext, ReactNode, Dispatch, useEffect } from 'react';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 // Define types for cart items and state
 interface CartItem {
@@ -17,7 +18,9 @@ interface CartState {
 type Action =
   | { type: 'ADD_ITEM'; payload: CartItem }
   | { type: 'REMOVE_ITEM'; payload: string }
-  | { type: 'CLEAR_CART' };
+  | { type: 'CLEAR_CART' }
+  | { type: 'INCREMENT_QUANTITY'; payload: string }
+  | { type: 'DECREMENT_QUANTITY'; payload: string };
 
 // Initial state
 const initialState: CartState = {
@@ -28,43 +31,68 @@ const initialState: CartState = {
 const CartContext = createContext<{
   state: CartState;
   dispatch: Dispatch<Action>;
-  cartItemCount: number; // Add cartItemCount to the context value
+  cartItemCount: number;
 }>({
   state: initialState,
   dispatch: () => null,
-  cartItemCount: 0, // Initialize cartItemCount
+  cartItemCount: 0,
 });
 
 // Provider component to wrap around the app
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  // Reducer function to handle state changes
-  const cartReducer = (state: CartState, action: Action): CartState => {
-    switch (action.type) {
-      case 'ADD_ITEM':
-        // Check if item already exists in cart
-        const existingIndex = state.items.findIndex(item => item.id === action.payload.id);
-        if (existingIndex !== -1) {
-          const updatedItems = [...state.items];
-          updatedItems[existingIndex].quantity += action.payload.quantity;
-          return { ...state, items: updatedItems };
-        }
-        return { ...state, items: [...state.items, action.payload] };
-      case 'REMOVE_ITEM':
-        return {
-          ...state,
-          items: state.items.filter(item => item.id !== action.payload),
-        };
-      case 'CLEAR_CART':
-        return initialState;
-      default:
-        return state;
-    }
-  };
+  // Retrieve initial state from local storage or use initial state
+  const [storedState, setStoredState] = useLocalStorage<CartState>('cart', initialState);
 
-  const [state, dispatch] = useReducer(cartReducer, initialState);
+  // Reducer function to handle state changes
+  // Reducer function to handle state changes
+// Reducer function to handle state changes
+const cartReducer = (state: CartState, action: Action): CartState => {
+  switch (action.type) {
+    case 'ADD_ITEM':
+      const existingItemIndex = state.items.findIndex(item => item.id === action.payload.id);
+      if (existingItemIndex !== -1) {
+        const updatedItems = [...state.items];
+        updatedItems[existingItemIndex].quantity += 1; // Increment quantity by 1
+        return { ...state, items: updatedItems };
+      }
+      return { 
+        ...state, 
+        items: [...state.items, { ...action.payload, quantity: 1 }] // Add new item with quantity 1
+      };
+    case 'REMOVE_ITEM':
+      const updatedItems = state.items.filter(item => item.id !== action.payload);
+      return { ...state, items: updatedItems };
+    case 'CLEAR_CART':
+      return initialState;
+    case 'INCREMENT_QUANTITY':
+      const incrementedItems = state.items.map(item =>
+        item.id === action.payload
+          ? { ...item, quantity: item.quantity + 1 }
+          : item
+      );
+      return { ...state, items: incrementedItems };
+    case 'DECREMENT_QUANTITY':
+      const decrementedItems = state.items.map(item =>
+        item.id === action.payload
+          ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
+          : item
+      );
+      return { ...state, items: decrementedItems };
+    default:
+      return state;
+  }
+};
+
+
+
+  const [state, dispatch] = useReducer(cartReducer, storedState);
+
+  useEffect(() => {
+    setStoredState(state);
+  }, [state, setStoredState]);
 
   // Calculate cartItemCount based on the length of items array
-  const cartItemCount = state.items.length;
+  const cartItemCount = state.items.reduce((count, item) => count + item.quantity, 0);
 
   return (
     <CartContext.Provider value={{ state, dispatch, cartItemCount }}>
@@ -78,3 +106,8 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
+
+
+
+
