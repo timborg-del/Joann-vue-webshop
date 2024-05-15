@@ -7,11 +7,12 @@ import CartButton from './components/CartButton';
 import { CartProvider } from './context/CartContext';
 import ShopPage from './pages/ShopPage'; // Import the ShopPage component
 import About from './pages/About';
+import Login from './pages/Login'; // Import the Login component
+import AdminPage from './pages/AdminPage';
 
 const App: React.FC = () => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false); // State to track authentication status
   const [isShopOpen, setIsShopOpen] = useState(false);
-
-
 
   return (
     <Router>
@@ -30,9 +31,9 @@ const App: React.FC = () => {
             </div>
           </div>
           {/* Center links */}
-          
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>
+            {isAuthenticated && <Link to="/admin">Admin</Link>} {/* Render only if authenticated */}
           </div>
           {/* Cart button */}
           <div>
@@ -40,14 +41,15 @@ const App: React.FC = () => {
           </div>
         </nav>
 
-
-          {/* Routes */}
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/shoppage" element={<ShopPage />} /> {/* Route for ShopPage */}
-            <Route path="/about" element={<About/>}></Route>
-          </Routes>
+        {/* Routes */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/shoppage" element={<ShopPage />} /> {/* Route for ShopPage */}
+          <Route path="/about" element={<About/>}></Route>
+          <Route path="/login" element={<Login />} /> {/* Route for Login page */}
+          <Route path="/admin" element={<AdminPage />} /> {/* Route for Admin page */}
+        </Routes>
         
       </CartProvider>
     </Router>
@@ -55,6 +57,7 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 
 
 

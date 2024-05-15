@@ -11,12 +11,12 @@ const useFetchData = (url: string) => {
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
-                    throw new Error('Failed to fetch data');
+                    throw new Error('Failed to fetch data: ' + response.status + ' ' + response.statusText);
                 }
                 const data = await response.json();
                 setData(data);
             } catch (error) {
-                // Cast 'error' to 'Error' type before passing it to setError
+                console.error(error); // Log the error for debugging
                 setError(error as Error);
             } finally {
                 setIsLoading(false);
@@ -30,6 +30,7 @@ const useFetchData = (url: string) => {
 };
 
 export default useFetchData;
+
 
 
 
