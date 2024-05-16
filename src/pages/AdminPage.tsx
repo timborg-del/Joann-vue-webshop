@@ -88,7 +88,7 @@ const AdminPage: React.FC = () => {
             <h2>Product List</h2>
             <input
               type="text"
-              placeholder="Search products"
+              placeholder="Search products by name"
               value={searchTerm}
               onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
             />
