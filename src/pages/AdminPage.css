@@ -68,6 +68,15 @@ main {
 
 .dashboard {
   margin-bottom: 20px;
+  max-width: fit-content;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.539);
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
 }
 
 .dashboard h2, .product-form h2, .product-list h2 {
