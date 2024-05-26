@@ -1,0 +1,17 @@
+{
+    "routes": [
+      {
+        "route": "/*.ts",
+        "headers": {
+          "Content-Type": "application/javascript"
+        }
+      },
+      {
+        "route": "/*.tsx",
+        "headers": {
+          "Content-Type": "application/javascript"
+        }
+      }
+    ]
+  }
+  
