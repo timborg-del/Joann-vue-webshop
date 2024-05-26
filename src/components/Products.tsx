@@ -1,8 +1,19 @@
+// Products.tsx
 import React from 'react';
 import { CartItemProps } from './CartItems';
 import useCartActions from '../hooks/useCartActions'; // Import useCartActions hook
 import './Products.css'; // Import the corresponding CSS file
 import useFetchData from '../hooks/useFetchData'; // Import the useFetchData hook
+
+// Define the Product interface
+export interface Product {
+    id: string;
+    name: string;
+    price: number;
+    stock: number;
+    category: string;
+    productImage: string;
+}
 
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions(); // Access addItemToCart function from useCartActions hook
@@ -17,7 +28,7 @@ const Products: React.FC = () => {
   }
 
   // Explicitly specify the type of products
-  const productsArray: (CartItemProps & { productImage: string })[] = products || [];
+  const productsArray: (CartItemProps & Product)[] = products || [];
 
   return (
     <div className='container'>
@@ -40,6 +51,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 

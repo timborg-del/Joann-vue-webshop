@@ -1,22 +1,21 @@
-import { useEffect, useState } from "react";
+// useFetchData.tsx
+import { useState, useEffect } from 'react';
 
 const useFetchData = (url: string) => {
-    const [data, setData] = useState(null);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState<Error | null>(null); // Explicit typing for the error state
+    const [data, setData] = useState<any>(null);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState<Error | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            setIsLoading(true);
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
-                    throw new Error('Failed to fetch data: ' + response.status + ' ' + response.statusText);
+                    throw new Error('Failed to fetch data');
                 }
-                const data = await response.json();
-                setData(data);
+                const result = await response.json();
+                setData(result);
             } catch (error) {
-                console.error(error); // Log the error for debugging
                 setError(error as Error);
             } finally {
                 setIsLoading(false);
@@ -30,6 +29,9 @@ const useFetchData = (url: string) => {
 };
 
 export default useFetchData;
+
+
+
 
 
 
