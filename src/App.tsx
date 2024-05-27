@@ -11,7 +11,7 @@ import Login from './pages/Login'; // Import the Login component
 import AdminPage from './pages/AdminPage';
 
 const App: React.FC = () => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false); // State to track authentication status
+  const [isAuthenticated] = useState(false); // State to track authentication status
   const [isShopOpen, setIsShopOpen] = useState(false);
 
   return (

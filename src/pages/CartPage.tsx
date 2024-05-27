@@ -16,7 +16,7 @@ const CartPage: React.FC = () => {
 
     const [isFormVisible, setIsFormVisible] = useState(false); // Initially set to false
     const [isCartPageVisible] = useState(true); // State to track cart page visibility
-    const { clearCart } = useCartActions(); // Include removeItemFromCart from useCartActions
+    const { } = useCartActions(); // Include removeItemFromCart from useCartActions
     const { state } = useCart();
 
     // Calculate total price of items in the cart
