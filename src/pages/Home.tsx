@@ -3,7 +3,7 @@ import './Home.css'; // Import CSS file for Home styles
 import useFetchData from '../hooks/useFetchData';
 
 const Home: React.FC = () => {
-  const { data, isLoading, error } = useFetchData('http://localhost:7203/api/user/1'); // Adjust URL as necessary
+  const { data, isLoading, error } = useFetchData('https://joart.azurewebsites.net'); // Adjust URL as necessary
 
   return (
     <div className="home-container">

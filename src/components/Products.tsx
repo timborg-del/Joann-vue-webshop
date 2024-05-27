@@ -17,7 +17,7 @@ export interface Product {
 
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions(); // Access addItemToCart function from useCartActions hook
-  const { data: products, isLoading, error } = useFetchData('http://localhost:7203/api/products'); // Fetch products data
+  const { data: products, isLoading, error } = useFetchData('https://joart.azurewebsites.net'); // Fetch products data
 
   if (isLoading) {
     return <div>Loading...</div>;
