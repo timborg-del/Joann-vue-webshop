@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://josalmonart.azurewebsites.net"; // Update with your Azure Function app URL for production
+const API_BASE_URL = "https://joart.azurewebsites.net"; // Update with your Azure Function app URL for production
 
 export interface Product {
     PartitionKey: string;
