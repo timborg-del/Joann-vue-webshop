@@ -19,7 +19,7 @@ export interface User {
 }
 
 export const addProduct = async (product: Product): Promise<void> => {
-    const response = await fetch(`${API_BASE_URL}api/AddProduct`, {
+    const response = await fetch(`${API_BASE_URL}/api/AddProduct`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -33,7 +33,7 @@ export const addProduct = async (product: Product): Promise<void> => {
 };
 
 export const getProducts = async (): Promise<Product[]> => {
-    const response = await fetch(`${API_BASE_URL}api/GetProducts`, {
+    const response = await fetch(`${API_BASE_URL}/api/GetProducts`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export const getProducts = async (): Promise<Product[]> => {
 };
 
 export const addUser = async (user: User): Promise<void> => {
-    const response = await fetch(`${API_BASE_URL}api/AddUser`, {
+    const response = await fetch(`${API_BASE_URL}/api/AddUser`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ export const addUser = async (user: User): Promise<void> => {
 };
 
 export const getUsers = async (): Promise<User[]> => {
-    const response = await fetch(`${API_BASE_URL}/GetUsers`, {
+    const response = await fetch(`${API_BASE_URL}/api/GetUsers`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -77,7 +77,7 @@ export const getUsers = async (): Promise<User[]> => {
 };
 
 export const getUser = async (partitionKey: string, rowKey: string): Promise<User> => {
-    const response = await fetch(`${API_BASE_URL}/GetUser?partitionKey=${partitionKey}&rowKey=${rowKey}`, {
+    const response = await fetch(`${API_BASE_URL}/api/GetUser?partitionKey=${partitionKey}&rowKey=${rowKey}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
