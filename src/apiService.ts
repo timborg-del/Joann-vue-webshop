@@ -33,7 +33,7 @@ export const addProduct = async (product: Product): Promise<void> => {
 };
 
 export const getProducts = async (): Promise<Product[]> => {
-    const response = await fetch(`${API_BASE_URL}/api/GetProducts`, {
+    const response = await fetch(`${API_BASE_URL}GetProducts`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
