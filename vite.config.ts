@@ -5,7 +5,12 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   build: {
-    sourcemap: true,
-    outDir: 'dist', // Specify the output directory for the build
+    sourcemap: true, // Ensure source maps are enabled
+    outDir: 'dist',  // Specify the output directory
+    rollupOptions: {
+      output: {
+        sourcemap: true, // Ensure source maps are enabled for Rollup
+      },
+    },
   },
 });
