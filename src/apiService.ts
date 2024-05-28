@@ -28,12 +28,13 @@ export const addProduct = async (product: Product): Promise<void> => {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to add product');
+        const errorText = await response.text();
+        throw new Error(`Failed to add product: ${errorText}`);
     }
 };
 
 export const getProducts = async (): Promise<Product[]> => {
-    const response = await fetch(`${API_BASE_URL}/api/GetProducts`, {
+    const response = await fetch(`${API_BASE_URL}/GetProducts`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -41,10 +42,12 @@ export const getProducts = async (): Promise<Product[]> => {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to fetch products');
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch products: ${errorText}`);
     }
 
-    return response.json();
+    const products: Product[] = await response.json();
+    return products;
 };
 
 export const addUser = async (user: User): Promise<void> => {
@@ -57,7 +60,8 @@ export const addUser = async (user: User): Promise<void> => {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to add user');
+        const errorText = await response.text();
+        throw new Error(`Failed to add user: ${errorText}`);
     }
 };
 
@@ -70,10 +74,12 @@ export const getUsers = async (): Promise<User[]> => {
     });
 
     if (!response.ok) {
-        throw new Error('Failed to fetch users');
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch users: ${errorText}`);
     }
 
-    return response.json();
+    const users: User[] = await response.json();
+    return users;
 };
 
 export const getUser = async (partitionKey: string, rowKey: string): Promise<User> => {
@@ -85,9 +91,10 @@ export const getUser = async (partitionKey: string, rowKey: string): Promise<Use
     });
 
     if (!response.ok) {
-        throw new Error('Failed to fetch user');
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch user: ${errorText}`);
     }
 
-    return response.json();
+    const user: User = await response.json();
+    return user;
 };
-
