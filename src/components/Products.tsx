@@ -1,5 +1,5 @@
 // Products.tsx
-import React from 'react';
+import React, { useEffect } from 'react';
 import { CartItemProps } from './CartItems';
 import useCartActions from '../hooks/useCartActions'; // Import useCartActions hook
 import './Products.css'; // Import the corresponding CSS file
@@ -7,17 +7,24 @@ import useFetchData from '../hooks/useFetchData'; // Import the useFetchData hoo
 
 // Define the Product interface
 export interface Product {
-    id: string;
-    name: string;
-    price: number;
-    stock: number;
-    category: string;
-    productImage: string;
+    PartitionKey: string;
+    RowKey: string;
+    Name: string;
+    Price: number;
+    Stock: number;
+    Category: string;
+    ProductImageBase64: string;
 }
 
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions(); // Access addItemToCart function from useCartActions hook
   const { data: products, isLoading, error } = useFetchData('https://joart.azurewebsites.net/GetProducts'); // Fetch products data
+
+  useEffect(() => {
+    if (products) {
+        console.log("Fetched products:", products);
+    }
+}, [products]);
 
   if (isLoading) {
     return <div>Loading...</div>;
