@@ -6,13 +6,13 @@ import useFetchData from '../hooks/useFetchData'; // Import the useFetchData hoo
 
 // Define the Product interface
 export interface Product {
-    PartitionKey: string;
-    RowKey: string;
-    Name: string;
-    Price: number;
-    Stock: number;
-    Category: string;
-    ProductImageBase64: string;
+  PartitionKey: string;
+  RowKey: string;
+  Name: string;
+  Price: number;
+  Stock: number;
+  Category: string;
+  ProductImageBase64: string;
 }
 
 const Products: React.FC = () => {
@@ -34,7 +34,11 @@ const Products: React.FC = () => {
   }
 
   // Check if data is an array
-  const productsArray: (CartItemProps & Product)[] = Array.isArray(data) ? data : [];
+  if (!Array.isArray(data)) {
+    return <div>Error: Unexpected data format</div>;
+  }
+
+  const productsArray: (CartItemProps & Product)[] = data;
 
   return (
     <div className='container'>
@@ -61,6 +65,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
