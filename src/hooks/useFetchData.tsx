@@ -14,6 +14,7 @@ const useFetchData = (url: string) => {
                     throw new Error('Failed to fetch data');
                 }
                 const result = await response.json();
+                console.log('Fetched data:', result); // Log the fetched data
                 setData(result);
             } catch (error) {
                 setError(error as Error);
