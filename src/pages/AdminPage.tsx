@@ -11,7 +11,6 @@ const AdminPage: React.FC = () => {
     Price: 0,
     Stock: 0,
     Category: '',
-    
     ProductImageBase64: ''
   });
   const [, setEditingProduct] = useState<Product | null>(null);
@@ -23,7 +22,11 @@ const AdminPage: React.FC = () => {
     const fetchProducts = async () => {
       try {
         const products = await getProducts();
-        setProducts(products);
+        if (Array.isArray(products)) {
+          setProducts(products);
+        } else {
+          setError('Unexpected data format');
+        }
       } catch (err) {
         setError('Failed to fetch products');
       }
@@ -227,6 +230,7 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
 
 
 
