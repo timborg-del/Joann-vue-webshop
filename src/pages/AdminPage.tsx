@@ -13,7 +13,7 @@ const AdminPage: React.FC = () => {
     Category: '',
     ProductImageBase64: ''
   });
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [, setEditingProduct] = useState<Product | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit'>('dashboard');
   const [error, setError] = useState<string | null>(null);
