@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import './AdminPage.css'; // Import CSS file for styling
-import { addProduct, getProducts, Product } from '../apiService';
+import { addProduct, getProducts, Product, updateProduct } from '../apiService';
 
 const AdminPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -81,7 +81,7 @@ const AdminPage: React.FC = () => {
   const handleUpdateProduct = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await addProduct(newProduct); // Assuming the addProduct API can handle both add and update operations
+      await updateProduct(newProduct);
       const updatedProducts = products.map(p => (p.RowKey === newProduct.RowKey ? newProduct : p));
       setProducts(updatedProducts);
       setEditingProduct(null);
@@ -100,6 +100,7 @@ const AdminPage: React.FC = () => {
       setError('Failed to update product');
     }
   };
+
 
   const handleDeleteProduct = async (rowKey: string) => {
     try {

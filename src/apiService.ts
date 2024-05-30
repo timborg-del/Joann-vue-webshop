@@ -37,6 +37,27 @@ export const addProduct = async (product: Product): Promise<void> => {
     }
 };
 
+export const updateProduct = async (product: Product): Promise<void> => {
+    console.log('Updating product:', product);
+
+    const response = await fetch(`${API_BASE_URL}/UpdateProduct`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        console.error('Failed to update product:', errorText);
+        throw new Error(`Failed to update product: ${errorText}`);
+    }
+
+    console.log('Product updated successfully');
+};
+
+
 export const getProducts = async (): Promise<Product[]> => {
     const response = await fetch(`${API_BASE_URL}/GetProducts`, {
         method: 'GET',
