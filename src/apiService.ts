@@ -21,6 +21,12 @@ export interface User {
 export const addProduct = async (product: Product): Promise<void> => {
     console.log('Adding product:', product); // Log product data
 
+    // Ensure product data is correctly formatted
+    if (!product.PartitionKey || !product.RowKey || !product.Name || product.Price <= 0 || product.Stock < 0 || !product.Category || !product.ProductImageBase64) {
+        console.error('Invalid product data:', product);
+        throw new Error('Invalid product data');
+    }
+
     const response = await fetch(`${API_BASE_URL}/AddProduct`, {
         method: 'POST',
         headers: {
@@ -37,6 +43,7 @@ export const addProduct = async (product: Product): Promise<void> => {
 
     console.log('Product added successfully'); // Log success
 };
+
 
 export const getProducts = async (): Promise<Product[]> => {
     const response = await fetch(`${API_BASE_URL}/GetProducts`, {
