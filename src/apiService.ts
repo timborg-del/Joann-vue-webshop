@@ -19,6 +19,10 @@ export interface User {
 }
 
 export const addProduct = async (product: Product): Promise<void> => {
+        // Convert Price to number if it is a string
+        if (typeof product.Price === 'string') {
+            product.Price = parseFloat(product.Price);
+        }
     const response = await fetch(`${API_BASE_URL}/AddProduct`, {
         method: 'POST',
         headers: {
