@@ -50,7 +50,13 @@ const Products: React.FC = () => {
               <div className="product-details">
                 <p>{product.Name}</p>
                 <p>${product.Price}</p>
-                <button className="buy-btn" onClick={() => addItemToCart(product)}>
+                <button className="buy-btn" onClick={() => addItemToCart({
+                  id: product.RowKey,
+                  name: product.Name,
+                  price: product.Price,
+                  productImage: product.ProductImageBase64,
+                  quantity: 1
+                })}>
                   Add to Cart
                 </button>
               </div>
