@@ -54,7 +54,7 @@ const Products: React.FC = () => {
                   id: product.RowKey,
                   name: product.Name,
                   price: product.Price,
-                  productImage: product.ProductImageBase64,
+                  productImage: `data:image/jpeg;base64,${product.ProductImageBase64}`,
                   quantity: 1
                 })}>
                   Add to Cart
