@@ -58,12 +58,12 @@ const AdminPage: React.FC = () => {
       setProducts([...products, productToAdd]);
       setNewProduct({
         PartitionKey: 'product',
-        RowKey: '',
-        Name: '',
-        Price: 0,
-        Stock: 0,
-        Category: '',
-        ProductImageBase64: ''
+        RowKey: '65',
+        Name: 'Producy',
+        Price: 50,
+        Stock: 50,
+        Category: 'Mugs',
+        ProductImageBase64: 'string'
       });
       setCurrentView('products');
       setError(null);
