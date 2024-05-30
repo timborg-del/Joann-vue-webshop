@@ -19,10 +19,15 @@ export interface User {
 }
 
 export const addProduct = async (product: Product): Promise<void> => {
-        // Convert Price to number if it is a string
-        if (typeof product.Price === 'string') {
-            product.Price = parseFloat(product.Price);
-        }
+    // Convert Price to number if it is a string
+    if (typeof product.Price === 'string') {
+        product.Price = parseFloat(product.Price);
+    }
+    // Convert Stock to number if it is a string
+    if (typeof product.Stock === 'string') {
+        product.Stock = parseInt(product.Stock, 10);
+    }
+
     const response = await fetch(`${API_BASE_URL}/AddProduct`, {
         method: 'POST',
         headers: {
@@ -40,6 +45,15 @@ export const addProduct = async (product: Product): Promise<void> => {
 export const updateProduct = async (product: Product): Promise<void> => {
     console.log('Updating product:', product);
 
+    // Convert Price to number if it is a string
+    if (typeof product.Price === 'string') {
+        product.Price = parseFloat(product.Price);
+    }
+    // Convert Stock to number if it is a string
+    if (typeof product.Stock === 'string') {
+        product.Stock = parseInt(product.Stock, 10);
+    }
+
     const response = await fetch(`${API_BASE_URL}/UpdateProduct`, {
         method: 'PUT',
         headers: {
@@ -56,7 +70,6 @@ export const updateProduct = async (product: Product): Promise<void> => {
 
     console.log('Product updated successfully');
 };
-
 
 export const getProducts = async (): Promise<Product[]> => {
     const response = await fetch(`${API_BASE_URL}/GetProducts`, {

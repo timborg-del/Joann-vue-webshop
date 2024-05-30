@@ -36,9 +36,14 @@ const AdminPage: React.FC = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    setNewProduct({ ...newProduct, [name]: value });
+  
+    if (name === 'Price' || name === 'Stock') {
+      setNewProduct({ ...newProduct, [name]: parseFloat(value) });
+    } else {
+      setNewProduct({ ...newProduct, [name]: value });
+    }
   };
-
+  
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
@@ -49,6 +54,7 @@ const AdminPage: React.FC = () => {
       reader.readAsDataURL(file);
     }
   };
+  
 
   const handleAddProduct = async (e: FormEvent) => {
     e.preventDefault();
