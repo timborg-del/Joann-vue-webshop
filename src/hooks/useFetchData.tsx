@@ -1,4 +1,3 @@
-// useFetchData.tsx
 import { useState, useEffect } from 'react';
 
 const useFetchData = (url: string) => {
@@ -11,12 +10,14 @@ const useFetchData = (url: string) => {
             try {
                 const response = await fetch(url);
                 if (!response.ok) {
-                    throw new Error('Failed to fetch data');
+                    const errorText = await response.text();
+                    throw new Error(`Failed to fetch data: ${errorText}`);
                 }
                 const result = await response.json();
                 console.log('Fetched data:', result); // Log the fetched data
                 setData(result);
             } catch (error) {
+                console.error('Error fetching data:', error); // Log detailed error
                 setError(error as Error);
             } finally {
                 setIsLoading(false);
@@ -30,6 +31,7 @@ const useFetchData = (url: string) => {
 };
 
 export default useFetchData;
+
 
 
 

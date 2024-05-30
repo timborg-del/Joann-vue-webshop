@@ -13,7 +13,7 @@ const AdminPage: React.FC = () => {
     Category: '',
     ProductImageBase64: ''
   });
-  const [, setEditingProduct] = useState<Product | null>(null);
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit'>('dashboard');
   const [error, setError] = useState<string | null>(null);
@@ -29,6 +29,7 @@ const AdminPage: React.FC = () => {
         }
       } catch (err) {
         setError('Failed to fetch products');
+        console.error('Failed to fetch products:', err); // Log error
       }
     };
     fetchProducts();
@@ -54,6 +55,7 @@ const AdminPage: React.FC = () => {
     e.preventDefault();
     try {
       const productToAdd = { ...newProduct, RowKey: Date.now().toString() };
+      console.log('Adding product:', productToAdd); // Log product data
       await addProduct(productToAdd);
       setProducts([...products, productToAdd]);
       setNewProduct({
@@ -69,6 +71,7 @@ const AdminPage: React.FC = () => {
       setError(null);
     } catch (err) {
       setError('Failed to add product');
+      console.error('Error adding product:', err); // Log error
     }
   };
 
@@ -81,6 +84,7 @@ const AdminPage: React.FC = () => {
   const handleUpdateProduct = async (e: FormEvent) => {
     e.preventDefault();
     try {
+      console.log('Updating product:', newProduct); // Log product data
       await addProduct(newProduct); // Assuming the addProduct API can handle both add and update operations
       const updatedProducts = products.map(p => (p.RowKey === newProduct.RowKey ? newProduct : p));
       setProducts(updatedProducts);
@@ -98,16 +102,19 @@ const AdminPage: React.FC = () => {
       setError(null);
     } catch (err) {
       setError('Failed to update product');
+      console.error('Error updating product:', err); // Log error
     }
   };
 
   const handleDeleteProduct = async (rowKey: string) => {
     try {
       // Implement delete logic here using your deleteProduct API
+      console.log('Deleting product with RowKey:', rowKey); // Log delete action
       const updatedProducts = products.filter(product => product.RowKey !== rowKey);
       setProducts(updatedProducts);
     } catch (err) {
       setError('Failed to delete product');
+      console.error('Error deleting product:', err); // Log error
     }
   };
 
@@ -230,6 +237,7 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
 
 
 

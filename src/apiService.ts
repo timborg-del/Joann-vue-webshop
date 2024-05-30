@@ -19,6 +19,8 @@ export interface User {
 }
 
 export const addProduct = async (product: Product): Promise<void> => {
+    console.log('Adding product:', product); // Log product data
+
     const response = await fetch(`${API_BASE_URL}/AddProduct`, {
         method: 'POST',
         headers: {
@@ -29,8 +31,11 @@ export const addProduct = async (product: Product): Promise<void> => {
 
     if (!response.ok) {
         const errorText = await response.text();
+        console.error('Failed to add product:', errorText); // Log error
         throw new Error(`Failed to add product: ${errorText}`);
     }
+
+    console.log('Product added successfully'); // Log success
 };
 
 export const getProducts = async (): Promise<Product[]> => {
@@ -43,14 +48,18 @@ export const getProducts = async (): Promise<Product[]> => {
 
     if (!response.ok) {
         const errorText = await response.text();
+        console.error('Failed to fetch products:', errorText); // Log error
         throw new Error(`Failed to fetch products: ${errorText}`);
     }
 
     const products: Product[] = await response.json();
+    console.log('Fetched products:', products); // Log fetched products
     return products;
 };
 
 export const addUser = async (user: User): Promise<void> => {
+    console.log('Adding user:', user); // Log user data
+
     const response = await fetch(`${API_BASE_URL}/AddUser`, {
         method: 'POST',
         headers: {
@@ -61,8 +70,11 @@ export const addUser = async (user: User): Promise<void> => {
 
     if (!response.ok) {
         const errorText = await response.text();
+        console.error('Failed to add user:', errorText); // Log error
         throw new Error(`Failed to add user: ${errorText}`);
     }
+
+    console.log('User added successfully'); // Log success
 };
 
 export const getUsers = async (): Promise<User[]> => {
@@ -75,10 +87,12 @@ export const getUsers = async (): Promise<User[]> => {
 
     if (!response.ok) {
         const errorText = await response.text();
+        console.error('Failed to fetch users:', errorText); // Log error
         throw new Error(`Failed to fetch users: ${errorText}`);
     }
 
     const users: User[] = await response.json();
+    console.log('Fetched users:', users); // Log fetched users
     return users;
 };
 
@@ -92,9 +106,12 @@ export const getUser = async (partitionKey: string, rowKey: string): Promise<Use
 
     if (!response.ok) {
         const errorText = await response.text();
+        console.error('Failed to fetch user:', errorText); // Log error
         throw new Error(`Failed to fetch user: ${errorText}`);
     }
 
     const user: User = await response.json();
+    console.log('Fetched user:', user); // Log fetched user
     return user;
 };
+
