@@ -11,6 +11,18 @@
       "headers": {
         "Content-Type": "application/javascript"
       }
+    },
+    {
+      "route": "/*.js",
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
+    },
+    {
+      "route": "/*.mjs",
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
     }
   ],
   "navigationFallback": {
@@ -18,3 +30,4 @@
     "exclude": ["/static/*"]
   }
 }
+
