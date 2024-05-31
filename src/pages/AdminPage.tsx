@@ -44,77 +44,16 @@ const AdminPage: React.FC = () => {
     }
   };
   
-  const resizeImage = (base64Str: string, maxWidth: number, maxHeight: number, maxSizeKB: number, callback: (resizedImage: string) => void) => {
-    const img = document.createElement('img');
-    img.src = base64Str;
-  
-    img.onload = () => {
-      const canvas = document.createElement('canvas');
-      let width = img.width;
-      let height = img.height;
-  
-      if (width > height) {
-        if (width > maxWidth) {
-          height = Math.round((height *= maxWidth / width));
-          width = maxWidth;
-        }
-      } else {
-        if (height > maxHeight) {
-          width = Math.round((width *= maxHeight / height));
-          height = maxHeight;
-        }
-      }
-  
-      canvas.width = width;
-      canvas.height = height;
-      const ctx = canvas.getContext('2d');
-      ctx?.drawImage(img, 0, 0, width, height);
-  
-      const adjustQuality = (quality: number) => {
-        const resizedImage = canvas.toDataURL('image/jpeg', quality);
-        // Calculate the size of the base64 string in bytes
-        const stringLength = resizedImage.length - 'data:image/jpeg;base64,'.length;
-        const fileSize = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812 / 1024; // Convert to kilobytes
-        return { resizedImage, fileSize };
-      };
-  
-      let quality = 0.5; // Start with a lower quality
-      let { resizedImage, fileSize } = adjustQuality(quality);
-  
-      // Adjust quality until file size is within the limit
-      while (fileSize > maxSizeKB && quality > 0.05) {
-        quality -= 0.05; // Decrease quality in smaller steps
-        ({ resizedImage, fileSize } = adjustQuality(quality));
-      }
-  
-      if (fileSize > maxSizeKB) {
-        console.error("Unable to resize image within the desired file size");
-        callback(base64Str); // Fallback to original image if resize fails
-      } else {
-        callback(resizedImage);
-      }
-    };
-  
-    img.onerror = (e) => {
-      console.error("Error loading image", e);
-      callback(base64Str); // Fallback to original image if resize fails
-    };
-  };
-  
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.onloadend = () => {
-        resizeImage(reader.result as string, 800, 800, 60, (resizedImage) => {
-          setNewProduct({ ...newProduct, ProductImageBase64: resizedImage });
-        });
+        setNewProduct({ ...newProduct, ProductImageBase64: reader.result as string });
       };
       reader.readAsDataURL(file);
     }
   };
-  
-  
   
 
   const handleAddProduct = async (e: FormEvent) => {
