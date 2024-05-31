@@ -38,17 +38,28 @@ const Products: React.FC = () => {
         {productsArray.length > 0 ? (
           productsArray.map((product) => (
             <div key={product.RowKey} className="product-card">
-              <img src={`data:image/jpeg;base64,${product.ProductImageBase64}`}  className="product-image" />
+              {product.ProductImageBase64 ? (
+                <img 
+                  src={`data:image/jpeg;base64,${product.ProductImageBase64}`} 
+                  alt={product.Name} 
+                  className="product-image" 
+                />
+              ) : (
+                <div className="no-image">No Image Available</div>
+              )}
               <div className="product-details">
                 <p>{product.Name}</p>
                 <p>${product.Price}</p>
-                <button className="buy-btn" onClick={() => addItemToCart({
-                  id: product.RowKey,
-                  name: product.Name,
-                  price: product.Price,
-                  productImage: `data:image/jpeg;base64,${product.ProductImageBase64}`,
-                  quantity: 1
-                })}>
+                <button 
+                  className="buy-btn" 
+                  onClick={() => addItemToCart({
+                    id: product.RowKey,
+                    name: product.Name,
+                    price: product.Price,
+                    productImage: `data:image/jpeg;base64,${product.ProductImageBase64}`,
+                    quantity: 1
+                  })}
+                >
                   Add to Cart
                 </button>
               </div>
@@ -63,6 +74,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
