@@ -44,7 +44,7 @@ const Products: React.FC = () => {
                 <p>${product.Price}</p>
                 <button className="buy-btn" onClick={() => addItemToCart({
                   id: product.RowKey,
-                  name: product.Name,
+                  name: "",
                   price: product.Price,
                   productImage: `data:image/jpeg;base64,${product.ProductImageBase64}`,
                   quantity: 1
