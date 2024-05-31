@@ -44,12 +44,50 @@ const AdminPage: React.FC = () => {
     }
   };
   
+  const resizeImage = (base64Str: string, maxWidth: number, maxHeight: number, callback: (resizedImage: string) => void) => {
+    const img = document.createElement('img');
+    img.src = base64Str;
+
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      let width = img.width;
+      let height = img.height;
+
+      if (width > height) {
+        if (width > maxWidth) {
+          height = Math.round((height *= maxWidth / width));
+          width = maxWidth;
+        }
+      } else {
+        if (height > maxHeight) {
+          width = Math.round((width *= maxHeight / height));
+          height = maxHeight;
+        }
+      }
+
+      canvas.width = width;
+      canvas.height = height;
+      const ctx = canvas.getContext('2d');
+      ctx?.drawImage(img, 0, 0, width, height);
+
+      const resizedImage = canvas.toDataURL('image/jpeg', 0.7); // Adjust quality as needed
+      callback(resizedImage);
+    };
+
+    img.onerror = (e) => {
+      console.error("Error loading image", e);
+      callback(base64Str); // Fallback to original image if resize fails
+    };
+  };
+
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.onloadend = () => {
-        setNewProduct({ ...newProduct, ProductImageBase64: reader.result as string });
+        resizeImage(reader.result as string, 800, 800, (resizedImage) => {
+          setNewProduct({ ...newProduct, ProductImageBase64: resizedImage });
+        });
       };
       reader.readAsDataURL(file);
     }
