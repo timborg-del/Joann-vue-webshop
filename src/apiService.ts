@@ -88,6 +88,20 @@ export const getProducts = async (): Promise<Product[]> => {
     return products;
 };
 
+export const deleteProduct = async (partitionKey: string, rowKey: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/DeleteProduct/${partitionKey}/${rowKey}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to delete product: ${errorText}`);
+    }
+};
+
 export const addUser = async (user: User): Promise<void> => {
     const response = await fetch(`${API_BASE_URL}/AddUser`, {
         method: 'POST',

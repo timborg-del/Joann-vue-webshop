@@ -1,6 +1,6 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import './AdminPage.css'; // Import CSS file for styling
-import { addProduct, getProducts, Product, updateProduct } from '../apiService';
+import { addProduct, getProducts, Product, updateProduct, deleteProduct } from '../apiService';
 
 const AdminPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -108,15 +108,15 @@ const AdminPage: React.FC = () => {
   };
 
 
-  const handleDeleteProduct = async (rowKey: string) => {
+  const handleDeleteProduct = async (partitionKey: string, rowKey: string) => {
     try {
-      // Implement delete logic here using your deleteProduct API
+      await deleteProduct(partitionKey, rowKey);
       const updatedProducts = products.filter(product => product.RowKey !== rowKey);
       setProducts(updatedProducts);
     } catch (err) {
       setError('Failed to delete product');
     }
-  };
+  }
 
   const filteredProducts = products.filter(product =>
     product.Name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -180,7 +180,7 @@ const AdminPage: React.FC = () => {
                     <td>{product.Category}</td>
                     <td>
                       <button onClick={() => handleEditProduct(product)}>Edit</button>
-                      <button onClick={() => handleDeleteProduct(product.RowKey)}>Delete</button>
+                      <button onClick={() => handleDeleteProduct(product.PartitionKey, product.RowKey)}>Delete</button>
                     </td>
                   </tr>
                 ))}
