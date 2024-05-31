@@ -44,15 +44,15 @@ const AdminPage: React.FC = () => {
     }
   };
   
-  const resizeImage = (base64Str: string, maxWidth: number, maxHeight: number, callback: (resizedImage: string) => void) => {
+  const resizeImage = (base64Str: string, maxWidth: number, maxHeight: number, maxSizeKB: number, callback: (resizedImage: string) => void) => {
     const img = document.createElement('img');
     img.src = base64Str;
-
+  
     img.onload = () => {
       const canvas = document.createElement('canvas');
       let width = img.width;
       let height = img.height;
-
+  
       if (width > height) {
         if (width > maxWidth) {
           height = Math.round((height *= maxWidth / width));
@@ -64,34 +64,54 @@ const AdminPage: React.FC = () => {
           height = maxHeight;
         }
       }
-
+  
       canvas.width = width;
       canvas.height = height;
       const ctx = canvas.getContext('2d');
       ctx?.drawImage(img, 0, 0, width, height);
-
-      const resizedImage = canvas.toDataURL('image/jpeg', 0.7); // Adjust quality as needed
-      callback(resizedImage);
+  
+      const adjustQuality = (quality: number) => {
+        const resizedImage = canvas.toDataURL('image/jpeg', quality);
+        const fileSize = Math.round((resizedImage.length * 3 / 4) / 1024); // Approximate size in KB
+        return { resizedImage, fileSize };
+      };
+  
+      let quality = 0.7; // Initial quality
+      let { resizedImage, fileSize } = adjustQuality(quality);
+  
+      // Adjust quality until file size is within the limit
+      while (fileSize > maxSizeKB && quality > 0.1) {
+        quality -= 0.1;
+        ({ resizedImage, fileSize } = adjustQuality(quality));
+      }
+  
+      if (fileSize > maxSizeKB) {
+        console.error("Unable to resize image within the desired file size");
+        callback(base64Str); // Fallback to original image if resize fails
+      } else {
+        callback(resizedImage);
+      }
     };
-
+  
     img.onerror = (e) => {
       console.error("Error loading image", e);
       callback(base64Str); // Fallback to original image if resize fails
     };
   };
-
+  
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
       const reader = new FileReader();
       reader.onloadend = () => {
-        resizeImage(reader.result as string, 800, 800, (resizedImage) => {
+        resizeImage(reader.result as string, 800, 800, 60, (resizedImage) => {
           setNewProduct({ ...newProduct, ProductImageBase64: resizedImage });
         });
       };
       reader.readAsDataURL(file);
     }
   };
+  
   
 
   const handleAddProduct = async (e: FormEvent) => {
