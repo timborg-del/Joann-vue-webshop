@@ -38,17 +38,14 @@ const Products: React.FC = () => {
         {productsArray.length > 0 ? (
           productsArray.map((product) => (
             <div key={product.RowKey} className="product-card">
-              
               {product.ProductImageBase64 ? (
                 <>
                   <img 
                     src={product.ProductImageBase64} 
                     alt={product.Name} 
-                    
+                    className="product-image" 
                     onError={(e) => console.error("Image load error", e)}
                   />
-                  
-                  
                 </>
               ) : (
                 <div className="no-image">No Image Available</div>
