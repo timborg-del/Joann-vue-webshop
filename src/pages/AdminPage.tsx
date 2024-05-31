@@ -72,16 +72,18 @@ const AdminPage: React.FC = () => {
   
       const adjustQuality = (quality: number) => {
         const resizedImage = canvas.toDataURL('image/jpeg', quality);
-        const fileSize = Math.round((resizedImage.length * 3 / 4) / 1024); // Approximate size in KB
+        // Calculate the size of the base64 string in bytes
+        const stringLength = resizedImage.length - 'data:image/jpeg;base64,'.length;
+        const fileSize = 4 * Math.ceil((stringLength / 3)) * 0.5624896334383812 / 1024; // Convert to kilobytes
         return { resizedImage, fileSize };
       };
   
-      let quality = 0.2; // Initial quality
+      let quality = 0.5; // Start with a lower quality
       let { resizedImage, fileSize } = adjustQuality(quality);
   
       // Adjust quality until file size is within the limit
-      while (fileSize > maxSizeKB && quality > 0.02) {
-        quality -= 0.02;
+      while (fileSize > maxSizeKB && quality > 0.05) {
+        quality -= 0.05; // Decrease quality in smaller steps
         ({ resizedImage, fileSize } = adjustQuality(quality));
       }
   
@@ -111,6 +113,7 @@ const AdminPage: React.FC = () => {
       reader.readAsDataURL(file);
     }
   };
+  
   
   
 
