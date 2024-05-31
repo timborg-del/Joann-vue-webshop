@@ -39,11 +39,15 @@ const Products: React.FC = () => {
           productsArray.map((product) => (
             <div key={product.RowKey} className="product-card">
               {product.ProductImageBase64 ? (
-                <img 
-                  src={`data:image/jpeg;base64,${product.ProductImageBase64}`} 
-                  alt={product.Name} 
-                  className="product-image" 
-                />
+                <>
+                  <img 
+                    src={product.ProductImageBase64} 
+                    alt={product.Name} 
+                    className="product-image" 
+                    onError={(e) => console.error("Image load error", e)}
+                  />
+                  <p>Base64 length: {product.ProductImageBase64.length}</p>
+                </>
               ) : (
                 <div className="no-image">No Image Available</div>
               )}
@@ -56,7 +60,7 @@ const Products: React.FC = () => {
                     id: product.RowKey,
                     name: product.Name,
                     price: product.Price,
-                    productImage: `data:image/jpeg;base64,${product.ProductImageBase64}`,
+                    productImage: product.ProductImageBase64,
                     quantity: 1
                   })}
                 >
@@ -74,6 +78,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
