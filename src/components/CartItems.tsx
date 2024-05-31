@@ -11,7 +11,6 @@ export interface CartItemProps {
 const CartItems = ({id, name, price, productImage, quantity }: CartItemProps) => (
   <div className="cart-items-prop" >
     <img 
-      alt={name}
       src={productImage} 
       />
       <div >
