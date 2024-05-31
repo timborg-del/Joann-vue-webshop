@@ -72,16 +72,16 @@ const AdminPage: React.FC = () => {
   
       const adjustQuality = (quality: number) => {
         const resizedImage = canvas.toDataURL('image/jpeg', quality);
-        const fileSize = Math.round((resizedImage.length * 3 / 4) / 1024); // Approximate size in KB
+        const fileSize = Math.round((resizedImage.length * 1 / 4) / 1024); // Approximate size in KB
         return { resizedImage, fileSize };
       };
   
-      let quality = 0.7; // Initial quality
+      let quality = 0.2; // Initial quality
       let { resizedImage, fileSize } = adjustQuality(quality);
   
       // Adjust quality until file size is within the limit
-      while (fileSize > maxSizeKB && quality > 0.1) {
-        quality -= 0.1;
+      while (fileSize > maxSizeKB && quality > 0.02) {
+        quality -= 0.02;
         ({ resizedImage, fileSize } = adjustQuality(quality));
       }
   
