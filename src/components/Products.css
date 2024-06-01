@@ -43,10 +43,9 @@
   top: 100%;
   left: 0;
   right: 0;
-  background-color: #007bff69;
-  border-radius: 16px;
+  background: #007bff69;
+  border: 1px solid #ccc;
   box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(1.1px);
   padding: 10px;
   z-index: 1;
   border-radius: 0 0 16px 16px;
@@ -72,7 +71,6 @@
 @media screen and (min-width: 768px) {
   .product-card {
     min-width: 200px;
-    max-height: 200px ;
     min-height: fit-content;
     width: calc(25% - 10px); /* Four products side by side with margin */
   }
