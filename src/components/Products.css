@@ -43,6 +43,7 @@
   transition: max-height 0.3s ease;
   background-color: #007bff69;
   padding: 0 10px;
+  border: none;
   border-radius: 0 0 16px 16px;
 }
 
