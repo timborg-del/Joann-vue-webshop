@@ -17,21 +17,36 @@
   border-radius: 16px;
   box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(1.1px);
-  
   transition: transform 0.3s ease;
-  /* Keep the existing styles for product cards */
+  position: relative; /* Needed for the dropdown positioning */
 }
 
 .product-image {
   width: 100%;
   height: auto;
-  /* Keep the existing styles for product images */
+  cursor: pointer;
 }
 
 .product-details {
   text-align: center;
   margin-top: 20px;
-  /* Keep the existing styles for product details */
+}
+
+.product-details-dropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  background: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  z-index: 1;
+  border-radius: 0 0 16px 16px;
+}
+
+.product-card.active .product-details-dropdown {
+  display: block;
 }
 
 .buy-btn {
@@ -42,12 +57,9 @@
   min-height: 50px;
   margin-top: 20px;
   cursor: pointer;
-  color: #fff;
-  border: none;
   border-bottom-right-radius: 16px;
   border-bottom-left-radius: 16px;
   transition: background-color 0.3s ease;
-  /* Keep the existing styles for buy button */
 }
 
 @media screen and (min-width: 768px) {
@@ -57,6 +69,7 @@
     width: calc(25% - 10px); /* Four products side by side with margin */
   }
 }
+
 
 
 

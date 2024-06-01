@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CartItemProps } from './CartItems';
 import useCartActions from '../hooks/useCartActions'; // Import useCartActions hook
 import './Products.css'; // Import the corresponding CSS file
@@ -8,6 +8,12 @@ import { Product } from '../apiService'; // Adjust import as needed
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions(); // Access addItemToCart function from useCartActions hook
   const { data, isLoading, error } = useFetchData('https://joart.azurewebsites.net/GetProducts'); // Fetch products data
+
+  const [activeProduct, setActiveProduct] = useState<string | null>(null);
+
+  const toggleDetails = (productId: string) => {
+    setActiveProduct(activeProduct === productId ? null : productId);
+  };
 
   useEffect(() => {
     if (data) {
@@ -37,22 +43,37 @@ const Products: React.FC = () => {
       <div className="products-container">
         {productsArray.length > 0 ? (
           productsArray.map((product) => (
-            <div key={product.RowKey} className="product-card">
+            <div 
+              key={product.RowKey} 
+              className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}
+            >
               {product.ProductImageBase64 ? (
-                <>
-                  <img 
-                    src={product.ProductImageBase64} 
-                    alt={product.Name} 
-                    className="product-image" 
-                    onError={(e) => console.error("Image load error", e)}
-                  />
-                </>
+                <img 
+                  src={product.ProductImageBase64} 
+                  alt={product.Name} 
+                  className="product-image" 
+                  onError={(e) => console.error("Image load error", e)}
+                  onClick={() => toggleDetails(product.RowKey)}
+                />
               ) : (
                 <div className="no-image">No Image Available</div>
               )}
               <div className="product-details">
                 <p>{product.Name}</p>
-                <p>${product.Price}</p>
+                <p>${product.Price.toFixed(2)}</p>
+              </div>
+              <div className="product-details-dropdown">
+                <p>{product.Name}</p>
+                <p>Price: ${product.Price.toFixed(2)}</p>
+                <p>Stock: {product.Stock}</p>
+                <p>Category: {product.Category}</p>
+                <div>
+                  <label htmlFor={`size-${product.RowKey}`}>Size:</label>
+                  <select id={`size-${product.RowKey}`}>
+                    <option value="A3">A3</option>
+                    <option value="A5">A5</option>
+                  </select>
+                </div>
                 <button 
                   className="buy-btn" 
                   onClick={() => addItemToCart({
@@ -77,6 +98,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
