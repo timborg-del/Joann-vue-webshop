@@ -38,21 +38,18 @@
 }
 
 .product-details-dropdown {
-  display: none;
-  position: absolute;
-  top: 100%;
-  left: 0;
-  right: 0;
-  background: #007bff69;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+  background: white;
   border: 1px solid #ccc;
-  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.8);
-  padding: 10px;
-  z-index: 1;
+  padding: 0 10px;
   border-radius: 0 0 16px 16px;
 }
 
 .product-card.active .product-details-dropdown {
-  display: block;
+  max-height: 200px; /* Adjust as needed */
+  padding: 10px;
 }
 
 .buy-btn {
@@ -75,6 +72,8 @@
     width: calc(25% - 10px); /* Four products side by side with margin */
   }
 }
+
+
 
 
 
