@@ -70,6 +70,7 @@
 @media screen and (min-width: 768px) {
   .product-card {
     min-width: 200px;
+    max-height: 200px ;
     min-height: fit-content;
     width: calc(25% - 10px); /* Four products side by side with margin */
   }
