@@ -9,7 +9,7 @@
 }
 
 .product-card {
-  width: calc(50% - 10px); /* Two products side by side with margin */
+  width: calc(100% - 10px); /* Single product per row for mobile view */
   margin-bottom: 20px;
   max-width: 250px;
   text-align: center;
@@ -22,7 +22,7 @@
 }
 
 .product-card.active {
-  transform: scale(1.7);
+  transform: scale(1.2); /* Slightly less scaling for mobile */
   z-index: 10;
 }
 
@@ -65,7 +65,22 @@
   transition: background-color 0.3s ease;
 }
 
+/* Desktop View */
 @media screen and (min-width: 768px) {
+  .product-card {
+    min-width: 200px;
+    min-height: fit-content;
+    width: calc(50% - 10px); /* Two products side by side with margin */
+  }
+
+  .product-card.active {
+    transform: scale(1.7);
+    z-index: 10;
+  }
+}
+
+/* Large Desktop View */
+@media screen and (min-width: 1024px) {
   .product-card {
     min-width: 200px;
     min-height: fit-content;
