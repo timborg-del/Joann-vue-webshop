@@ -25,8 +25,12 @@ const Cart = () => {
           {state.items.map((item) => (
             <div key={item.id} className="cart-item">
               <CartItems
-                // id={item.id}  // Remove this line from rendering
-                {...item}      // Spread other item properties including id
+                id={item.id}  // Keep id as part of the props, but do not render it in CartItems component
+                size={item.size}
+                productImage={item.productImage}
+                name={item.name}
+                price={item.price}
+                quantity={item.quantity}
               />
               <div className="cart-item-actions">
                 <button onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.id })}>Delete</button> {/* Dispatch REMOVE_ITEM action */}
@@ -45,6 +49,7 @@ const Cart = () => {
 };
 
 export default Cart;
+
 
 
 

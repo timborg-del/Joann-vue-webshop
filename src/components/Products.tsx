@@ -38,6 +38,19 @@ const Products: React.FC = () => {
     return basePrice + adjustment;
   };
 
+  const handleAddToCart = (product: CartItemProps & Product) => {
+    const size = selectedSizes[product.RowKey] || 'A3';
+    const uniqueId = `${product.RowKey}-${size}`;
+    addItemToCart({
+      id: uniqueId,
+      name: product.Name,
+      price: getPrice(product.RowKey, product.Price),
+      productImage: product.ProductImageBase64,
+      quantity: 1,
+      size: size
+    });
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -98,14 +111,7 @@ const Products: React.FC = () => {
                   </div>
                   <button 
                     className="buy-btn" 
-                    onClick={() => addItemToCart({
-                      id: product.RowKey,
-                      name: product.Name,
-                      price: getPrice(product.RowKey, product.Price),
-                      productImage: product.ProductImageBase64,
-                      quantity: 1,
-                      size: selectedSizes[product.RowKey] || 'A3'
-                    })}
+                    onClick={() => handleAddToCart(product)}
                   >
                     Add to Cart
                   </button>
@@ -122,6 +128,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
