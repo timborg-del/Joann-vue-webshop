@@ -15,7 +15,6 @@ const CartItems = ({id, name, price, productImage, quantity, size }: CartItemPro
       src={productImage} 
       />
       <div >
-      <p>{id}</p>
       <p>{size}</p>
       <p>{name}</p>
       <p>${price}</p>
