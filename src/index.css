@@ -27,13 +27,16 @@ body {
 
 .navbar {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   top: 0;
   left: 0;
   width: 100%;
   padding: 10px;
-  background: none;
-  border-radius: none;
-  border: none;
+  background-color: none; /* Navbar background color */
+  color: #fff; /* Navbar text color */
+  position: fixed; /* Fixed position to stay at the top */
+  z-index: 1000; /* Ensure it stays above other content */
 }
 
 .centerLinks {
