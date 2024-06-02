@@ -98,6 +98,7 @@
   line-height: 30px;
   text-decoration: none;
   cursor: pointer;
+  z-index: 1000;
 }
 .hide-btn{
   display: flex;
