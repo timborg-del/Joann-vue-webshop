@@ -6,6 +6,7 @@ export interface CartItemProps {
   price: number;
   productImage: string; // Assuming productImage is a URL
   quantity: number;
+  size?: string;
 }
 
 const CartItems = ({id, name, price, productImage, quantity }: CartItemProps) => (

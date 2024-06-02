@@ -10,6 +10,13 @@ const Products: React.FC = () => {
   const { data, isLoading, error } = useFetchData('https://joart.azurewebsites.net/GetProducts'); // Fetch products data
 
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
+  const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
+  
+  // Define price adjustments as a constant
+  const priceAdjustments: { [key: string]: number } = {
+    A3: 0, // No adjustment for A3
+    A5: -2 // Adjust price by -2 for A5
+  };
 
   const toggleDetails = (productId: string) => {
     setActiveProduct(activeProduct === productId ? null : productId);
@@ -20,6 +27,16 @@ const Products: React.FC = () => {
       console.log("Fetched data:", data);
     }
   }, [data]);
+
+  const handleSizeChange = (productId: string, size: string) => {
+    setSelectedSizes({ ...selectedSizes, [productId]: size });
+  };
+
+  const getPrice = (productId: string, basePrice: number) => {
+    const size = selectedSizes[productId] || 'A3';
+    const adjustment = priceAdjustments[size as keyof typeof priceAdjustments] || 0;
+    return basePrice + adjustment;
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -60,33 +77,40 @@ const Products: React.FC = () => {
               )}
               <div className="product-details">
                 <p>{product.Name}</p>
-                <p>${product.Price.toFixed(2)}</p>
+                <p>${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
               </div>
-              <div className="product-details-dropdown">
-                <p>{product.Name}</p>
-                <p>Price: ${product.Price.toFixed(2)}</p>
-                <p>Stock: {product.Stock}</p>
-                <p>Category: {product.Category}</p>
-                <div>
-                  <label htmlFor={`size-${product.RowKey}`}>Size:</label>
-                  <select id={`size-${product.RowKey}`}>
-                    <option value="A3">A3</option>
-                    <option value="A5">A5</option>
-                  </select>
+              {activeProduct === product.RowKey && (
+                <div className="product-details-dropdown">
+                  <p>{product.Name}</p>
+                  <p>Price: ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
+                  <p>Stock: {product.Stock}</p>
+                  <p>Category: {product.Category}</p>
+                  <div>
+                    <label htmlFor={`size-${product.RowKey}`}>Size:</label>
+                    <select 
+                      id={`size-${product.RowKey}`} 
+                      value={selectedSizes[product.RowKey] || 'A3'}
+                      onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
+                    >
+                      <option value="A3">A3</option>
+                      <option value="A5">A5</option>
+                    </select>
+                  </div>
+                  <button 
+                    className="buy-btn" 
+                    onClick={() => addItemToCart({
+                      id: product.RowKey,
+                      name: product.Name,
+                      price: getPrice(product.RowKey, product.Price),
+                      productImage: product.ProductImageBase64,
+                      quantity: 1,
+                      size: selectedSizes[product.RowKey] || 'A3'
+                    })}
+                  >
+                    Add to Cart
+                  </button>
                 </div>
-                <button 
-                  className="buy-btn" 
-                  onClick={() => addItemToCart({
-                    id: product.RowKey,
-                    name: product.Name,
-                    price: product.Price,
-                    productImage: product.ProductImageBase64,
-                    quantity: 1
-                  })}
-                >
-                  Add to Cart
-                </button>
-              </div>
+              )}
             </div>
           ))
         ) : (
@@ -98,6 +122,11 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
+
+
+
 
 
 
