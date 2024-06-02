@@ -1,4 +1,4 @@
-
+import React from 'react';
 
 export interface CartItemProps {
   id: string;
@@ -9,22 +9,20 @@ export interface CartItemProps {
   size?: string;
 }
 
-const CartItems = ({name, price, productImage, quantity, size }: CartItemProps) => (
-  <div className="cart-items-prop" >
-    <img 
-      src={productImage} 
-      />
-      <div >
+const CartItems = ({ name, price, productImage, quantity, size }: CartItemProps) => (
+  <div className="cart-items-prop">
+    <img src={productImage} alt={name} />
+    <div>
       <p>{name}</p>
       <p>{size}</p>
-      <p>${price}</p>
-     {/* Render the image */}
-    <p>Quantity: {quantity}</p>
+      <p>${price.toFixed(2)}</p>
+      <p>Quantity: {quantity}</p>
     </div>
   </div>
 );
 
 export default CartItems;
+
 
 
 

@@ -25,7 +25,7 @@ const Cart = () => {
           {state.items.map((item) => (
             <div key={item.id} className="cart-item">
               <CartItems
-                id={item.id}  // Keep id as part of the props, but do not render it in CartItems component
+                id={item.id} // Keep id as part of the props but do not render it in CartItems component
                 size={item.size}
                 productImage={item.productImage}
                 name={item.name}
@@ -49,6 +49,7 @@ const Cart = () => {
 };
 
 export default Cart;
+
 
 
 
