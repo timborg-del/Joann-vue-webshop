@@ -26,6 +26,7 @@ const Cart = () => {
             <div key={item.id} className="cart-item">
               <CartItems
                 id={item.id}
+                size={item.size}
                 productImage={item.productImage}
                 name={item.name}
                 price={item.price}

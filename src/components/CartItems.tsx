@@ -9,13 +9,14 @@ export interface CartItemProps {
   size?: string;
 }
 
-const CartItems = ({id, name, price, productImage, quantity }: CartItemProps) => (
+const CartItems = ({id, name, price, productImage, quantity, size }: CartItemProps) => (
   <div className="cart-items-prop" >
     <img 
       src={productImage} 
       />
       <div >
       <p>{id}</p>
+      <p>{size}</p>
       <p>{name}</p>
       <p>${price}</p>
      {/* Render the image */}
