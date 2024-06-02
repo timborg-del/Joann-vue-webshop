@@ -22,7 +22,7 @@
 }
 
 .product-card.active {
-  transform: scale(3.1);
+  transform: scale(2.1);
   z-index: 10;
 }
 
