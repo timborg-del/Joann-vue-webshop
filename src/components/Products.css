@@ -5,7 +5,7 @@
   grid-gap: 5px;
   align-items: center;
   justify-items: center;
-  overflow-y: auto; /* Make the container scrollable */
+  /* Make the container scrollable */
   max-height: calc(100vh - 100px); /* Adjust height based on your navbar or other elements */
   padding: 10px; /* Optional padding for better spacing */
 }
