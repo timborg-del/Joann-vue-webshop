@@ -97,7 +97,7 @@ const Products: React.FC = () => {
                 <p>Price: ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
                 <p>Stock: {product.Stock}</p>
                 <p>Category: {product.Category}</p>
-                <div>
+                <div className="select-container">
                   <label htmlFor={`size-${product.RowKey}`}>Size:</label>
                   <select 
                     id={`size-${product.RowKey}`} 
