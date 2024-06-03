@@ -71,7 +71,8 @@
 .product-card.active .product-details-dropdown {
   display: flex;
   margin-left: 10px;
-  height: auto;
+  max-height: 500px;
+  max-width: auto;
   flex: 1;
 }
 
