@@ -24,20 +24,22 @@ const Cart = () => {
         <div className="cart-items-container">
           {state.items.map((item) => (
             <div key={item.id} className="cart-item">
-              <CartItems
-                id={item.id} // Keep id as part of the props but do not render it in CartItems component
-                size={item.size}
-                productImage={item.productImage}
-                name={item.name}
-                price={item.price}
-                quantity={item.quantity}
-              />
-              <div className="cart-item-actions">
-                <button onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.id })}>Delete</button> {/* Dispatch REMOVE_ITEM action */}
-                <div className="quantity-controls">
-                  <button onClick={() => decrementQuantity(item.id)}>-</button>
-                  <span>{item.quantity}</span>
-                  <button onClick={() => incrementQuantity(item.id)}>+</button>
+              <div className="cart-items-prop">
+                <CartItems
+                  id={item.id} // Keep id as part of the props but do not render it in CartItems component
+                  size={item.size}
+                  productImage={item.productImage}
+                  name={item.name}
+                  price={item.price}
+                  quantity={item.quantity}
+                />
+                <div className="cart-item-actions">
+                  <div className="quantity-controls">
+                    <button onClick={() => decrementQuantity(item.id)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => incrementQuantity(item.id)}>+</button>
+                  </div>
+                  <button onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.id })}>Delete</button> {/* Dispatch REMOVE_ITEM action */}
                 </div>
               </div>
             </div>

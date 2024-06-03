@@ -1,127 +1,111 @@
-/* Cart.css */
 .cart-product-container {
-    display: grid;
-    flex-direction: column;
-    align-items:center;
-    justify-content: center;
-    margin: 0px;
-    min-width: auto;
-    max-height: fit-content;
-    overflow-y: auto;
-    max-width: auto;
+  display: grid;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 0px;
+  min-width: auto;
+  max-height: fit-content;
+  overflow-y: auto;
+  max-width: auto;
+}
 
-  }
+.cart-items-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column size based on your design */
+  grid-gap: 20px;
+  min-width: fit-content;
+  max-height: 100%;
+  min-height: 100%;
+  padding: 20px;
+  overflow-y: auto;
+}
 
+.cart-items-prop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Ensure the items and buttons are distributed evenly */
+  width: 100%; /* Make sure the container takes full width */
+}
 
-  
+.cart-items-prop img {
+  height: 5rem;
+  width: 5rem;
+  border-radius: 5px;
+  object-fit: cover;
+}
+
+.cart-items-prop p {
+  font-size: 1rem;
+  margin: 10px;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center; /* Center items vertically */
+  justify-content: space-between; /* Distribute items evenly */
+  max-width: 100%; /* Ensure each item never exceeds the width of the cart page */
+  margin-bottom: 20px; /* Add some space between items */
+  border-radius: 5px;
+  background-color: rgba(101, 1, 124, 0.486);
+  border: 1px solid rgba(162, 3, 206, 0.312);
+  box-shadow: 4px 4px 4px rgba(48, 48, 48, 0.5);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+}
+
+.cart-item-actions {
+  display: flex;
+  flex-direction: column; /* Stack the buttons vertically */
+  align-items: center; /* Center buttons horizontally */
+}
+
+.quantity-controls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Add some space between quantity controls and delete button */
+}
+
+.cart-item button {
+  padding: 5px;
+  margin-right: 5px;
+  font-family: monospace;
+  color: white;
+  background: rgba(69, 115, 253, 0.608);
+  border-radius: 5px;
+  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  transition: transform 0.3s ease;
+}
+
+/* Add responsive styles for larger screens */
+@media screen and (min-width: 768px) {
   .cart-items-container {
-    display: grid;
-    flex-direction: row;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column size based on your design */
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust column size based on your design */
     grid-gap: 20px;
-    min-width: fit-content;
-    max-height: 100% ;
-    min-height: 100%;
-    padding: 20px;
-    
+    padding: 50px;
+    max-width: 700px;
+    max-height: auto;
     overflow-y: auto;
-    
   }
 
-  .cart-items-prop{
+  .cart-items-prop {
     display: flex;
-    align-items: center ;
+    align-items: center;
   }
-  
-  .cart-items-prop img{
-    height: 5rem;
-    width: 5rem;
-    border-radius: 5px;
+
+  .cart-items-prop img {
+    height: 10rem;
+    width: 10rem;
     object-fit: cover;
   }
-  
-  .cart-items-prop p{
-    font-size: 1rem;
+
+  .cart-items-prop p {
+    font-size: 1.2rem;
     margin: 10px;
   }
- 
-  
-  .cart-item {
-    display: flex;
-    align-items: center; /* Center items vertically */
-    justify-content: space-between; /* Distribute items evenly */
-    max-width: 100%; /* Ensure each item never exceeds the width of the cart page */
-    margin-bottom: 20px; /* Add some space between items */
-    border-radius: 5px;
-    background-color:  rgba(101, 1, 124, 0.486); ;
-    border: 1px solid rgba(162, 3, 206, 0.312);
-    box-shadow: 4px 4px 4px rgba(48, 48, 48, 0.5);
-    backdrop-filter: blur(1.1px);
-    -webkit-backdrop-filter: blur(1.1px);
-    
-    
-    
-  }
-  
-  /* Adjust other styles for the cart items as needed */
-  
+}
 
-
-  .cart-buttons{
-    display: flex;
-    align-items: center; /* Center items vertically */
-    padding: 5px
-  }
-
-  .cart-item button {
-    padding: 5px;
-    margin-right: 5px;
-    font-family: monospace;
-    color: white;
-    background: rgba(69, 115, 253, 0.608);
-    border-radius: 5px;
-    box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(1.1px);
-    -webkit-backdrop-filter: blur(1.1px);
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    
-    transition: transform 0.3s ease;
-  }
-
-
-  
-  
-  /* Add responsive styles for larger screens */
-  @media screen and (min-width: 768px) {
-    .cart-items-container {
-      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust column size based on your design */
-      display: grid;
-      flex-direction: row;
-  
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column size based on your design */
-      grid-gap: 20px;
-      padding: 50px;
-      max-width: 700px;
-      max-height: auto;
-      overflow-y: auto;
-    }
-
-    .cart-items-prop{
-      display: flex;
-      align-items: center ;
-    }
-    
-    .cart-items-prop img{
-      height: 10rem;
-      width: 10rem;
-      object-fit: cover;
-    }
-    
-    .cart-items-prop p{
-      font-size: 1.2rem;
-      margin: 10px;
-    }
-
-
-  }
   
