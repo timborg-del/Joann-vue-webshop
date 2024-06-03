@@ -194,9 +194,8 @@
     width: 100%;
     padding: 10px;
     border-radius: 0 0 16px 16px; /* Remove top corners radius */
-    margin-top: 10px; /* Ensure there's a space between image and dropdown */
+    max-height: fit-content;
   }
-
   .product-card.active .product-image {
     width: 100%;
     height: auto;
