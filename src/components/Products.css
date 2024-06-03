@@ -11,6 +11,9 @@
 }
 
 .product-card {
+  display: flex; /* Use flexbox for the card layout */
+  flex-direction: column;
+  align-items: center;
   width: calc(100% - 10px); /* Single product per row for mobile view */
   margin-bottom: 20px;
   max-width: 250px;
@@ -19,7 +22,7 @@
   border-radius: 16px;
   box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(1.1px);
-  transition: transform 0.3s ease, z-index 0.3s ease;
+  transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease;
   position: relative; /* Needed for the dropdown positioning */
   overflow: hidden; /* Hide overflow to contain the sliding dropdown */
 }
@@ -27,6 +30,8 @@
 .product-card.active {
   transform: scale(1.2); /* Slightly less scaling for mobile */
   z-index: 10;
+  flex-direction: row; /* Switch to row direction on activation */
+  width: auto; /* Expand to fit content */
 }
 
 .product-image {
@@ -41,23 +46,17 @@
 }
 
 .product-details-dropdown {
-  position: absolute;
-  top: 0;
-  right: -100%; /* Start hidden off-screen */
-  width: 100%;
-  height: 100%;
-  background-color: hsla(303, 100%, 50%, 0.387);
-  transition: right 0.3s ease, max-height 0.3s ease;
-  padding: 10px;
-  border-radius: 0 16px 16px 0;
-  display: flex;
+  display: none; /* Hide by default */
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  padding: 10px;
+  background-color: hsla(303, 100%, 50%, 0.387);
+  border-radius: 0 16px 16px 0;
 }
 
 .product-card.active .product-details-dropdown {
-  right: 0; /* Slide in when the card is active */
+  display: flex; /* Show when active */
 }
 
 /* Tablet View */
@@ -69,17 +68,10 @@
   }
 
   .product-card.active {
-    transform: scale(1.7);
+    transform: scale(1.2); /* Less scaling */
     z-index: 10;
-  }
-
-  .product-details-dropdown {
-    width: 200px; /* Adjust as needed for your design */
-    right: -200px; /* Hide off-screen */
-  }
-
-  .product-card.active .product-details-dropdown {
-    right: 0; /* Slide in when active */
+    flex-direction: row; /* Switch to row direction on activation */
+    width: auto; /* Expand to fit content */
   }
 }
 
@@ -91,13 +83,11 @@
     width: calc(25% - 10px); /* Four products side by side with margin */
   }
 
-  .product-details-dropdown {
-    width: 200px; /* Adjust as needed for your design */
-    right: -200px; /* Hide off-screen */
-  }
-
-  .product-card.active .product-details-dropdown {
-    right: 0; /* Slide in when active */
+  .product-card.active {
+    transform: scale(1.2); /* Less scaling */
+    z-index: 10;
+    flex-direction: row; /* Switch to row direction on activation */
+    width: auto; /* Expand to fit content */
   }
 }
 

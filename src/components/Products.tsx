@@ -92,7 +92,7 @@ const Products: React.FC = () => {
                 <p>{product.Name}</p>
                 <p>${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
               </div>
-              <div className={`product-details-dropdown ${activeProduct === product.RowKey ? 'active' : ''}`}>
+              <div className="product-details-dropdown">
                 <p>{product.Name}</p>
                 <p>Price: ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
                 <p>Stock: {product.Stock}</p>
@@ -126,6 +126,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
