@@ -92,31 +92,29 @@ const Products: React.FC = () => {
                 <p>{product.Name}</p>
                 <p>${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
               </div>
-              {activeProduct === product.RowKey && (
-                <div className="product-details-dropdown">
-                  <p>{product.Name}</p>
-                  <p>Price: ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
-                  <p>Stock: {product.Stock}</p>
-                  <p>Category: {product.Category}</p>
-                  <div>
-                    <label htmlFor={`size-${product.RowKey}`}>Size:</label>
-                    <select 
-                      id={`size-${product.RowKey}`} 
-                      value={selectedSizes[product.RowKey] || 'A3'}
-                      onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
-                    >
-                      <option value="A3">A3</option>
-                      <option value="A5">A5</option>
-                    </select>
-                  </div>
-                  <button 
-                    className="buy-btn" 
-                    onClick={() => handleAddToCart(product)}
+              <div className={`product-details-dropdown ${activeProduct === product.RowKey ? 'active' : ''}`}>
+                <p>{product.Name}</p>
+                <p>Price: ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
+                <p>Stock: {product.Stock}</p>
+                <p>Category: {product.Category}</p>
+                <div>
+                  <label htmlFor={`size-${product.RowKey}`}>Size:</label>
+                  <select 
+                    id={`size-${product.RowKey}`} 
+                    value={selectedSizes[product.RowKey] || 'A3'}
+                    onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
                   >
-                    Add to Cart
-                  </button>
+                    <option value="A3">A3</option>
+                    <option value="A5">A5</option>
+                  </select>
                 </div>
-              )}
+                <button 
+                  className="buy-btn" 
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add to Cart
+                </button>
+              </div>
             </div>
           ))
         ) : (
