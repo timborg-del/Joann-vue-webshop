@@ -84,7 +84,7 @@
 
 .product-info p {
   margin: 5px 0;
-  font-size: 1rem;
+  font-size: 2rem;
   color: #ffffff;
   text-align: left;
 }
@@ -116,7 +116,8 @@
 .select-container label {
   margin-bottom: 5px;
   font-weight: bold;
-  color: #333;
+  font-size: 2rem;
+  color: #ffffff;
 }
 
 .select-container select {
