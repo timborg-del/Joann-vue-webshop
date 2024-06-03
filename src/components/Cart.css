@@ -23,7 +23,6 @@
 
 .cart-items-prop {
   display: flex;
-  flex-direction: column; /* Stack items and buttons vertically */
   align-items: center;
   justify-content: space-between; /* Ensure the items and buttons are distributed evenly */
   width: 100%; /* Make sure the container takes full width */
@@ -57,14 +56,13 @@
 
 .cart-item-actions {
   display: flex;
-  flex-direction: column; /* Stack buttons vertically */
-  align-items: center; /* Center buttons horizontally */
-  width: 100%; /* Ensure the buttons container takes full width */
+  align-items: center; /* Center buttons vertically */
+  margin-left: auto; /* Push buttons to the end */
 }
 
 .cart-item-actions button {
   padding: 5px;
-  margin: 5px 0; /* Add space between buttons vertically */
+  margin: 0 5px; /* Add space between buttons */
   font-family: monospace;
   color: white;
   background: rgba(69, 115, 253, 0.608);
@@ -88,7 +86,7 @@
   }
 
   .cart-items-prop {
-    flex-direction: row; /* Align items and buttons in a row */
+    display: flex;
     align-items: center;
   }
 
@@ -102,18 +100,7 @@
     font-size: 1.2rem;
     margin: 10px;
   }
-
-  .cart-item-actions {
-    flex-direction: row; /* Place buttons in a row */
-    justify-content: flex-start; /* Align buttons to the start */
-    width: auto; /* Adjust width */
-  }
-
-  .cart-item-actions button {
-    margin: 0 10px; /* Adjust space between buttons */
-  }
 }
-
 
 
   
