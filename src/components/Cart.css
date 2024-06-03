@@ -56,19 +56,13 @@
 
 .cart-item-actions {
   display: flex;
-  flex-direction: column; /* Stack the buttons vertically */
-  align-items: center; /* Center buttons horizontally */
+  align-items: center; /* Center buttons vertically */
+  margin-left: auto; /* Push buttons to the end */
 }
 
-.quantity-controls {
-  display: flex;
-  align-items: center;
-  margin-bottom: 10px; /* Add some space between quantity controls and delete button */
-}
-
-.cart-item button {
+.cart-item-actions button {
   padding: 5px;
-  margin-right: 5px;
+  margin: 0 5px; /* Add space between buttons */
   font-family: monospace;
   color: white;
   background: rgba(69, 115, 253, 0.608);
@@ -107,5 +101,6 @@
     margin: 10px;
   }
 }
+
 
   

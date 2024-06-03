@@ -34,11 +34,9 @@ const Cart = () => {
                   quantity={item.quantity}
                 />
                 <div className="cart-item-actions">
-                  <div className="quantity-controls">
-                    <button onClick={() => decrementQuantity(item.id)}>-</button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => incrementQuantity(item.id)}>+</button>
-                  </div>
+                  <button onClick={() => decrementQuantity(item.id)}>-</button>
+                  <span>{item.quantity}</span>
+                  <button onClick={() => incrementQuantity(item.id)}>+</button>
                   <button onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.id })}>Delete</button> {/* Dispatch REMOVE_ITEM action */}
                 </div>
               </div>
@@ -51,6 +49,9 @@ const Cart = () => {
 };
 
 export default Cart;
+
+
+
 
 
 
