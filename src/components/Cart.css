@@ -1,9 +1,9 @@
 .cart-product-container {
-  display: grid;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: 0px;
+  margin: 0;
   min-width: auto;
   max-height: fit-content;
   overflow-y: auto;
@@ -11,21 +11,36 @@
 }
 
 .cart-items-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column size based on your design */
-  grid-gap: 20px;
-  min-width: fit-content;
-  max-height: 100%;
-  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 800px; /* Adjust based on your design */
   padding: 20px;
-  overflow-y: auto;
+}
+
+.cart-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: rgba(101, 1, 124, 0.486);
+  border: 1px solid rgba(162, 3, 206, 0.312);
+  box-shadow: 4px 4px 4px rgba(48, 48, 48, 0.5);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  flex-wrap: wrap; /* Ensure items wrap on small screens */
 }
 
 .cart-items-prop {
   display: flex;
   align-items: center;
-  justify-content: space-between; /* Ensure the items and buttons are distributed evenly */
-  width: 100%; /* Make sure the container takes full width */
+  justify-content: space-between;
+  width: 100%;
+  flex: 1;
 }
 
 .cart-items-prop img {
@@ -33,6 +48,7 @@
   width: 5rem;
   border-radius: 5px;
   object-fit: cover;
+  margin-right: 10px;
 }
 
 .cart-items-prop p {
@@ -40,29 +56,16 @@
   margin: 10px;
 }
 
-.cart-item {
-  display: flex;
-  align-items: center; /* Center items vertically */
-  justify-content: space-between; /* Distribute items evenly */
-  max-width: 100%; /* Ensure each item never exceeds the width of the cart page */
-  margin-bottom: 20px; /* Add some space between items */
-  border-radius: 5px;
-  background-color: rgba(101, 1, 124, 0.486);
-  border: 1px solid rgba(162, 3, 206, 0.312);
-  box-shadow: 4px 4px 4px rgba(48, 48, 48, 0.5);
-  backdrop-filter: blur(1.1px);
-  -webkit-backdrop-filter: blur(1.1px);
-}
-
 .cart-item-actions {
   display: flex;
-  align-items: center; /* Center buttons vertically */
-  margin-left: auto; /* Push buttons to the end */
+  align-items: center;
+  justify-content: flex-end; /* Align buttons to the right */
+  flex-wrap: wrap; /* Ensure buttons wrap on small screens */
 }
 
 .cart-item-actions button {
   padding: 5px;
-  margin: 0 5px; /* Add space between buttons */
+  margin: 5px;
   font-family: monospace;
   color: white;
   background: rgba(69, 115, 253, 0.608);
@@ -76,31 +79,21 @@
 
 /* Add responsive styles for larger screens */
 @media screen and (min-width: 768px) {
-  .cart-items-container {
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); /* Adjust column size based on your design */
-    grid-gap: 20px;
-    padding: 50px;
-    max-width: 700px;
-    max-height: auto;
-    overflow-y: auto;
+  .cart-item {
+    flex-direction: row; /* Ensure items are in a row on larger screens */
   }
 
   .cart-items-prop {
-    display: flex;
-    align-items: center;
+    flex-direction: row;
+    width: 70%;
   }
 
-  .cart-items-prop img {
-    height: 10rem;
-    width: 10rem;
-    object-fit: cover;
-  }
-
-  .cart-items-prop p {
-    font-size: 1.2rem;
-    margin: 10px;
+  .cart-item-actions {
+    width: 30%;
+    justify-content: flex-end;
   }
 }
+
 
 
   
