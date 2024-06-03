@@ -89,7 +89,7 @@
     z-index: 1000; /* Bring to front */
     flex-direction: row; /* Switch to row direction on activation */
     width: 60%; /* Adjust width as needed for tablet view */
-    height: auto; /* Adjust height as needed */
+    height: 60%; /* Adjust height as needed */
   }
 }
 
@@ -106,7 +106,7 @@
     z-index: 1000; /* Bring to front */
     flex-direction: row; /* Switch to row direction on activation */
     width: 60%; /* Adjust width as needed for desktop view */
-    height: auto; /* Adjust height as needed */
+    height: 60%; /* Adjust height as needed */
   }
 }
 
