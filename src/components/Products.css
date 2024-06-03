@@ -5,16 +5,15 @@
   grid-gap: 5px;
   align-items: center;
   justify-items: center;
-  /* Make the container scrollable */
-  max-height: calc(100vh - 100px); /* Adjust height based on your navbar or other elements */
-  padding: 10px; /* Optional padding for better spacing */
+  max-height: calc(100vh - 100px);
+  padding: 10px;
 }
 
 .product-card {
-  display: flex; /* Use flexbox for the card layout */
+  display: flex;
   flex-direction: column;
   align-items: center;
-  width: calc(100% - 10px); /* Single product per row for mobile view */
+  width: calc(100% - 10px);
   margin-bottom: 20px;
   max-width: 250px;
   text-align: center;
@@ -23,34 +22,34 @@
   box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(1.1px);
   transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease, position 0.3s ease;
-  position: relative; /* Needed for the dropdown positioning */
-  overflow: hidden; /* Hide overflow to contain the sliding dropdown */
+  position: relative;
+  overflow: hidden;
 }
 
 .product-card.active {
-  transform: scale(1.2); /* Scale up the card */
-  z-index: 1000; /* Bring to front */
-  position: fixed; /* Position fixed to overlay other content */
-  top: 50%; /* Center vertically */
-  left: 50%; /* Center horizontally */
-  transform: translate(-50%, -50%) scale(1.2); /* Center and scale */
-  width: 60%; /* Expand to fit content */
-  max-width: none; /* Allow to expand beyond 250px */
-  height: auto; /* Allow height to adjust automatically */
-  background-color: #fff; /* Ensure the background covers the underlying content */
-  padding: 20px; /* Add some padding for better appearance */
+  transform: scale(1.2);
+  z-index: 1000;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(1.2);
+  width: 60%;
+  max-width: none;
+  height: auto;
+  background-color: #fff;
+  padding: 20px;
 }
 
 .product-image {
   width: 100%;
   height: auto;
   cursor: pointer;
-  transition: transform 0.3s ease; /* Smooth scaling of the image */
+  transition: transform 0.3s ease;
 }
 
 .product-card.active .product-image {
-  width: 50%; /* Ensure the image scales with the card */
-  height: auto; /* Maintain aspect ratio */
+  width: 50%;
+  height: auto;
 }
 
 .product-details {
@@ -58,27 +57,37 @@
   margin-top: 20px;
 }
 
-.product-details-dropdown, p {
-  display: none; /* Hide by default */
+.product-details-dropdown {
+  display: none;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
   padding: 20px;
   background-color: hsla(303, 100%, 50%, 0.387);
   border-radius: 0 16px 16px 0;
-  width: auto; /* Adjust width automatically */
+  width: auto;
 }
 
 .product-card.active .product-details-dropdown {
-  display: flex; /* Show when active */
-  margin-left: 10px; /* Space between image and details */
-  height: auto; /* Adjust height automatically */
-  flex: 1; /* Take remaining space */
+  display: flex;
+  margin-left: 10px;
+  height: auto;
+  flex: 1;
+}
+
+.product-info {
+  margin-bottom: 20px;
+}
+
+.product-info p {
+  margin: 5px 0;
+  font-size: 1rem;
+  color: #333;
 }
 
 .buy-btn-container {
   display: flex;
-  justify-content: flex-end; /* Align button to the right */
+  justify-content: flex-end;
   width: 100%;
 }
 
@@ -92,6 +101,7 @@
   border-radius: 8px;
   transition: background-color 0.3s ease;
 }
+
 .select-container {
   display: flex;
   flex-direction: column;
@@ -132,21 +142,20 @@
   padding: 10px;
 }
 
-
 /* Tablet View */
 @media screen and (min-width: 768px) {
   .product-card {
     min-width: 200px;
     min-height: fit-content;
-    width: calc(50% - 10px); /* Two products side by side with margin */
+    width: calc(50% - 10px);
   }
 
   .product-card.active {
-    transform: translate(-50%, -50%) scale(1.2); /* Center and scale */
-    z-index: 1000; /* Bring to front */
-    flex-direction: row; /* Switch to row direction on activation */
-    width: 60%; /* Adjust width as needed for tablet view */
-    height: auto; /* Adjust height as needed */
+    transform: translate(-50%, -50%) scale(1.2);
+    z-index: 1000;
+    flex-direction: row;
+    width: 60%;
+    height: auto;
   }
 }
 
@@ -155,17 +164,18 @@
   .product-card {
     min-width: 200px;
     min-height: fit-content;
-    width: calc(25% - 10px); /* Four products side by side with margin */
+    width: calc(25% - 10px);
   }
 
   .product-card.active {
-    transform: translate(-50%, -50%) scale(1.2); /* Center and scale */
-    z-index: 1000; /* Bring to front */
-    flex-direction: row; /* Switch to row direction on activation */
-    width: 60%; /* Adjust width as needed for desktop view */
-    height: auto; /* Adjust height as needed */
+    transform: translate(-50%, -50%) scale(1.2);
+    z-index: 1000;
+    flex-direction: row;
+    width: 60%;
+    height: auto;
   }
 }
+
 
 
 

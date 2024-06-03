@@ -93,10 +93,11 @@ const Products: React.FC = () => {
                 <p>${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
               </div>
               <div className="product-details-dropdown">
-                <p>{product.Name}</p>
-                <p>Price: ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
-                <p>Stock: {product.Stock}</p>
-                <p>Category: {product.Category}</p>
+                <div className="product-info">
+                  <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
+                  <p><strong>Stock:</strong> {product.Stock}</p>
+                  <p><strong>Category:</strong> {product.Category}</p>
+                </div>
                 <div className="select-container">
                   <label htmlFor={`size-${product.RowKey}`}>Size:</label>
                   <select 
@@ -128,6 +129,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
