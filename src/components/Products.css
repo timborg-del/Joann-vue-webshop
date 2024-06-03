@@ -58,12 +58,12 @@
   margin-top: 20px;
 }
 
-.product-details-dropdown {
+.product-details-dropdown, p {
   display: none; /* Hide by default */
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 10px;
+  padding: 20px;
   background-color: hsla(303, 100%, 50%, 0.387);
   border-radius: 0 16px 16px 0;
   width: auto; /* Adjust width automatically */
