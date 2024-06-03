@@ -65,7 +65,10 @@
 
 .product-card.active .product-details-dropdown {
   display: flex; /* Show when active */
-  margin-left: 10px;
+  margin-left: 10px; /* Space between image and details */
+  height: auto; /* Adjust height automatically */
+  width: auto; /* Adjust width automatically */
+  max-width: 50%; /* Ensure it doesn't exceed half the card's width */
 }
 
 /* Tablet View */
