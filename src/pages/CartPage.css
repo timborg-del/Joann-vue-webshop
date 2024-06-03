@@ -133,8 +133,6 @@ form {
 
 /* Add responsive styles for larger screens */
 @media screen and (min-width: 768px) {
-
-
   .cart-page {
     flex-direction: row;
     justify-content: space-between;
@@ -145,10 +143,6 @@ form {
     width: 48%;
   }
 }
-
-
-
-
 
 
   
