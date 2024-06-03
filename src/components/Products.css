@@ -1,3 +1,4 @@
+/* Existing CSS */
 .products-container {
   display: flex;
   flex-wrap: wrap;
@@ -84,7 +85,7 @@
 
 .product-info p {
   margin: 5px 0;
-  font-size: 2rem;
+  font-size: 1rem;
   color: #ffffff;
   text-align: left;
 }
@@ -116,7 +117,7 @@
 .select-container label {
   margin-bottom: 5px;
   font-weight: bold;
-  font-size: 2rem;
+  font-size: 1rem;
   color: #ffffff;
 }
 
@@ -176,6 +177,26 @@
     z-index: 1000;
     flex-direction: row;
     width: 60%;
+    height: auto;
+  }
+}
+
+/* Phone View */
+@media screen and (max-width: 767px) {
+  .product-card.active {
+    width: 90%;
+    max-width: 100%;
+    padding: 10px;
+    transform: translate(-50%, -50%) scale(1);
+  }
+
+  .product-details-dropdown {
+    width: 100%;
+    padding: 10px;
+  }
+
+  .product-card.active .product-image {
+    width: 100%;
     height: auto;
   }
 }
