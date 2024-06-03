@@ -17,6 +17,8 @@
   width: 100%;
   max-width: 800px; /* Adjust based on your design */
   padding: 20px;
+  max-height:400px;
+  overflow-y: auto;
 }
 
 .cart-item {
