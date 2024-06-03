@@ -184,24 +184,31 @@
 }
 
 /* Phone View */
+/* Phone View */
 @media screen and (max-width: 767px) {
   .product-card.active {
-    width: 90%;
+    width: 100%;
     max-width: 100%;
     padding: 10px;
     transform: translate(-50%, -50%) scale(1);
+    top: 50%;
+    left: 50%;
   }
 
   .product-details-dropdown {
     width: 100%;
     padding: 10px;
+    border-radius: 0 0 16px 16px; /* Remove top corners radius */
+    margin-top: 10px; /* Ensure there's a space between image and dropdown */
   }
 
   .product-card.active .product-image {
     width: 100%;
     height: auto;
+    margin-bottom: 10px; /* Add space below the image */
   }
 }
+
 
 
 
