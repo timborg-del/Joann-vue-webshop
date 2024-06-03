@@ -34,7 +34,7 @@
   top: 50%; /* Center vertically */
   left: 50%; /* Center horizontally */
   transform: translate(-50%, -50%) scale(1.2); /* Center and scale */
-  width: 60%; /* Expand to fit content */
+  width: auto; /* Expand to fit content */
   max-width: none; /* Allow to expand beyond 250px */
   height: auto; /* Allow height to adjust automatically */
   background-color: #fff; /* Ensure the background covers the underlying content */
@@ -73,7 +73,7 @@
   display: flex; /* Show when active */
   margin-left: 10px; /* Space between image and details */
   height: auto; /* Adjust height automatically */
-  flex: 1; /* Take remaining space */
+  flex: 1;
 }
 
 /* Tablet View */
@@ -89,7 +89,7 @@
     z-index: 1000; /* Bring to front */
     flex-direction: row; /* Switch to row direction on activation */
     width: 60%; /* Adjust width as needed for tablet view */
-    height: 60%; /* Adjust height as needed */
+    height: auto; /* Adjust height as needed */
   }
 }
 
@@ -106,10 +106,9 @@
     z-index: 1000; /* Bring to front */
     flex-direction: row; /* Switch to row direction on activation */
     width: 60%; /* Adjust width as needed for desktop view */
-    height: 60%; /* Adjust height as needed */
+    height: auto; /* Adjust height as needed */
   }
 }
-
 
 
 
