@@ -8,6 +8,7 @@
   justify-items: center;
   max-height: calc(100vh - 100px);
   padding: 10px;
+  padding-top: 100px;
 }
 
 .product-card {
