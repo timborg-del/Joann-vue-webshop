@@ -22,18 +22,23 @@
   border-radius: 16px;
   box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(1.1px);
-  transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease;
+  transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease, position 0.3s ease;
   position: relative; /* Needed for the dropdown positioning */
   overflow: hidden; /* Hide overflow to contain the sliding dropdown */
 }
 
 .product-card.active {
   transform: scale(1.2); /* Scale up the card */
-  z-index: 10;
-  flex-direction: row; /* Switch to row direction on activation */
+  z-index: 1000; /* Bring to front */
+  position: fixed; /* Position fixed to overlay other content */
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%) scale(1.2); /* Center and scale */
   width: auto; /* Expand to fit content */
   max-width: none; /* Allow to expand beyond 250px */
   height: auto; /* Allow height to adjust automatically */
+  background-color: #fff; /* Ensure the background covers the underlying content */
+  padding: 20px; /* Add some padding for better appearance */
 }
 
 .product-image {
@@ -61,14 +66,14 @@
   padding: 10px;
   background-color: hsla(303, 100%, 50%, 0.387);
   border-radius: 0 16px 16px 0;
+  width: auto; /* Adjust width automatically */
+  max-width: 50%; /* Ensure it doesn't exceed half the card's width */
 }
 
 .product-card.active .product-details-dropdown {
   display: flex; /* Show when active */
   margin-left: 10px; /* Space between image and details */
   height: auto; /* Adjust height automatically */
-  width: auto; /* Adjust width automatically */
-  max-width: 50%; /* Ensure it doesn't exceed half the card's width */
 }
 
 /* Tablet View */
@@ -80,8 +85,8 @@
   }
 
   .product-card.active {
-    transform: scale(1.5); /* Scale up the card */
-    z-index: 10;
+    transform: translate(-50%, -50%) scale(1.2); /* Center and scale */
+    z-index: 1000; /* Bring to front */
     flex-direction: row; /* Switch to row direction on activation */
     width: 500px; /* Adjust width as needed for tablet view */
     height: auto; /* Adjust height as needed */
@@ -97,13 +102,14 @@
   }
 
   .product-card.active {
-    transform: scale(1.7); /* Scale up the card */
-    z-index: 10;
+    transform: translate(-50%, -50%) scale(1.2); /* Center and scale */
+    z-index: 1000; /* Bring to front */
     flex-direction: row; /* Switch to row direction on activation */
     width: 700px; /* Adjust width as needed for desktop view */
     height: auto; /* Adjust height as needed */
   }
 }
+
 
 
 
