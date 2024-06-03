@@ -133,9 +133,7 @@ form {
 
 /* Add responsive styles for larger screens */
 @media screen and (min-width: 768px) {
-  .cart-page-container {
-    /* No need to add any styles, it will remain centered */
-  }
+
 
   .cart-page {
     flex-direction: row;
