@@ -12,7 +12,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 1200px; /* Adjust max-width based on your design */
+  max-width: fit-content; /* Adjust max-width based on your design */
   min-width: auto;
   max-height: 1200px;
   min-height: 600px;
