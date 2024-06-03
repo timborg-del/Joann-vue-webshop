@@ -5,10 +5,10 @@
     align-items:center;
     justify-content: center;
     margin: 0px;
-    min-width: fit-content;
+    min-width: auto;
     max-height: fit-content;
     overflow-y: auto;
-    max-width: fit-content;
+    max-width: auto;
 
   }
 
