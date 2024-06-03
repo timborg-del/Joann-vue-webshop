@@ -22,16 +22,17 @@
   border-radius: 16px;
   box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(1.1px);
-  transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease;
+  transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease;
   position: relative; /* Needed for the dropdown positioning */
   overflow: hidden; /* Hide overflow to contain the sliding dropdown */
 }
 
 .product-card.active {
-  transform: scale(1.2); /* Slightly less scaling for mobile */
+  transform: scale(1.2); /* Scale up the card */
   z-index: 10;
   flex-direction: row; /* Switch to row direction on activation */
-  width: auto; /* Expand to fit content */
+  width: 300px; /* Adjust width as needed */
+  height: auto; /* Adjust height as needed */
 }
 
 .product-image {
@@ -73,10 +74,11 @@
   }
 
   .product-card.active {
-    transform: scale(1.2); /* Less scaling */
+    transform: scale(1.2); /* Scale up the card */
     z-index: 10;
     flex-direction: row; /* Switch to row direction on activation */
-    width: auto; /* Expand to fit content */
+    width: 500px; /* Adjust width as needed for tablet view */
+    height: auto; /* Adjust height as needed */
   }
 }
 
@@ -89,10 +91,11 @@
   }
 
   .product-card.active {
-    transform: scale(1.2); /* Less scaling */
+    transform: scale(1.2); /* Scale up the card */
     z-index: 10;
     flex-direction: row; /* Switch to row direction on activation */
-    width: auto; /* Expand to fit content */
+    width: 700px; /* Adjust width as needed for desktop view */
+    height: auto; /* Adjust height as needed */
   }
 }
 
