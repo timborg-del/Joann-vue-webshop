@@ -67,6 +67,7 @@
   background-color: hsla(303, 100%, 50%, 0.387);
   border-radius: 0 16px 16px 0;
   width: auto; /* Adjust width automatically */
+  height: max-content;
 }
 
 .product-card.active .product-details-dropdown {
