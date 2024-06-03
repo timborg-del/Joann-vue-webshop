@@ -108,12 +108,14 @@ const Products: React.FC = () => {
                     <option value="A5">A5</option>
                   </select>
                 </div>
-                <button 
-                  className="buy-btn" 
-                  onClick={() => handleAddToCart(product)}
-                >
-                  Add to Cart
-                </button>
+                <div className="buy-btn-container">
+                  <button 
+                    className="buy-btn" 
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    Add to Cart
+                  </button>
+                </div>
               </div>
             </div>
           ))
@@ -126,6 +128,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
