@@ -38,6 +38,11 @@
   width: 100%;
   height: auto;
   cursor: pointer;
+  transition: transform 0.3s ease; /* Smooth scaling of the image */
+}
+
+.product-card.active .product-image {
+  transform: scale(1.2); /* Scale the image when the card is active */
 }
 
 .product-details {
