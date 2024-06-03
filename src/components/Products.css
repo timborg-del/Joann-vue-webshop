@@ -76,10 +76,12 @@
 }
 
 .product-info {
+  align-items: flex-start;
   margin-bottom: 20px;
 }
 
 .product-info p {
+  align-items: flex-start;
   margin: 5px 0;
   font-size: 1rem;
   color: #333;
@@ -126,7 +128,6 @@
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
-  background-image: url('data:image/svg+xml;utf8,<svg fill="none" height="24" stroke="%23333" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><polyline points="6 9 12 15 18 9"></polyline></svg>');
   background-repeat: no-repeat;
   background-position: right 10px center;
   background-size: 16px;
