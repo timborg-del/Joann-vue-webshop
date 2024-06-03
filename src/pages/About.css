@@ -1,34 +1,59 @@
+/* Ensures the container is centered on the screen */
 .about-container {
-    position: relative;   
-    bottom: 25vh;
-    top: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%; /* Ensure it takes the full width of the viewport */
+  padding: 20px;
+  box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+/* Ensures the content is well-styled and responsive */
+.about-content {
+  display: block;
+  max-width: 800px;
+  width: 100%; /* Ensure content is responsive */
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.539);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+/* Center align the heading and ensure proper margin */
+.about-content h2 {
+  text-align: center;
+  font-size: 2rem;
+  margin-bottom: 10px;
+  color: #ffffff; /* Ensure the text color is white */
+}
+
+/* Style paragraphs for readability */
+.about-content p {
+  font-size: 1rem; /* Adjust font size for better readability */
+  line-height: 1.6;
+  color: #ffffff;
+  margin-bottom: 10px; /* Add margin between paragraphs */
+}
+
+/* Responsive adjustments */
+@media screen and (max-width: 767px) {
   .about-content {
-    display: block;
-    max-width: 800px;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.539);
-    padding: 20px;
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-    backdrop-filter: blur(1.1px);
-    -webkit-backdrop-filter: blur(1.1px);
-    border: 1px solid rgba(255, 255, 255, 0.13);
-  }
-  
-  .about-content h2 {
-    text-align: center;
-    font-size: 2rem;
-    margin-bottom: 10px;
+    max-width: 100%;
+    font-size: 1rem; /* Adjust font size for smaller screens */
   }
   
   .about-content p {
-    font-size: 2rem;
-    line-height: 1.6;
-    color: #ffffff;
+    font-size: 1rem; /* Adjust font size for smaller screens */
   }
   
+  .about-content h2 {
+    font-size: 1.5rem; /* Adjust heading size for smaller screens */
+  }
+}
