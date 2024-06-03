@@ -88,8 +88,10 @@ const Products: React.FC = () => {
               ) : (
                 <div className="no-image">No Image Available</div>
               )}
+
               <div className="product-details-dropdown">
                 <div className="product-info">
+                  <p><strong>Name:</strong> {product.Name}</p>
                   <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
                   <p><strong>Stock:</strong> {product.Stock}</p>
                   <p><strong>Category:</strong> {product.Category}</p>
