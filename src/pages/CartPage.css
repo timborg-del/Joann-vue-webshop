@@ -1,9 +1,11 @@
-/* CartPage.css */
-.cart-page-container{
+
+
+/* Adjust cart-page-container margin-top to account for navbar height */
+.cart-page-container {
   display: inline-block;
   justify-content: center;
   align-items: center;
-  margin-top: 100px;
+  margin-top: 100px; /* Same height as the navbar */
   max-width: 600px;
   max-height: 600px;
   min-width: 600px;
@@ -11,10 +13,10 @@
 }
 
 .cart-page {
-  position: flex;
+  display: flex;
   flex-direction: column;
-  margin-top: 400px;
   align-items: center;
+  margin-top: 20px; /* Additional margin if needed */
   max-width: 600px; /* Adjust max-width based on your design */
   min-width: auto;
   max-height: 1200px;
@@ -22,7 +24,7 @@
   margin: 0 auto;
   padding: 20px;
   background: rgba(249, 169, 49, 0.395);
-  /*background: rgba(0, 255, 238, 0.425);*/
+  /* background: rgba(0, 255, 238, 0.425); */
   border-radius: 16px;
   box-shadow: 4px 4px 4px rgba(144, 95, 22, 0.467);
   backdrop-filter: blur(1.1px);
@@ -32,14 +34,13 @@
   overflow-y: visible;
 }
 
-.form-container{
+.form-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 100%;
   margin-bottom: 20px;
   margin: 0;
- 
 }
 
 .form-container input {
@@ -67,25 +68,19 @@
   padding: 20px;
   border-radius: 5px;
   border: 1px solid rgba(255, 255, 255, 0.024);
-
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.467);
   color: white;
   background-color: rgba(22, 1, 75, 0.464);
-  /*background-color: rgba(75, 45, 1, 0.464);*/
+  /* background-color: rgba(75, 45, 1, 0.464); */
 }
 
-
-
-
-
-
-.form-container p{
+.form-container p {
   font-size: 20px;
   font-weight: bold;
   margin-bottom: 10px;
 }
 
-.cartexit_btn{
+.cartexit_btn {
   position: fixed;
   top: 5px;
   right: 5px;
@@ -102,50 +97,51 @@
   cursor: pointer;
   z-index: 1000;
 }
-.hide-btn{
+
+.hide-btn {
   display: flex;
   justify-content: center;
-  }
+}
 
-form{
+form {
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
+.hideform_btn,
+.cartclear_btn,
+.checkout_btn {
+  cursor: pointer;
+  width: 50%;
+  min-width: 100%; /* Adjust the minimum width as needed */
+  margin-top: 10px; /* Adjust the spacing between buttons */
+  color: white;
+  font-size: larger;
+  padding: 15px;
+  background: rgba(255, 27, 194, 0.368);
+  border-radius: 16px;
+  box-shadow: 4px 4px 4px rgba(124, 0, 91, 0.368);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  transition: transform 0.3s ease;
+}
 
-  
-  .hideform_btn,
-  .cartclear_btn,
-  .checkout_btn {
-    cursor: pointer;
-    width: 50%;
-    min-width: 100%; /* Adjust the minimum width as needed */
-    margin-top: 10px; /* Adjust the spacing between buttons */
-    color: white;
-    font-size: larger;
-    padding: 15px;
-    background: rgba(255, 27, 194, 0.368);
-    border-radius: 16px;
-    box-shadow: 4px 4px 4px rgba(124, 0, 91, 0.368);
-    backdrop-filter: blur(1.1px);
-    -webkit-backdrop-filter: blur(1.1px);
-    border: 1px solid rgba(255, 255, 255, 0.13);
-    transition: transform 0.3s ease;
-  }
-  .total-price{
-    text-align: center;
-    color: rgb(255, 255, 255);
-  }
-  .cartclear_btn {
-    background: rgba(98, 255, 1, 0.386);
-    box-shadow: 4px 4px 4px rgba(48, 125, 0, 0.386);
-  }
-  
-  .checkout_btn {
-    background: rgba(0, 255, 166, 0.397);
-    box-shadow: 4px 4px 5px rgba(0, 124, 81, 0.397);
-  }
+.total-price {
+  text-align: center;
+  color: rgb(255, 255, 255);
+}
+
+.cartclear_btn {
+  background: rgba(98, 255, 1, 0.386);
+  box-shadow: 4px 4px 4px rgba(48, 125, 0, 0.386);
+}
+
+.checkout_btn {
+  background: rgba(0, 255, 166, 0.397);
+  box-shadow: 4px 4px 5px rgba(0, 124, 81, 0.397);
+}
 
 /* Add responsive styles for larger screens */
 @media screen and (min-width: 768px) {
@@ -157,9 +153,10 @@ form{
     flex-direction: row;
     justify-content: space-between;
     padding: 20px;
-    &__item {
-      width: 48%;
-    }
+  }
+
+  .cart-page__item {
+    width: 48%;
   }
 }
 
