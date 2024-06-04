@@ -23,7 +23,7 @@
   position: relative;
   overflow: hidden;
   width: calc(100% - 20px); /* Default width for small screens */
-  height: 200px;
+  height: 150px;
 }
 
 .product-card.active {
@@ -153,12 +153,13 @@
 /* Tablet View */
 @media screen and (min-width: 768px) {
   .product-card {
-    width: calc(50% - 20px); /* 2 cards per row */
+    width: calc(50% - 10px); /* 2 cards per row */
     height: 250px;
   }
 
   .product-image {
     height: 150px; /* Maintain reduced height */
+    width: 100%;
   }
 
   .product-card.active {
@@ -173,13 +174,13 @@
 /* Large Desktop View */
 @media screen and (min-width: 1024px) {
   .product-card {
-    width: calc(25% - 20px); /* 4 cards per row */
+    width: calc(25% - 10px); /* 4 cards per row */
     height: 250px;
-    max-width: 150px;
   }
+
   .product-image {
     height: 150px; /* Maintain reduced height */
-    max-width: 150px;
+    width: 100%;
   }
 
   .product-card.active {
@@ -192,13 +193,12 @@
 }
 
 /* Phone View */
-/* Phone View */
 @media screen and (max-width: 767px) {
   .product-card {
-    width: calc(50% - 20px); /* 2 cards per row */
+    width: calc(50% - 10px); /* 2 cards per row */
     height: 250px; /* Make the cards larger */
   }
-  
+
   .product-image {
     height: 150px; /* Adjust the height to fit within the card */
     width: 100%; /* Ensure the image fills the width of the card */
@@ -226,7 +226,6 @@
     height: auto;
   }
 }
-
 
 
 
