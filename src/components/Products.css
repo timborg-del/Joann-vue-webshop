@@ -23,6 +23,7 @@
   position: relative;
   overflow: hidden;
   width: calc(100% - 20px); /* Default width for small screens */
+  height: 200px;
 }
 
 .product-card.active {
@@ -153,6 +154,7 @@
 @media screen and (min-width: 768px) {
   .product-card {
     width: calc(50% - 20px); /* 2 cards per row */
+    height: 250px;
   }
 
   .product-image {
@@ -172,6 +174,7 @@
 @media screen and (min-width: 1024px) {
   .product-card {
     width: calc(25% - 20px); /* 4 cards per row */
+    height: 250px;
   }
   .product-image {
     height: 150px; /* Maintain reduced height */
