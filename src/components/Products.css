@@ -11,8 +11,6 @@
 
 .product-card {
   display: flex;
-  height: 150px;
-  width: 50px;
   flex-direction: column;
   align-items: center;
   margin-top: 20px;
@@ -21,12 +19,10 @@
   background-color: #02359c78;
   border-radius: 5px;
   box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(1.1px);
   transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease, position 0.3s ease;
   position: relative;
   overflow: hidden;
   width: calc(100% - 10px); /* Default width for small screens */
-  
 }
 
 .product-card.active {
@@ -36,15 +32,15 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%) scale(1.2);
-  width: 60%;
-  max-width: 800px;
+  width: calc(100% - 10px); /* Match default width */
+  max-width: 800px; /* Adjust maximum width if needed */
   height: auto;
   padding: 20px;
 }
 
 .product-image {
-  width: 90%;
-  height: 90%;
+  width: 100%; /* Make the image fill the entire width of the product card */
+  height: auto; /* Ensure aspect ratio is maintained */
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -54,6 +50,7 @@
   max-height: 500px;
   max-width: auto;
 }
+
 
 .product-details {
   text-align: center;
