@@ -164,7 +164,7 @@
 
   .product-card {
     width: 100%; /* Make card fill wrapper */
-    height: 300px; /* Fixed height for tablet view */
+    height: 200px; /* Fixed height for tablet view */
   }
 
   .product-image-wrapper {
@@ -181,7 +181,7 @@
 
   .product-card {
     width: 100%; /* Make card fill wrapper */
-    height: 300px; /* Fixed height for desktop view */
+    height: 200px; /* Fixed height for desktop view */
   }
 
   .product-image-wrapper {
