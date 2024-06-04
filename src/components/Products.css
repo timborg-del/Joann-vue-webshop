@@ -204,12 +204,11 @@
   }
   .product-card {
     width: calc(25% - 20px); /* 4 cards per row */
-    height: 250px;
-    max-width: 150px;
+    height: 200px;
   }
   .product-image {
-    height: 150px; /* Maintain reduced height */
-    max-width: 150px;
+    height: 100px; /* Maintain reduced height */
+    
   }
 
   .product-details-dropdown {
