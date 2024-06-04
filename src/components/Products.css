@@ -192,7 +192,18 @@
 }
 
 /* Phone View */
+/* Phone View */
 @media screen and (max-width: 767px) {
+  .product-card {
+    width: calc(50% - 20px); /* 2 cards per row */
+    height: 250px; /* Make the cards larger */
+  }
+  
+  .product-image {
+    height: 150px; /* Adjust the height to fit within the card */
+    width: 100%; /* Ensure the image fills the width of the card */
+  }
+
   .product-card.active {
     width: 90%;
     max-width: 90%;
@@ -202,15 +213,6 @@
     left: 50%;
     overflow-y: auto;
   }
-  .product-card {
-    width: calc(25% - 20px); /* 4 cards per row */
-    height: 200px;
-  }
-  .product-image {
-    height: 200px;
-    width: auto; /* Maintain reduced height */
-    
-  }
 
   .product-details-dropdown {
     width: 100%;
@@ -218,7 +220,7 @@
     border-radius: 0 0 16px 16px; /* Remove top corners radius */
     max-height: fit-content;
   }
-  
+
   .product-card.active .product-image {
     width: 100%;
     height: auto;
