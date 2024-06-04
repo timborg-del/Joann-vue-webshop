@@ -15,7 +15,8 @@ const Products: React.FC = () => {
   // Define price adjustments as a constant
   const priceAdjustments: { [key: string]: number } = {
     A3: 0, // No adjustment for A3
-    A5: -2 // Adjust price by -2 for A5
+    A4: -2, // Adjust price by -2 for A5
+    A5: -5
   };
 
   const toggleDetails = (productId: string) => {
@@ -103,6 +104,7 @@ const Products: React.FC = () => {
                   onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
                 >
                   <option value="A3">A3</option>
+                  <option value="A4">A4</option>
                   <option value="A5">A5</option>
                 </select>
               </div>
