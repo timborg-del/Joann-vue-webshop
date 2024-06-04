@@ -40,7 +40,7 @@
 
 .product-image {
   width: 100%; /* Make the image fill the entire width of the product card */
-  height: auto; /* Ensure aspect ratio is maintained */
+  height: 200px; /* Ensure aspect ratio is maintained */
   cursor: pointer;
   transition: transform 0.3s ease;
 }
