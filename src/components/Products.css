@@ -35,7 +35,8 @@
   transition: transform 0.3s ease;
   object-fit: cover;
   width: 100%;
-  height: 100%;
+  height: auto;
+  max-height: 100%;
 }
 
 .product-card.active {
@@ -165,8 +166,8 @@
   }
 
   .product-image {
-    width: 100%; /* Make image fill card */
-    height: 100%; /* Make image fill card */
+    width: 100%;
+    height: 100%;
   }
 
   .product-card.active {
@@ -186,12 +187,12 @@
 
   .product-card {
     width: 100%; /* Make card fill wrapper */
-    height: 200px; /* Fixed height for desktop view */
+    height: 300px; /* Fixed height for desktop view */
   }
 
   .product-image {
-    width: auto; /* Make image fill card */
-    height: auto; /* Make image fill card */
+    width: 100%;
+    height: 100%;
   }
 
   .product-card.active {
@@ -215,8 +216,8 @@
   }
 
   .product-image {
-    width: 100%; /* Make image fill card */
-    height: 100%; /* Make image fill card */
+    width: 100%;
+    height: 100%;
   }
 
   .product-card.active {
@@ -241,7 +242,6 @@
     height: auto;
   }
 }
-
 
 
 
