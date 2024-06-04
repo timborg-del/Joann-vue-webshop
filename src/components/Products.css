@@ -22,7 +22,7 @@
   transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease, position 0.3s ease;
   position: relative;
   overflow: hidden;
-  width: calc(100% - 10px); /* Default width for small screens */
+  width: calc(100% - 20px); /* Default width for small screens */
 }
 
 .product-card.active {
@@ -41,7 +41,7 @@
 
 .product-image {
   width: 100%; /* Make the image fill the entire width of the product card */
-  height: 200px; /* Ensure aspect ratio is maintained */
+  height: 150px; /* Ensure aspect ratio is maintained */
   cursor: pointer;
   transition: transform 0.3s ease;
 }
@@ -152,7 +152,11 @@
 /* Tablet View */
 @media screen and (min-width: 768px) {
   .product-card {
-    width: calc(50% - 10px); /* 2 cards per row */
+    width: calc(50% - 20px); /* 2 cards per row */
+  }
+
+  .product-image {
+    height: 150px; /* Maintain reduced height */
   }
 
   .product-card.active {
@@ -167,7 +171,10 @@
 /* Large Desktop View */
 @media screen and (min-width: 1024px) {
   .product-card {
-    width: calc(25% - 10px); /* 4 cards per row */
+    width: calc(25% - 20px); /* 4 cards per row */
+  }
+  .product-image {
+    height: 150px; /* Maintain reduced height */
   }
 
   .product-card.active {
