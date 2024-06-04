@@ -1,10 +1,9 @@
 .products-container {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  grid-gap: 5px;
+  justify-content: center;
+  grid-gap: 10px;
   align-items: center;
-  justify-items: center;
   max-height: calc(100vh - 100px);
   padding: 10px;
 }
@@ -27,6 +26,8 @@
   transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease, position 0.3s ease;
   position: relative;
   overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .product-image {
@@ -38,12 +39,11 @@
 }
 
 .product-card.active {
-  transform: scale(1.2);
+  transform: translate(-50%, -50%) scale(1.2);
   z-index: 1000;
   position: fixed;
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%) scale(1.2);
   width: 90%;
   max-width: 800px;
   height: auto;
@@ -55,7 +55,6 @@
   width: 50%;
   height: auto;
   max-width: 100%;
-  max-height: none;
 }
 
 .product-details {
@@ -157,7 +156,7 @@
 /* Tablet View */
 @media screen and (min-width: 768px) {
   .product-wrapper {
-    width: 50%; /* 2 cards per row */
+    width: calc(50% - 10px); /* 2 cards per row */
   }
 
   .product-card {
@@ -182,7 +181,7 @@
 /* Large Desktop View */
 @media screen and (min-width: 1024px) {
   .product-wrapper {
-    width: 25%; /* 4 cards per row */
+    width: calc(25% - 10px); /* 4 cards per row */
   }
 
   .product-card {
@@ -207,7 +206,7 @@
 /* Phone View */
 @media screen and (max-width: 767px) {
   .product-wrapper {
-    width: 50%; /* 2 cards per row */
+    width: calc(50% - 10px); /* 2 cards per row */
   }
 
   .product-card {
