@@ -207,7 +207,8 @@
     height: 200px;
   }
   .product-image {
-    height: 100px; /* Maintain reduced height */
+    height: 200px;
+    width: auto; /* Maintain reduced height */
     
   }
 
