@@ -81,7 +81,7 @@ const Products: React.FC = () => {
               <img 
                 src={product.ProductImageBase64} 
                 alt={product.Name} 
-                className={`product-image"${activeProduct === product.RowKey ? 'active' : ''}`} 
+                className="product-image" 
                 onError={(e) => console.error("Image load error", e)}
                 onClick={() => toggleDetails(product.RowKey)}
               />
