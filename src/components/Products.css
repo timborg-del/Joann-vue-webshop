@@ -186,12 +186,12 @@
 
   .product-card {
     width: 100%; /* Make card fill wrapper */
-    height: 300px; /* Fixed height for desktop view */
+    height: 200px; /* Fixed height for desktop view */
   }
 
   .product-image {
-    width: 100%; /* Make image fill card */
-    height: 100%; /* Make image fill card */
+    width: auto; /* Make image fill card */
+    height: auto; /* Make image fill card */
   }
 
   .product-card.active {
