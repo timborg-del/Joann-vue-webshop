@@ -45,12 +45,9 @@
   transition: transform 0.3s ease;
 }
 
-.product-image.active{
-  height: 300px;
-  width: 100%;
-}
 
-.product-card.active .product-image {
+
+.product-card.active .product-image.active {
   width: 50%;
   max-height: 500px;
   max-width: auto;
