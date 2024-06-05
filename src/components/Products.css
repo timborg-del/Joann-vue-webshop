@@ -184,6 +184,7 @@
   .product-card.active {
     flex-direction: column;
     width: 90%;
+    min-height: 100vh;
     min-height: fit-content;
     max-width: 90%;
     padding: 10px;
