@@ -84,6 +84,7 @@ const Products: React.FC = () => {
                   alt={product.Name} 
                   className="product-image" 
                   onError={(e) => console.error("Image load error", e)}
+                  onClick={() => toggleDetails(product.RowKey)}
                 />
               ) : (
                 <div className="product-thumbnail">
