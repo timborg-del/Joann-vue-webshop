@@ -136,6 +136,7 @@ form {
 @media screen and (min-width: 768px) {
   .cart-page-container {
     align-items: center; /* Center items horizontally */
+    overflow-y: auto;
   }
 
   .cart-page {
