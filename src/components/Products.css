@@ -261,13 +261,14 @@
   }
 
   .product-card.active .product-image {
-    width: 60%; /* Image takes up 50% of the width */
-    height: auto;
+    width: 50%; /* Image takes up 50% of the width */
+    height: fit-content;
     margin: 20px;
   }
 
   .product-card.active .product-details-dropdown {
-    width: 40%; /* Details take up 50% of the width */
+    width: 50%;
+    height: fit-content; /* Details take up 50% of the width */
     margin: 20px;
   }
 }
