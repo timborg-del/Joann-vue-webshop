@@ -185,7 +185,6 @@
     flex-direction: column;
     width: 90%;
     min-height: 100vh;
-    min-height: fit-content;
     max-width: 90%;
     padding: 10px;
     transform: translate(-50%, -50%) scale(0.9);
@@ -262,15 +261,19 @@
   }
 
   .product-card.active .product-image {
-    width: 50%; /* Image takes up 50% of the width */
-    height: 50%;
+    width: 50%;
+    max-height: auto; /* Details take up 50% of the width */
     margin: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 
   .product-card.active .product-details-dropdown {
     width: 50%;
-    height: fit-content; /* Details take up 50% of the width */
+    max-height: auto; /* Details take up 50% of the width */
     margin: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
   }
 }
 
