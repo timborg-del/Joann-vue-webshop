@@ -1,7 +1,7 @@
 /* Ensures the container is centered on the screen */
 .about-container {
   position: absolute;
-  top: 50%;
+  top: 110px;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
