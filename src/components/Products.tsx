@@ -77,11 +77,9 @@ const Products: React.FC = () => {
             key={product.RowKey} 
             className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
           >
-            <div 
-              className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}
-            >
-              {product.ProductImageBase64 ? (
-                <div className="product-image-wrapper">
+            <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
+              <div className="product-thumbnail">
+                {product.ProductImageBase64 ? (
                   <img 
                     src={product.ProductImageBase64} 
                     alt={product.Name} 
@@ -89,11 +87,11 @@ const Products: React.FC = () => {
                     onError={(e) => console.error("Image load error", e)}
                     onClick={() => toggleDetails(product.RowKey)}
                   />
-                </div>
-              ) : (
-                <div className="no-image">No Image Available</div>
-              )}
-
+                ) : (
+                  <div className="no-image">No Image Available</div>
+                )}
+                <div className="product-name">{product.Name}</div>
+              </div>
               {activeProduct === product.RowKey && (
                 <div className="product-details-dropdown">
                   <div className="product-info">
@@ -135,6 +133,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
