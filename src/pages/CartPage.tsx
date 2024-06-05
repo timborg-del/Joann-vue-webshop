@@ -35,6 +35,14 @@ const CartPage: React.FC = () => {
 
     const toggleFormVisibility = () => {
         setIsFormVisible(!isFormVisible); // Toggle form visibility
+
+        // If the formContainer is active, scroll to it
+        if (!isFormVisible) {
+            const formContainer = document.querySelector('.form-container');
+            if (formContainer) {
+                formContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+        }
     };
 
     return (
@@ -79,6 +87,7 @@ const CartPage: React.FC = () => {
 };
 
 export default CartPage;
+
 
 
 

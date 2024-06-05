@@ -8,6 +8,7 @@
   height: calc(100vh - 60px); /* Full height of the viewport minus navbar height */
   width: 100vw; /* Full width of the viewport */
   margin: 0; /* Remove any default margin */
+  overflow-y: auto;
 }
 
 .cart-page {
