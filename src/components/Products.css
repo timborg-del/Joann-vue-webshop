@@ -24,6 +24,7 @@
   transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease, position 0.3s ease;
   position: relative;
   overflow: hidden;
+  max-width: 100%;
 }
 
 .product-thumbnail {
@@ -33,7 +34,8 @@
   background-color: #fff;
   border-radius: 5px;
   padding: 10px;
-  width: 100%;
+  width: 150px; /* Fixed width for thumbnails */
+  height: 150px; /* Fixed height for thumbnails */
 }
 
 .product-image {
@@ -176,8 +178,8 @@
   }
 
   .product-thumbnail {
-    width: 100%;
-    height: 100px; /* Fixed height for phone view */
+    width: 150px; /* Fixed width for thumbnails */
+    height: 150px; /* Fixed height for thumbnails */
   }
 
   .product-image {
@@ -212,8 +214,8 @@
   }
 
   .product-thumbnail {
-    width: 100%;
-    height: 120px; /* Fixed height for tablet view */
+    width: 150px; /* Fixed width for thumbnails */
+    height: 150px; /* Fixed height for thumbnails */
   }
 
   .product-image {
@@ -234,8 +236,8 @@
   }
 
   .product-thumbnail {
-    width: 100%;
-    height: 150px; /* Fixed height for desktop view */
+    width: 150px; /* Fixed width for thumbnails */
+    height: 150px; /* Fixed height for thumbnails */
   }
 
   .product-image {
