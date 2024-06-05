@@ -182,6 +182,7 @@
   }
 
   .product-card.active {
+    flex-direction: column;
     width: 90%;
     max-width: 90%;
     padding: 10px;
@@ -196,12 +197,13 @@
   }
 
   .product-card.active .product-image {
-    width: 25%; /* Image takes up 50% of the width */
+    width: 100%; /* Image takes up 50% of the width */
     height: auto;
   }
 
   .product-card.active .product-details-dropdown {
-    width: 25%; /* Details take up 50% of the width */
+    width: 100%; /* Details take up 50% of the width */
+    margin-top: 10px;
   }
 }
 
