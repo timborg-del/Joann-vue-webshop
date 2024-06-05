@@ -205,6 +205,7 @@
 
   .product-card.active .product-details-dropdown {
     width: 70%; /* Details take up 50% of the width */
+    height: auto;
     margin-top: 10px;
   }
 }
