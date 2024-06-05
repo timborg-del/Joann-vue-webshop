@@ -2,8 +2,10 @@
 .cart-page-container {
   display: flex; /* Use flexbox for centering */
   justify-content: center; /* Center horizontally */
-  align-items: center; /* Center vertically */
-  height: 100vh; /* Full height of the viewport */
+  align-items: flex-start; /* Align items to the top */
+  position: fixed; /* Fixed position to keep it at the top */
+  top: 60px; /* Height of the navbar */
+  height: calc(100vh - 60px); /* Full height of the viewport minus navbar height */
   width: 100vw; /* Full width of the viewport */
   margin: 0; /* Remove any default margin */
 }
@@ -12,10 +14,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: fit-content; /* Adjust max-width based on your design */
-  min-width: auto;
-  max-height: 1200px;
-  min-height: 600px;
+  justify-content: center; /* Center vertically */
+  width: 90%; /* Adjust width based on your design */
+  max-width: 600px; /* Maximum width of the cart page */
   padding: 20px;
   background: rgba(249, 169, 49, 0.395);
   border-radius: 16px;
@@ -24,7 +25,7 @@
   -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.13);
   transition: transform 0.3s ease;
-  overflow-y: visible;
+  overflow-y: auto;
 }
 
 .form-container {
@@ -133,16 +134,18 @@ form {
 
 /* Add responsive styles for larger screens */
 @media screen and (min-width: 768px) {
-
+  .cart-page-container {
+    align-items: center; /* Center items horizontally */
+  }
 
   .cart-page {
     flex-direction: row;
     justify-content: space-between;
-    padding: 20px;
+    width: 80%; /* Adjust width based on your design */
   }
 
   .cart-page__item {
-    width: 48%;
+    width: 48%; /* Adjust width of cart items */
   }
 }
 
