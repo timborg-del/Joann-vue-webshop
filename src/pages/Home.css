@@ -1,7 +1,7 @@
 /* Ensures the container is centered on the screen */
 .home-container {
   position: absolute;
-  top: 110px;
+  top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   display: flex;
