@@ -262,7 +262,7 @@
 
   .product-card.active .product-image {
     width: 50%; /* Image takes up 50% of the width */
-    height: fit-content;
+    height: 50%;
     margin: 20px;
   }
 
