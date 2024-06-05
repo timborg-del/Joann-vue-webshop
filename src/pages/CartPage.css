@@ -153,6 +153,7 @@ form {
     display: flex; /* Show the form when active */
   }
 
+
   .cart-page__item {
     width: 48%; /* Adjust width of cart items */
   }
