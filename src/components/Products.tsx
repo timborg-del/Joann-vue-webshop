@@ -46,7 +46,7 @@ const Products: React.FC = () => {
       id: uniqueId,
       name: product.Name,
       price: getPrice(product.RowKey, product.Price),
-      productImage: product.ImageUrl, // This now holds the URL to the image
+      imageUrl: product.ImageUrl, // This now holds the URL to the image
       quantity: 1,
       size: size
     });

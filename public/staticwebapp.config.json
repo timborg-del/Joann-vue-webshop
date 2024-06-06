@@ -9,14 +9,6 @@
       "mimeType": "text/html"
     },
     {
-      "route": "/*.ts",
-      "mimeType": "application/javascript"
-    },
-    {
-      "route": "/*.tsx",
-      "mimeType": "application/javascript"
-    },
-    {
       "route": "/*.js",
       "mimeType": "application/javascript"
     },
@@ -42,5 +34,6 @@
     "exclude": ["/static/*", "/assets/*"]
   }
 }
+
 
 

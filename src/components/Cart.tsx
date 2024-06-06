@@ -1,3 +1,4 @@
+import React from 'react';
 import { useCart, useCartDispatch } from '../context/CartContext';
 import CartItems from './CartItems';
 import './Cart.css';
@@ -28,7 +29,7 @@ const Cart = () => {
                 <CartItems
                   id={item.id} // Keep id as part of the props but do not render it in CartItems component
                   size={item.size}
-                  productImage={item.productImage}
+                  imageUrl={item.imageUrl} // Ensure imageUrl is used correctly
                   name={item.name}
                   price={item.price}
                   quantity={item.quantity}
