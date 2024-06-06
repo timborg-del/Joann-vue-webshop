@@ -6,7 +6,7 @@ interface CartItem {
   id: string;
   name: string;
   price: number;
-  productImage: string;
+  imageUrl: string; // Updated to imageUrl
   quantity: number;
   size?: string;
 }
@@ -45,46 +45,42 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [storedState, setStoredState] = useLocalStorage<CartState>('cart', initialState);
 
   // Reducer function to handle state changes
-  // Reducer function to handle state changes
-// Reducer function to handle state changes
-const cartReducer = (state: CartState, action: Action): CartState => {
-  switch (action.type) {
-    case 'ADD_ITEM':
-      const existingItemIndex = state.items.findIndex(item => item.id === action.payload.id);
-      if (existingItemIndex !== -1) {
-        const updatedItems = [...state.items];
-        updatedItems[existingItemIndex].quantity += 1; // Increment quantity by 1
+  const cartReducer = (state: CartState, action: Action): CartState => {
+    switch (action.type) {
+      case 'ADD_ITEM':
+        const existingItemIndex = state.items.findIndex(item => item.id === action.payload.id);
+        if (existingItemIndex !== -1) {
+          const updatedItems = [...state.items];
+          updatedItems[existingItemIndex].quantity += 1; // Increment quantity by 1
+          return { ...state, items: updatedItems };
+        }
+        return { 
+          ...state, 
+          items: [...state.items, { ...action.payload, quantity: 1 }] // Add new item with quantity 1
+        };
+      case 'REMOVE_ITEM':
+        const updatedItems = state.items.filter(item => item.id !== action.payload);
         return { ...state, items: updatedItems };
-      }
-      return { 
-        ...state, 
-        items: [...state.items, { ...action.payload, quantity: 1 }] // Add new item with quantity 1
-      };
-    case 'REMOVE_ITEM':
-      const updatedItems = state.items.filter(item => item.id !== action.payload);
-      return { ...state, items: updatedItems };
-    case 'CLEAR_CART':
-      return initialState;
-    case 'INCREMENT_QUANTITY':
-      const incrementedItems = state.items.map(item =>
-        item.id === action.payload
-          ? { ...item, quantity: item.quantity + 1 }
-          : item
-      );
-      return { ...state, items: incrementedItems };
-    case 'DECREMENT_QUANTITY':
-      const decrementedItems = state.items.map(item =>
-        item.id === action.payload
-          ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
-          : item
-      );
-      return { ...state, items: decrementedItems };
-    default:
-      return state;
-  }
-};
-
-
+      case 'CLEAR_CART':
+        return initialState;
+      case 'INCREMENT_QUANTITY':
+        const incrementedItems = state.items.map(item =>
+          item.id === action.payload
+            ? { ...item, quantity: item.quantity + 1 }
+            : item
+        );
+        return { ...state, items: incrementedItems };
+      case 'DECREMENT_QUANTITY':
+        const decrementedItems = state.items.map(item =>
+          item.id === action.payload
+            ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
+            : item
+        );
+        return { ...state, items: decrementedItems };
+      default:
+        return state;
+    }
+  };
 
   const [state, dispatch] = useReducer(cartReducer, storedState);
 
@@ -107,7 +103,6 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
-
 
 
 
