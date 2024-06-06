@@ -17,6 +17,7 @@ const AdminPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit'>('dashboard');
   const [error, setError] = useState<string | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -47,20 +48,20 @@ const AdminPage: React.FC = () => {
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const file = e.target.files[0];
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setNewProduct({ ...newProduct, ProductImageBase64: reader.result as string });
-      };
-      reader.readAsDataURL(file);
+      setSelectedFile(file);
     }
   };
-  
 
   const handleAddProduct = async (e: FormEvent) => {
     e.preventDefault();
+    if (!selectedFile) {
+      setError('Please select a file to upload.');
+      return;
+    }
+
     try {
       const productToAdd = { ...newProduct, RowKey: Date.now().toString() };
-      await addProduct(productToAdd);
+      await addProduct(productToAdd, selectedFile);
       setProducts([...products, productToAdd]);
       setNewProduct({
         PartitionKey: 'product',
@@ -71,6 +72,7 @@ const AdminPage: React.FC = () => {
         Category: '',
         ProductImageBase64: ''
       });
+      setSelectedFile(null);
       setCurrentView('products');
       setError(null);
     } catch (err) {
@@ -107,7 +109,6 @@ const AdminPage: React.FC = () => {
     }
   };
 
-
   const handleDeleteProduct = async (partitionKey: string, rowKey: string) => {
     try {
       await deleteProduct(partitionKey, rowKey);
@@ -116,7 +117,7 @@ const AdminPage: React.FC = () => {
     } catch (err) {
       setError('Failed to delete product');
     }
-  }
+  };
 
   const filteredProducts = products.filter(product =>
     product.Name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -141,6 +142,7 @@ const AdminPage: React.FC = () => {
             Category: '',
             ProductImageBase64: ''
           });
+          setSelectedFile(null);
           setCurrentView('add');
         }}>Add New Product</button>
       </aside>
@@ -172,7 +174,7 @@ const AdminPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredProducts.map(product => (
+                {filteredProducts.map((product) => (
                   <tr key={product.RowKey}>
                     <td>{product.Name}</td>
                     <td>{product.Price}</td>
@@ -224,7 +226,7 @@ const AdminPage: React.FC = () => {
               placeholder="Category"
               required
             />
-            <input type="file" onChange={handleFileChange} />
+            <input type="file" onChange={handleFileChange} required={currentView === 'add'} />
             <button type="submit">{currentView === 'add' ? 'Add Product' : 'Update Product'}</button>
           </form>
         )}
@@ -237,6 +239,8 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
+
 
 
 

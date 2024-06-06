@@ -7,7 +7,7 @@ export interface Product {
     Price: number;
     Stock: number;
     Category: string;
-    ProductImageBase64: string;
+    ProductImageBase64: string; // This should be the URL to the image in Blob Storage
 }
 
 export interface User {
@@ -18,22 +18,15 @@ export interface User {
     PasswordHash: string;
 }
 
-export const addProduct = async (product: Product): Promise<void> => {
-    // Convert Price to number if it is a string
-    if (typeof product.Price === 'string') {
-        product.Price = parseFloat(product.Price);
-    }
-    // Convert Stock to number if it is a string
-    if (typeof product.Stock === 'string') {
-        product.Stock = parseInt(product.Stock, 10);
-    }
+// Updated to handle file upload
+export const addProduct = async (product: Product, file: File): Promise<void> => {
+    const formData = new FormData();
+    formData.append('product', JSON.stringify(product));
+    formData.append('file', file);
 
     const response = await fetch(`${API_BASE_URL}/AddProduct`, {
         method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(product),
+        body: formData,
     });
 
     if (!response.ok) {
@@ -44,15 +37,6 @@ export const addProduct = async (product: Product): Promise<void> => {
 
 export const updateProduct = async (product: Product): Promise<void> => {
     console.log('Updating product:', product);
-
-    // Convert Price to number if it is a string
-    if (typeof product.Price === 'string') {
-        product.Price = parseFloat(product.Price);
-    }
-    // Convert Stock to number if it is a string
-    if (typeof product.Stock === 'string') {
-        product.Stock = parseInt(product.Stock, 10);
-    }
 
     const response = await fetch(`${API_BASE_URL}/UpdateProduct`, {
         method: 'PUT',
