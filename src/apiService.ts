@@ -7,7 +7,7 @@ export interface Product {
     Price: number;
     Stock: number;
     Category: string;
-    ImageUrl: string; // Updated to ImageUrl
+    ProductImageBase64: string; // This should be the URL to the image in Blob Storage
 }
 
 export interface User {

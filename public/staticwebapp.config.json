@@ -1,39 +1,33 @@
 {
   "routes": [
     {
-      "route": "/",
-      "mimeType": "text/html"
+      "route": "/*.ts",
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
     },
     {
-      "route": "/index.html",
-      "mimeType": "text/html"
+      "route": "/*.tsx",
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
     },
     {
       "route": "/*.js",
-      "mimeType": "application/javascript"
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
     },
     {
       "route": "/*.mjs",
-      "mimeType": "application/javascript"
-    },
-    {
-      "route": "/static/js/*",
-      "mimeType": "application/javascript"
-    },
-    {
-      "route": "/static/css/*",
-      "mimeType": "text/css"
-    },
-    {
-      "route": "/assets/*",
-      "mimeType": "application/octet-stream"
+      "headers": {
+        "Content-Type": "application/javascript"
+      }
     }
   ],
   "navigationFallback": {
     "rewrite": "/index.html",
-    "exclude": ["/static/*", "/assets/*"]
+    "exclude": ["/static/*"]
   }
 }
-
-
 
