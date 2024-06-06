@@ -37,7 +37,6 @@ const AdminPage: React.FC = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-  
     if (name === 'Price' || name === 'Stock') {
       setNewProduct({ ...newProduct, [name]: parseFloat(value) });
     } else {
@@ -239,6 +238,8 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
+
 
 
 
