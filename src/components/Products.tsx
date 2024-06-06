@@ -46,7 +46,7 @@ const Products: React.FC = () => {
       id: uniqueId,
       name: product.Name,
       price: getPrice(product.RowKey, product.Price),
-      imageUrl: product.ImageUrl, // This now holds the URL to the image
+      imageUrl: product.imageUrl, // This now holds the URL to the image
       quantity: 1,
       size: size
     });
@@ -80,7 +80,7 @@ const Products: React.FC = () => {
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
                 <img 
-                  src={product.ImageUrl} // This should now be the image URL
+                  src={product.imageUrl} // This should now be the image URL
                   alt={product.Name} 
                   className="product-image" 
                   onError={(e) => console.error("Image load error", e)}
@@ -88,9 +88,9 @@ const Products: React.FC = () => {
                 />
               ) : (
                 <div className="product-thumbnail">
-                  {product.ImageUrl ? (
+                  {product.imageUrl ? (
                     <img 
-                      src={product.ImageUrl} // This should now be the image URL
+                      src={product.imageUrl} // This should now be the image URL
                       alt={product.Name} 
                       className="product-image" 
                       onError={(e) => console.error("Image load error", e)}

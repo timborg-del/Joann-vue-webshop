@@ -4,7 +4,7 @@ export interface CartItemProps {
   id: string;
   name: string;
   price: number;
-  imageUrl: string; // Updated to imageUrl
+  imageUrl: string; // Corrected to imageUrl
   quantity: number;
   size?: string;
 }
@@ -22,6 +22,7 @@ const CartItems: React.FC<CartItemProps> = ({ name, price, imageUrl, quantity, s
 );
 
 export default CartItems;
+
 
 
 
