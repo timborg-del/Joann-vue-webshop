@@ -9,6 +9,22 @@
       "mimeType": "text/html"
     },
     {
+      "route": "/*.ts",
+      "mimeType": "application/javascript"
+    },
+    {
+      "route": "/*.tsx",
+      "mimeType": "application/javascript"
+    },
+    {
+      "route": "/*.js",
+      "mimeType": "application/javascript"
+    },
+    {
+      "route": "/*.mjs",
+      "mimeType": "application/javascript"
+    },
+    {
       "route": "/static/js/*",
       "mimeType": "application/javascript"
     },
@@ -17,34 +33,8 @@
       "mimeType": "text/css"
     },
     {
-      "route": "/*.ts",
-      "headers": {
-        "Content-Type": "application/javascript"
-      }
-    },
-    {
-      "route": "/*.tsx",
-      "headers": {
-        "Content-Type": "application/javascript"
-      }
-    },
-    {
-      "route": "/*.js",
-      "headers": {
-        "Content-Type": "application/javascript"
-      }
-    },
-    {
-      "route": "/*.mjs",
-      "headers": {
-        "Content-Type": "application/javascript"
-      }
-    },
-    {
       "route": "/assets/*",
-      "headers": {
-        "Content-Type": "application/octet-stream"
-      }
+      "mimeType": "application/octet-stream"
     }
   ],
   "navigationFallback": {
