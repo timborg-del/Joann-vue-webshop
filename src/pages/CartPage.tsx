@@ -3,7 +3,7 @@ import Cart from '../components/Cart';
 import './CartPage.css'; // Import CSS file for CartPage styles
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
-import useCartActions from '../hooks/useCartActions';
+
 
 const CartPage: React.FC = () => {
     const [formData, setFormData] = useState({
@@ -16,7 +16,7 @@ const CartPage: React.FC = () => {
 
     const [isFormVisible, setIsFormVisible] = useState(false); // Initially set to false
     const [isCartPageVisible] = useState(true); // State to track cart page visibility
-    const { } = useCartActions(); // Include removeItemFromCart from useCartActions
+// Include removeItemFromCart from useCartActions
     const { state } = useCart();
 
     // Calculate total price of items in the cart

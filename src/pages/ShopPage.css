@@ -17,11 +17,19 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: center;
+  width: 100%;
 }
 
 .product {
-  width: 100%;
+  width: calc(20% - 20px); /* 5 cards per row on large screens */
   margin: 10px;
+}
+
+@media screen and (max-width: 1023px) and (min-width: 768px) {
+  .product {
+    width: calc(33.33% - 20px); /* 3 cards per row on tablet screens */
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -31,7 +39,7 @@
   }
 
   .product {
-    width: 100%;
+    width: calc(50% - 20px); /* 2 cards per row on mobile screens */
     margin: 10px 0; /* Adjust margin as needed */
   }
 }
