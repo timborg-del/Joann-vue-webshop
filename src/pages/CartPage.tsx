@@ -4,7 +4,6 @@ import './CartPage.css'; // Import CSS file for CartPage styles
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
-
 const CartPage: React.FC = () => {
     const [formData, setFormData] = useState({
         fullName: '',
@@ -15,8 +14,6 @@ const CartPage: React.FC = () => {
     });
 
     const [isFormVisible, setIsFormVisible] = useState(false); // Initially set to false
-    const [isCartPageVisible] = useState(true); // State to track cart page visibility
-// Include removeItemFromCart from useCartActions
     const { state } = useCart();
 
     // Calculate total price of items in the cart
@@ -42,14 +39,10 @@ const CartPage: React.FC = () => {
             <div className='cart-page'>
                 <div className='cart-container'>
                     <h1>Cart</h1>
-                    {/* Render Cart and checkout form based on visibility state */}
-                    {isCartPageVisible && (                 
-                        <Cart />
-                    )}
+                    <Cart />
                 </div>
                 
-                <div className='form-container'>
-                
+                <div className={`form-container ${isFormVisible ? 'active' : ''}`}>
                     {isFormVisible && (
                         <form onSubmit={handleSubmit}>
                             <div className='input-text'>
@@ -63,22 +56,23 @@ const CartPage: React.FC = () => {
                             <button type="submit" className='checkout_btn'>Checkout</button>
                         </form>
                     )}
-
-                    {/* Button to toggle form visibility */}
-                    <div className='hide-btn'>
-                        {!isFormVisible && (
-                            <button onClick={toggleFormVisibility} className="hideform_btn">Go To Checkout</button>
-                        )}
-                    </div>
-                    {/* Button to navigate back to homepage */}
-                    <Link to="/" className="cartexit_btn">X</Link>
                 </div>
+
+                <div className='hide-btn'>
+                    {!isFormVisible && (
+                        <button onClick={toggleFormVisibility} className="hideform_btn">Go To Checkout</button>
+                    )}
+                </div>
+
+                {/* Button to navigate back to homepage */}
+                <Link to="/" className="cartexit_btn">X</Link>
             </div>
         </div>
     );
 };
 
 export default CartPage;
+
 
 
 

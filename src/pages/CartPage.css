@@ -107,8 +107,7 @@ form {
 .cartclear_btn,
 .checkout_btn {
   cursor: pointer;
-  width: 50%;
-  min-width: 100%; /* Adjust the minimum width as needed */
+  width: 100%; /* Ensure buttons take the full width */
   margin-top: 10px; /* Adjust the spacing between buttons */
   color: white;
   font-size: larger;
@@ -153,16 +152,7 @@ form {
     display: flex; /* Show the form when active */
   }
 
-
   .cart-page__item {
     width: 48%; /* Adjust width of cart items */
   }
 }
-
-
-
-
-
-
-  
-  
