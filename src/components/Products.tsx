@@ -4,12 +4,12 @@ import useCartActions from '../hooks/useCartActions'; // Import useCartActions h
 import './Products.css'; // Import the corresponding CSS file
 import useFetchData from '../hooks/useFetchData'; // Import the useFetchData hook
 import { Product } from '../apiService'; // Adjust import as needed
-import { useCartDispatch } from '../context/CartContext'; // Import useCartDispatch
-
+import { useCart, useCartDispatch } from '../context/CartContext'; // Import useCartDispatch and useCart
 
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions(); // Access addItemToCart function from useCartActions hook
   const dispatch = useCartDispatch(); // Access the dispatch function from CartContext
+  const { state } = useCart(); // Access the cart state
   const { data, isLoading, error } = useFetchData('https://joart.azurewebsites.net/GetProducts'); // Fetch products data
 
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
@@ -61,6 +61,11 @@ const Products: React.FC = () => {
 
   const incrementQuantity = (itemId: string) => {
     dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
+  };
+
+  const getProductQuantity = (productId: string, size: string) => {
+    const cartItem = state.items.find(item => item.id === `${productId}-${size}`);
+    return cartItem ? cartItem.quantity : 0;
   };
 
   if (isLoading) {
@@ -147,9 +152,9 @@ const Products: React.FC = () => {
                     </button>
                   </div>
                   <div className="quantity-buttons">
-                    <button onClick={() => decrementQuantity(product.RowKey)}>-</button>
-                    <span>{product.quantity}</span>
-                    <button onClick={() => incrementQuantity(product.RowKey)}>+</button>
+                    <button onClick={() => decrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>-</button>
+                    <span>{getProductQuantity(product.RowKey, selectedSizes[product.RowKey] || 'A3')}</span>
+                    <button onClick={() => incrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>+</button>
                   </div>
                 </div>
               )}
