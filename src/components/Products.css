@@ -273,8 +273,9 @@
 
   .product-card.active .product-details-dropdown {
     width: 50%;
-    max-height: 300px; /* Details take up 50% of the width */
+    max-height: 350px; /* Details take up 50% of the width */
     padding: 20px;
+    overflow-y: auto;
   }
 }
 
