@@ -227,7 +227,7 @@
 
   .product-thumbnail {
     width: 200px; /* Fixed width for thumbnails */
-    height: 250px; /* Fixed height for thumbnails */
+    height: 200px; /* Fixed height for thumbnails */
   }
 
   .product-image {
@@ -268,8 +268,8 @@
   }
 
   .product-thumbnail {
-    width: 250px; /* Fixed width for thumbnails */
-    height: 300px; /* Fixed height for thumbnails */
+    width: 200px; /* Fixed width for thumbnails */
+    height: 200px; /* Fixed height for thumbnails */
   }
 
   .product-image {
