@@ -42,17 +42,18 @@
   background-color: #02359c78;
   border-radius: 5px;
   box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.3s ease, border 0.3s ease, z-index 0.3s ease;
+  transition: box-shadow 0.1s ease, border 0.1s ease, z-index 0.1s ease;
   position: relative;
   overflow: hidden;
   width: 100%; /* Ensure width adapts */
+  border: 1px solid rgb(196, 196, 196);
   max-width: none; /* Ensure width adapts */
   height: auto;
 }
 
 .product-card:hover {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Add shadow effect */
-  border: 2px solid rgba(0, 0, 0, 0.1); /* Add subtle border effect */
+  border: 1px solid rgb(196, 196, 196); /* Add subtle border effect */
   z-index: 1; /* Bring the card to the front */
 }
 
