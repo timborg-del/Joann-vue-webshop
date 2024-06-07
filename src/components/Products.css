@@ -222,8 +222,8 @@
   }
 
   .product-thumbnail {
-    width: 150px; /* Fixed width for thumbnails */
-    height: 150px; /* Fixed height for thumbnails */
+    width: 200px; /* Fixed width for thumbnails */
+    height: 250px; /* Fixed height for thumbnails */
   }
 
   .product-image {
@@ -248,13 +248,14 @@
   }
 
   .product-card {
+    flex-direction: column;
     max-width: 250px; /* Static width for desktop view */
     max-height: 300px; /* Static height for desktop view */
   }
 
   .product-thumbnail {
-    width: 150px; /* Fixed width for thumbnails */
-    height: 150px; /* Fixed height for thumbnails */
+    width: 250px; /* Fixed width for thumbnails */
+    height: 300px; /* Fixed height for thumbnails */
   }
 
   .product-image {
