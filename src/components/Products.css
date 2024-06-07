@@ -34,8 +34,8 @@
   background-color: #fff;
   border-radius: 5px;
   padding: 10px;
-  width: 150px; /* Fixed width for thumbnails */
-  height: 150px; /* Fixed height for thumbnails */
+  width: 100%; /* Adjusted width */
+  height: auto; /* Adjusted height */
 }
 
 .product-image {
@@ -244,7 +244,7 @@
 /* Large Desktop View */
 @media screen and (min-width: 1024px) {
   .product-wrapper {
-    width: calc(100% - 20px); /* 5 cards per row */
+    width: calc(20% - 20px); /* 5 cards per row */
   }
 
   .product-card {
