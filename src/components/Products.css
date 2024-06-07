@@ -7,6 +7,19 @@
   padding: 10px;
   width: 100%;
 }
+.quantity-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.quantity-buttons button {
+  margin: 0 5px;
+  padding: 5px 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
 
 .product-wrapper {
   display: flex;
