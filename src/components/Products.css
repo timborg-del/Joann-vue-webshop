@@ -246,6 +246,17 @@
 
 /* Large Desktop View */
 @media screen and (min-width: 1024px) {
+  .products-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    grid-gap: 100px;
+    width: 100vh;
+    height: auto;
+    padding: 10px;
+  }
+
   .product-wrapper {
     width: calc(20% - 20px); /* 5 cards per row */
   }
