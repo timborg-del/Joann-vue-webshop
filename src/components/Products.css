@@ -11,6 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 10px;
 }
 
 .quantity-buttons button {
@@ -19,6 +20,12 @@
   font-size: 16px;
   cursor: pointer;
 }
+
+.quantity-buttons span {
+  font-size: 16px;
+  margin: 0 10px;
+}
+
 
 
 .product-wrapper {
@@ -42,6 +49,11 @@
   width: 100%; /* Ensure width adapts */
   max-width: none; /* Ensure width adapts */
   height: auto;
+}
+
+.product-card:hover{
+  transform: translateY(-5px); /* Slightly lift the element */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow effect */
 }
 
 .product-thumbnail {
