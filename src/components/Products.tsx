@@ -83,7 +83,10 @@ const Products: React.FC = () => {
                   src={product.ImageUrl} // This should now be the image URL
                   alt={product.Name} 
                   className="product-image" 
-                  onError={(e) => console.error("Image load error", e)}
+                  onError={(e) => {
+                    e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
+                    console.error("Image load error", e);
+                  }}
                   onClick={() => toggleDetails(product.RowKey)}
                 />
               ) : (
@@ -93,7 +96,10 @@ const Products: React.FC = () => {
                       src={product.ImageUrl} // This should now be the image URL
                       alt={product.Name} 
                       className="product-image" 
-                      onError={(e) => console.error("Image load error", e)}
+                      onError={(e) => {
+                        e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
+                        console.error("Image load error", e);
+                      }}
                       onClick={() => toggleDetails(product.RowKey)}
                     />
                   ) : (
@@ -143,24 +149,6 @@ const Products: React.FC = () => {
 };
 
 export default Products;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
