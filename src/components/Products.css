@@ -11,7 +11,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  box-sizing: border-box; /* Added to include padding and border in width and height calculations */
+  box-sizing: border-box; /* Include padding and border in width and height calculations */
 }
 
 .product-card {
@@ -25,7 +25,8 @@
   transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease, position 0.3s ease;
   position: relative;
   overflow: hidden;
-  max-width: 100%;
+  width: 100%;
+  height: auto;
 }
 
 .product-thumbnail {
@@ -70,7 +71,7 @@
 }
 
 .product-card.active .product-image {
-  width: 25%; /* Image takes up 50% of the width */
+  width: 25%; /* Image takes up 25% of the width */
   height: auto;
   max-height: 500px;
   object-fit: contain;
@@ -201,12 +202,12 @@
   }
 
   .product-card.active .product-image {
-    width: 70%; /* Image takes up 50% of the width */
+    width: 70%; /* Image takes up 70% of the width */
     height: auto;
   }
 
   .product-card.active .product-details-dropdown {
-    width: 70%; /* Details take up 50% of the width */
+    width: 70%; /* Details take up 70% of the width */
     height: auto;
     margin-top: 10px;
   }
@@ -235,12 +236,12 @@
   }
 
   .product-card.active .product-image {
-    width: 25%; /* Image takes up 50% of the width */
+    width: 25%; /* Image takes up 25% of the width */
     height: auto;
   }
 
   .product-card.active .product-details-dropdown {
-    width: 25%; /* Details take up 50% of the width */
+    width: 25%; /* Details take up 25% of the width */
   }
 }
 
@@ -251,9 +252,7 @@
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
-    grid-gap: 100px;
-    width: 100vh;
-    height: auto;
+    grid-gap: 20px;
     padding: 10px;
   }
 
@@ -276,24 +275,21 @@
   .product-image {
     width: 100%;
     height: 100%; /* Ensure the image fills the thumbnail */
+    object-fit: cover; /* Ensure the image covers the thumbnail */
   }
 
   .product-card.active .product-image {
     width: 50%;
     max-height: 350px; /* Details take up 50% of the width */
     padding: 20px;
-  
   }
 
   .product-card.active .product-details-dropdown {
     width: 50%;
     max-height: 350px; /* Details take up 50% of the width */
     padding: 20px;
-
   }
 }
-
-
 
 
 
