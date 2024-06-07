@@ -236,14 +236,18 @@
   }
 
   .product-card.active .product-image {
-    width: 25%; /* Image takes up 25% of the width */
-    height: auto;
+    width: 50%;
+    max-height: 300px; /* Details take up 50% of the width */
+    padding: 20px;
   }
 
   .product-card.active .product-details-dropdown {
-    width: 75%; /* Details take up 75% of the width */
+    width: 50%;
+    max-height: 300px; /* Details take up 50% of the width */
+    padding: 20px;
   }
 }
+
 
 /* Large Desktop View */
 @media screen and (min-width: 1024px) {
