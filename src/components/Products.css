@@ -3,7 +3,7 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  grid-gap: 20px;
+  grid-gap: 10px;
   padding: 10px;
   width: 100%;
 }
@@ -177,7 +177,7 @@
 
   .product-thumbnail {
     width: 150px; /* Fixed width for thumbnails */
-    height: 150px; /* Fixed height for thumbnails */
+    height: 200px; /* Fixed height for thumbnails */
   }
 
   .product-image {
