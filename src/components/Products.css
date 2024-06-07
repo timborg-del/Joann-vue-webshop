@@ -47,8 +47,8 @@
   overflow: hidden;
   width: 100%; /* Ensure width adapts */
   border: 1px solid rgb(196, 196, 196);
-  max-width: none; /* Ensure width adapts */
-  height: auto;
+  max-width: 100%; /* Ensure width adapts */
+  height: 250px;
 }
 
 .product-card:hover {
@@ -66,7 +66,7 @@
   border-radius: 5px;
   padding: 10px;
   width: 100%; /* Fixed width for thumbnails */
-  height: auto; /* Fixed height for thumbnails */
+  height: 250px; /* Fixed height for thumbnails */
 }
 
 /* Remove hover effect from .product-thumbnail */
