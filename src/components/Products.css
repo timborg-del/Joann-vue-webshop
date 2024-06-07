@@ -52,8 +52,8 @@
 }
 
 .product-card:hover {
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Add shadow effect */
-  border: 1px solid rgb(196, 196, 196); /* Add subtle border effect */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.7); /* Add shadow effect */
+  border: 2px solid rgb(196, 196, 196); /* Add subtle border effect */
   z-index: 1; /* Bring the card to the front */
 }
 
