@@ -7,6 +7,7 @@
   padding: 10px;
   width: 100%;
 }
+
 .quantity-buttons {
   display: flex;
   justify-content: center;
@@ -25,8 +26,6 @@
   font-size: 16px;
   margin: 0 10px;
 }
-
-
 
 .product-wrapper {
   display: flex;
@@ -51,7 +50,7 @@
   height: auto;
 }
 
-.product-card:hover{
+.product-card:hover {
   transform: translateY(-5px); /* Slightly lift the element */
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow effect */
 }
@@ -65,13 +64,10 @@
   padding: 10px;
   width: 100%; /* Fixed width for thumbnails */
   height: auto; /* Fixed height for thumbnails */
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.product-thumbnail:hover {
-  transform: translateY(-5px); /* Slightly lift the element */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow effect */
-}
+/* Remove hover effect from .product-thumbnail */
+
 
 
 .product-image {
