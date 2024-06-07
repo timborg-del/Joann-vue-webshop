@@ -11,7 +11,7 @@ const AdminPage: React.FC = () => {
     Price: 0,
     Stock: 0,
     Category: '',
-    imageUrl: '' // Corrected to imageUrl
+    ImageUrl: '' // Corrected to imageUrl
   });
   const [, setEditingProduct] = useState<Product | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -69,7 +69,7 @@ const AdminPage: React.FC = () => {
         Price: 0,
         Stock: 0,
         Category: '',
-        imageUrl: '' // Reset imageUrl
+        ImageUrl: '' // Reset imageUrl
       });
       setSelectedFile(null);
       setCurrentView('products');
@@ -99,7 +99,7 @@ const AdminPage: React.FC = () => {
         Price: 0,
         Stock: 0,
         Category: '',
-        imageUrl: '' // Reset imageUrl
+        ImageUrl: '' // Reset imageUrl
       });
       setCurrentView('products');
       setError(null);
@@ -139,7 +139,7 @@ const AdminPage: React.FC = () => {
             Price: 0,
             Stock: 0,
             Category: '',
-            imageUrl: '' // Reset imageUrl
+            ImageUrl: '' // Reset imageUrl
           });
           setSelectedFile(null);
           setCurrentView('add');

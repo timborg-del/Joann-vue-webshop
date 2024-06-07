@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-const useFetchData = (url: string) => {
-    const [data, setData] = useState<any>(null);
+const useFetchData = <T,>(url: string) => {
+    const [data, setData] = useState<T | null>(null);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState<Error | null>(null);
 
@@ -13,7 +13,7 @@ const useFetchData = (url: string) => {
                     const errorText = await response.text();
                     throw new Error(`Failed to fetch data: ${errorText}`);
                 }
-                const result = await response.json();
+                const result: T = await response.json();
                 console.log('Fetched data:', result); // Log the fetched data
                 setData(result);
             } catch (error) {
@@ -31,6 +31,7 @@ const useFetchData = (url: string) => {
 };
 
 export default useFetchData;
+
 
 
 

@@ -7,7 +7,7 @@ export interface Product {
     Price: number;
     Stock: number;
     Category: string;
-    imageUrl: string; // Updated to imageUrl
+    ImageUrl: string; // Updated to imageUrl
 }
 
 export interface User {

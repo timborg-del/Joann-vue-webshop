@@ -6,7 +6,7 @@ interface CartItem {
   id: string;
   name: string;
   price: number;
-  imageUrl: string; // Updated to imageUrl
+  ImageUrl: string; // Updated to imageUrl
   quantity: number;
   size?: string;
 }
@@ -47,7 +47,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   // Reducer function to handle state changes
   const cartReducer = (state: CartState, action: Action): CartState => {
     switch (action.type) {
-      case 'ADD_ITEM':
+      case 'ADD_ITEM': {
         const existingItemIndex = state.items.findIndex(item => item.id === action.payload.id);
         if (existingItemIndex !== -1) {
           const updatedItems = [...state.items];
@@ -58,25 +58,30 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           ...state, 
           items: [...state.items, { ...action.payload, quantity: 1 }] // Add new item with quantity 1
         };
-      case 'REMOVE_ITEM':
+      }
+      case 'REMOVE_ITEM': {
         const updatedItems = state.items.filter(item => item.id !== action.payload);
         return { ...state, items: updatedItems };
-      case 'CLEAR_CART':
+      }
+      case 'CLEAR_CART': {
         return initialState;
-      case 'INCREMENT_QUANTITY':
+      }
+      case 'INCREMENT_QUANTITY': {
         const incrementedItems = state.items.map(item =>
           item.id === action.payload
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
         return { ...state, items: incrementedItems };
-      case 'DECREMENT_QUANTITY':
+      }
+      case 'DECREMENT_QUANTITY': {
         const decrementedItems = state.items.map(item =>
           item.id === action.payload
             ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
             : item
         );
         return { ...state, items: decrementedItems };
+      }
       default:
         return state;
     }
@@ -103,6 +108,8 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
+
 
 
 

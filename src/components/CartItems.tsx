@@ -4,14 +4,14 @@ export interface CartItemProps {
   id: string;
   name: string;
   price: number;
-  imageUrl: string; // Corrected to imageUrl
+  ImageUrl: string; // Corrected to imageUrl
   quantity: number;
   size?: string;
 }
 
-const CartItems: React.FC<CartItemProps> = ({ name, price, imageUrl, quantity, size }) => (
+const CartItems: React.FC<CartItemProps> = ({ name, price, ImageUrl, quantity, size }) => (
   <div className="cart-items-prop">
-    <img src={imageUrl} alt={name} onError={(e) => { e.currentTarget.src = '/path/to/placeholder-image.jpg'; }} />
+    <img src={ImageUrl} alt={name} onError={(e) => { e.currentTarget.src = '/path/to/placeholder-image.jpg'; }} />
     <div>
       <p>{name}</p>
       <p>{size}</p>

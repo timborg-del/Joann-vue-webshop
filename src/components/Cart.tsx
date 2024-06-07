@@ -28,7 +28,7 @@ const Cart = () => {
                 <CartItems
                   id={item.id} // Keep id as part of the props but do not render it in CartItems component
                   size={item.size}
-                  imageUrl={item.imageUrl} // Corrected to imageUrl
+                  ImageUrl={item.ImageUrl} // Corrected to imageUrl
                   name={item.name}
                   price={item.price}
                   quantity={item.quantity}
