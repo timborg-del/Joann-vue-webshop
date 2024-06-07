@@ -41,8 +41,8 @@
   text-align: center;
   background-color: #02359c78;
   border-radius: 5px;
-  box-shadow: 4px 4px 30px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s ease, z-index 0.3s ease, width 0.3s ease, height 0.3s ease, position 0.3s ease;
+  box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, border 0.3s ease, z-index 0.3s ease;
   position: relative;
   overflow: hidden;
   width: 100%; /* Ensure width adapts */
@@ -51,9 +51,11 @@
 }
 
 .product-card:hover {
-  transform: translateY(-5px); /* Slightly lift the element */
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2); /* Add shadow effect */
+  border: 2px solid rgba(0, 0, 0, 0.1); /* Add subtle border effect */
+  z-index: 1; /* Bring the card to the front */
 }
+
 
 .product-thumbnail {
   display: flex;
