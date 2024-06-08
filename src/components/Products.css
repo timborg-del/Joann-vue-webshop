@@ -105,10 +105,10 @@
 }
 
 .product-card.active .product-image {
-  width: 25%; /* Image takes up 25% of the width */
+  width: 50%; /* Image takes up 25% of the width */
   height: auto;
   max-height: 500px;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .product-card.active .product-details-dropdown {
@@ -116,10 +116,10 @@
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
+  padding: 30px;
   background-color: hsla(303, 100%, 30%, 0.698);
   border-radius: 16px;
-  width: 75%; /* Details take up 75% of the width */
+  width: 50%; /* Details take up 75% of the width */
   max-height: 500px;
   flex: 1;
 }
