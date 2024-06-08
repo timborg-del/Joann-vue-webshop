@@ -261,6 +261,11 @@
     width: calc(20% - 20px); /* 5 cards per row */
   }
 
+  .product-card.active{
+    min-height: 900px;
+    min-width: 500px;
+  }
+
 
   .product-card {
     max-width: 200px; /* Static width for desktop view */
