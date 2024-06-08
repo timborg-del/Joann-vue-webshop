@@ -266,6 +266,21 @@
     min-width: auto;
   }
 
+  .product-card.active .product-thumbnail {
+    display: none;
+  }
+
+  .product-card.active .product-image {
+    width: 90%; /* Image takes up 70% of the width */
+    height: auto;
+  }
+  .product-card.active .product-details-dropdown {
+    width: 70%; /* Details take up 70% of the width */
+    height: auto;
+    margin-top: 10px;
+  }
+
+
 
   .product-card {
     max-width: 200px; /* Static width for desktop view */
