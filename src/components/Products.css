@@ -250,7 +250,7 @@
     overflow-y: auto;
   }
 
-  .product-card.active .product-thumbnail {
+  .product-card.active .product-image {
     width: 100%;
     height: auto;
   }
