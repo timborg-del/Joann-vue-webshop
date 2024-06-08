@@ -271,12 +271,12 @@
   }
 
   .product-card.active .product-image {
-    width: 90%; /* Image takes up 70% of the width */
-    height: auto;
+    width: 70%; /* Image takes up 70% of the width */
+    height: fit-content;
   }
   .product-card.active .product-details-dropdown {
     width: 70%; /* Details take up 70% of the width */
-    height: auto;
+    height: fit-content;
     margin-top: 10px;
   }
 
