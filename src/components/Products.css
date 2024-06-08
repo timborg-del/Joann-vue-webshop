@@ -97,7 +97,7 @@
   padding: 20px;
   background: #ffffff; /* Background color */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Shadow for depth */
-  border-radius: 16px;
+  border-radius: 5px;
   overflow: hidden;
 }
 
