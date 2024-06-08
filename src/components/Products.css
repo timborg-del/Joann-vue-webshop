@@ -218,6 +218,7 @@
 /* Phone View */
 /* Phone View */
 /* Phone View */
+/* Phone View */
 @media screen and (max-width: 767px) {
   .product-wrapper {
     width: calc(50% - 10px); /* 2 cards per row */
@@ -266,7 +267,7 @@
 
   .product-card.active .product-details-dropdown {
     width: 100%;
-    height: 50vh; /* Details take up 50% of the viewport height */
+    height: calc(50vh - 20px); /* Details take up the remaining 50% of the viewport height minus padding */
     margin-top: 10px;
     overflow-y: auto; /* Add scroll if needed */
   }
@@ -275,7 +276,6 @@
     display: flex;
     flex-direction: column;
     align-items: flex-start;
-    margin-bottom: 20px;
     text-align: left;
     color: #333; /* Dark text for contrast */
     padding: 10px;
@@ -286,7 +286,6 @@
     margin: 5px 0;
     font-size: 1rem;
     color: #333; /* Dark text color */
-    text-align: left;
   }
 
   .buy-btn-container {
