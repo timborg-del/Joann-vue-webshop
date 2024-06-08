@@ -265,7 +265,7 @@
   .product-card.active{
     min-height: 70%;
     min-width: auto;
-    overflow-y: auto;
+    overflow-y: hidden;
   }
 
   .product-card.active .product-thumbnail {
@@ -273,12 +273,12 @@
   }
 
   .product-card.active .product-image {
-    width: 70%; /* Image takes up 70% of the width */
-    height: fit-content;
+    width: 48%; /* Image takes up 70% of the width */
+    object-fit: cover;
   }
   .product-card.active .product-details-dropdown {
-    width: 70%; /* Details take up 70% of the width */
-    height: fit-content;
+    width: 48%; /* Details take up 70% of the width */
+    object-fit: cover;
     border-radius: 0px 5px 5px 0px; /* Rounded corners on the right side */
     margin-top: 10px;
   }
