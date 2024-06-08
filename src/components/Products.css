@@ -262,7 +262,7 @@
   }
 
   .product-card.active{
-    min-height: 600px;
+    min-height: 80%;
     min-width: auto;
   }
 
