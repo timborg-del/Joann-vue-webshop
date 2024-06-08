@@ -263,8 +263,9 @@
   }
 
   .product-card.active{
-    min-height: 80%;
+    min-height: 70%;
     min-width: auto;
+    overflow-y: auto;
   }
 
   .product-card.active .product-thumbnail {
