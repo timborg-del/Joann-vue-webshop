@@ -266,6 +266,7 @@
   .product-thumbnail {
     width: 250px; /* Fixed width for thumbnails */
     height: 300px; /* Fixed height for thumbnails */
+    object-fit:contain
   }
 
   .product-image {
