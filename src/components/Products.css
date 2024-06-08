@@ -92,8 +92,8 @@
   top: 50%;
   left: 50%;
   width: 90%;
-  min-width: 1000px;
-  min-height: 800px; /* Set a fixed height */
+  max-width: 1000px;
+  height: 80vh; /* Set a fixed height */
   padding: 20px;
   background: #ffffff; /* Background color */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Shadow for depth */
