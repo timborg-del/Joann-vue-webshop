@@ -1,5 +1,4 @@
 /* Products.css */
-@media screen and (min-width: 768px) {
 .products-container {
   display: flex;
   flex-wrap: wrap;
@@ -213,13 +212,8 @@
 .select-container select option {
   padding: 10px;
 }
-}
 
-/* Phone View */
-/* Phone View */
-/* Phone View */
-/* Phone View */
-/* Phone View */
+
 @media screen and (max-width: 767px) {
   .product-wrapper {
     width: calc(50% - 10px); /* 2 cards per row */
@@ -245,7 +239,7 @@
   .product-card.active {
     flex-direction: column;
     width: 90%;
-    height: 100vh; /* Full viewport height */
+    min-height: 100vh; /* Full viewport height */
     padding: 10px;
     border-radius: 5px; /* Rounded corners */
     transform: translate(-50%, -50%) scale(1);
