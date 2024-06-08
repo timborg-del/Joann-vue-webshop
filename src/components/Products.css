@@ -251,18 +251,18 @@
   }
 
   .product-card.active .product-thumbnail {
-    width: 100%;
-    height: auto;
+    display: none;
+
   }
 
   .product-card.active .product-image {
-    width: 100%;
-    height: auto; /* Make the image responsive */
+    width: 25%;
+    height: 25%; /* Make the image responsive */
   }
 
   .product-card.active .product-details-dropdown {
-    width: 100%;
-    height: auto;
+    width: 25%;
+    height: 25%;
     margin-top: 10px;
     overflow-y: auto; /* Ensure content is scrollable if it overflows */
   }
