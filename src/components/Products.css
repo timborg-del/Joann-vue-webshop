@@ -25,6 +25,8 @@
 
 .quantity-buttons span {
   font-size: 16px;
+  color: #333; /* Dark text color */
+
   margin: 0 10px;
 }
 
