@@ -262,8 +262,8 @@
   }
 
   .product-card.active{
-    min-height: 900px;
-    min-width: 500px;
+    min-height: 600px;
+    min-width: auto;
   }
 
 
