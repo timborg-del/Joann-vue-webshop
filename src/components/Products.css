@@ -86,7 +86,7 @@
   display: flex;
   flex-direction: row; /* Image on the left, details on the right */
   justify-content: space-between;
-  align-items: center;
+  align-items: stretch; /* Ensure both items stretch to fit */
   transform: translate(-50%, -50%) scale(1.05);
   z-index: 1000;
   position: fixed;
@@ -94,7 +94,7 @@
   left: 50%;
   width: 90%;
   max-width: 1000px;
-  height: auto;
+  height: 80vh; /* Set a fixed height */
   padding: 20px;
   background: #ffffff; /* Background color */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Shadow for depth */
@@ -102,13 +102,9 @@
   overflow: hidden;
 }
 
-.product-card.active .product-thumbnail {
-  display: none;
-}
-
 .product-card.active .product-image {
   width: 48%; /* Image takes up 48% of the width */
-  height: auto;
+  height: 100%; /* Make image fit the height */
   object-fit: cover;
   border-radius: 16px 0 0 16px; /* Rounded corners on the left side */
   margin-right: 2%; /* Space between the image and the details */
@@ -124,11 +120,11 @@
   background-color: rgba(255, 255, 255, 0.9); /* Light background for contrast */
   border-radius: 0 16px 16px 0; /* Rounded corners on the right side */
   width: 48%; /* Details take up 48% of the width */
-  height: auto;
-  object-fit: cover;
+  height: 100%; /* Make details fit the height */
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
+
 
 .product-info {
   display: flex;
