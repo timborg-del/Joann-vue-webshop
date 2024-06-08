@@ -275,7 +275,7 @@
   }
 
   .product-card.active .product-image {
-    width: 70%; /* Image takes up 70% of the width */
+    width: 100%; /* Image takes up 70% of the width */
     height: auto;
   }
 
