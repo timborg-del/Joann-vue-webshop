@@ -93,7 +93,10 @@ const Products: React.FC = () => {
             className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
           >
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
-              <div className="product-thumbnail">
+              <div 
+                className="product-thumbnail"
+                onClick={() => toggleDetails(product.RowKey)}
+              >
                 {product.ImageUrl ? (
                   <img 
                     src={product.ImageUrl} // This should now be the image URL
@@ -103,46 +106,47 @@ const Products: React.FC = () => {
                       e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
                       console.error("Image load error", e);
                     }}
-                    onClick={() => toggleDetails(product.RowKey)}
                   />
                 ) : (
                   <div className="no-image">No Image Available</div>
                 )}
                 <div className="product-name">{product.Name}</div>
               </div>
-              <div className="product-details-dropdown">
-                <div className="product-info">
-                  <p><strong>Name:</strong> {product.Name}</p>
-                  <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
-                  <p><strong>Stock:</strong> {product.Stock}</p>
-                  <p><strong>Category:</strong> {product.Category}</p>
+              {activeProduct === product.RowKey && (
+                <div className="product-details-dropdown">
+                  <div className="product-info">
+                    <p><strong>Name:</strong> {product.Name}</p>
+                    <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
+                    <p><strong>Stock:</strong> {product.Stock}</p>
+                    <p><strong>Category:</strong> {product.Category}</p>
+                  </div>
+                  <div className="select-container">
+                    <label htmlFor={`size-${product.RowKey}`}>Size:</label>
+                    <select 
+                      id={`size-${product.RowKey}`} 
+                      value={selectedSizes[product.RowKey] || 'A3'}
+                      onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
+                    >
+                      <option value="A3">A3</option>
+                      <option value="A4">A4</option>
+                      <option value="A5">A5</option>
+                    </select>
+                  </div>
+                  <div className="buy-btn-container">
+                    <button 
+                      className="buy-btn" 
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                  <div className="quantity-buttons">
+                    <button onClick={() => decrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>-</button>
+                    <span>{getProductQuantity(product.RowKey, selectedSizes[product.RowKey] || 'A3')}</span>
+                    <button onClick={() => incrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>+</button>
+                  </div>
                 </div>
-                <div className="select-container">
-                  <label htmlFor={`size-${product.RowKey}`}>Size:</label>
-                  <select 
-                    id={`size-${product.RowKey}`} 
-                    value={selectedSizes[product.RowKey] || 'A3'}
-                    onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
-                  >
-                    <option value="A3">A3</option>
-                    <option value="A4">A4</option>
-                    <option value="A5">A5</option>
-                  </select>
-                </div>
-                <div className="buy-btn-container">
-                  <button 
-                    className="buy-btn" 
-                    onClick={() => handleAddToCart(product)}
-                  >
-                    Add to Cart
-                  </button>
-                </div>
-                <div className="quantity-buttons">
-                  <button onClick={() => decrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>-</button>
-                  <span>{getProductQuantity(product.RowKey, selectedSizes[product.RowKey] || 'A3')}</span>
-                  <button onClick={() => incrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>+</button>
-                </div>
-              </div>
+              )}
             </div>
           </div>
         ))
@@ -154,6 +158,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
