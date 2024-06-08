@@ -252,13 +252,12 @@
 
 
 /* Large Desktop View */
-@media screen and (min-width: 1024px) {
+@media screen and (min-width: 768px) {
   .product-wrapper {
     width: calc(20% - 20px); /* 5 cards per row */
   }
 
   .product-card {
-    flex-direction: column;
     max-width: 250px; /* Static width for desktop view */
     max-height: 300px; /* Static height for desktop view */
   }
@@ -274,11 +273,10 @@
     height: 100%; /* Ensure the image fills the thumbnail */
     object-fit: cover;
   }
-
+  
   .product-card.active .product-image {
-    width: 50%;
-    max-height: 350px; /* Details take up 50% of the width */
-    padding: 20px;
+    width: 70%; /* Image takes up 70% of the width */
+    height: auto;
   }
 
   .product-card.active .product-details-dropdown {
