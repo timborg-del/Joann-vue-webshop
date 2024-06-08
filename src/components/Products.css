@@ -258,13 +258,13 @@
   }
 
   .product-card {
-    max-width: 250px; /* Static width for desktop view */
-    max-height: 300px; /* Static height for desktop view */
+    max-width: 200px; /* Static width for desktop view */
+    max-height: 250px; /* Static height for desktop view */
   }
 
   .product-thumbnail {
-    width: 250px; /* Fixed width for thumbnails */
-    height: 300px; /* Fixed height for thumbnails */
+    width: 200px; /* Fixed width for thumbnails */
+    height: 250px; /* Fixed height for thumbnails */
     object-fit:contain
   }
 
@@ -273,7 +273,7 @@
     height: 100%; /* Ensure the image fills the thumbnail */
     object-fit: cover;
   }
-  
+
   .product-card.active .product-image {
     width: 70%; /* Image takes up 70% of the width */
     height: auto;
