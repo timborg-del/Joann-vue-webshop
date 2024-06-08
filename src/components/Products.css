@@ -256,13 +256,13 @@
   }
 
   .product-card.active .product-image {
-    width: 25%;
-    height: 25%; /* Make the image responsive */
+    width: 100%;
+    height: auto; /* Make the image responsive */
   }
 
   .product-card.active .product-details-dropdown {
-    width: 25%;
-    height: 25%;
+    width: 100%;
+    height: auto;
     margin-top: 10px;
     overflow-y: auto; /* Ensure content is scrollable if it overflows */
   }
