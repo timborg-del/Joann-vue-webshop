@@ -4,10 +4,13 @@ import useCartActions from '../hooks/useCartActions'; // Import useCartActions h
 import './Products.css'; // Import the corresponding CSS file
 import useFetchData from '../hooks/useFetchData'; // Import the useFetchData hook
 import { Product } from '../apiService'; // Adjust import as needed
+import { useCart, useCartDispatch } from '../context/CartContext'; // Import useCartDispatch and useCart
 
 
 
 const Products: React.FC = () => {
+  const { state } = useCart(); // Access the cart state
+  const dispatch = useCartDispatch(); // Access the dispatch function from CartContext
   const { addItemToCart } = useCartActions(); // Access addItemToCart function from useCartActions hook
   const { data, isLoading, error } = useFetchData('https://joart.azurewebsites.net/GetProducts'); // Fetch products data
 
@@ -53,6 +56,20 @@ const Products: React.FC = () => {
       size: size
     });
   };
+
+  const decrementQuantity = (itemId: string) => {
+    dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
+  };
+
+  const incrementQuantity = (itemId: string) => {
+    dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
+  };
+
+  const getProductQuantity = (productId: string, size: string) => {
+    const cartItem = state.items.find(item => item.id === `${productId}-${size}`);
+    return cartItem ? cartItem.quantity : 0;
+  };
+
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -137,6 +154,11 @@ const Products: React.FC = () => {
                     >
                       Add to Cart
                     </button>
+                    </div>
+                  <div className="quantity-buttons">
+                    <button onClick={() => decrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>-</button>
+                    <span>{getProductQuantity(product.RowKey, selectedSizes[product.RowKey] || 'A3')}</span>
+                    <button onClick={() => incrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>+</button>
                   </div>
                 </div>
               )}
