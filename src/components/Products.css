@@ -217,6 +217,7 @@
 /* Phone View */
 /* Phone View */
 /* Phone View */
+/* Phone View */
 @media screen and (max-width: 767px) {
   .product-wrapper {
     width: calc(50% - 10px); /* 2 cards per row */
@@ -242,13 +243,15 @@
   .product-card.active {
     flex-direction: column;
     width: 90%;
-    height: auto; /* Allow height to adjust based on content */
+    height: 100vh; /* Full viewport height */
     padding: 10px;
     border-radius: 5px; /* Rounded corners */
-    transform: translate(-50%, -50%) scale(0.9);
+    transform: translate(-50%, -50%) scale(1);
     top: 50%;
     left: 50%;
-    overflow: hidden;
+    overflow: hidden; /* Prevent overflow */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Shadow for depth */
+    background-color: #ffffff; /* Background color */
   }
 
   .product-card.active .product-thumbnail {
@@ -257,18 +260,99 @@
 
   .product-card.active .product-image {
     width: 100%;
-    height: auto; /* Make the image responsive */
-    max-height: 50vh; /* Limit the height to fit within the screen */
+    height: 50vh; /* Image takes up 50% of the viewport height */
+    object-fit: cover;
   }
 
   .product-card.active .product-details-dropdown {
     width: 100%;
-    height: auto; /* Allow height to adjust based on content */
+    height: 50vh; /* Details take up 50% of the viewport height */
     margin-top: 10px;
-    max-height: 40vh; /* Limit the height to fit within the screen */
-    overflow: hidden; /* Prevent overflow */
+    overflow-y: auto; /* Add scroll if needed */
+  }
+  
+  .product-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    text-align: left;
+    color: #333; /* Dark text for contrast */
+    padding: 10px;
+    box-sizing: border-box;
+  }
+
+  .product-info p {
+    margin: 5px 0;
+    font-size: 1rem;
+    color: #333; /* Dark text color */
+    text-align: left;
+  }
+
+  .buy-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+  }
+
+  .buy-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    margin-top: 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s ease;
+  }
+
+  .buy-btn:hover {
+    background-color: #0056b3; /* Darker blue on hover */
+    transform: scale(1.05); /* Slightly larger on hover */
+  }
+
+  .select-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 10px;
+    width: 100%;
+  }
+
+  .select-container label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+    color: #333; /* Dark text color */
+  }
+
+  .select-container select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #fff;
+    color: #333;
+    font-size: 1rem;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 16px;
+    transition: border-color 0.3s ease;
+  }
+
+  .select-container select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+
+  .select-container select option {
+    padding: 10px;
   }
 }
+
 
 
 
