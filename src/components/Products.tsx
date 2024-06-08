@@ -93,21 +93,38 @@ const Products: React.FC = () => {
             className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
           >
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
-              <img 
-                src={product.ImageUrl} // This should now be the image URL
-                alt={product.Name} 
-                className="product-image" 
-                onError={(e) => {
-                  e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
-                  console.error("Image load error", e);
-                }}
-                onClick={() => toggleDetails(product.RowKey)}
-              />
-              <div className="product-thumbnail">
-                <div className="product-name">{product.Name}</div>
-              </div>
+              {activeProduct === product.RowKey ? (
+                <img 
+                  src={product.ImageUrl} // This should now be the image URL
+                  alt={product.Name} 
+                  className="product-image" 
+                  onError={(e) => {
+                    e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
+                    console.error("Image load error", e);
+                  }}
+                  onClick={() => toggleDetails(product.RowKey)}
+                />
+              ) : (
+                <div className="product-thumbnail">
+                  {product.ImageUrl ? (
+                    <img 
+                      src={product.ImageUrl} // This should now be the image URL
+                      alt={product.Name} 
+                      className="product-image" 
+                      onError={(e) => {
+                        e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
+                        console.error("Image load error", e);
+                      }}
+                      onClick={() => toggleDetails(product.RowKey)}
+                    />
+                  ) : (
+                    <div className="no-image">No Image Available</div>
+                  )}
+                  <div className="product-name">{product.Name}</div>
+                </div>
+              )}
               {activeProduct === product.RowKey && (
-                <div className="product-details-dropdown active">
+                <div className="product-details-dropdown">
                   <div className="product-info">
                     <p><strong>Name:</strong> {product.Name}</p>
                     <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
