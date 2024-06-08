@@ -4,12 +4,11 @@ import useCartActions from '../hooks/useCartActions'; // Import useCartActions h
 import './Products.css'; // Import the corresponding CSS file
 import useFetchData from '../hooks/useFetchData'; // Import the useFetchData hook
 import { Product } from '../apiService'; // Adjust import as needed
-import { useCart, useCartDispatch } from '../context/CartContext'; // Import useCartDispatch and useCart
+
+
 
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions(); // Access addItemToCart function from useCartActions hook
-  const dispatch = useCartDispatch(); // Access the dispatch function from CartContext
-  const { state } = useCart(); // Access the cart state
   const { data, isLoading, error } = useFetchData('https://joart.azurewebsites.net/GetProducts'); // Fetch products data
 
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
@@ -55,19 +54,6 @@ const Products: React.FC = () => {
     });
   };
 
-  const decrementQuantity = (itemId: string) => {
-    dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
-  };
-
-  const incrementQuantity = (itemId: string) => {
-    dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
-  };
-
-  const getProductQuantity = (productId: string, size: string) => {
-    const cartItem = state.items.find(item => item.id === `${productId}-${size}`);
-    return cartItem ? cartItem.quantity : 0;
-  };
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -77,6 +63,7 @@ const Products: React.FC = () => {
     return <div>Error: {error.message}</div>;
   }
 
+  // Check if data is an array
   if (!Array.isArray(data)) {
     console.error("Unexpected data format:", data); // Log unexpected data format
     return <div>Error: Unexpected data format</div>;
@@ -93,25 +80,36 @@ const Products: React.FC = () => {
             className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
           >
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
-              <div 
-                className="product-thumbnail"
-                onClick={() => toggleDetails(product.RowKey)}
-              >
-                {product.ImageUrl ? (
-                  <img 
-                    src={product.ImageUrl} // This should now be the image URL
-                    alt={product.Name} 
-                    className="product-image" 
-                    onError={(e) => {
-                      e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
-                      console.error("Image load error", e);
-                    }}
-                  />
-                ) : (
-                  <div className="no-image">No Image Available</div>
-                )}
-                <div className="product-name">{product.Name}</div>
-              </div>
+              {activeProduct === product.RowKey ? (
+                <img 
+                  src={product.ImageUrl} // This should now be the image URL
+                  alt={product.Name} 
+                  className="product-image" 
+                  onError={(e) => {
+                    e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
+                    console.error("Image load error", e);
+                  }}
+                  onClick={() => toggleDetails(product.RowKey)}
+                />
+              ) : (
+                <div className="product-thumbnail">
+                  {product.ImageUrl ? (
+                    <img 
+                      src={product.ImageUrl} // This should now be the image URL
+                      alt={product.Name} 
+                      className="product-image" 
+                      onError={(e) => {
+                        e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
+                        console.error("Image load error", e);
+                      }}
+                      onClick={() => toggleDetails(product.RowKey)}
+                    />
+                  ) : (
+                    <div className="no-image">No Image Available</div>
+                  )}
+                  <div className="product-name">{product.Name}</div>
+                </div>
+              )}
               {activeProduct === product.RowKey && (
                 <div className="product-details-dropdown">
                   <div className="product-info">
@@ -140,11 +138,6 @@ const Products: React.FC = () => {
                       Add to Cart
                     </button>
                   </div>
-                  <div className="quantity-buttons">
-                    <button onClick={() => decrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>-</button>
-                    <span>{getProductQuantity(product.RowKey, selectedSizes[product.RowKey] || 'A3')}</span>
-                    <button onClick={() => incrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>+</button>
-                  </div>
                 </div>
               )}
             </div>
@@ -158,9 +151,6 @@ const Products: React.FC = () => {
 };
 
 export default Products;
-
-
-
 
 
 
