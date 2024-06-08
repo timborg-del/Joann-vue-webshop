@@ -273,17 +273,6 @@
     height: 100%; /* Ensure the image fills the thumbnail */
     object-fit: cover;
   }
-
-  .product-card.active .product-image {
-    width: 70%; /* Image takes up 70% of the width */
-    height: auto;
-  }
-
-  .product-card.active .product-details-dropdown {
-    width: 50%;
-    max-height: 350px; /* Details take up 50% of the width */
-    padding: 20px;
-  }
 }
 
 
