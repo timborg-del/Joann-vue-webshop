@@ -216,6 +216,7 @@
 
 /* Phone View */
 /* Phone View */
+/* Phone View */
 @media screen and (max-width: 767px) {
   .product-wrapper {
     width: calc(50% - 10px); /* 2 cards per row */
@@ -241,32 +242,34 @@
   .product-card.active {
     flex-direction: column;
     width: 90%;
-    max-height: 100vh; /* Set height to 100% of viewport height */
+    height: auto; /* Allow height to adjust based on content */
     padding: 10px;
     border-radius: 5px; /* Rounded corners */
     transform: translate(-50%, -50%) scale(0.9);
     top: 50%;
     left: 50%;
-    overflow-y: auto;
+    overflow: hidden;
   }
 
   .product-card.active .product-thumbnail {
-    display: none;
-
+    display: none; /* Hide thumbnail */
   }
 
   .product-card.active .product-image {
     width: 100%;
     height: auto; /* Make the image responsive */
+    max-height: 50vh; /* Limit the height to fit within the screen */
   }
 
   .product-card.active .product-details-dropdown {
     width: 100%;
-    height: auto;
+    height: auto; /* Allow height to adjust based on content */
     margin-top: 10px;
-    overflow-y: auto; /* Ensure content is scrollable if it overflows */
+    max-height: 40vh; /* Limit the height to fit within the screen */
+    overflow: hidden; /* Prevent overflow */
   }
 }
+
 
 
 
