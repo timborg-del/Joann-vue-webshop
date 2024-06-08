@@ -105,7 +105,7 @@
   width: 48%; /* Image takes up 48% of the width */
   height: 100%; /* Make image fit the height */
   object-fit: cover;
-  border-radius: 16px 0 0 16px; /* Rounded corners on the left side */
+  border: none;
   margin-right: 2%; /* Space between the image and the details */
   transition: transform 0.5s ease;
 }
@@ -117,7 +117,7 @@
   align-items: flex-start;
   padding: 30px;
   background-color: rgba(255, 255, 255, 0.9); /* Light background for contrast */
-  border-radius: 0 16px 16px 0; /* Rounded corners on the right side */
+  border-radius: 0 5px 5px 0; /* Rounded corners on the right side */
   width: 48%; /* Details take up 48% of the width */
   height: 100%; /* Make details fit the height */
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
