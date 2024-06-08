@@ -86,7 +86,6 @@
   display: flex;
   flex-direction: row; /* Image on the left, details on the right */
   justify-content: space-between;
-  align-items: stretch; /* Ensure both items stretch to fit */
   transform: translate(-50%, -50%) scale(1.05);
   z-index: 1000;
   position: fixed;
@@ -94,7 +93,7 @@
   left: 50%;
   width: 90%;
   max-width: 1000px;
-  height: 80vh; /* Set a fixed height */
+  height: auto; /* Set a fixed height */
   padding: 20px;
   background: #ffffff; /* Background color */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Shadow for depth */
@@ -261,6 +260,7 @@
   .product-wrapper {
     width: calc(20% - 20px); /* 5 cards per row */
   }
+
 
   .product-card {
     max-width: 200px; /* Static width for desktop view */
