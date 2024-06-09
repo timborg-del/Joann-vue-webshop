@@ -26,7 +26,6 @@
 .quantity-buttons span {
   font-size: 16px;
   color: #333; /* Dark text color */
-
   margin: 0 10px;
 }
 
@@ -217,7 +216,7 @@
   padding: 10px;
 }
 
-
+/* Phone View */
 @media screen and (max-width: 767px) {
   .product-wrapper {
     width: calc(50% - 10px); /* 2 cards per row */
@@ -231,12 +230,12 @@
   .product-thumbnail {
     width: 150px; /* Fixed width for thumbnails */
     height: 200px; /* Fixed height for thumbnails */
-    object-fit: contain;
+    object-fit: cover;
   }
 
   .product-image {
     width: 100%;
-    max-width: 100%;/* Ensure the image fills the thumbnail */
+    height: 100%; /* Ensure the image fills the thumbnail */
     object-fit: cover;
   }
 
@@ -358,7 +357,7 @@
     width: calc(20% - 20px); /* 5 cards per row */
   }
 
-  .product-card.active{
+  .product-card.active {
     min-height: 70%;
     min-width: auto;
     overflow-y: hidden;
@@ -369,12 +368,13 @@
   }
 
   .product-card.active .product-image {
-    width: 48%; /* Image takes up 70% of the width */
+    width: 48%; /* Image takes up 48% of the width */
     max-height: 90%;
     object-fit: contain;
   }
+
   .product-card.active .product-details-dropdown {
-    width: 48%; /* Details take up 70% of the width */
+    width: 48%; /* Details take up 48% of the width */
     max-height: 90%;
     object-fit: contain;
     border-radius: 0px 5px 5px 0px; /* Rounded corners on the right side */
