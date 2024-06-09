@@ -36,7 +36,6 @@
   transition: all 0.3s ease;
   justify-content: center;
   align-items: center;
-  width: calc(20% - 20px); /* 5 cards per row on large screens */
 }
 
 .product-card {
@@ -359,6 +358,9 @@
 
 /* Large Desktop View */
 @media screen and (min-width: 768px) {
+  .product-wrapper {
+    width: calc(20% - 20px); /* 5 cards per row */
+  }
 
   .product-card.active{
     min-height: 70%;
