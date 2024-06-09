@@ -359,9 +359,6 @@
 
 /* Large Desktop View */
 @media screen and (min-width: 768px) {
-  .product-wrapper {
-    width: calc(20% - 20px); /* 5 cards per row */
-  }
 
   .product-card.active{
     min-height: 70%;
