@@ -235,7 +235,7 @@
 
   .product-image {
     width: auto;
-    height: 70%; /* Ensure the image fills the thumbnail */
+    height: 80%; /* Ensure the image fills the thumbnail */
     object-fit: cover;
   }
 
@@ -258,7 +258,7 @@
   }
 
   .product-card.active .product-image {
-    width: 100%;
+    width: auto;
     height: 50vh; /* Image takes up 50% of the viewport height */
     object-fit: cover;
   }
