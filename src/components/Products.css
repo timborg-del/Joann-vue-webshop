@@ -107,6 +107,9 @@
   border-radius: 5px;
   overflow: hidden;
 }
+.product-card.active{
+  border: none;
+}
 
 .product-card.active .product-thumbnail {
   width: 48%; /* Image takes up 48% of the width */
