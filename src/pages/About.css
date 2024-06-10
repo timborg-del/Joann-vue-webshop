@@ -1,15 +1,14 @@
 /* Ensures the container is centered on the screen */
 .about-container {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%; /* Ensure it takes the full width of the viewport */
-  padding: 20px;
-  box-sizing: border-box; /* Include padding in the element's total width and height */
+  display: flex; /* Use flexbox for centering */
+  justify-content: center; /* Center horizontally */
+  align-items: flex-start; /* Align items to the top */
+  position: fixed; /* Fixed position to keep it at the top */
+  top: 110px; /* Height of the navbar */
+  height: calc(100vh - 60px); /* Full height of the viewport minus navbar height */
+  width: 100vw; /* Full width of the viewport */
+  margin: 0; /* Remove any default margin */
+  overflow-y: auto;
 }
 
 /* Ensures the content is well-styled and responsive */
