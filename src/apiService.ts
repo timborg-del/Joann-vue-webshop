@@ -1,4 +1,6 @@
-const API_BASE_URL = "https://joart.azurewebsites.net"; // Update with your Azure Function app URL for production
+import {jwtDecode} from 'jwt-decode';
+
+const API_BASE_URL = "https://joart.azurewebsites.net";
 
 export interface Product {
     PartitionKey: string;
@@ -7,7 +9,7 @@ export interface Product {
     Price: number;
     Stock: number;
     Category: string;
-    ImageUrl: string; // Updated to imageUrl
+    ImageUrl: string;
 }
 
 export interface User {
@@ -18,7 +20,6 @@ export interface User {
     PasswordHash: string;
 }
 
-// Updated to handle file upload
 export const addProduct = async (product: Product, file: File): Promise<void> => {
     const formData = new FormData();
     formData.append('product', JSON.stringify(product));
@@ -134,3 +135,25 @@ export const getUser = async (partitionKey: string, rowKey: string): Promise<Use
     const user: User = await response.json();
     return user;
 };
+
+// Utility function to check authentication
+export const isAuthenticated = (): boolean => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        return false;
+    }
+
+    try {
+        const { exp } = jwtDecode<{ exp: number }>(token);
+        if (exp && Date.now() >= exp * 1000) {
+            localStorage.removeItem('token'); // Remove expired token
+            return false;
+        }
+        return true;
+    } catch (e) {
+        console.error('Invalid token', e);
+        return false;
+    }
+};
+
+

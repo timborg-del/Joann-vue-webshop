@@ -19,7 +19,7 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:7203/api/users/login', {
+            const response = await fetch('http://localhost:7203/api/auth/login', { // Updated the endpoint
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -31,7 +31,10 @@ const Login = () => {
                 throw new Error('Invalid username or password');
             }
 
-            navigate('/admin');
+            const data = await response.json();
+            localStorage.setItem('token', data.token); // Store the token in local storage
+
+            navigate('/admin'); // Redirect to the admin page
         } catch (error) {
             console.error('Error logging in:', error);
             setError('Invalid username or password');
@@ -70,5 +73,6 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
