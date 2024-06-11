@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useLocalStorage from '../hooks/useLocalStorage'; // Adjust the path as necessary
 import './Login.css';
 
 const Login = () => {
@@ -7,6 +8,7 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [, setToken] = useLocalStorage<string | null>('token', null); // Destructure to avoid unused variable warning
     const navigate = useNavigate();
 
     const handleLogin = async () => {
@@ -42,7 +44,7 @@ const Login = () => {
 
             const { token } = responseData;
             console.log('Received token:', token);
-            localStorage.setItem('token', token);  // Store the token in localStorage
+            setToken(token);  // Store the token using useLocalStorage
 
             console.log('Token stored in localStorage');
 
@@ -86,5 +88,6 @@ const Login = () => {
 };
 
 export default Login;
+
 
 
