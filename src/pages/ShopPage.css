@@ -10,8 +10,12 @@
 
 .shop-container h1 {
   position: fixed;
+  top: 10px; /* Adjust top position as needed */
+  left: 50%;
+  transform: translateX(-50%);
   font-size: 2rem;
-  margin-bottom: 100px;
+  margin: 0;
+  z-index: 1000; /* Ensure the header is on top */
 }
 
 .product-list {
@@ -20,6 +24,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-top: 60px; /* Adjust this margin to ensure content does not go under the fixed header */
 }
 
 .product {
