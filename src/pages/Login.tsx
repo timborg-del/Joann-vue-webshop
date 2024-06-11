@@ -10,7 +10,10 @@ const Login = () => {
     const navigate = useNavigate();
 
     const handleLogin = async () => {
+        console.log('Attempting to login with', { username, password });
+
         if (!username || !password) {
+            console.log('Username or password is missing');
             setError('Username and password are required');
             return;
         }
@@ -26,14 +29,23 @@ const Login = () => {
                 },
                 body: JSON.stringify({ username, password }),
             });
-    
+
+            console.log('Response status:', response.status);
+
             if (!response.ok) {
+                console.log('Login failed:', response.statusText);
                 throw new Error('Invalid username or password');
             }
-    
-            const { token } = await response.json();
+
+            const responseData = await response.json();
+            console.log('Response data:', responseData);
+
+            const { token } = responseData;
+            console.log('Received token:', token);
             localStorage.setItem('token', token);  // Store the token in localStorage
-    
+
+            console.log('Token stored in localStorage');
+
             navigate('/admin');
         } catch (error) {
             console.error('Error logging in:', error);
@@ -74,6 +86,5 @@ const Login = () => {
 };
 
 export default Login;
-
 
 

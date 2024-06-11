@@ -140,15 +140,22 @@ export const getUser = async (partitionKey: string, rowKey: string): Promise<Use
 export const isAuthenticated = (): boolean => {
     const token = localStorage.getItem('token');
     if (!token) {
+        console.log('No token found in local storage');
         return false;
     }
 
     try {
-        const { exp } = jwtDecode<{ exp: number }>(token);
+        const decodedToken = jwtDecode<{ exp: number }>(token);
+        console.log('Decoded token:', decodedToken);
+
+        const { exp } = decodedToken;
         if (exp && Date.now() >= exp * 1000) {
+            console.log('Token has expired');
             localStorage.removeItem('token'); // Remove expired token
             return false;
         }
+
+        console.log('Token is valid');
         return true;
     } catch (e) {
         console.error('Invalid token', e);
