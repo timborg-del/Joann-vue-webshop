@@ -14,27 +14,27 @@ const Login = () => {
             setError('Username and password are required');
             return;
         }
-
+    
         setIsLoading(true);
         setError('');
-
+    
         try {
-            const response = await fetch('https://joart.azurewebsites.net/auth/login', { // Updated the endpoint
+            const response = await fetch('https://joart.azurewebsites.net/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({ username, password }),
             });
-
+    
             if (!response.ok) {
                 throw new Error('Invalid username or password');
             }
-
-            const data = await response.json();
-            localStorage.setItem('token', data.token); // Store the token in local storage
-
-            navigate('/admin'); // Redirect to the admin page
+    
+            const { token } = await response.json();
+            localStorage.setItem('token', token);  // Store the token in localStorage
+    
+            navigate('/admin');
         } catch (error) {
             console.error('Error logging in:', error);
             setError('Invalid username or password');
@@ -42,6 +42,7 @@ const Login = () => {
             setIsLoading(false);
         }
     };
+    
 
     return (
         <div className="login-container">
