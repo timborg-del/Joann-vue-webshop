@@ -43,7 +43,7 @@ body {
 .centerLinks {
   display: flex;
   flex: 1;
-  justify-content: center;
+  justify-content:flex-start;
 }
 
 .centerLinks a {
