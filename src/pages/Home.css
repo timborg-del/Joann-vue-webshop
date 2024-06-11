@@ -11,6 +11,17 @@
   overflow-y: auto;
 }
 
+.home-container h2 {
+  position: fixed;
+  top: 10px; /* Adjust top position as needed */
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 2rem;
+  margin: 0;
+  z-index: 1000; /* Ensure the header is on top */
+  color: #ffffff; /* Ensure the text color is white */
+}
+
 /* Ensures the content is well-styled and responsive */
 .home-content {
   display: block;
@@ -23,6 +34,7 @@
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.13);
+  margin-top: 60px; /* Add margin-top to ensure content does not overlap with fixed h2 */
 }
 
 /* Center align the heading and ensure proper margin */
@@ -56,5 +68,6 @@
     font-size: 1.5rem; /* Adjust heading size for smaller screens */
   }
 }
+
 
   
