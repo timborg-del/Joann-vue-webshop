@@ -19,7 +19,7 @@ const Login = () => {
         setError('');
 
         try {
-            const response = await fetch('http://localhost:7203/api/auth/login', { // Updated the endpoint
+            const response = await fetch('https://joart.azurewebsites.net/auth/login', { // Updated the endpoint
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
