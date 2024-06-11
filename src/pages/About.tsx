@@ -4,8 +4,9 @@ import './About.css'; // Import CSS file for About page styles
 const About = () => {
   return (
     <div className="about-container">
+      <h2>About Me</h2>
       <div className="about-content">
-        <h2>About Me</h2>
+       
         <p>
         Hello and Welcome!
         My name is JoAnne Salmon, but you can call me Jo 😊

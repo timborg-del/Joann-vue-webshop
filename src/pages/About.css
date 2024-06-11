@@ -2,7 +2,7 @@
 .about-container {
   display: flex; /* Use flexbox for centering */
   justify-content: center; /* Center horizontally */
-  align-items: flex-start; /* Align items to the top */
+  align-items: center; /* Align items to the top */
   position: fixed; /* Fixed position to keep it at the top */
   top: 110px; /* Height of the navbar */
   height: calc(100vh - 60px); /* Full height of the viewport minus navbar height */
