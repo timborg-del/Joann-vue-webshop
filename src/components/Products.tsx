@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CartItemProps } from './CartItems';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
@@ -14,6 +14,8 @@ const Products: React.FC = () => {
 
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
+  const magnifierGlassRef = useRef<HTMLDivElement | null>(null);
+  const magnifierImageRef = useRef<HTMLImageElement | null>(null);
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
@@ -67,6 +69,23 @@ const Products: React.FC = () => {
     return cartItem ? cartItem.quantity : 0;
   };
 
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, productImageUrl: string) => {
+    const magnifierGlass = magnifierGlassRef.current;
+    const magnifierImage = magnifierImageRef.current;
+    if (magnifierGlass && magnifierImage) {
+      const rect = e.currentTarget.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      
+      magnifierGlass.style.left = `${x - magnifierGlass.offsetWidth / 2}px`;
+      magnifierGlass.style.top = `${y - magnifierGlass.offsetHeight / 2}px`;
+
+      magnifierImage.src = productImageUrl;
+      magnifierImage.style.left = `${-x * 2 + magnifierGlass.offsetWidth / 2}px`;
+      magnifierImage.style.top = `${-y * 2 + magnifierGlass.offsetHeight / 2}px`;
+    }
+  };
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -90,19 +109,31 @@ const Products: React.FC = () => {
           <div 
             key={product.RowKey} 
             className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
+            onMouseMove={(e) => handleMouseMove(e, product.ImageUrl)}
+            onMouseLeave={() => {
+              if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'none';
+            }}
+            onMouseEnter={() => {
+              if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'block';
+            }}
           >
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
-                <img 
-                  src={product.ImageUrl}
-                  alt={product.Name}
-                  className="product-image"
-                  onError={(e) => {
-                    e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                    console.error("Image load error", e);
-                  }}
-                  onClick={() => toggleDetails(product.RowKey)}
-                />
+                <div className="product-image-container">
+                  <img 
+                    src={product.ImageUrl}
+                    alt={product.Name}
+                    className="product-image"
+                    onError={(e) => {
+                      e.currentTarget.src = '/path/to/placeholder-image.jpg';
+                      console.error("Image load error", e);
+                    }}
+                    onClick={() => toggleDetails(product.RowKey)}
+                  />
+                  <div className="magnifier-glass" ref={magnifierGlassRef}>
+                    <img ref={magnifierImageRef} alt="magnified" />
+                  </div>
+                </div>
               ) : (
                 <div className="product-thumbnail">
                   {product.ImageUrl ? (
