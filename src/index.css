@@ -117,14 +117,14 @@ body {
 
 .cart-button {
   display: flex;
+  align-items: center; /* Align items vertically centered */
   max-width: 100%;
-  margin: 0 0px;
-  justify-items: center;
+  margin: 0;
   padding: 10px;
   color: rgb(255, 255, 255);
-  border: 1px, green;
+  border: 1px solid green; /* Corrected border syntax */
   border-radius: 5px;
-  
+  transition: transform 0.3s ease; /* Smooth transition for hover effect */
 }
 
 .cart-button:hover {
@@ -132,17 +132,16 @@ body {
 }
 
 .cart-counter {
-  position: fixed;
-  top: 0px;
-  right: 15px;
-  background: rgb(1, 127, 110);
+  display: inline-block;
+  margin-left: 8px; /* Space between icon and counter */
+  background-color: red;
   color: white;
+  padding: 2px 6px;
   border-radius: 50%;
-  padding: 5px;
-  font-size: 12px;
-  width: 20px;
-  height: 20px;
+  font-size: 14px;
+  line-height: 1; /* Ensures the counter is vertically centered */
 }
+
 
 .buy_btn {
   width: 100%;
