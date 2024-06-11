@@ -101,10 +101,6 @@ body {
   
 }
 
-
-
-
-
 .card {
   max-width: 8rem;
   margin: 0 10px;
@@ -136,7 +132,7 @@ body {
 }
 
 .cart-counter {
-  position: absolute;
+  position: fixed;
   top: 0px;
   right: 15px;
   background: rgb(1, 127, 110);
@@ -146,7 +142,6 @@ body {
   font-size: 12px;
   width: 20px;
   height: 20px;
-  line-height: 1;
 }
 
 .buy_btn {
