@@ -122,7 +122,7 @@ body {
   margin: 0;
   padding: 10px;
   color: rgb(255, 255, 255);
-  border: 1px solid green; /* Corrected border syntax */
+  border: 1px solid rgb(255, 255, 255); /* Corrected border syntax */
   border-radius: 5px;
   transition: transform 0.3s ease; /* Smooth transition for hover effect */
 }
