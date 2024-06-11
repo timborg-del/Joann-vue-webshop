@@ -1,26 +1,23 @@
 import React, { useState, useEffect } from 'react';
 import { CartItemProps } from './CartItems';
-import useCartActions from '../hooks/useCartActions'; // Import useCartActions hook
-import './Products.css'; // Import the corresponding CSS file
-import useFetchData from '../hooks/useFetchData'; // Import the useFetchData hook
-import { Product } from '../apiService'; // Adjust import as needed
-import { useCart, useCartDispatch } from '../context/CartContext'; // Import useCartDispatch and useCart
-
-
+import useCartActions from '../hooks/useCartActions';
+import './Products.css';
+import useFetchData from '../hooks/useFetchData';
+import { Product } from '../apiService';
+import { useCart, useCartDispatch } from '../context/CartContext';
 
 const Products: React.FC = () => {
-  const { state } = useCart(); // Access the cart state
-  const dispatch = useCartDispatch(); // Access the dispatch function from CartContext
-  const { addItemToCart } = useCartActions(); // Access addItemToCart function from useCartActions hook
-  const { data, isLoading, error } = useFetchData('https://joart.azurewebsites.net/GetProducts'); // Fetch products data
+  const { state } = useCart();
+  const dispatch = useCartDispatch();
+  const { addItemToCart } = useCartActions();
+  const { data, isLoading, error } = useFetchData('https://joart.azurewebsites.net/GetProducts');
 
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
-  
-  // Define price adjustments as a constant
+
   const priceAdjustments: { [key: string]: number } = {
-    A3: 0, // No adjustment for A3
-    A4: -2, // Adjust price by -2 for A4
+    A3: 0,
+    A4: -2,
     A5: -5
   };
 
@@ -40,7 +37,7 @@ const Products: React.FC = () => {
 
   const getPrice = (productId: string, basePrice: number) => {
     const size = selectedSizes[productId] || 'A3';
-    const adjustment = priceAdjustments[size as keyof typeof priceAdjustments] || 0;
+    const adjustment = priceAdjustments[size] || 0;
     return basePrice + adjustment;
   };
 
@@ -51,7 +48,7 @@ const Products: React.FC = () => {
       id: uniqueId,
       name: product.Name,
       price: getPrice(product.RowKey, product.Price),
-      ImageUrl: product.ImageUrl, // Use ImageUrl here
+      ImageUrl: product.ImageUrl,
       quantity: 1,
       size: size
     });
@@ -70,19 +67,17 @@ const Products: React.FC = () => {
     return cartItem ? cartItem.quantity : 0;
   };
 
-
   if (isLoading) {
     return <div>Loading...</div>;
   }
 
   if (error) {
-    console.error("Error fetching products:", error); // Log detailed error
+    console.error("Error fetching products:", error);
     return <div>Error: {error.message}</div>;
   }
 
-  // Check if data is an array
   if (!Array.isArray(data)) {
-    console.error("Unexpected data format:", data); // Log unexpected data format
+    console.error("Unexpected data format:", data);
     return <div>Error: Unexpected data format</div>;
   }
 
@@ -99,11 +94,11 @@ const Products: React.FC = () => {
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
                 <img 
-                  src={product.ImageUrl} // This should now be the image URL
-                  alt={product.Name} 
-                  className="product-image" 
+                  src={product.ImageUrl}
+                  alt={product.Name}
+                  className="product-image"
                   onError={(e) => {
-                    e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
+                    e.currentTarget.src = '/path/to/placeholder-image.jpg';
                     console.error("Image load error", e);
                   }}
                   onClick={() => toggleDetails(product.RowKey)}
@@ -112,11 +107,11 @@ const Products: React.FC = () => {
                 <div className="product-thumbnail">
                   {product.ImageUrl ? (
                     <img 
-                      src={product.ImageUrl} // This should now be the image URL
-                      alt={product.Name} 
-                      className="product-image" 
+                      src={product.ImageUrl}
+                      alt={product.Name}
+                      className="product-image"
                       onError={(e) => {
-                        e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Fallback image
+                        e.currentTarget.src = '/path/to/placeholder-image.jpg';
                         console.error("Image load error", e);
                       }}
                       onClick={() => toggleDetails(product.RowKey)}
@@ -154,7 +149,7 @@ const Products: React.FC = () => {
                     >
                       Add to Cart
                     </button>
-                    </div>
+                  </div>
                   <div className="quantity-buttons">
                     <button onClick={() => decrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>-</button>
                     <span>{getProductQuantity(product.RowKey, selectedSizes[product.RowKey] || 'A3')}</span>

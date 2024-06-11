@@ -6,7 +6,7 @@ interface CartItem {
   id: string;
   name: string;
   price: number;
-  ImageUrl: string; // Updated to imageUrl
+  ImageUrl: string;
   quantity: number;
   size?: string;
 }
@@ -41,22 +41,20 @@ const CartContext = createContext<{
 
 // Provider component to wrap around the app
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  // Retrieve initial state from local storage or use initial state
   const [storedState, setStoredState] = useLocalStorage<CartState>('cart', initialState);
 
-  // Reducer function to handle state changes
   const cartReducer = (state: CartState, action: Action): CartState => {
     switch (action.type) {
       case 'ADD_ITEM': {
         const existingItemIndex = state.items.findIndex(item => item.id === action.payload.id);
         if (existingItemIndex !== -1) {
           const updatedItems = [...state.items];
-          updatedItems[existingItemIndex].quantity += 1; // Increment quantity by 1
+          updatedItems[existingItemIndex].quantity += 1;
           return { ...state, items: updatedItems };
         }
         return { 
           ...state, 
-          items: [...state.items, { ...action.payload, quantity: 1 }] // Add new item with quantity 1
+          items: [...state.items, { ...action.payload, quantity: 1 }]
         };
       }
       case 'REMOVE_ITEM': {
@@ -76,10 +74,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
       case 'DECREMENT_QUANTITY': {
         const decrementedItems = state.items.map(item =>
-          item.id === action.payload
-            ? { ...item, quantity: Math.max(item.quantity - 1, 1) }
+          item.id === action.payload && item.quantity > 1
+            ? { ...item, quantity: item.quantity - 1 }
             : item
-        );
+        ).filter(item => item.quantity > 0);
         return { ...state, items: decrementedItems };
       }
       default:
@@ -93,7 +91,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setStoredState(state);
   }, [state, setStoredState]);
 
-  // Calculate cartItemCount based on the length of items array
   const cartItemCount = state.items.reduce((count, item) => count + item.quantity, 0);
 
   return (
@@ -103,7 +100,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Custom hook to consume CartContext
+// Custom hooks to consume CartContext
 export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
