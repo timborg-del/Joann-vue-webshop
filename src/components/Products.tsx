@@ -109,17 +109,10 @@ const Products: React.FC = () => {
           <div 
             key={product.RowKey} 
             className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
-            onMouseMove={(e) => handleMouseMove(e, product.ImageUrl)}
-            onMouseLeave={() => {
-              if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'none';
-            }}
-            onMouseEnter={() => {
-              if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'block';
-            }}
           >
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
-                <div className="product-image-container">
+                <>
                   <img 
                     src={product.ImageUrl}
                     alt={product.Name}
@@ -130,23 +123,34 @@ const Products: React.FC = () => {
                     }}
                     onClick={() => toggleDetails(product.RowKey)}
                   />
-                  <div className="magnifier-glass" ref={magnifierGlassRef}>
-                    <img ref={magnifierImageRef} alt="magnified" />
-                  </div>
-                </div>
+                </>
               ) : (
-                <div className="product-thumbnail">
+                <div 
+                  className="product-thumbnail"
+                  onMouseMove={(e) => handleMouseMove(e, product.ImageUrl)}
+                  onMouseLeave={() => {
+                    if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'none';
+                  }}
+                  onMouseEnter={() => {
+                    if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'block';
+                  }}
+                >
                   {product.ImageUrl ? (
-                    <img 
-                      src={product.ImageUrl}
-                      alt={product.Name}
-                      className="product-image"
-                      onError={(e) => {
-                        e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                        console.error("Image load error", e);
-                      }}
-                      onClick={() => toggleDetails(product.RowKey)}
-                    />
+                    <div className="product-image-container">
+                      <img 
+                        src={product.ImageUrl}
+                        alt={product.Name}
+                        className="product-image"
+                        onError={(e) => {
+                          e.currentTarget.src = '/path/to/placeholder-image.jpg';
+                          console.error("Image load error", e);
+                        }}
+                        onClick={() => toggleDetails(product.RowKey)}
+                      />
+                      <div className="magnifier-glass" ref={magnifierGlassRef}>
+                        <img ref={magnifierImageRef} alt="magnified" />
+                      </div>
+                    </div>
                   ) : (
                     <div className="no-image">No Image Available</div>
                   )}
@@ -199,7 +203,6 @@ const Products: React.FC = () => {
 };
 
 export default Products;
-
 
 
 

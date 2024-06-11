@@ -106,9 +106,10 @@
   transition: none; /* Prevent smooth zoom */
 }
 
-.product-image-container:hover .magnifier-glass {
+.product-thumbnail:hover .magnifier-glass {
   display: block; /* Show magnifier glass on hover */
 }
+
 
 
 .product-name {
