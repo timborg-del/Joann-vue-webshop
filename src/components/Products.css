@@ -107,9 +107,9 @@
   transition: none; /* Prevent smooth zoom */
 }
 
-/* Only show the magnifier glass in the detailed view */
-.product-details-dropdown .product-image-container:hover .magnifier-glass {
-  display: block; /* Show magnifier glass on hover when details are visible */
+/* Only show the magnifier glass on product image hover within the detailed view */
+.product-card.active .product-image-container:hover .magnifier-glass {
+  display: block; /* Show magnifier glass on hover */
 }
 
 .product-name {
@@ -430,6 +430,7 @@
     object-fit: cover;
   }
 }
+
 
 
 

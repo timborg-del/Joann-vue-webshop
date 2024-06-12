@@ -130,7 +130,6 @@ const Products: React.FC = () => {
                       e.currentTarget.src = '/path/to/placeholder-image.jpg';
                       console.error("Image load error", e);
                     }}
-                    onClick={() => toggleDetails(product.RowKey)}
                   />
                   <div className="magnifier-glass" ref={magnifierGlassRef}>
                     <img ref={magnifierImageRef} alt="magnified" />
@@ -200,6 +199,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
