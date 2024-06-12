@@ -81,16 +81,16 @@ const Products: React.FC = () => {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      
-      magnifierGlass.style.left = `${x - magnifierGlass.offsetWidth / 2}px`;
-      magnifierGlass.style.top = `${y - magnifierGlass.offsetHeight / 2}px`;
-
+  
+      magnifierGlass.style.left = `${e.clientX - magnifierGlass.offsetWidth / 2}px`;
+      magnifierGlass.style.top = `${e.clientY - magnifierGlass.offsetHeight / 2}px`;
+  
       magnifierImage.src = productImageUrl;
       magnifierImage.style.left = `${-x * 3 + magnifierGlass.offsetWidth / 2}px`;
       magnifierImage.style.top = `${-y * 3 + magnifierGlass.offsetHeight / 2}px`;
     }
   };
-
+  
   const handleImageClick = (productImageUrl: string) => {
     setEnlargedImage(productImageUrl);
   };

@@ -78,6 +78,9 @@
   height: 100%;
   object-fit: cover;
 }
+.product-card.active .product-image {
+  cursor: none;
+}
 
 /* Ensure the container is positioned relative */
 .product-image-container {
