@@ -110,13 +110,22 @@ const Products: React.FC = () => {
       magnifierGlass.style.top = `${e.pageY - magnifierGlass.offsetHeight / 2}px`;
 
       magnifierImage.src = productImageUrl;
-      magnifierImage.style.left = `${-x * 3 + magnifierGlass.offsetWidth / 2}px`;
-      magnifierImage.style.top = `${-y * 3 + magnifierGlass.offsetHeight / 2}px`;
+      magnifierImage.style.left = `${-x * 0 + magnifierGlass.offsetWidth / 2}px`;
+      magnifierImage.style.top = `${-y * 0 + magnifierGlass.offsetHeight / 2}px`;
     }
   };
 
   const handleImageClick = (productImageUrl: string) => {
     setEnlargedImage(productImageUrl);
+  };
+
+  const renderStars = (rating: number) => {
+    return (
+      <span className="star-rating">
+        {"★".repeat(rating)}
+        {"☆".repeat(5 - rating)}
+      </span>
+    );
   };
 
   if (isLoading) {
@@ -186,7 +195,10 @@ const Products: React.FC = () => {
                   <div className="product-name">{product.Name}</div>
                   <div className="product-reviews">
                     {mockReviews[product.RowKey]?.slice(0, 1).map((review) => (
-                      <p key={review.id}><strong>{review.user}:</strong> {review.comment} ({review.rating} stars)</p>
+                      <div key={review.id}>
+                        <p><strong>{review.user}:</strong> {review.comment}</p>
+                        {renderStars(review.rating)}
+                      </div>
                     ))}
                   </div>
                 </div>
@@ -231,7 +243,10 @@ const Products: React.FC = () => {
                     {showReviews && (
                       <div>
                         {mockReviews[product.RowKey]?.map((review) => (
-                          <p key={review.id}><strong>{review.user}:</strong> {review.comment} ({review.rating} stars)</p>
+                          <div key={review.id}>
+                            <p><strong>{review.user}:</strong> {review.comment}</p>
+                            {renderStars(review.rating)}
+                          </div>
                         ))}
                       </div>
                     )}
@@ -255,6 +270,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
