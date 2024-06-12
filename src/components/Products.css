@@ -96,14 +96,13 @@
   display: none; /* Hidden by default */
   z-index: 1000;
   overflow: hidden;
+  pointer-events: none;
 }
 
 .magnifier-glass img {
   position: absolute;
-  width: 200%;
-  height: 200%;
-  top: -50%;
-  left: -50%;
+  width: 300%;
+  height: 300%;
   transition: none; /* Prevent smooth zoom */
 }
 .enlarged-image-overlay {
@@ -171,7 +170,7 @@
   color: white;
   border: none;
   padding: 10px;
-  border-radius: 50%;
+  border-radius: 100%;
   cursor: pointer;
   z-index: 1001; /* Ensure it is on top of other elements */
   transition: background-color 0.3s ease;

@@ -86,8 +86,8 @@ const Products: React.FC = () => {
       magnifierGlass.style.top = `${y - magnifierGlass.offsetHeight / 2}px`;
 
       magnifierImage.src = productImageUrl;
-      magnifierImage.style.left = `${-x * 2 + magnifierGlass.offsetWidth / 2}px`;
-      magnifierImage.style.top = `${-y * 2 + magnifierGlass.offsetHeight / 2}px`;
+      magnifierImage.style.left = `${-x * 3 + magnifierGlass.offsetWidth / 2}px`;
+      magnifierImage.style.top = `${-y * 3 + magnifierGlass.offsetHeight / 2}px`;
     }
   };
 
@@ -214,8 +214,6 @@ const Products: React.FC = () => {
 };
 
 export default Products;
-
-
 
 
 
