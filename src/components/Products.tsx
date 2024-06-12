@@ -28,6 +28,10 @@ const Products: React.FC = () => {
     setActiveProduct(activeProduct === productId ? null : productId);
   };
 
+  const closeDetails = () => {
+    setActiveProduct(null);
+  };
+
   useEffect(() => {
     if (data) {
       console.log("Fetched data:", data);
@@ -118,6 +122,7 @@ const Products: React.FC = () => {
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
                 <div className="product-image-container">
+                  <button className="close-button" onClick={closeDetails}>&times;</button>
                   <img 
                     src={product.ImageUrl}
                     alt={product.Name}

@@ -162,6 +162,25 @@
 .product-card.active{
   border: none;
 }
+/* Close button styles */
+.close-button {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: rgba(0, 0, 0, 0.7);
+  color: white;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1001; /* Ensure it is on top of other elements */
+  transition: background-color 0.3s ease;
+}
+
+.close-button:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
 
 .product-card.active .product-thumbnail {
   width: 48%; /* Image takes up 48% of the width */
