@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { CartItemProps } from './CartItems';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
@@ -26,8 +26,6 @@ const Products: React.FC = () => {
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
-  const magnifierGlassRef = useRef<HTMLDivElement | null>(null);
-  const magnifierImageRef = useRef<HTMLImageElement | null>(null);
   const [showReviews, setShowReviews] = useState<boolean>(false);
 
   const priceAdjustments: { [key: string]: number } = {
@@ -98,23 +96,6 @@ const Products: React.FC = () => {
     return cartItem ? cartItem.quantity : 0;
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>, productImageUrl: string) => {
-    const magnifierGlass = magnifierGlassRef.current;
-    const magnifierImage = magnifierImageRef.current;
-    if (magnifierGlass && magnifierImage) {
-      const rect = e.currentTarget.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-
-      magnifierGlass.style.left = `${x - magnifierGlass.offsetWidth / 0}px`;
-      magnifierGlass.style.top = `${y - magnifierGlass.offsetHeight / 0}px`;
-
-      magnifierImage.src = productImageUrl;
-      magnifierImage.style.left = `${-x * 3 + magnifierGlass.offsetWidth / 0}px`;
-      magnifierImage.style.top = `${-y * 3 + magnifierGlass.offsetHeight / 0}px`;
-    }
-  };
-
   const handleImageClick = (productImageUrl: string) => {
     setEnlargedImage(productImageUrl);
   };
@@ -154,7 +135,7 @@ const Products: React.FC = () => {
           >
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
-                <div className="product-image-container">
+                <>
                   <button className="close-button" onClick={closeDetails}>&times;</button>
                   <img 
                     src={product.ImageUrl}
@@ -164,19 +145,9 @@ const Products: React.FC = () => {
                       e.currentTarget.src = '/path/to/placeholder-image.jpg';
                       console.error("Image load error", e);
                     }}
-                    onMouseMove={(e) => handleMouseMove(e, product.ImageUrl)}
-                    onMouseLeave={() => {
-                      if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'none';
-                    }}
-                    onMouseEnter={() => {
-                      if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'block';
-                    }}
                     onClick={() => handleImageClick(product.ImageUrl)}
                   />
-                  <div className="magnifier-glass" ref={magnifierGlassRef}>
-                    <img ref={magnifierImageRef} alt="magnified" />
-                  </div>
-                </div>
+                </>
               ) : (
                 <div className="product-thumbnail" onClick={() => toggleDetails(product.RowKey)}>
                   {product.ImageUrl ? (
@@ -270,6 +241,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 

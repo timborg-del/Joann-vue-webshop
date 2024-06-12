@@ -112,37 +112,6 @@
   object-fit: cover;
 }
 
-.product-card.active .product-image {
-  cursor: none;
-}
-
-/* Ensure the container is positioned relative */
-.product-image-container {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-
-.magnifier-glass {
-  position: absolute;
-  border: 3px solid #000;
-  border-radius: 50%;
-  cursor: none;
-  width: 100px;
-  height: 100px;
-  display: none; /* Hidden by default */
-  z-index: 1000;
-  overflow: hidden;
-  pointer-events: none;
-}
-
-.magnifier-glass img {
-  position: absolute;
-  width: 300%;
-  height: 300%;
-  transition: none; /* Prevent smooth zoom */
-}
-
 .enlarged-image-overlay {
   position: fixed;
   top: 0;
@@ -163,11 +132,6 @@
   object-fit: contain;
   border: 2px solid #fff;
   border-radius: 10px;
-}
-
-/* Only show the magnifier glass on product image hover within the detailed view */
-.product-card.active .product-image:hover + .magnifier-glass {
-  display: block; /* Show magnifier glass on hover */
 }
 
 .product-name {
@@ -374,9 +338,9 @@
   }
 
   .product-card.active .product-details-dropdown {
-    width: auto;
-    height: 50vh;
-    height: calc(50vh - 10px); /* Details take up the remaining 50% of the viewport height minus padding */
+    width: 100%;
+    height: calc(50vh - 20px); /* Details take up the remaining 50% of the viewport height minus padding */
+    margin-top: 10px;
     overflow-y: auto; /* Add scroll if needed */
   }
   
