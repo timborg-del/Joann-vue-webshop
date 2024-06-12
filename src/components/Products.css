@@ -374,9 +374,9 @@
   }
 
   .product-card.active .product-details-dropdown {
-    width: 100%;
-    height: calc(50vh - 20px); /* Details take up the remaining 50% of the viewport height minus padding */
-    margin-top: 10px;
+    width: auto;
+    height: 50vh;
+    height: calc(50vh - 10px); /* Details take up the remaining 50% of the viewport height minus padding */
     overflow-y: auto; /* Add scroll if needed */
   }
   
