@@ -8,6 +8,31 @@
   padding: 10px;
   width: 100%;
 }
+/* Products.css */
+.product-reviews {
+  margin-top: 10px;
+  text-align: left;
+}
+
+.product-reviews p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.product-reviews button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 5px;
+}
+
+.product-reviews button:hover {
+  background-color: #0056b3;
+}
+
 
 .quantity-buttons {
   display: flex;

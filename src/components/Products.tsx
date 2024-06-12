@@ -6,6 +6,17 @@ import useFetchData from '../hooks/useFetchData';
 import { Product } from '../apiService';
 import { useCart, useCartDispatch } from '../context/CartContext';
 
+interface Review {
+  id: number;
+  user: string;
+  comment: string;
+  rating: number;
+}
+
+interface MockReviews {
+  [key: string]: Review[];
+}
+
 const Products: React.FC = () => {
   const { state } = useCart();
   const dispatch = useCartDispatch();
@@ -17,11 +28,23 @@ const Products: React.FC = () => {
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
   const magnifierGlassRef = useRef<HTMLDivElement | null>(null);
   const magnifierImageRef = useRef<HTMLImageElement | null>(null);
+  const [showReviews, setShowReviews] = useState<boolean>(false);
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
     A4: -2,
     A5: -5
+  };
+
+  const mockReviews: MockReviews = {
+    "product1": [
+      { id: 1, user: "John Doe", comment: "Great product!", rating: 5 },
+      { id: 2, user: "Jane Smith", comment: "Good quality.", rating: 4 }
+    ],
+    "product2": [
+      { id: 1, user: "Alice Johnson", comment: "Loved it!", rating: 5 },
+      { id: 2, user: "Bob Brown", comment: "Not bad.", rating: 3 }
+    ]
   };
 
   const toggleDetails = (productId: string) => {
@@ -30,6 +53,7 @@ const Products: React.FC = () => {
 
   const closeDetails = () => {
     setActiveProduct(null);
+    setShowReviews(false);
   };
 
   useEffect(() => {
@@ -81,17 +105,16 @@ const Products: React.FC = () => {
       const rect = e.currentTarget.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-  
+
       magnifierGlass.style.left = `${e.pageX - magnifierGlass.offsetWidth / 2}px`;
       magnifierGlass.style.top = `${e.pageY - magnifierGlass.offsetHeight / 2}px`;
-  
+
       magnifierImage.src = productImageUrl;
       magnifierImage.style.left = `${-x * 3 + magnifierGlass.offsetWidth / 2}px`;
       magnifierImage.style.top = `${-y * 3 + magnifierGlass.offsetHeight / 2}px`;
     }
   };
-  
-  
+
   const handleImageClick = (productImageUrl: string) => {
     setEnlargedImage(productImageUrl);
   };
@@ -161,6 +184,11 @@ const Products: React.FC = () => {
                     <div className="no-image">No Image Available</div>
                   )}
                   <div className="product-name">{product.Name}</div>
+                  <div className="product-reviews">
+                    {mockReviews[product.RowKey]?.slice(0, 1).map((review) => (
+                      <p key={review.id}><strong>{review.user}:</strong> {review.comment} ({review.rating} stars)</p>
+                    ))}
+                  </div>
                 </div>
               )}
               {activeProduct === product.RowKey && (
@@ -196,6 +224,18 @@ const Products: React.FC = () => {
                     <span>{getProductQuantity(product.RowKey, selectedSizes[product.RowKey] || 'A3')}</span>
                     <button onClick={() => incrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>+</button>
                   </div>
+                  <div className="product-reviews">
+                    <button onClick={() => setShowReviews(!showReviews)}>
+                      {showReviews ? "Hide Reviews" : "Show Reviews"}
+                    </button>
+                    {showReviews && (
+                      <div>
+                        {mockReviews[product.RowKey]?.map((review) => (
+                          <p key={review.id}><strong>{review.user}:</strong> {review.comment} ({review.rating} stars)</p>
+                        ))}
+                      </div>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -215,6 +255,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
