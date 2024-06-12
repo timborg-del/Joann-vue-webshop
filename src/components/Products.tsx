@@ -14,6 +14,7 @@ const Products: React.FC = () => {
 
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
+  const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
   const magnifierGlassRef = useRef<HTMLDivElement | null>(null);
   const magnifierImageRef = useRef<HTMLImageElement | null>(null);
 
@@ -69,7 +70,7 @@ const Products: React.FC = () => {
     return cartItem ? cartItem.quantity : 0;
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>, productImageUrl: string) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLImageElement>, productImageUrl: string) => {
     const magnifierGlass = magnifierGlassRef.current;
     const magnifierImage = magnifierImageRef.current;
     if (magnifierGlass && magnifierImage) {
@@ -84,6 +85,10 @@ const Products: React.FC = () => {
       magnifierImage.style.left = `${-x * 2 + magnifierGlass.offsetWidth / 2}px`;
       magnifierImage.style.top = `${-y * 2 + magnifierGlass.offsetHeight / 2}px`;
     }
+  };
+
+  const handleImageClick = (productImageUrl: string) => {
+    setEnlargedImage(productImageUrl);
   };
 
   if (isLoading) {
@@ -112,16 +117,7 @@ const Products: React.FC = () => {
           >
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
-                <div 
-                  className="product-image-container"
-                  onMouseMove={(e) => handleMouseMove(e, product.ImageUrl)}
-                  onMouseLeave={() => {
-                    if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'none';
-                  }}
-                  onMouseEnter={() => {
-                    if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'block';
-                  }}
-                >
+                <div className="product-image-container">
                   <img 
                     src={product.ImageUrl}
                     alt={product.Name}
@@ -130,6 +126,14 @@ const Products: React.FC = () => {
                       e.currentTarget.src = '/path/to/placeholder-image.jpg';
                       console.error("Image load error", e);
                     }}
+                    onMouseMove={(e) => handleMouseMove(e, product.ImageUrl)}
+                    onMouseLeave={() => {
+                      if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'none';
+                    }}
+                    onMouseEnter={() => {
+                      if (magnifierGlassRef.current) magnifierGlassRef.current.style.display = 'block';
+                    }}
+                    onClick={() => handleImageClick(product.ImageUrl)}
                   />
                   <div className="magnifier-glass" ref={magnifierGlassRef}>
                     <img ref={magnifierImageRef} alt="magnified" />
@@ -194,12 +198,17 @@ const Products: React.FC = () => {
       ) : (
         <div>No products available</div>
       )}
+
+      {enlargedImage && (
+        <div className="enlarged-image-overlay" onClick={() => setEnlargedImage(null)}>
+          <img src={enlargedImage} alt="Enlarged" className="enlarged-image" />
+        </div>
+      )}
     </div>
   );
 };
 
 export default Products;
-
 
 
 

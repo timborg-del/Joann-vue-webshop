@@ -106,9 +106,31 @@
   left: -50%;
   transition: none; /* Prevent smooth zoom */
 }
+.enlarged-image-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  cursor: pointer;
+}
+
+.enlarged-image {
+  max-width: 90%;
+  max-height: 90%;
+  object-fit: contain;
+  border: 2px solid #fff;
+  border-radius: 10px;
+}
+
 
 /* Only show the magnifier glass on product image hover within the detailed view */
-.product-card.active .product-image-container:hover .magnifier-glass {
+.product-card.active .product-image:hover + .magnifier-glass {
   display: block; /* Show magnifier glass on hover */
 }
 
