@@ -50,7 +50,6 @@
   width: 100%; /* Ensure width adapts */
   border: 1px inset rgb(221, 220, 220);
   max-width: 100%; /* Ensure width adapts */
-  cursor: pointer;
   transition: all 0.3s ease;
   height: 250px;
 }
@@ -69,6 +68,7 @@
   background-color: #fff;
   border-radius: 5px;
   padding: 10px;
+  cursor: pointer;
   width: 100%; /* Fixed width for thumbnails */
   height: 100%; /* Fixed height for thumbnails */
 }
