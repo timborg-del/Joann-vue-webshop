@@ -2,7 +2,7 @@ import { createContext, useReducer, useContext, ReactNode, Dispatch, useEffect }
 import useLocalStorage from '../hooks/useLocalStorage';
 
 // Define types for cart items and state
-interface CartItem {
+export interface CartItem {
   id: string;
   name: string;
   price: number;
