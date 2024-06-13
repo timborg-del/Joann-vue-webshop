@@ -64,6 +64,9 @@ function PaypalStuff({cart}: PaypalStuffProps) {
         }),
       });
 
+      return await response.text();
+
+
       const orderData = await response.json();
 
       if (orderData.id) {
