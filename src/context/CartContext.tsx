@@ -90,7 +90,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setStoredState(state);
   }, [state, setStoredState]);
-
+  
   const cartItemCount = state.items.reduce((count, item) => count + item.quantity, 0);
 
   return (

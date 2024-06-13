@@ -26,8 +26,9 @@ function Message({ content }: MessageProps) {
 }
 
 function PaypalStuff({cart}: PaypalStuffProps) {
+  cart;
   const initialOptions = {
-    clientId: "test",
+    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId",
     "enable-funding": "venmo",
     "disable-funding": "",
     /*country: "US",*/
@@ -41,7 +42,8 @@ function PaypalStuff({cart}: PaypalStuffProps) {
 
   const createOrder = async () => {
     try {
-      const response = await fetch("https://joart.azurewebsites.net/orders/create", {
+      //const response = await fetch("https://joart.azurewebsites.net/orders/create", {
+        const response = await fetch("http://localhost:7203/orders/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -49,7 +51,16 @@ function PaypalStuff({cart}: PaypalStuffProps) {
         // use the "body" param to optionally pass additional order information
         // like product ids and quantities
         body: JSON.stringify({
-          cart
+          cart: [
+            {
+              id: "1",
+              ImageUrl: 'http://asd.com/asd.jpg',
+              name: 'asd',
+              price: 5,
+              quantity: 5,
+              size: "lg"
+            }
+          ]
         }),
       });
 
