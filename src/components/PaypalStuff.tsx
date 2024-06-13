@@ -32,7 +32,7 @@ function PaypalStuff({cart}: PaypalStuffProps) {
     "enable-funding": "venmo",
     "disable-funding": "",
     /*country: "US",*/
-    currency: "USD",
+    currency: "SEK",
     "data-page-type": "product-details",
     components: "buttons",
     "data-sdk-integration-source": "developer-studio",
