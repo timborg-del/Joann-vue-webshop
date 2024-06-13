@@ -43,7 +43,7 @@ function PaypalStuff({cart}: PaypalStuffProps) {
   const createOrder = async () => {
     try {
       //const response = await fetch("https://joart.azurewebsites.net/orders/create", {
-        const response = await fetch("http://localhost:7203/orders/create", {
+        const response = await fetch("https://joart.azurewebsites.net/orders/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
