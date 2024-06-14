@@ -15,7 +15,7 @@ const useCartActions = () => {
       if (existingItem) {
         dispatch({ type: 'INCREMENT_QUANTITY', payload: item.RowKey });
       } else {
-        dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity: 1 } });
+        dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity: 1, Price: item.Price ?? 0 } });
       }
 
       setLoading(false);
@@ -48,6 +48,7 @@ const useCartActions = () => {
 };
 
 export default useCartActions;
+
 
 
 

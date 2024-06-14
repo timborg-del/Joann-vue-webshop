@@ -1,6 +1,6 @@
 import { useCart, useCartDispatch } from '../context/CartContext';
 import './Cart.css';
-
+import { Product } from '../apiService'; // Ensure this path is correct
 
 const Cart = () => {
   const { state } = useCart();
@@ -14,13 +14,26 @@ const Cart = () => {
     dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
   };
 
+  // Normalize data structure to ensure consistency
+  const normalizeCartItems = (items: Product[]): Product[] => {
+    return items.map(item => ({
+      ...item,
+      RowKey: item.RowKey,
+      Name: item.Name,
+      Price: item.Price ?? 0,
+      ImageUrl: item.ImageUrl,
+      quantity: item.quantity ?? 1,
+      size: item.size ?? 'default-size'
+    }));
+  };
+
   return (
     <div className="cart-product-container">
       {state.items.length === 0 ? (
         <p>Your cart is empty</p>
       ) : (
         <div className="cart-items-container">
-          {state.items.map((item) => (
+          {normalizeCartItems(state.items).map((item) => (
             <div key={item.RowKey} className="cart-item">
               <div className="cart-items-prop">
                 <div className="cart-item-details">
