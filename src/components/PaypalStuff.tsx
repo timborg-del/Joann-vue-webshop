@@ -1,13 +1,11 @@
 import { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { CartItem } from "src/context/CartContext";
+import { CartItem } from "../context/CartContext";
 
-// Define a type for the Message component's props
 type MessageProps = {
   content: string;
 };
 
-// Define types for PayPal data and actions
 type PayPalData = {
   orderID: string;
 };
@@ -16,22 +14,28 @@ type PayPalActions = {
   restart: () => void;
 };
 
-interface PaypalStuffProps {
-  cart: CartItem[]
+interface FormData {
+  fullName: string;
+  email: string;
+  address: string;
+  city: string;
+  postalCode: string;
 }
 
-// Renders errors or successful transactions on the screen.
+interface PaypalStuffProps {
+  cart: CartItem[];
+  formData: FormData;
+}
+
 function Message({ content }: MessageProps) {
   return <p>{content}</p>;
 }
 
-function PaypalStuff({cart}: PaypalStuffProps) {
-  cart;
+function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   const initialOptions = {
     clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId",
     "enable-funding": "venmo",
     "disable-funding": "",
-    /*country: "US",*/
     currency: "SEK",
     "data-page-type": "product-details",
     components: "buttons",
@@ -42,30 +46,20 @@ function PaypalStuff({cart}: PaypalStuffProps) {
 
   const createOrder = async () => {
     try {
-      //const response = await fetch("https://joart.azurewebsites.net/orders/create", {
-        const response = await fetch("https://joart.azurewebsites.net/orders/create", {
+      const response = await fetch("https://joart.azurewebsites.net/orders/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        // use the "body" param to optionally pass additional order information
-        // like product ids and quantities
         body: JSON.stringify({
-          cart: [
-            {
-              id: "1",
-              ImageUrl: 'http://asd.com/asd.jpg',
-              name: 'asd',
-              price: 5,
-              quantity: 5,
-              size: "lg"
-            }
-          ]
+          Cart: cart,
+          Fullname: formData.fullName,
+          Email: formData.email,
+          Address: formData.address,
+          City: formData.city,
+          PostalCode: formData.postalCode
         }),
       });
-
-      return await response.text();
-
 
       const orderData = await response.json();
 
@@ -98,41 +92,21 @@ function PaypalStuff({cart}: PaypalStuffProps) {
       );
 
       const orderData = await response.json();
-      // Three cases to handle:
-      //   (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-      //   (2) Other non-recoverable errors -> Show a failure message
-      //   (3) Successful transaction -> Show confirmation or thank you message
 
       const errorDetail = orderData?.details?.[0];
 
       if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
-        // (1) Recoverable INSTRUMENT_DECLINED -> call actions.restart()
-        // recoverable state, per https://developer.paypal.com/docs/checkout/standard/customize/handle-funding-failures/
         return actions.restart();
       } else if (errorDetail) {
-        // (2) Other non-recoverable errors -> Show a failure message
-        throw new Error(
-          `${errorDetail.description} (${orderData.debug_id})`
-        );
+        throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
       } else {
-        // (3) Successful transaction -> Show confirmation or thank you message
-        // Or go to another URL:  actions.redirect('thank_you.html');
-        const transaction =
-          orderData.purchase_units[0].payments.captures[0];
-        setMessage(
-          `Transaction ${transaction.status}: ${transaction.id}. See console for all available details`
-        );
-        console.log(
-          "Capture result",
-          orderData,
-          JSON.stringify(orderData, null, 2)
-        );
+        const transaction = orderData.purchase_units[0].payments.captures[0];
+        setMessage(`Transaction ${transaction.status}: ${transaction.id}. See console for all available details`);
+        console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
       }
     } catch (error) {
       console.error(error);
-      setMessage(
-        `Sorry, your transaction could not be processed...${error}`
-      );
+      setMessage(`Sorry, your transaction could not be processed...${error}`);
     }
   };
 
@@ -151,12 +125,12 @@ function PaypalStuff({cart}: PaypalStuffProps) {
         />
       </PayPalScriptProvider>
       <Message content={message} />
-      asd
     </div>
   );
 }
 
 export default PaypalStuff;
+
 
 
 

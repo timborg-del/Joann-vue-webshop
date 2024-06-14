@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Cart from '../components/Cart';
-import './CartPage.css'; // Import CSS file for CartPage styles
+import PaypalStuff from '../components/PaypalStuff';
+import './CartPage.css';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 
@@ -13,10 +14,9 @@ const CartPage: React.FC = () => {
         postalCode: '',
     });
 
-    const [isFormVisible, setIsFormVisible] = useState(false); // Initially set to false
+    const [isFormVisible, setIsFormVisible] = useState(false);
     const { state } = useCart();
 
-    // Calculate total price of items in the cart
     const totalPrice = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -26,12 +26,12 @@ const CartPage: React.FC = () => {
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        // Handle checkout logic here, such as sending data to the server
+        setIsFormVisible(false); // Hide form after submit
         console.log(formData);
     };
 
     const toggleFormVisibility = () => {
-        setIsFormVisible(!isFormVisible); // Toggle form visibility
+        setIsFormVisible(!isFormVisible);
     };
 
     return (
@@ -64,7 +64,10 @@ const CartPage: React.FC = () => {
                     )}
                 </div>
 
-                {/* Button to navigate back to homepage */}
+                {isFormVisible && (
+                    <PaypalStuff cart={state.items} formData={formData} />
+                )}
+
                 <Link to="/" className="cartexit_btn">X</Link>
             </div>
         </div>
@@ -72,6 +75,7 @@ const CartPage: React.FC = () => {
 };
 
 export default CartPage;
+
 
 
 

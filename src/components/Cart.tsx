@@ -1,7 +1,6 @@
 import { useCart, useCartDispatch } from '../context/CartContext';
 import CartItems from './CartItems';
 import './Cart.css';
-import PaypalStuff from './PaypalStuff';
 
 const Cart = () => {
   const { state } = useCart();
@@ -45,12 +44,12 @@ const Cart = () => {
           ))}
         </div>
       )}
-      <PaypalStuff cart={state.items}/>
     </div>
   );
 };
 
 export default Cart;
+
 
 
 
