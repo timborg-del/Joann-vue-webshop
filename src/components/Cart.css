@@ -23,9 +23,8 @@
 
 .cart-item {
   display: flex;
-  flex-direction: row; /* Ensure items are in a row */
-  align-items: flex-start; /* Align items to the top */
-  justify-content: space-between;
+  align-items: center; /* Align items to the center */
+  justify-content: flex-start; /* Align items to the start */
   width: 100%;
   margin-bottom: 20px;
   padding: 10px;
@@ -35,24 +34,15 @@
   box-shadow: 4px 4px 4px rgba(48, 48, 48, 0.5);
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
-  flex-wrap: wrap; /* Ensure items wrap on small screens */
+  flex-wrap: nowrap; /* Ensure items do not wrap */
 }
 
-.cart-items-prop {
-  display: flex;
-  flex-direction: row; /* Ensure image and details are in a row */
-  align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  flex: 1;
-}
-
-.cart-items-prop img {
+.cart-item-image {
   height: 5rem;
   width: 5rem;
   border-radius: 5px;
   object-fit: cover;
-  margin-right: 10px;
+  margin-right: 20px; /* Add space between image and details */
 }
 
 .cart-item-details {
@@ -64,12 +54,11 @@
 
 .cart-item-details p {
   font-size: 1rem;
-  margin: 10px 0;
+  margin: 5px 0;
 }
 
 .cart-item-actions {
   display: flex;
-  flex-direction: row;
   align-items: center;
   justify-content: flex-start; /* Align buttons to the left */
   flex-wrap: wrap; /* Ensure buttons wrap on small screens */
@@ -106,7 +95,6 @@
     justify-content: flex-start;
   }
 }
-
 
 
   

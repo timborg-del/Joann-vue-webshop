@@ -35,19 +35,17 @@ const Cart = () => {
         <div className="cart-items-container">
           {normalizeCartItems(state.items).map((item) => (
             <div key={item.RowKey} className="cart-item">
-              <div className="cart-items-prop">
-                <img src={item.ImageUrl} alt={item.Name} />
-                <div className="cart-item-details">
-                  <p>{item.Name}</p>
-                  <p>{item.size}</p>
-                  <p>${item.Price.toFixed(2)}</p>
-                  <p>Quantity: {item.quantity}</p>
-                  <div className="cart-item-actions">
-                    <button onClick={() => decrementQuantity(item.RowKey)}>-</button>
-                    <span>{item.quantity}</span>
-                    <button onClick={() => incrementQuantity(item.RowKey)}>+</button>
-                    <button onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.RowKey })}>Delete</button>
-                  </div>
+              <img src={item.ImageUrl} alt={item.Name} className="cart-item-image" />
+              <div className="cart-item-details">
+                <p>{item.Name}</p>
+                <p>{item.size}</p>
+                <p>${item.Price.toFixed(2)}</p>
+                <p>Quantity: {item.quantity}</p>
+                <div className="cart-item-actions">
+                  <button onClick={() => decrementQuantity(item.RowKey)}>-</button>
+                  <span>{item.quantity}</span>
+                  <button onClick={() => incrementQuantity(item.RowKey)}>+</button>
+                  <button onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.RowKey })}>Delete</button>
                 </div>
               </div>
             </div>
@@ -59,6 +57,7 @@ const Cart = () => {
 };
 
 export default Cart;
+
 
 
 
