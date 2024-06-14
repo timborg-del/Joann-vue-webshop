@@ -60,24 +60,39 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
           PostalCode: formData.postalCode
         }),
       });
-
-      const orderData = await response.json();
-
-      if (orderData.id) {
-        return orderData.id;
+  
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`Error creating order: ${errorText}`);
+        setMessage(`Error creating order: ${errorText}`);
+        return;
+      }
+  
+      // Attempt to parse the response as JSON
+      let orderData;
+      try {
+        const responseBody = await response.text();
+        orderData = JSON.parse(responseBody);
+      } catch (parseError) {
+        console.error(`Error parsing response JSON: ${parseError}`);
+        setMessage(`Error parsing response JSON: ${parseError}`);
+        return;
+      }
+  
+      if (orderData.orderId) {
+        console.log(`Order created successfully: ${orderData.orderId}`);
+        setMessage(`Order created successfully: ${orderData.orderId}`);
+        return orderData.orderId;
       } else {
-        const errorDetail = orderData?.details?.[0];
-        const errorMessage = errorDetail
-          ? `${errorDetail.issue} ${errorDetail.description} (${orderData.debug_id})`
-          : JSON.stringify(orderData);
-
-        throw new Error(errorMessage);
+        console.error(`Order creation failed: ${JSON.stringify(orderData)}`);
+        setMessage(`Order creation failed: ${JSON.stringify(orderData)}`);
       }
     } catch (error) {
-      console.error(error);
-      setMessage(`Could not initiate PayPal Checkout...${error}`);
+      console.error(`Could not initiate PayPal Checkout: ${error}`);
+      setMessage(`Could not initiate PayPal Checkout: ${error}`);
     }
   };
+  
 
   const onApprove = async (data: PayPalData, actions: PayPalActions) => {
     try {
