@@ -33,7 +33,7 @@ function Message({ content }: MessageProps) {
 
 function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   const initialOptions = {
-    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId",
+    clientId: "AVUnkSZBVCMf3oywvjucMAoBe9gP-FRd5fFjoA2zx9z_hd8Za0CrTt4sH1698_RR1njkDy8zoOckuIsd",
     "enable-funding": "venmo",
     "disable-funding": "",
     currency: "SEK",
