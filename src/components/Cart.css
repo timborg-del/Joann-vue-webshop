@@ -12,7 +12,7 @@
 
 .cart-items-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
   width: 100%;
   max-width: 800px; /* Adjust based on your design */
