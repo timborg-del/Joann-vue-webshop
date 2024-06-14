@@ -60,25 +60,16 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
           PostalCode: formData.postalCode
         }),
       });
-  
+
       if (!response.ok) {
         const errorText = await response.text();
         console.error(`Error creating order: ${errorText}`);
         setMessage(`Error creating order: ${errorText}`);
         return;
       }
-  
-      // Attempt to parse the response as JSON
-      let orderData;
-      try {
-        const responseBody = await response.text();
-        orderData = JSON.parse(responseBody);
-      } catch (parseError) {
-        console.error(`Error parsing response JSON: ${parseError}`);
-        setMessage(`Error parsing response JSON: ${parseError}`);
-        return;
-      }
-  
+
+      const orderData = await response.json();
+
       if (orderData.orderId) {
         console.log(`Order created successfully: ${orderData.orderId}`);
         setMessage(`Order created successfully: ${orderData.orderId}`);
@@ -92,7 +83,6 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
       setMessage(`Could not initiate PayPal Checkout: ${error}`);
     }
   };
-  
 
   const onApprove = async (data: PayPalData, actions: PayPalActions) => {
     try {
