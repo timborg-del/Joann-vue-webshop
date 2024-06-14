@@ -4,8 +4,7 @@
   justify-content: center; /* Center horizontally */
   align-items: flex-start; /* Align items to the top */
   position: fixed; /* Fixed position to keep it at the top */
-  top: 110px; /* Height of the navbar */
-  height: calc(100vh - 60px); /* Full height of the viewport minus navbar height */
+  height: calc(100vh - 100px); /* Full height of the viewport minus navbar height */
   width: 100vw; /* Full width of the viewport */
   margin: 0; /* Remove any default margin */
   overflow-y: auto;
@@ -16,9 +15,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center; /* Center vertically */
-  width: 90%; /* Adjust width based on your design */
+  
   height: auto;
-  max-width: 1200px; /* Maximum width of the cart page */
+  max-width: 900px; /* Maximum width of the cart page */
   padding: 20px;
   background: rgba(249, 169, 49, 0.395);
   border-radius: 16px;
