@@ -12,18 +12,19 @@
 
 .cart-items-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   max-width: 800px; /* Adjust based on your design */
   padding: 20px;
-  max-height:400px;
+  max-height: 400px;
   overflow-y: auto;
 }
 
 .cart-item {
   display: flex;
-  align-items: center;
+  flex-direction: row; /* Ensure items are in a row */
+  align-items: flex-start; /* Align items to the top */
   justify-content: space-between;
   width: 100%;
   margin-bottom: 20px;
@@ -39,8 +40,9 @@
 
 .cart-items-prop {
   display: flex;
+  flex-direction: row; /* Ensure image and details are in a row */
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
   width: 100%;
   flex: 1;
 }
@@ -53,16 +55,25 @@
   margin-right: 10px;
 }
 
-.cart-items-prop p {
+.cart-item-details {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.cart-item-details p {
   font-size: 1rem;
-  margin: 10px;
+  margin: 10px 0;
 }
 
 .cart-item-actions {
   display: flex;
+  flex-direction: row;
   align-items: center;
-  justify-content: flex-end; /* Align buttons to the right */
+  justify-content: flex-start; /* Align buttons to the left */
   flex-wrap: wrap; /* Ensure buttons wrap on small screens */
+  margin-top: 10px; /* Add space between details and buttons */
 }
 
 .cart-item-actions button {
@@ -91,8 +102,8 @@
   }
 
   .cart-item-actions {
-    width: 30%;
-    justify-content: flex-end;
+    width: 100%; /* Ensure actions take full width */
+    justify-content: flex-start;
   }
 }
 
