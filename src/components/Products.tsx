@@ -1,64 +1,22 @@
 import React, { useState, useEffect } from 'react';
-import { CartItemProps } from './CartItems';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
 import { Product } from '../apiService';
-import { useCart, useCartDispatch } from '../context/CartContext';
-
-interface Review {
-  id: number;
-  user: string;
-  comment: string;
-  rating: number;
-}
-
-interface MockReviews {
-  [key: string]: Review[];
-}
 
 const Products: React.FC = () => {
-  const { state } = useCart();
-  const dispatch = useCartDispatch();
   const { addItemToCart } = useCartActions();
-  const { data, isLoading, error } = useFetchData('https://joart.azurewebsites.net/GetProducts');
+  const { data, isLoading, error } = useFetchData<Product[]>('https://joart.azurewebsites.net/GetProducts');
 
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
-  const [showReviews, setShowReviews] = useState<boolean>(false);
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
     A4: -2,
     A5: -5
   };
-
-  const mockReviews: MockReviews = {
-    "product1": [
-      { id: 1, user: "John Doe", comment: "Great product!", rating: 5 },
-      { id: 2, user: "Jane Smith", comment: "Good quality.", rating: 4 }
-    ],
-    "product2": [
-      { id: 1, user: "Alice Johnson", comment: "Loved it!", rating: 5 },
-      { id: 2, user: "Bob Brown", comment: "Not bad.", rating: 3 }
-    ]
-  };
-
-  const toggleDetails = (productId: string) => {
-    setActiveProduct(activeProduct === productId ? null : productId);
-  };
-
-  const closeDetails = () => {
-    setActiveProduct(null);
-    setShowReviews(false);
-  };
-
-  useEffect(() => {
-    if (data) {
-      console.log("Fetched data:", data);
-    }
-  }, [data]);
 
   const handleSizeChange = (productId: string, size: string) => {
     setSelectedSizes({ ...selectedSizes, [productId]: size });
@@ -70,44 +28,23 @@ const Products: React.FC = () => {
     return basePrice + adjustment;
   };
 
-  const handleAddToCart = (product: CartItemProps & Product) => {
+  const handleAddToCart = (product: Product) => {
     const size = selectedSizes[product.RowKey] || 'A3';
     const uniqueId = `${product.RowKey}-${size}`;
     addItemToCart({
-      id: uniqueId,
-      name: product.Name,
-      price: getPrice(product.RowKey, product.Price),
-      ImageUrl: product.ImageUrl,
+      ...product,
+      RowKey: uniqueId,
+      Price: getPrice(product.RowKey, product.Price),
       quantity: 1,
       size: size
     });
   };
 
-  const decrementQuantity = (itemId: string) => {
-    dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
-  };
-
-  const incrementQuantity = (itemId: string) => {
-    dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
-  };
-
-  const getProductQuantity = (productId: string, size: string) => {
-    const cartItem = state.items.find(item => item.id === `${productId}-${size}`);
-    return cartItem ? cartItem.quantity : 0;
-  };
-
-  const handleImageClick = (productImageUrl: string) => {
-    setEnlargedImage(productImageUrl);
-  };
-
-  const renderStars = (rating: number) => {
-    return (
-      <span className="star-rating">
-        {"★".repeat(rating)}
-        {"☆".repeat(5 - rating)}
-      </span>
-    );
-  };
+  useEffect(() => {
+    if (data) {
+      console.log("Fetched data:", data);
+    }
+  }, [data]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -123,12 +60,10 @@ const Products: React.FC = () => {
     return <div>Error: Unexpected data format</div>;
   }
 
-  const productsArray: (CartItemProps & Product)[] = data;
-
   return (
     <div className="products-container">
-      {productsArray.length > 0 ? (
-        productsArray.map((product) => (
+      {data.length > 0 ? (
+        data.map((product) => (
           <div 
             key={product.RowKey} 
             className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
@@ -136,7 +71,7 @@ const Products: React.FC = () => {
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
                 <>
-                  <button className="close-button" onClick={closeDetails}>&times;</button>
+                  <button className="close-button" onClick={() => setActiveProduct(null)}>&times;</button>
                   <img 
                     src={product.ImageUrl}
                     alt={product.Name}
@@ -145,11 +80,11 @@ const Products: React.FC = () => {
                       e.currentTarget.src = '/path/to/placeholder-image.jpg';
                       console.error("Image load error", e);
                     }}
-                    onClick={() => handleImageClick(product.ImageUrl)}
+                    onClick={() => setEnlargedImage(product.ImageUrl)}
                   />
                 </>
               ) : (
-                <div className="product-thumbnail" onClick={() => toggleDetails(product.RowKey)}>
+                <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
                   {product.ImageUrl ? (
                     <img 
                       src={product.ImageUrl}
@@ -164,14 +99,6 @@ const Products: React.FC = () => {
                     <div className="no-image">No Image Available</div>
                   )}
                   <div className="product-name">{product.Name}</div>
-                  <div className="product-reviews">
-                    {mockReviews[product.RowKey]?.slice(0, 1).map((review) => (
-                      <div key={review.id}>
-                        <p><strong>{review.user}:</strong> {review.comment}</p>
-                        {renderStars(review.rating)}
-                      </div>
-                    ))}
-                  </div>
                 </div>
               )}
               {activeProduct === product.RowKey && (
@@ -179,7 +106,6 @@ const Products: React.FC = () => {
                   <div className="product-info">
                     <p><strong>Name:</strong> {product.Name}</p>
                     <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
-                    <p><strong>Stock:</strong> {product.Stock}</p>
                     <p><strong>Category:</strong> {product.Category}</p>
                   </div>
                   <div className="select-container">
@@ -202,26 +128,6 @@ const Products: React.FC = () => {
                       Add to Cart
                     </button>
                   </div>
-                  <div className="quantity-buttons">
-                    <button onClick={() => decrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>-</button>
-                    <span>{getProductQuantity(product.RowKey, selectedSizes[product.RowKey] || 'A3')}</span>
-                    <button onClick={() => incrementQuantity(`${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)}>+</button>
-                  </div>
-                  <div className="product-reviews">
-                    <button onClick={() => setShowReviews(!showReviews)}>
-                      {showReviews ? "Hide Reviews" : "Show Reviews"}
-                    </button>
-                    {showReviews && (
-                      <div>
-                        {mockReviews[product.RowKey]?.map((review) => (
-                          <div key={review.id}>
-                            <p><strong>{review.user}:</strong> {review.comment}</p>
-                            {renderStars(review.rating)}
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </div>
                 </div>
               )}
             </div>
@@ -241,6 +147,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 

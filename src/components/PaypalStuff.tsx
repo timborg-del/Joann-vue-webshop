@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { CartItem } from "../context/CartContext";
+import { CartProduct } from "../context/CartContext"; // Ensure this path is correct
 
 type MessageProps = {
   content: string;
@@ -23,7 +23,7 @@ interface FormData {
 }
 
 interface PaypalStuffProps {
-  cart: CartItem[];
+  cart: CartProduct[];
   formData: FormData;
 }
 
@@ -130,6 +130,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 

@@ -17,7 +17,7 @@ const CartPage: React.FC = () => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const { state } = useCart();
 
-    const totalPrice = state.items.reduce((total, item) => total + item.price * item.quantity, 0);
+    const totalPrice = state.items.reduce((total, item) => total + item.Price * item.quantity, 0);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;

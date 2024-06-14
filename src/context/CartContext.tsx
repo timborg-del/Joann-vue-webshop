@@ -1,23 +1,20 @@
 import { createContext, useReducer, useContext, ReactNode, Dispatch, useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
+import { Product } from '../apiService'; // Ensure this path is correct
 
-// Define types for cart items and state
-export interface CartItem {
-  id: string;
-  name: string;
-  price: number;
-  ImageUrl: string;
+// Extend Product to include quantity and size for cart items
+export interface CartProduct extends Product {
   quantity: number;
   size?: string;
 }
 
 interface CartState {
-  items: CartItem[];
+  items: CartProduct[];
 }
 
 // Define action types
 type Action =
-  | { type: 'ADD_ITEM'; payload: CartItem }
+  | { type: 'ADD_ITEM'; payload: CartProduct }
   | { type: 'REMOVE_ITEM'; payload: string }
   | { type: 'CLEAR_CART' }
   | { type: 'INCREMENT_QUANTITY'; payload: string }
@@ -46,19 +43,19 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const cartReducer = (state: CartState, action: Action): CartState => {
     switch (action.type) {
       case 'ADD_ITEM': {
-        const existingItemIndex = state.items.findIndex(item => item.id === action.payload.id);
+        const existingItemIndex = state.items.findIndex(item => item.RowKey === action.payload.RowKey && item.size === action.payload.size);
         if (existingItemIndex !== -1) {
           const updatedItems = [...state.items];
-          updatedItems[existingItemIndex].quantity += 1;
+          updatedItems[existingItemIndex].quantity += action.payload.quantity;
           return { ...state, items: updatedItems };
         }
         return { 
           ...state, 
-          items: [...state.items, { ...action.payload, quantity: 1 }]
+          items: [...state.items, action.payload]
         };
       }
       case 'REMOVE_ITEM': {
-        const updatedItems = state.items.filter(item => item.id !== action.payload);
+        const updatedItems = state.items.filter(item => item.RowKey !== action.payload);
         return { ...state, items: updatedItems };
       }
       case 'CLEAR_CART': {
@@ -66,7 +63,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
       case 'INCREMENT_QUANTITY': {
         const incrementedItems = state.items.map(item =>
-          item.id === action.payload
+          item.RowKey === action.payload
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
@@ -74,7 +71,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
       case 'DECREMENT_QUANTITY': {
         const decrementedItems = state.items.map(item =>
-          item.id === action.payload && item.quantity > 1
+          item.RowKey === action.payload && item.quantity > 1
             ? { ...item, quantity: item.quantity - 1 }
             : item
         ).filter(item => item.quantity > 0);
@@ -105,6 +102,10 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
+
+
+
 
 
 
