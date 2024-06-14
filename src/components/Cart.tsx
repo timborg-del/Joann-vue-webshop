@@ -40,7 +40,6 @@ const Cart = () => {
                 <p>{item.Name}</p>
                 <p>{item.size}</p>
                 <p>${item.Price.toFixed(2)}</p>
-                <p>Quantity: {item.quantity}</p>
                 <div className="cart-item-actions">
                   <button onClick={() => decrementQuantity(item.RowKey)}>-</button>
                   <span>{item.quantity}</span>
@@ -57,6 +56,7 @@ const Cart = () => {
 };
 
 export default Cart;
+
 
 
 

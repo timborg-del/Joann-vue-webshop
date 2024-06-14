@@ -34,12 +34,11 @@
   box-shadow: 4px 4px 4px rgba(48, 48, 48, 0.5);
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
-  flex-wrap: nowrap; /* Ensure items do not wrap */
 }
 
 .cart-item-image {
-  height: 5rem;
-  width: 5rem;
+  height: 100px; /* Adjust the height as needed */
+  width: 100px; /* Ensure the image remains square */
   border-radius: 5px;
   object-fit: cover;
   margin-right: 20px; /* Add space between image and details */
@@ -85,16 +84,22 @@
     flex-direction: row; /* Ensure items are in a row on larger screens */
   }
 
-  .cart-items-prop {
-    flex-direction: row;
-    width: 70%;
+  .cart-item-details {
+    flex-direction: column;
   }
 
   .cart-item-actions {
+    flex-direction: row;
     width: 100%; /* Ensure actions take full width */
     justify-content: flex-start;
+    align-items: center;
+  }
+
+  .cart-item-actions button {
+    margin: 0 5px;
   }
 }
+
 
 
   
