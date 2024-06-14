@@ -17,7 +17,7 @@
   align-items: center;
   justify-content: center; /* Center vertically */
   width: 90%; /* Adjust width based on your design */
-  max-width: 800px; /* Maximum width of the cart page */
+  max-width: 1200px; /* Maximum width of the cart page */
   padding: 20px;
   background: rgba(249, 169, 49, 0.395);
   border-radius: 16px;
