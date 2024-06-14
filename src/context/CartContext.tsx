@@ -2,19 +2,13 @@ import { createContext, useReducer, useContext, ReactNode, Dispatch, useEffect }
 import useLocalStorage from '../hooks/useLocalStorage';
 import { Product } from '../apiService'; // Ensure this path is correct
 
-// Extend Product to include quantity and size for cart items
-export interface CartProduct extends Product {
-  quantity: number;
-  size?: string;
-}
-
 interface CartState {
-  items: CartProduct[];
+  items: Product[];
 }
 
 // Define action types
 type Action =
-  | { type: 'ADD_ITEM'; payload: CartProduct }
+  | { type: 'ADD_ITEM'; payload: Product }
   | { type: 'REMOVE_ITEM'; payload: string }
   | { type: 'CLEAR_CART' }
   | { type: 'INCREMENT_QUANTITY'; payload: string }
@@ -102,6 +96,8 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
+
 
 
 

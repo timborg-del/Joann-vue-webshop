@@ -11,7 +11,9 @@ const AdminPage: React.FC = () => {
     Price: 0,
     Stock: 0,
     Category: '',
-    ImageUrl: '' // Corrected to imageUrl
+    ImageUrl: '',
+    quantity: 0, // Default value
+    size: '', // Default value
   });
   const [, setEditingProduct] = useState<Product | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -37,7 +39,7 @@ const AdminPage: React.FC = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    if (name === 'Price' || name === 'Stock') {
+    if (name === 'Price' || name === 'Stock' || name === 'quantity') {
       setNewProduct({ ...newProduct, [name]: parseFloat(value) });
     } else {
       setNewProduct({ ...newProduct, [name]: value });
@@ -69,7 +71,9 @@ const AdminPage: React.FC = () => {
         Price: 0,
         Stock: 0,
         Category: '',
-        ImageUrl: '' // Reset imageUrl
+        ImageUrl: '',
+        quantity: 0, // Reset quantity
+        size: '', // Reset size
       });
       setSelectedFile(null);
       setCurrentView('products');
@@ -99,7 +103,9 @@ const AdminPage: React.FC = () => {
         Price: 0,
         Stock: 0,
         Category: '',
-        ImageUrl: '' // Reset imageUrl
+        ImageUrl: '',
+        quantity: 0, // Reset quantity
+        size: '', // Reset size
       });
       setCurrentView('products');
       setError(null);
@@ -124,7 +130,7 @@ const AdminPage: React.FC = () => {
 
   return (
     <div className="admin-container">
-      <h1 >Admin Page</h1>
+      <h1>Admin Page</h1>
 
       <header>
         <button onClick={() => setCurrentView('dashboard')}>Dashboard</button>
@@ -140,7 +146,9 @@ const AdminPage: React.FC = () => {
             Price: 0,
             Stock: 0,
             Category: '',
-            ImageUrl: '' // Reset imageUrl
+            ImageUrl: '',
+            quantity: 0, // Reset quantity
+            size: '', // Reset size
           });
           setSelectedFile(null);
           setCurrentView('add');
@@ -226,6 +234,21 @@ const AdminPage: React.FC = () => {
               placeholder="Category"
               required
             />
+            <input
+              type="number"
+              name="quantity"
+              value={newProduct.quantity}
+              onChange={handleInputChange}
+              placeholder="Quantity"
+              required
+            />
+            <input
+              type="text"
+              name="size"
+              value={newProduct.size}
+              onChange={handleInputChange}
+              placeholder="Size"
+            />
             <input type="file" onChange={handleFileChange} required={currentView === 'add'} />
             <button type="submit">{currentView === 'add' ? 'Add Product' : 'Update Product'}</button>
           </form>
@@ -239,4 +262,5 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
 

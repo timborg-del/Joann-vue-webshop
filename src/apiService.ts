@@ -10,7 +10,10 @@ export interface Product {
     Stock: number;
     Category: string;
     ImageUrl: string;
-}
+    quantity: number;
+    size?: string;
+  }
+  
 
 export interface User {
     PartitionKey: string;
