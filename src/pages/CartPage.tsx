@@ -37,6 +37,7 @@ const CartPage: React.FC = () => {
     return (
         <div className='cart-page-container'>
             <div className='cart-page'>
+                <button className="close-button" onClick={toggleFormVisibility}>&times;</button>
                 <div className='cart-container'>
                     <h1>Cart</h1>
                     <Cart />
@@ -53,10 +54,9 @@ const CartPage: React.FC = () => {
                                 <input type="text" name="postalCode" placeholder="Postal Code" value={formData.postalCode} onChange={handleChange} required />
                             </div>
                             <p className='total-price'>Total Price: ${totalPrice.toFixed(2)}</p>
-                              {isFormVisible && (
-                               <PaypalStuff cart={state.items} formData={formData} />
-                              )}
-                            
+                            {isFormVisible && (
+                                <PaypalStuff cart={state.items} formData={formData} />
+                            )}
                         </form>
                     )}
                 </div>
@@ -73,6 +73,7 @@ const CartPage: React.FC = () => {
 };
 
 export default CartPage;
+
 
 
 
