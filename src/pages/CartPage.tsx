@@ -35,7 +35,7 @@ const CartPage: React.FC = () => {
     };
 
     return (
-        <div className='cart-page-container'>
+        <div className={`cart-page-container ${isFormVisible ? 'active' : ''}`}>
             <div className='cart-page'>
                 <button className="close-button" onClick={toggleFormVisibility}>&times;</button>
                 <div className='cart-container'>
@@ -73,6 +73,7 @@ const CartPage: React.FC = () => {
 };
 
 export default CartPage;
+
 
 
 
