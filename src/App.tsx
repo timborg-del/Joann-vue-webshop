@@ -14,6 +14,11 @@ import PrivateRoute from './components/PrivateRoute';
 
 const App: React.FC = () => {
   const [isShopOpen, setIsShopOpen] = useState(false);
+  const [isCartVisible, setIsCartVisible] = useState(false);
+
+  const toggleCartVisibility = () => {
+    setIsCartVisible(!isCartVisible);
+  };
 
   return (
     <Router>
@@ -34,9 +39,18 @@ const App: React.FC = () => {
             <Link to="/admin">Admin</Link>
           </div>
           <div>
-            <CartButton />
+            <button className="cart-button" onClick={toggleCartVisibility}>
+              <CartButton />
+            </button>
           </div>
         </nav>
+
+        <div className={`cart-page-container ${isCartVisible ? 'active' : ''}`} id="cartPage">
+          <div className="cart-page">
+            <button className="close-button" onClick={toggleCartVisibility}>&times;</button>
+            <CartPage />
+          </div>
+        </div>
 
         <Routes>
           <Route path="/" element={<Home />} />
@@ -45,7 +59,7 @@ const App: React.FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/change-password" element={<PrivateRoute component={ChangePassword} />} />
-          <Route path="/admin" element={< AdminPage/>} />
+          <Route path="/admin" element={<AdminPage />} />
         </Routes>
       </CartProvider>
     </Router>
@@ -53,6 +67,8 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
 
 {/* <Route path="/admin" element={<PrivateRoute component={AdminPage} />} /> */}
 
