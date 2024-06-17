@@ -25,7 +25,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: auto;
+  height: auto; /* Ensure height adapts to content */
+  min-height: 300px; /* Add a minimum height to prevent collapsing */
   max-width: 900px;
   padding: 20px;
   background: rgba(249, 169, 49, 0.395);
