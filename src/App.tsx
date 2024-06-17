@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
-import CartPage from './pages/CartPage';
 import CartButton from './components/CartButton';
 import { CartProvider } from './context/CartContext';
 import ShopPage from './pages/ShopPage';
@@ -11,6 +10,7 @@ import Login from './pages/Login';
 import AdminPage from './pages/AdminPage';
 import ChangePassword from './components/ChangePassword';
 import PrivateRoute from './components/PrivateRoute';
+import CartPage from './pages/CartPage'; // Import here for sliding cart
 
 const App: React.FC = () => {
   const [isShopOpen, setIsShopOpen] = useState(false);
@@ -45,16 +45,10 @@ const App: React.FC = () => {
           </div>
         </nav>
 
-        <div className={`cart-page-container ${isCartVisible ? 'active' : ''}`} id="cartPage">
-          <div className="cart-page">
-            <button className="close-button" onClick={toggleCartVisibility}>&times;</button>
-            <CartPage />
-          </div>
-        </div>
+        <CartPage isVisible={isCartVisible} onClose={toggleCartVisibility} />
 
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="/cart" element={<CartPage />} />
           <Route path="/shoppage" element={<ShopPage />} />
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
@@ -67,6 +61,12 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
+
+
+
+
 
 
 
