@@ -25,7 +25,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: auto; /* Ensure height adapts to content */
+  height: auto;
   min-height: 300px; /* Add a minimum height to prevent collapsing */
   max-width: 900px;
   padding: 20px;
@@ -50,7 +50,7 @@
   display: flex; /* Show the form when active */
 }
 
-.form-container input {
+.form-container .input-text {
   width: 100%;
   max-width: 300px; /* Set max-width to prevent it from extending too much */
   height: auto;
@@ -62,7 +62,7 @@
   background-color: rgba(0, 0, 0, 0.684);
 }
 
-.form-container .input-text {
+.form-container .input-text input {
   width: 100%;
   margin-top: 1px;
   max-width: 300px; /* Set max-width to prevent it from extending too much */
