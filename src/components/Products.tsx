@@ -71,7 +71,7 @@ const Products: React.FC = () => {
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
                 <>
-                  <button className="close-button" onClick={() => setActiveProduct(null)}>&times;</button>
+                  <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;</button>
                   <img 
                     src={product.ImageUrl}
                     alt={product.Name}

@@ -3,7 +3,7 @@
   justify-content: center;
   align-items: center;
   position: fixed;
-  top: 0;
+  top: 120px;
   right: -100%; /* Start hidden off the screen */
   height: 100vh;
   width: 100vw;
@@ -25,11 +25,11 @@
   align-items: center;
   justify-content: center;
   height: auto; /* Ensure height adapts to content */
-  min-height: 300px; /* Add a minimum height to prevent collapsing */
+  min-height: auto; /* Add a minimum height to prevent collapsing */
   max-width: 1200px; /* Adjusted max-width for a larger layout */
   padding: 20px;
   background: rgba(249, 169, 49, 0.395);
-  border-radius: 16px;
+  border-radius: 5px;
   box-shadow: 4px 4px 4px rgba(144, 95, 22, 0.467);
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
@@ -37,19 +37,19 @@
   overflow-y: auto;
 }
 
-.close-button {
+.close-button-cart {
   position: absolute;
   top: 10px;
   left: 10px; /* Move the button to the left side */
   width: 40px; /* Set width and height to make a larger square button */
   height: 40px;
-  background-color: none; /*rgba(173, 61, 155, 0.61);*/
+  background: rgba(86, 249, 49, 0.515);
   color: #fff;
-  border: none;
-  border-radius: 50%; /* Make a circle */
-  font-size: 24px; /* Increase font size for a larger arrow */
+  border-radius: 5px;
+  align-items: center;
+  font-size: 25px; /* Increase font size for a larger arrow */
   text-align: center;
-  line-height: 40px; /* Adjust line height to match the button height */
+  line-height: 0px; /* Adjust line height to match the button height */
   text-decoration: none;
   cursor: pointer;
   z-index: 1001; /* Ensure it is above other content */
