@@ -108,6 +108,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
       }
 
       const orderData = await response.json();
+      console.log("Capture result", orderData);
 
       const errorDetail = orderData?.details?.[0];
 
