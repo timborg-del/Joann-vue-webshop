@@ -110,9 +110,9 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
       const orderData = await response.json();
       console.log("Capture result", orderData);
 
-      if (!orderData || !orderData.purchase_units || !orderData.purchase_units[0].payments.captures[0]) {
-        console.error("Unexpected response structure", orderData);
-        setMessage(`Unexpected response structure: ${JSON.stringify(orderData)}`);
+      if (!orderData.purchase_units) {
+        console.error("purchase_units is undefined", orderData);
+        setMessage(`Transaction ${orderData.status}: ${orderData.id}. No purchase_units in response.`);
         return;
       }
 
