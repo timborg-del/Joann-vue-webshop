@@ -33,7 +33,7 @@ function Message({ content }: MessageProps) {
 
 function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   const initialOptions = {
-    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId",
+    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Add your PayPal Client ID here
     "enable-funding": "venmo",
     "disable-funding": "",
     currency: "SEK",
@@ -79,8 +79,12 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         setMessage(`Order creation failed: ${JSON.stringify(orderData)}`);
       }
     } catch (error) {
-      console.error(`Could not initiate PayPal Checkout: ${error}`);
-      setMessage(`Could not initiate PayPal Checkout: ${error}`);
+      console.error(`Could not initiate PayPal Checkout:`, error);
+      if (error instanceof Error) {
+        setMessage(`Could not initiate PayPal Checkout: ${error.message}`);
+      } else {
+        setMessage(`Could not initiate PayPal Checkout: ${String(error)}`);
+      }
     }
   };
 
@@ -110,8 +114,12 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
       }
     } catch (error) {
-      console.error(error);
-      setMessage(`Sorry, your transaction could not be processed...${error}`);
+      console.error("Error occurred during transaction:", error);
+      if (error instanceof Error) {
+        setMessage(`Sorry, your transaction could not be processed...${error.message}`);
+      } else {
+        setMessage(`Sorry, your transaction could not be processed...${String(error)}`);
+      }
     }
   };
 
@@ -135,6 +143,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
