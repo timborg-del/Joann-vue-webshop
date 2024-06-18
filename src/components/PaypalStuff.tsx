@@ -91,7 +91,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   const onApprove = async (data: PayPalData, actions: PayPalActions) => {
     try {
       const response = await fetch(
-        `/api/orders/${data.orderID}/capture`,
+        `https://joart.azurewebsites.net/orders/${data.orderID}/capture`,
         {
           method: "POST",
           headers: {
@@ -99,6 +99,13 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
           },
         }
       );
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error(`Error capturing order: ${errorText}`);
+        setMessage(`Error capturing order: ${errorText}`);
+        return;
+      }
 
       const orderData = await response.json();
 
@@ -143,6 +150,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
