@@ -110,6 +110,12 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
       const orderData = await response.json();
       console.log("Capture result", orderData);
 
+      if (!orderData || !orderData.purchase_units || !orderData.purchase_units[0].payments.captures[0]) {
+        console.error("Unexpected response structure", orderData);
+        setMessage(`Unexpected response structure: ${JSON.stringify(orderData)}`);
+        return;
+      }
+
       const errorDetail = orderData?.details?.[0];
 
       if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
@@ -151,6 +157,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
