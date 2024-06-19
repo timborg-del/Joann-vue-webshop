@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Product } from "../apiService"; // Ensure this path is correct
 
@@ -35,6 +35,10 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 
   const [message, setMessage] = useState<string>("");
 
+  useEffect(() => {
+    console.log('Current cart items for PayPal:', cart);
+  }, [cart]);
+
   const createOrder = async () => {
     try {
       const response = await fetch("https://joart.azurewebsites.net/orders/create", {
@@ -42,9 +46,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({
-          Cart: cart,
-        }),
+        body: JSON.stringify({ Cart: cart }),
       });
 
       if (!response.ok) {
@@ -143,6 +145,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 

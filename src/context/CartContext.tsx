@@ -6,7 +6,6 @@ interface CartState {
   items: Product[];
 }
 
-// Define action types
 type Action =
   | { type: 'ADD_ITEM'; payload: Product }
   | { type: 'REMOVE_ITEM'; payload: string }
@@ -14,12 +13,10 @@ type Action =
   | { type: 'INCREMENT_QUANTITY'; payload: string }
   | { type: 'DECREMENT_QUANTITY'; payload: string };
 
-// Initial state
 const initialState: CartState = {
   items: [],
 };
 
-// Create context
 const CartContext = createContext<{
   state: CartState;
   dispatch: Dispatch<Action>;
@@ -30,19 +27,21 @@ const CartContext = createContext<{
   cartItemCount: 0,
 });
 
-// Provider component to wrap around the app
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [storedState, setStoredState] = useLocalStorage<CartState>('cart', initialState);
 
   const cartReducer = (state: CartState, action: Action): CartState => {
+    console.log('Action dispatched:', action);
     switch (action.type) {
       case 'ADD_ITEM': {
         const existingItemIndex = state.items.findIndex(item => item.RowKey === action.payload.RowKey && item.size === action.payload.size);
         if (existingItemIndex !== -1) {
           const updatedItems = [...state.items];
           updatedItems[existingItemIndex].quantity += action.payload.quantity;
+          console.log('Updated items after ADD_ITEM:', updatedItems);
           return { ...state, items: updatedItems };
         }
+        console.log('Items after ADD_ITEM:', [...state.items, action.payload]);
         return { 
           ...state, 
           items: [...state.items, action.payload]
@@ -50,9 +49,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       }
       case 'REMOVE_ITEM': {
         const updatedItems = state.items.filter(item => item.RowKey !== action.payload);
+        console.log('Updated items after REMOVE_ITEM:', updatedItems);
         return { ...state, items: updatedItems };
       }
       case 'CLEAR_CART': {
+        console.log('Cart cleared');
         return initialState;
       }
       case 'INCREMENT_QUANTITY': {
@@ -61,6 +62,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             ? { ...item, quantity: item.quantity + 1 }
             : item
         );
+        console.log('Items after INCREMENT_QUANTITY:', incrementedItems);
         return { ...state, items: incrementedItems };
       }
       case 'DECREMENT_QUANTITY': {
@@ -69,6 +71,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             ? { ...item, quantity: item.quantity - 1 }
             : item
         ).filter(item => item.quantity > 0);
+        console.log('Items after DECREMENT_QUANTITY:', decrementedItems);
         return { ...state, items: decrementedItems };
       }
       default:
@@ -79,6 +82,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(cartReducer, storedState || initialState);
 
   useEffect(() => {
+    console.log('State updated:', state);
     setStoredState(state);
   }, [state, setStoredState]);
 
@@ -91,11 +95,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   );
 };
 
-// Custom hooks to consume CartContext
 export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
 
 
 

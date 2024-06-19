@@ -18,7 +18,6 @@ const Cart = () => {
     dispatch({ type: 'REMOVE_ITEM', payload: itemId });
   };
 
-  // Normalize data structure to ensure consistency
   const normalizeCartItems = (items: Product[]): Product[] => {
     return items.map(item => ({
       ...item,
@@ -30,6 +29,8 @@ const Cart = () => {
       size: item.size ?? 'default-size'
     }));
   };
+
+  console.log('Current cart items:', state.items);
 
   return (
     <div className="cart-product-container">
