@@ -76,7 +76,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const [state, dispatch] = useReducer(cartReducer, storedState);
+  const [state, dispatch] = useReducer(cartReducer, storedState || initialState);
 
   useEffect(() => {
     setStoredState(state);
@@ -96,6 +96,7 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
 
 
 
