@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Hook to use local storage
 function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => void] {
@@ -21,10 +21,15 @@ function useLocalStorage<T>(key: string, initialValue: T): [T, (value: T) => voi
     }
   };
 
+  useEffect(() => {
+    window.localStorage.setItem(key, JSON.stringify(storedValue));
+  }, [key, storedValue]);
+
   return [storedValue, setValue];
 }
 
 export default useLocalStorage;
+
 
 
 
