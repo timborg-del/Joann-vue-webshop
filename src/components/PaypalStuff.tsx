@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Product } from "../apiService"; // Ensure this path is correct
 
@@ -35,18 +35,24 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 
   const [message, setMessage] = useState<string>("");
 
+  const cartRef = useRef(cart);
+
   useEffect(() => {
-    console.log('Current cart items for PayPal:', cart);
+    cartRef.current = cart;
+    console.log('Updated cart state in ref:', cartRef.current);
   }, [cart]);
 
-  const createOrder = async () => {
+  const createOrder = useCallback(async () => {
+    const currentCart = cartRef.current;
+    console.log('Creating order with cart:', currentCart);
+
     try {
       const response = await fetch("https://joart.azurewebsites.net/orders/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Cart: cart }),
+        body: JSON.stringify({ Cart: currentCart }),
       });
 
       if (!response.ok) {
@@ -74,9 +80,9 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         setMessage(`Could not initiate PayPal Checkout: ${String(error)}`);
       }
     }
-  };
+  }, []);
 
-  const onApprove = async (data: PayPalData, actions: PayPalActions) => {
+  const onApprove = useCallback(async (data: PayPalData, actions: PayPalActions) => {
     try {
       const response = await fetch(
         `https://joart.azurewebsites.net/orders/${data.orderID}/capture`,
@@ -123,7 +129,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         setMessage(`Sorry, your transaction could not be processed...${String(error)}`);
       }
     }
-  };
+  }, []);
 
   return (
     <div className="App">
@@ -145,6 +151,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
