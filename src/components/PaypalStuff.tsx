@@ -14,24 +14,15 @@ type PayPalActions = {
   restart: () => void;
 };
 
-interface FormData {
-  fullName: string;
-  email: string;
-  address: string;
-  city: string;
-  postalCode: string;
-}
-
 interface PaypalStuffProps {
   cart: Product[];
-  formData: FormData;
 }
 
 function Message({ content }: MessageProps) {
   return <p>{content}</p>;
 }
 
-function PaypalStuff({ cart, formData }: PaypalStuffProps) {
+function PaypalStuff({ cart }: PaypalStuffProps) {
   const initialOptions = {
     clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Add your PayPal Client ID here
     "enable-funding": "venmo",
@@ -53,11 +44,6 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         },
         body: JSON.stringify({
           Cart: cart,
-          Fullname: formData.fullName,
-          Email: formData.email,
-          Address: formData.address,
-          City: formData.city,
-          PostalCode: formData.postalCode
         }),
       });
 
@@ -65,24 +51,26 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         const errorText = await response.text();
         console.error(`Error creating order: ${errorText}`);
         setMessage(`Error creating order: ${errorText}`);
-        return null; // Ensure we return null if the order creation fails
+        return;
       }
 
       const orderData = await response.json();
-      console.log(`Order created successfully: ${orderData.orderId}`);
 
       if (orderData.orderId) {
+        console.log(`Order created successfully: ${orderData.orderId}`);
         setMessage(`Order created successfully: ${orderData.orderId}`);
         return orderData.orderId;
       } else {
         console.error(`Order creation failed: ${JSON.stringify(orderData)}`);
         setMessage(`Order creation failed: ${JSON.stringify(orderData)}`);
-        return null; // Ensure we return null if the order creation fails
       }
     } catch (error) {
       console.error(`Could not initiate PayPal Checkout:`, error);
-      setMessage(`Could not initiate PayPal Checkout: ${error instanceof Error ? error.message : String(error)}`);
-      return null; // Ensure we return null if the order creation fails
+      if (error instanceof Error) {
+        setMessage(`Could not initiate PayPal Checkout: ${error.message}`);
+      } else {
+        setMessage(`Could not initiate PayPal Checkout: ${String(error)}`);
+      }
     }
   };
 
@@ -127,7 +115,11 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
       }
     } catch (error) {
       console.error("Error occurred during transaction:", error);
-      setMessage(`Sorry, your transaction could not be processed...${error instanceof Error ? error.message : String(error)}`);
+      if (error instanceof Error) {
+        setMessage(`Sorry, your transaction could not be processed...${error.message}`);
+      } else {
+        setMessage(`Sorry, your transaction could not be processed...${String(error)}`);
+      }
     }
   };
 
@@ -151,6 +143,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
