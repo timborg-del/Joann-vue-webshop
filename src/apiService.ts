@@ -149,7 +149,7 @@ export const getUser = async (partitionKey: string, rowKey: string): Promise<Use
 
 // Function to fetch reviews for a product
 export const getReviews = async (productId: string): Promise<Review[]> => {
-    const response = await fetch(`${API_BASE_URL}/api/products/${productId}/reviews`, {
+    const response = await fetch(`${API_BASE_URL}/products/${productId}/reviews`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -172,7 +172,7 @@ export const submitReview = async (productId: string, rating: number, reviewText
         ReviewText: reviewText
     };
 
-    const response = await fetch(`${API_BASE_URL}/api/products/${productId}/review`, {
+    const response = await fetch(`${API_BASE_URL}/products/${productId}/review`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',

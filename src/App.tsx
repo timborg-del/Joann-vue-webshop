@@ -53,7 +53,8 @@ const App: React.FC = () => {
           <Route path="/about" element={<About />} />
           <Route path="/login" element={<Login />} />
           <Route path="/change-password" element={<PrivateRoute component={ChangePassword} />} />
-          <Route path="/admin" element={<AdminPage />} />
+          <Route path="/admin" element={<PrivateRoute component={AdminPage} />} />
+          
         </Routes>
       </CartProvider>
     </Router>
@@ -70,7 +71,7 @@ export default App;
 
 
 
-{/* <Route path="/admin" element={<PrivateRoute component={AdminPage} />} /> */}
+{/*  <Route path="/admin" element={<AdminPage />} /> */}
 
 
 
