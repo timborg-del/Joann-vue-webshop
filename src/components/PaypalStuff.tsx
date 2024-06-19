@@ -65,26 +65,24 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         const errorText = await response.text();
         console.error(`Error creating order: ${errorText}`);
         setMessage(`Error creating order: ${errorText}`);
-        return;
+        return null; // Ensure we return null if the order creation fails
       }
 
       const orderData = await response.json();
+      console.log(`Order created successfully: ${orderData.orderId}`);
 
       if (orderData.orderId) {
-        console.log(`Order created successfully: ${orderData.orderId}`);
         setMessage(`Order created successfully: ${orderData.orderId}`);
         return orderData.orderId;
       } else {
         console.error(`Order creation failed: ${JSON.stringify(orderData)}`);
         setMessage(`Order creation failed: ${JSON.stringify(orderData)}`);
+        return null; // Ensure we return null if the order creation fails
       }
     } catch (error) {
       console.error(`Could not initiate PayPal Checkout:`, error);
-      if (error instanceof Error) {
-        setMessage(`Could not initiate PayPal Checkout: ${error.message}`);
-      } else {
-        setMessage(`Could not initiate PayPal Checkout: ${String(error)}`);
-      }
+      setMessage(`Could not initiate PayPal Checkout: ${error instanceof Error ? error.message : String(error)}`);
+      return null; // Ensure we return null if the order creation fails
     }
   };
 
@@ -129,11 +127,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
       }
     } catch (error) {
       console.error("Error occurred during transaction:", error);
-      if (error instanceof Error) {
-        setMessage(`Sorry, your transaction could not be processed...${error.message}`);
-      } else {
-        setMessage(`Sorry, your transaction could not be processed...${String(error)}`);
-      }
+      setMessage(`Sorry, your transaction could not be processed...${error instanceof Error ? error.message : String(error)}`);
     }
   };
 

@@ -31,6 +31,14 @@ export interface Review {
     Timestamp: Date;
 }
 
+export interface FormData {
+    fullName: string;
+    email: string;
+    address: string;
+    city: string;
+    postalCode: string;
+  }
+
 export const addProduct = async (product: Product, file: File): Promise<void> => {
     const formData = new FormData();
     formData.append('product', JSON.stringify(product));

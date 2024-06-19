@@ -12,7 +12,7 @@ interface FormData {
 
 interface CartState {
   items: Product[];
-  formData: FormData;
+  formData: FormData; // Add formData to the state
 }
 
 // Define action types
@@ -41,12 +41,10 @@ const CartContext = createContext<{
   state: CartState;
   dispatch: Dispatch<Action>;
   cartItemCount: number;
-  setFormData: (formData: FormData) => void;
 }>({
   state: initialState,
   dispatch: () => null,
   cartItemCount: 0,
-  setFormData: () => {} // Default function
 });
 
 // Provider component to wrap around the app
@@ -72,7 +70,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         return { ...state, items: updatedItems };
       }
       case 'CLEAR_CART': {
-        return initialState;
+        return { ...state, items: [] };
       }
       case 'INCREMENT_QUANTITY': {
         const incrementedItems = state.items.map(item =>
@@ -104,14 +102,10 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setStoredState(state);
   }, [state, setStoredState]);
 
-  const setFormData = (formData: FormData) => {
-    dispatch({ type: 'SET_FORM_DATA', payload: formData });
-  };
-
   const cartItemCount = state.items.reduce((count, item) => count + item.quantity, 0);
 
   return (
-    <CartContext.Provider value={{ state, dispatch, cartItemCount, setFormData }}>
+    <CartContext.Provider value={{ state, dispatch, cartItemCount }}>
       {children}
     </CartContext.Provider>
   );
@@ -120,9 +114,17 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 // Custom hooks to consume CartContext
 export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
-export const useSetFormData = () => useContext(CartContext).setFormData;
+
+export const useSetFormData = () => {
+  const dispatch = useCartDispatch();
+  return (formData: FormData) => {
+    dispatch({ type: 'SET_FORM_DATA', payload: formData });
+  };
+};
 
 export default CartContext;
+
+
 
 
 

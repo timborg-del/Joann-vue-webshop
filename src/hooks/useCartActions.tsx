@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useCart, useCartDispatch } from '../context/CartContext';
-import { Product } from '../apiService'; // Ensure this path is correct
+import { Product, FormData } from '../apiService'; // Ensure this path is correct
 
 const useCartActions = () => {
   const dispatch = useCartDispatch();
@@ -9,33 +9,31 @@ const useCartActions = () => {
 
   const addItemToCart = (item: Product) => {
     setLoading(true);
-    setTimeout(() => {
-      const existingItem = state.items.find(cartItem => cartItem.RowKey === item.RowKey && cartItem.size === item.size);
-      
-      if (existingItem) {
-        dispatch({ type: 'INCREMENT_QUANTITY', payload: item.RowKey });
-      } else {
-        dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity: 1, Price: item.Price ?? 0 } });
-      }
+    const existingItem = state.items.find(cartItem => cartItem.RowKey === item.RowKey && cartItem.size === item.size);
+    
+    if (existingItem) {
+      dispatch({ type: 'INCREMENT_QUANTITY', payload: item.RowKey });
+    } else {
+      dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity: 1, Price: item.Price ?? 0 } });
+    }
 
-      setLoading(false);
-    }, 1000);
+    setLoading(false);
   };
 
   const removeItemFromCart = (itemId: string) => {
     setLoading(true);
-    setTimeout(() => {
-      dispatch({ type: 'REMOVE_ITEM', payload: itemId });
-      setLoading(false);
-    }, 1000);
+    dispatch({ type: 'REMOVE_ITEM', payload: itemId });
+    setLoading(false);
   };
 
   const clearCart = () => {
     setLoading(true);
-    setTimeout(() => {
-      dispatch({ type: 'CLEAR_CART' });
-      setLoading(false);
-    }, 1000);
+    dispatch({ type: 'CLEAR_CART' });
+    setLoading(false);
+  };
+
+  const setFormData = (formData: FormData) => {
+    dispatch({ type: 'SET_FORM_DATA', payload: formData });
   };
 
   return {
@@ -44,6 +42,7 @@ const useCartActions = () => {
     addItemToCart,
     removeItemFromCart,
     clearCart,
+    setFormData,
   };
 };
 
