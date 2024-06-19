@@ -2,17 +2,8 @@ import { createContext, useReducer, useContext, ReactNode, Dispatch, useEffect }
 import useLocalStorage from '../hooks/useLocalStorage';
 import { Product } from '../apiService';
 
-interface FormData {
-  fullName: string;
-  email: string;
-  address: string;
-  city: string;
-  postalCode: string;
-}
-
 interface CartState {
   items: Product[];
-  formData: FormData; // Add formData to the state
 }
 
 // Define action types
@@ -21,19 +12,11 @@ type Action =
   | { type: 'REMOVE_ITEM'; payload: string }
   | { type: 'CLEAR_CART' }
   | { type: 'INCREMENT_QUANTITY'; payload: string }
-  | { type: 'DECREMENT_QUANTITY'; payload: string }
-  | { type: 'SET_FORM_DATA'; payload: FormData };
+  | { type: 'DECREMENT_QUANTITY'; payload: string };
 
 // Initial state
 const initialState: CartState = {
   items: [],
-  formData: {
-    fullName: '',
-    email: '',
-    address: '',
-    city: '',
-    postalCode: ''
-  }
 };
 
 // Create context
@@ -70,7 +53,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         return { ...state, items: updatedItems };
       }
       case 'CLEAR_CART': {
-        return { ...state, items: [] };
+        return initialState;
       }
       case 'INCREMENT_QUANTITY': {
         const incrementedItems = state.items.map(item =>
@@ -87,9 +70,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             : item
         ).filter(item => item.quantity > 0);
         return { ...state, items: decrementedItems };
-      }
-      case 'SET_FORM_DATA': {
-        return { ...state, formData: action.payload };
       }
       default:
         return state;
@@ -115,18 +95,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
-export const useSetFormData = () => {
-  const dispatch = useCartDispatch();
-  return (formData: FormData) => {
-    dispatch({ type: 'SET_FORM_DATA', payload: formData });
-  };
-};
-
 export default CartContext;
-
-
-
-
 
 
 
