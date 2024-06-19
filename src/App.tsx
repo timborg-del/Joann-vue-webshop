@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useNavigate } from 'react-router-dom';
 import './App.css';
 import Home from './pages/Home';
 import CartButton from './components/CartButton';
@@ -10,14 +10,22 @@ import Login from './pages/Login';
 import AdminPage from './pages/AdminPage';
 import ChangePassword from './components/ChangePassword';
 import PrivateRoute from './components/PrivateRoute';
-import CartPage from './pages/CartPage'; // Import here for sliding cart
+import CartPage from './pages/CartPage';
+import useLocalStorage from './hooks/useLocalStorage'; // Ensure this is the correct path
 
 const App: React.FC = () => {
   const [isShopOpen, setIsShopOpen] = useState(false);
   const [isCartVisible, setIsCartVisible] = useState(false);
+  const [token, setToken] = useLocalStorage<string | null>('token', null);
+  const navigate = useNavigate();
 
   const toggleCartVisibility = () => {
     setIsCartVisible(!isCartVisible);
+  };
+
+  const handleLogout = () => {
+    setToken(null); // Clear the token from local storage
+    navigate('/login'); // Redirect to login page
   };
 
   return (
@@ -42,6 +50,11 @@ const App: React.FC = () => {
             <button className="cart-button" onClick={toggleCartVisibility}>
               <CartButton />
             </button>
+            {token && (
+              <button onClick={handleLogout} className="btn btn-secondary">
+                Logout
+              </button>
+            )}
           </div>
         </nav>
 
@@ -54,7 +67,6 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/change-password" element={<PrivateRoute component={ChangePassword} />} />
           <Route path="/admin" element={<PrivateRoute component={AdminPage} />} />
-          
         </Routes>
       </CartProvider>
     </Router>
@@ -62,6 +74,7 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 
 
 
