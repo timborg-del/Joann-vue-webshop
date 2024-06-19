@@ -1,6 +1,6 @@
 import { useCart, useCartDispatch } from '../context/CartContext';
 import './Cart.css';
-import { Product } from '../apiService'; // Ensure this path is correct
+import { Product } from '../apiService';
 
 const Cart = () => {
   const { state } = useCart();
@@ -12,6 +12,10 @@ const Cart = () => {
 
   const incrementQuantity = (itemId: string) => {
     dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
+  };
+
+  const removeItem = (itemId: string) => {
+    dispatch({ type: 'REMOVE_ITEM', payload: itemId });
   };
 
   // Normalize data structure to ensure consistency
@@ -44,7 +48,7 @@ const Cart = () => {
                   <button onClick={() => decrementQuantity(item.RowKey)}>-</button>
                   <span>{item.quantity}</span>
                   <button onClick={() => incrementQuantity(item.RowKey)}>+</button>
-                  <button onClick={() => dispatch({ type: 'REMOVE_ITEM', payload: item.RowKey })}>Delete</button>
+                  <button onClick={() => removeItem(item.RowKey)}>Delete</button>
                 </div>
               </div>
             </div>
@@ -56,6 +60,7 @@ const Cart = () => {
 };
 
 export default Cart;
+
 
 
 

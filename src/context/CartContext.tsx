@@ -1,6 +1,6 @@
 import { createContext, useReducer, useContext, ReactNode, Dispatch, useEffect } from 'react';
 import useLocalStorage from '../hooks/useLocalStorage';
-import { Product } from '../apiService'; // Ensure this path is correct
+import { Product } from '../apiService';
 
 interface CartState {
   items: Product[];
@@ -81,7 +81,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     setStoredState(state);
   }, [state, setStoredState]);
-  
+
   const cartItemCount = state.items.reduce((count, item) => count + item.quantity, 0);
 
   return (
