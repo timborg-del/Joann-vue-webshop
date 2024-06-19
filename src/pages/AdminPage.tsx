@@ -1,6 +1,8 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import './AdminPage.css'; // Import CSS file for styling
 import { addProduct, getProducts, Product, updateProduct, deleteProduct } from '../apiService';
+import { useNavigate } from 'react-router-dom';
+import useLocalStorage from '../hooks/useLocalStorage';
 
 const AdminPage: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -20,6 +22,8 @@ const AdminPage: React.FC = () => {
   const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit'>('dashboard');
   const [error, setError] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [, setToken] = useLocalStorage<string | null>('token', null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -124,6 +128,11 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const handleLogout = () => {
+    setToken(null); // Clear the token from local storage
+    navigate('/login'); // Navigate to the login page
+  };
+
   const filteredProducts = products.filter(product =>
     product.Name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -134,6 +143,7 @@ const AdminPage: React.FC = () => {
 
       <header>
         <button onClick={() => setCurrentView('dashboard')}>Dashboard</button>
+        <button onClick={handleLogout} className="logout-button">Logout</button>
       </header>
       <aside>
         <button onClick={() => setCurrentView('products')}>Products</button>
@@ -262,5 +272,6 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
 
 
