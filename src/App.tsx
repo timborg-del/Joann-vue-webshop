@@ -10,7 +10,7 @@ import Login from './pages/Login';
 import AdminPage from './pages/AdminPage';
 import ChangePassword from './components/ChangePassword';
 import PrivateRoute from './components/PrivateRoute';
-import CartPage from './pages/CartPage'; // Import here for sliding cart
+import CartPage from './pages/CartPage';
 
 const App: React.FC = () => {
   const [isShopOpen, setIsShopOpen] = useState(false);
@@ -54,7 +54,6 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/change-password" element={<PrivateRoute component={ChangePassword} />} />
           <Route path="/admin" element={<PrivateRoute component={AdminPage} />} />
-          
         </Routes>
       </CartProvider>
     </Router>

@@ -1,10 +1,10 @@
 import { useState } from 'react';
-import { useCart, useCartDispatch } from '../context/CartContext'; 
+import { useCart, useCartDispatch } from '../context/CartContext';
 import { Product } from '../apiService'; // Ensure this path is correct
 
 const useCartActions = () => {
-  const dispatch = useCartDispatch(); 
-  const { state } = useCart(); 
+  const dispatch = useCartDispatch();
+  const { state } = useCart();
   const [loading, setLoading] = useState(false);
 
   const addItemToCart = (item: Product) => {
@@ -48,6 +48,7 @@ const useCartActions = () => {
 };
 
 export default useCartActions;
+
 
 
 
