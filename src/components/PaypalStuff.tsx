@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
+import emailjs from 'emailjs-com';
 import { Product } from "../apiService"; // Ensure this path is correct
 
 type MessageProps = {
@@ -24,7 +25,7 @@ function Message({ content }: MessageProps) {
 
 function PaypalStuff({ cart }: PaypalStuffProps) {
   const initialOptions = {
-    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Add your PayPal Client ID here
+    clientId: "YOUR_PAYPAL_CLIENT_ID", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
     "disable-funding": "",
     currency: "SEK",
@@ -120,6 +121,9 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         const transaction = orderData.purchase_units[0].payments.captures[0];
         setMessage(`Transaction ${transaction.status}: ${transaction.id}. See console for all available details`);
         console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
+
+        // Send order details to the delivery service via email
+        await sendOrderToDeliveryService(orderData, cartRef.current);
       }
     } catch (error) {
       console.error("Error occurred during transaction:", error);
@@ -130,6 +134,37 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       }
     }
   }, []);
+
+  const sendOrderToDeliveryService = async (orderData: any, cart: Product[]) => {
+    const emailParams = {
+      to_email: "timl@live.com",
+      subject: "New Delivery Address and Order Details",
+      message: `
+        Order ID: ${orderData.id}
+        Status: ${orderData.status}
+        Payer: ${orderData.payer.name.given_name} ${orderData.payer.name.surname}
+        Purchase Units: ${JSON.stringify(orderData.purchase_units, null, 2)}
+        Cart: ${cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n")}
+      `
+    };
+
+    try {
+      const response = await emailjs.send(
+        'service_r1vze7i',
+        'template_nom64k5',
+        emailParams,
+        '04zjQJsqKjSBMMjMB'
+      );
+
+      if (response.status === 200) {
+        console.log("Order details sent to email successfully");
+      } else {
+        console.error("Failed to send order details to email");
+      }
+    } catch (error) {
+      console.error("Error sending order details to email:", error);
+    }
+  };
 
   return (
     <div className="App">
@@ -151,6 +186,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
