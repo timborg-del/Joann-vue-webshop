@@ -136,13 +136,21 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
   }, []);
 
   const sendOrderToDeliveryService = async (orderData: any, cart: Product[]) => {
+    const payer = orderData.payer ? {
+      name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
+      email: orderData.payer.email_address
+    } : {
+      name: "Unknown",
+      email: "Unknown"
+    };
+
     const emailParams = {
       to_email: "timl@live.com",
       subject: "New Delivery Address and Order Details",
       message: `
         Order ID: ${orderData.id}
         Status: ${orderData.status}
-        Payer: ${orderData.payer.name.given_name} ${orderData.payer.name.surname}
+        Payer: ${payer.name}
         Purchase Units: ${JSON.stringify(orderData.purchase_units, null, 2)}
         Cart: ${cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n")}
       `
@@ -186,6 +194,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
