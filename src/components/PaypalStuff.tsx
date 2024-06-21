@@ -159,7 +159,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
     try {
       const response = await emailjs.send(
         'service_r1vze7i',
-        'template_nom64k5',
+        'template_l85pyi9',
         emailParams,
         '04zjQJsqKjSBMMjMB'
       );
