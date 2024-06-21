@@ -145,16 +145,17 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
     };
 
     const emailParams = {
+      orderID: orderData.id,
+      status: orderData.status,
+      payer: payer.name,
+      purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
+      cart: cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
       to_email: "timl@live.com",
       subject: "New Delivery Address and Order Details",
-      message: `
-        Order ID: ${orderData.id}
-        Status: ${orderData.status}
-        Payer: ${payer.name}
-        Purchase Units: ${JSON.stringify(orderData.purchase_units, null, 2)}
-        Cart: ${cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n")}
-      `
+      message: `You have a new order.`
     };
+
+    console.log('Email Parameters:', emailParams);
 
     try {
       const response = await emailjs.send(
