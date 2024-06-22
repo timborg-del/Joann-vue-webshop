@@ -137,30 +137,49 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 
   const sendOrderToDeliveryService = async (orderData: any, cart: Product[]) => {
     console.log('Received orderData:', JSON.stringify(orderData, null, 2));
-
+    
     const payer = orderData.payer ? {
-      name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
-      email: orderData.payer.email_address
+        name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
+        email: orderData.payer.email_address
     } : {
-      name: "Unknown",
-      email: "Unknown"
+        name: "Unknown",
+        email: "Unknown"
     };
 
-    const shippingDetails = orderData.purchase_units[0]?.shipping ? orderData.purchase_units[0].shipping : null;
+    let shippingDetails = null;
+    if (orderData.purchase_units && orderData.purchase_units.length > 0) {
+        const shipping = orderData.purchase_units[0].shipping;
+        if (shipping) {
+            shippingDetails = {
+                name: shipping.name.full_name,
+                address: {
+                    line1: shipping.address.address_line_1,
+                    city: shipping.address.admin_area_2,
+                    state: shipping.address.admin_area_1,
+                    postalCode: shipping.address.postal_code,
+                    countryCode: shipping.address.country_code
+                }
+            };
+        }
+    }
+
     console.log('Shipping details:', shippingDetails);
 
     const emailParams = {
-      orderID: orderData.id,
-      status: orderData.status,
-      payer: payer.name,
-      purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
-      cart: cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
-      to_email: "timl@live.com",
-      subject: "New Delivery Address and Order Details",
-      message: `You have a new order.`
+        orderID: orderData.id,
+        status: orderData.status,
+        payer: payer.name,
+        purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
+        shippingDetails: shippingDetails ? JSON.stringify(shippingDetails, null, 2) : "No shipping details",
+        cart: cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
+        to_email: "timl@live.com",
+        subject: "New Delivery Address and Order Details",
+        message: `You have a new order.`
     };
 
     console.log('Email Parameters:', emailParams);
+
+    // Here you would send the email with these parameters
 
     try {
       const response = await emailjs.send(
