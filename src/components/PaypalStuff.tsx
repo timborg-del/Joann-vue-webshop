@@ -25,7 +25,7 @@ function Message({ content }: MessageProps) {
 
 function PaypalStuff({ cart }: PaypalStuffProps) {
   const initialOptions = {
-    clientId: "", // Replace with your PayPal Client ID
+    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
     "disable-funding": "",
     currency: "SEK",
@@ -146,31 +146,13 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         email: "Unknown"
     };
 
-    let shippingDetails = null;
-    if (orderData.purchase_units && orderData.purchase_units.length > 0) {
-        const shipping = orderData.purchase_units[0].shipping;
-        if (shipping) {
-            shippingDetails = {
-                name: shipping.name.full_name,
-                address: {
-                    line1: shipping.address.address_line_1,
-                    city: shipping.address.admin_area_2,
-                    state: shipping.address.admin_area_1,
-                    postalCode: shipping.address.postal_code,
-                    countryCode: shipping.address.country_code
-                }
-            };
-        }
-    }
-
-    console.log('Shipping details:', shippingDetails);
 
     const emailParams = {
         orderID: orderData.id,
         status: orderData.status,
         payer: payer.name,
         purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
-        shippingDetails: shippingDetails ? JSON.stringify(shippingDetails, null, 2) : "No shipping details",
+  
         cart: cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
         to_email: "timl@live.com",
         subject: "New Delivery Address and Order Details",
