@@ -136,6 +136,8 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
   }, []);
 
   const sendOrderToDeliveryService = async (orderData: any, cart: Product[]) => {
+    console.log('Received orderData:', JSON.stringify(orderData, null, 2));
+
     const payer = orderData.payer ? {
       name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
       email: orderData.payer.email_address
@@ -143,6 +145,9 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       name: "Unknown",
       email: "Unknown"
     };
+
+    const shippingDetails = orderData.purchase_units[0]?.shipping ? orderData.purchase_units[0].shipping : null;
+    console.log('Shipping details:', shippingDetails);
 
     const emailParams = {
       orderID: orderData.id,
