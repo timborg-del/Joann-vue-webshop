@@ -17,13 +17,27 @@ type PayPalActions = {
 
 interface PaypalStuffProps {
   cart: Product[];
+  formData: {
+    fullName: string;
+    email: string;
+    address: {
+      recipientName: string;
+      line1: string;
+      line2: string;
+      city: string;
+      state: string;
+      postalCode: string;
+      countryCode: string;
+      phone: string;
+    }
+  };
 }
 
 function Message({ content }: MessageProps) {
   return <p>{content}</p>;
 }
 
-function PaypalStuff({ cart }: PaypalStuffProps) {
+function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   const initialOptions = {
     clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
@@ -53,7 +67,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Cart: currentCart }),
+        body: JSON.stringify({ Cart: currentCart, Address: formData.address, Fullname: formData.fullName, Email: formData.email }),
       });
 
       if (!response.ok) {
@@ -81,7 +95,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         setMessage(`Could not initiate PayPal Checkout: ${String(error)}`);
       }
     }
-  }, []);
+  }, [formData]);
 
   const onApprove = useCallback(async (data: PayPalData, actions: PayPalActions) => {
     try {
@@ -137,26 +151,24 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 
   const sendOrderToDeliveryService = async (orderData: any, cart: Product[]) => {
     console.log('Received orderData:', JSON.stringify(orderData, null, 2));
-    
-    const payer = orderData.Payer ? {
-        name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
-        email: orderData.payer.email_address
+
+    const payer = orderData.payer ? {
+      name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
+      email: orderData.payer.email_address
     } : {
-        name: "Unknown",
-        email: "Unknown"
+      name: "Unknown",
+      email: "Unknown"
     };
 
-
     const emailParams = {
-        orderID: orderData.id,
-        status: orderData.status,
-        payer: payer.name,
-        purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
-  
-        cart: cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
-        to_email: "timl@live.com",
-        subject: "New Delivery Address and Order Details",
-        message: `You have a new order.`
+      orderID: orderData.id,
+      status: orderData.status,
+      payer: payer.name,
+      purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
+      cart: cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
+      to_email: "timl@live.com",
+      subject: "New Delivery Address and Order Details",
+      message: `You have a new order.`
     };
 
     console.log('Email Parameters:', emailParams);
@@ -201,6 +213,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
