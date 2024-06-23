@@ -22,7 +22,8 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
       postalCode: '',
       countryCode: 'SE', // Adjust if necessary
       phone: ''
-    }
+    },
+    consent: false
   });
 
   const { state } = useCart();

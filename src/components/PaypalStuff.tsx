@@ -29,7 +29,8 @@ interface PaypalStuffProps {
       postalCode: string;
       countryCode: string;
       phone: string;
-    }
+    };
+    consent: boolean;
   };
 }
 
@@ -67,7 +68,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Cart: currentCart, Address: formData.address, Fullname: formData.fullName, Email: formData.email }),
+        body: JSON.stringify({ Cart: currentCart, Address: formData.address, Fullname: formData.fullName, Email: formData.email, City: formData.address.city, State: formData.address.state, PostalCode: formData.address.postalCode }),
       });
 
       if (!response.ok) {
@@ -86,6 +87,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
       } else {
         console.error(`Order creation failed: ${JSON.stringify(orderData)}`);
         setMessage(`Order creation failed: ${JSON.stringify(orderData)}`);
+        throw new Error("Order creation failed.");
       }
     } catch (error) {
       console.error(`Could not initiate PayPal Checkout:`, error);
@@ -150,30 +152,35 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   }, []);
 
   const sendOrderToDeliveryService = async (orderData: any, cart: Product[]) => {
-    console.log('Received orderData:', JSON.stringify(orderData, null, 2));
+    if (!formData.consent) {
+      console.error("Consent not provided for processing personal data.");
+      setMessage("Consent not provided for processing personal data.");
+      return;
+    }
 
+    console.log('Received orderData:', JSON.stringify(orderData, null, 2));
+    
     const payer = orderData.payer ? {
-      name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
-      email: orderData.payer.email_address
+        name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
+        email: orderData.payer.email_address
     } : {
-      name: "Unknown",
-      email: "Unknown"
+        name: "Unknown",
+        email: "Unknown"
     };
 
     const emailParams = {
-      orderID: orderData.id,
-      status: orderData.status,
-      payer: payer.name,
-      purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
-      cart: cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
-      to_email: "timl@live.com",
-      subject: "New Delivery Address and Order Details",
-      message: `You have a new order.`
+        orderID: orderData.id,
+        status: orderData.status,
+        payer: payer.name,
+        purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
+        address: JSON.stringify(formData.address, null, 2),
+        cart: cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
+        to_email: "timl@live.com",
+        subject: "New Delivery Address and Order Details",
+        message: `You have a new order.`,
     };
 
     console.log('Email Parameters:', emailParams);
-
-    // Here you would send the email with these parameters
 
     try {
       const response = await emailjs.send(
@@ -213,6 +220,10 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
+
+
+
 
 
 
