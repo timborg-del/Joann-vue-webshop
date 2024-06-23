@@ -99,7 +99,7 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
                                 <label htmlFor="consent">I consent to the collection and use of my personal data as described in the privacy policy.</label>
                             </div>
                             <p className='total-price'>Total Price: ${totalPrice.toFixed(2)}</p>
-                            <PaypalStuff cart={state.items} formData={formData} />
+                            <PaypalStuff cart={state.items} />
                         </form>
                     </div>
                 </div>

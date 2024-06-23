@@ -17,23 +17,15 @@ type PayPalActions = {
 
 interface PaypalStuffProps {
   cart: Product[];
-  formData: {
-    fullName: string;
-    email: string;
-    address: string;
-    city: string;
-    postalCode: string;
-    consent: boolean;
-  };
 }
 
 function Message({ content }: MessageProps) {
   return <p>{content}</p>;
 }
 
-function PaypalStuff({ cart, formData }: PaypalStuffProps) {
+function PaypalStuff({ cart }: PaypalStuffProps) {
   const initialOptions = {
-    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
+    clientId: "", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
     "disable-funding": "",
     currency: "SEK",
@@ -52,11 +44,6 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   }, [cart]);
 
   const createOrder = useCallback(async () => {
-    if (!formData.consent) {
-      setMessage("You need to provide consent to proceed with the order.");
-      return;
-    }
-
     const currentCart = cartRef.current;
     console.log('Creating order with cart:', currentCart);
 
@@ -66,16 +53,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ 
-          Cart: currentCart, 
-          Fullname: formData.fullName, 
-          Email: formData.email, 
-          Address: {
-            AddressLine1: formData.address,
-            City: formData.city,
-            PostalCode: formData.postalCode
-          }
-        }),
+        body: JSON.stringify({ Cart: currentCart }),
       });
 
       if (!response.ok) {
@@ -94,7 +72,6 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
       } else {
         console.error(`Order creation failed: ${JSON.stringify(orderData)}`);
         setMessage(`Order creation failed: ${JSON.stringify(orderData)}`);
-        throw new Error("Order creation failed.");
       }
     } catch (error) {
       console.error(`Could not initiate PayPal Checkout:`, error);
@@ -104,8 +81,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         setMessage(`Could not initiate PayPal Checkout: ${String(error)}`);
       }
     }
-}, [formData]);
-
+  }, []);
 
   const onApprove = useCallback(async (data: PayPalData, actions: PayPalActions) => {
     try {
@@ -160,15 +136,9 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   }, []);
 
   const sendOrderToDeliveryService = async (orderData: any, cart: Product[]) => {
-    if (!formData.consent) {
-      console.error("Consent not provided for processing personal data.");
-      setMessage("Consent not provided for processing personal data.");
-      return;
-    }
-
     console.log('Received orderData:', JSON.stringify(orderData, null, 2));
     
-    const payer = orderData.payer ? {
+    const payer = orderData.Payer ? {
         name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
         email: orderData.payer.email_address
     } : {
@@ -176,19 +146,22 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         email: "Unknown"
     };
 
+
     const emailParams = {
         orderID: orderData.id,
         status: orderData.status,
         payer: payer.name,
         purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
-        address: JSON.stringify(formData, null, 2),
+  
         cart: cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
         to_email: "timl@live.com",
         subject: "New Delivery Address and Order Details",
-        message: `You have a new order.`,
+        message: `You have a new order.`
     };
 
     console.log('Email Parameters:', emailParams);
+
+    // Here you would send the email with these parameters
 
     try {
       const response = await emailjs.send(
@@ -228,7 +201,6 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
-
 
 
 
