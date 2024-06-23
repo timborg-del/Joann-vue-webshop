@@ -448,6 +448,7 @@
     width: 48%; /* Image takes up 48% of the width */
     max-height: 90%;
     object-fit: contain;
+    cursor: pointer;
   }
 
   .product-card.active .product-details-dropdown {
