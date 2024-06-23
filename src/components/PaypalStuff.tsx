@@ -33,7 +33,7 @@ function Message({ content }: MessageProps) {
 
 function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   const initialOptions = {
-    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
+    clientId: "", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
     "disable-funding": "",
     currency: "SEK",
@@ -213,8 +213,6 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
-
-
 
 
 

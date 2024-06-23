@@ -16,19 +16,24 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
         address: '',
         city: '',
         postalCode: '',
+        consent: false,
     });
     const { state } = useCart();
 
     const totalPrice = state.items.reduce((total, item) => total + item.Price * item.quantity, 0);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value, type, checked } = e.target;
+        setFormData({ ...formData, [name]: type === 'checkbox' ? checked : value });
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        console.log(formData);
+        if (formData.consent) {
+            console.log(formData);
+        } else {
+            alert("Please provide consent to proceed.");
+        }
     };
 
     return (
@@ -82,6 +87,16 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
                                     onChange={handleChange} 
                                     required 
                                 />
+                            </div>
+                            <div>
+                                <input 
+                                    type="checkbox" 
+                                    name="consent" 
+                                    checked={formData.consent} 
+                                    onChange={handleChange} 
+                                    required 
+                                />
+                                <label htmlFor="consent">I consent to the collection and use of my personal data as described in the privacy policy.</label>
                             </div>
                             <p className='total-price'>Total Price: ${totalPrice.toFixed(2)}</p>
                             <PaypalStuff cart={state.items} formData={formData} />
