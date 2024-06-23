@@ -23,6 +23,7 @@ interface PaypalStuffProps {
     address: string;
     city: string;
     postalCode: string;
+    consent: boolean;
   };
 }
 
@@ -50,7 +51,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
     console.log('Updated cart state in ref:', cartRef.current);
   }, [cart]);
 
-  const createOrder = useCallback(async () => {
+  const createOrder = useCallback(async (data: any, actions: any) => {
     const currentCart = cartRef.current;
     console.log('Creating order with cart:', currentCart);
 
@@ -79,6 +80,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
       } else {
         console.error(`Order creation failed: ${JSON.stringify(orderData)}`);
         setMessage(`Order creation failed: ${JSON.stringify(orderData)}`);
+        throw new Error("Order creation failed.");
       }
     } catch (error) {
       console.error(`Could not initiate PayPal Checkout:`, error);
@@ -143,9 +145,15 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   }, []);
 
   const sendOrderToDeliveryService = async (orderData: any, cart: Product[]) => {
+    if (!formData.consent) {
+      console.error("Consent not provided for processing personal data.");
+      setMessage("Consent not provided for processing personal data.");
+      return;
+    }
+
     console.log('Received orderData:', JSON.stringify(orderData, null, 2));
     
-    const payer = orderData.Payer ? {
+    const payer = orderData.payer ? {
         name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
         email: orderData.payer.email_address
     } : {
@@ -205,6 +213,8 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
+
 
 
 
