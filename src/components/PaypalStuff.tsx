@@ -25,7 +25,7 @@ function Message({ content }: MessageProps) {
 
 function PaypalStuff({ cart }: PaypalStuffProps) {
   const initialOptions = {
-    clientId: "", // Replace with your PayPal Client ID
+    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
     "disable-funding": "",
     currency: "SEK",
@@ -136,32 +136,26 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
   }, []);
 
   const sendOrderToDeliveryService = async (orderData: any, cart: Product[]) => {
-    console.log('Received orderData:', JSON.stringify(orderData, null, 2));
-    
-    const payer = orderData.Payer ? {
-        name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
-        email: orderData.payer.email_address
+    const payer = orderData.payer ? {
+      name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
+      email: orderData.payer.email_address
     } : {
-        name: "Unknown",
-        email: "Unknown"
+      name: "Unknown",
+      email: "Unknown"
     };
 
-
     const emailParams = {
-        orderID: orderData.id,
-        status: orderData.status,
-        payer: payer.name,
-        purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
-  
-        cart: cart.map(item => `${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
-        to_email: "timl@live.com",
-        subject: "New Delivery Address and Order Details",
-        message: `You have a new order.`
+      orderID: orderData.id,
+      status: orderData.status,
+      payer: payer.name,
+      purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
+      cart: cart.map(item => ` Product Name:${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
+      to_email: "timl@live.com",
+      subject: "New Delivery Address and Order Details",
+      message: `You have a new order.`
     };
 
     console.log('Email Parameters:', emailParams);
-
-    // Here you would send the email with these parameters
 
     try {
       const response = await emailjs.send(
