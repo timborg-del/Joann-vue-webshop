@@ -141,7 +141,7 @@ const AdminPage: React.FC = () => {
     <div className="admin-container">
       <h1>Admin Page</h1>
 
-      <header>
+      <header className='admin-header'>
         <button onClick={() => setCurrentView('dashboard')}>Dashboard</button>
         <button onClick={handleLogout} className="logout-button">Logout</button>
       </header>
