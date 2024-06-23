@@ -52,6 +52,11 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
   }, [cart]);
 
   const createOrder = useCallback(async () => {
+    if (!formData.consent) {
+      setMessage("You need to provide consent to proceed with the order.");
+      return;
+    }
+
     const currentCart = cartRef.current;
     console.log('Creating order with cart:', currentCart);
 
@@ -61,7 +66,16 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Cart: currentCart, Address: formData }),
+        body: JSON.stringify({ 
+          Cart: currentCart, 
+          Fullname: formData.fullName, 
+          Email: formData.email, 
+          Address: {
+            AddressLine1: formData.address,
+            City: formData.city,
+            PostalCode: formData.postalCode
+          }
+        }),
       });
 
       if (!response.ok) {
@@ -90,7 +104,8 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
         setMessage(`Could not initiate PayPal Checkout: ${String(error)}`);
       }
     }
-  }, [formData]);
+}, [formData]);
+
 
   const onApprove = useCallback(async (data: PayPalData, actions: PayPalActions) => {
     try {
