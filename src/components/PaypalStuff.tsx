@@ -51,7 +51,7 @@ function PaypalStuff({ cart, formData }: PaypalStuffProps) {
     console.log('Updated cart state in ref:', cartRef.current);
   }, [cart]);
 
-  const createOrder = useCallback(async (data: any, actions: any) => {
+  const createOrder = useCallback(async () => {
     const currentCart = cartRef.current;
     console.log('Creating order with cart:', currentCart);
 
