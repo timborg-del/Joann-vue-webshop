@@ -37,7 +37,7 @@ body {
   background-color: none; /* Navbar background color */
   color: #fff; /* Navbar text color */
   position: fixed; /* Fixed position to stay at the top */
-  z-index: 1000; /* Ensure it stays above other content */
+  z-index: 1002; /* Ensure it stays above other content */
 }
 
 .centerLinks {
@@ -72,7 +72,6 @@ body {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
 }
 
 .dropdownContent.open {
