@@ -1,11 +1,17 @@
-
+import { useEffect, useState } from 'react';
 import './About.css'; // Import CSS file for About page styles
 
 const About = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    // Trigger the transition after the component mounts
+    setIsVisible(true);
+  }, []);
   return (
     <div className="about-container">
       <h2>About Me</h2>
-      <div className="about-content">
+      <div className={`about-content ${isVisible ? 'visible' : ''}`}>
        
         <p>
         Hello and Welcome!
