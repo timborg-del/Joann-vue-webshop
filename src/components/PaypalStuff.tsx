@@ -1,6 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import emailjs from 'emailjs-com';
 import { Product } from "../apiService"; // Ensure this path is correct
 
 type MessageProps = {
@@ -15,9 +14,39 @@ type PayPalActions = {
   restart: () => void;
 };
 
+interface Payer {
+  name: {
+    given_name: string;
+    surname: string;
+  };
+  email_address: string;
+}
+
+interface PurchaseUnit {
+  payments: {
+    captures: {
+      id: string;
+      status: string;
+    }[];
+  };
+}
+
+interface OrderData {
+  id: string;
+  status: string;
+  payer: Payer;
+  purchase_units: PurchaseUnit[];
+  details?: {
+    issue?: string;
+    description?: string;
+    debug_id?: string;
+  }[];
+}
+
 interface PaypalStuffProps {
   cart: Product[];
 }
+
 
 function Message({ content }: MessageProps) {
   return <p>{content}</p>;
@@ -25,7 +54,7 @@ function Message({ content }: MessageProps) {
 
 function PaypalStuff({ cart }: PaypalStuffProps) {
   const initialOptions = {
-    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
+    clientId: "", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
     "disable-funding": "",
     currency: "SEK",
@@ -135,7 +164,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
     }
   }, []);
 
-  const sendOrderToDeliveryService = async (orderData: any, cart: Product[]) => {
+  const sendOrderToDeliveryService = async (orderData: OrderData, cart: Product[]) => {
     const payer = orderData.payer ? {
       name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
       email: orderData.payer.email_address
@@ -143,29 +172,30 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       name: "Unknown",
       email: "Unknown"
     };
-
+  
     const emailParams = {
       orderID: orderData.id,
       status: orderData.status,
       payer: payer.name,
       purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
-      cart: cart.map(item => ` Product Name:${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
+      cart: cart.map((item: Product) => ` Product Name: ${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
       to_email: "timl@live.com",
       subject: "New Delivery Address and Order Details",
       message: `You have a new order.`
     };
-
+  
     console.log('Email Parameters:', emailParams);
-
+  
     try {
-      const response = await emailjs.send(
-        'service_r1vze7i',
-        'template_l85pyi9',
-        emailParams,
-        '04zjQJsqKjSBMMjMB'
-      );
-
-      if (response.status === 200) {
+      const response = await fetch('https://joart.azurewebsites.net/SendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailParams),
+      });
+  
+      if (response.ok) {
         console.log("Order details sent to email successfully");
       } else {
         console.error("Failed to send order details to email");
@@ -174,6 +204,8 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       console.error("Error sending order details to email:", error);
     }
   };
+  
+  
 
   return (
     <div className="App">
