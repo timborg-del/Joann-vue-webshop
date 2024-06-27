@@ -146,7 +146,7 @@
   flex-direction: row; /* Image on the left, details on the right */
   justify-content: space-between;
   transform: translate(-50%, -50%) scale(1.05);
-  z-index: 1000;
+  z-index: 1004;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -320,6 +320,7 @@
     width: 90%;
     min-height: 100vh; /* Full viewport height */
     padding: 10px;
+    z-index: 1004;
     border-radius: 5px; /* Rounded corners */
     transform: translate(-50%, -50%) scale(1);
     top: 50%;
@@ -437,6 +438,7 @@
   .product-card.active {
     min-height: 70%;
     min-width: auto;
+    z-index: 1004;
     overflow-y: hidden;
   }
 
