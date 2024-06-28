@@ -5,6 +5,7 @@ import useFetchData from '../hooks/useFetchData';
 import { Product } from '../apiService';
 import StarRating from './StarRating';
 import { useCartDispatch } from '../context/CartContext';
+import { submitReview } from '../apiService';
 
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions();
@@ -24,7 +25,6 @@ const Products: React.FC = () => {
 
   useEffect(() => {
     if (products) {
-      console.log('Fetched products:', products); // Add this line for debugging
       products.forEach(product => {
         fetchReviews(product.RowKey);
       });
@@ -78,19 +78,9 @@ const Products: React.FC = () => {
 
   const handleSubmitReview = async (productId: string) => {
     try {
-      const response = await fetch('https://joart.azurewebsites.net/SubmitReview', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ ...newReview, productId })
-      });
-      if (response.ok) {
-        fetchReviews(productId);
-        setNewReview({ user: '', comment: '', rating: 0 });
-      } else {
-        console.error('Error submitting review:', response.statusText);
-      }
+      await submitReview(productId, newReview.user, newReview.rating, newReview.comment);
+      fetchReviews(productId);
+      setNewReview({ user: '', comment: '', rating: 0 });
     } catch (error) {
       console.error('Error submitting review:', error);
     }
@@ -238,6 +228,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
