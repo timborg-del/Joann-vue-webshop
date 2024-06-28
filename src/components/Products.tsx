@@ -32,7 +32,7 @@ const Products: React.FC = () => {
 
   const fetchReviews = async (productId: string) => {
     try {
-      const response = await fetch(`https://joart.azurewebsites.net/GetReviews?productId=${productId}`);
+      const response = await fetch(`https://joart.azurewebsites.net/products/${productId}/reviews`);
       const data = await response.json();
       setReviews(prev => ({ ...prev, [productId]: data }));
     } catch (error) {
@@ -77,7 +77,7 @@ const Products: React.FC = () => {
 
   const handleSubmitReview = async (productId: string) => {
     try {
-      const response = await fetch('https://joart.azurewebsites.net/AddReview', {
+      const response = await fetch('https://joart.azurewebsites.net/SubmitReview', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
