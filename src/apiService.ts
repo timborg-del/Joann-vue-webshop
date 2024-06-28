@@ -25,12 +25,13 @@ export interface User {
 }
 
 export interface Review {
-    PartitionKey: string; // Product ID
-    RowKey: string; // Unique ID for the review
-    Rating: number;
-    ReviewText: string;
-    Timestamp: Date;
-}
+    user: string;
+    comment: string;
+    rating: number;
+    PartitionKey?: string;
+    RowKey?: string;
+    Timestamp?: string;
+  }
 
 export interface FormData {
     fullName: string;
@@ -159,41 +160,42 @@ export const getUser = async (partitionKey: string, rowKey: string): Promise<Use
 // Function to fetch reviews for a product
 export const getReviews = async (productId: string): Promise<Review[]> => {
     const response = await fetch(`${API_BASE_URL}/products/${productId}/reviews`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
-
+  
     if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to fetch reviews: ${errorText}`);
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch reviews: ${errorText}`);
     }
-
+  
     const reviews: Review[] = await response.json();
     return reviews;
-};
-
-// Function to submit a review for a product
-export const submitReview = async (productId: string, rating: number, reviewText: string): Promise<void> => {
+  };
+  
+  // Function to submit a review for a product
+  export const submitReview = async (productId: string, user: string, rating: number, comment: string): Promise<void> => {
     const review = {
-        Rating: rating,
-        ReviewText: reviewText
+      user,
+      rating,
+      comment
     };
-
+  
     const response = await fetch(`${API_BASE_URL}/products/${productId}/review`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(review),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(review),
     });
-
+  
     if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to submit review: ${errorText}`);
+      const errorText = await response.text();
+      throw new Error(`Failed to submit review: ${errorText}`);
     }
-};
+  };
 
 // Utility function to check authentication
 export const isAuthenticated = (): boolean => {
