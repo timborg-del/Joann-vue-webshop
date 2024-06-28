@@ -178,7 +178,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       payer: payer.name,
       purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
       cart: cart.map((item: Product) => ` Product Name: ${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
-      to_email: "timl@live.com",
+      to_email: "timl@live.se",
       subject: "New Delivery Address and Order Details",
       message: `You have a new order.`
     };
