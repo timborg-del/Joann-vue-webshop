@@ -66,7 +66,6 @@
   background-color: #f9f9f9;
 }
 
-
 .product-reviews button {
   background-color: #007bff;
   color: white;
@@ -114,20 +113,15 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: none;
+  background-color: #fff; /* Ensure the background color makes text readable */
   border-radius: 5px;
   transition: box-shadow 0.1s ease, border 0.1s ease;
   position: relative;
   overflow: hidden;
-  opacity: 0;
-  transition: opacity 1s ease-in-out;
+  opacity: 1; /* Ensure opacity is set to fully visible */
   width: 100%; /* Ensure width adapts */
-  max-width: 100%; /* Ensure width adapts */
-  transition: all 0.3s ease;
-  min-height: auto
-}
-.product-card.visible {
-  opacity: 1;
+  max-width: 200px; /* Adjust as needed */
+  min-height: auto;
 }
 
 .product-card:hover {
@@ -208,10 +202,6 @@
   overflow: hidden;
 }
 
-.product-card.active {
-  border: none;
-}
-
 /* Close button styles */
 .close-button-details {
   position: absolute;
@@ -242,12 +232,6 @@
 }
 
 .product-details-dropdown {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease;
-}
-
-.product-card.active .product-details-dropdown {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -526,6 +510,7 @@
     object-fit: cover;
   }
 }
+
 
 
 
