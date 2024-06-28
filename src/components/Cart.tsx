@@ -2,7 +2,7 @@ import { useCart, useCartDispatch } from '../context/CartContext';
 import './Cart.css';
 import { Product } from '../apiService';
 
-const Cart = () => {
+export const Cart = () => {
   const { state } = useCart();
   const dispatch = useCartDispatch();
 
@@ -10,11 +10,11 @@ const Cart = () => {
     dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
   };
 
-  const incrementQuantity = (itemId: string) => {
+   const incrementQuantity = (itemId: string) => {
     dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
   };
 
-  const removeItem = (itemId: string) => {
+   const removeItem = (itemId: string) => {
     dispatch({ type: 'REMOVE_ITEM', payload: itemId });
   };
 

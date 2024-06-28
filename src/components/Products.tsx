@@ -4,12 +4,13 @@ import './Products.css';
 import useFetchData from '../hooks/useFetchData';
 import { Product } from '../apiService';
 import StarRating from './StarRating';
-import { useCartDispatch } from '../context/CartContext';
+import { useCart, useCartDispatch } from '../context/CartContext';
 import { submitReview } from '../apiService';
 
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions();
   const { data: products, isLoading, error } = useFetchData<Product[]>('https://joart.azurewebsites.net/GetProducts');
+  const { state } = useCart();
   const [reviews, setReviews] = useState<{ [key: string]: any[] }>({});
   const [newReview, setNewReview] = useState({ user: '', comment: '', rating: 0 });
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
@@ -155,7 +156,7 @@ const Products: React.FC = () => {
                     <p><strong>Category:</strong> {product.Category}</p>
                     <div className="quantity-controls">
                       <button onClick={() => decrementQuantity(product.RowKey)}>-</button>
-                      <span>{product.quantity}</span>
+                      <span>{state.items.find(item => item.RowKey === product.RowKey)?.quantity || 1}</span>
                       <button onClick={() => incrementQuantity(product.RowKey)}>+</button>
                     </div>
                   </div>
@@ -231,6 +232,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
