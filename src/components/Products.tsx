@@ -3,11 +3,41 @@ import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
 import { Product } from '../apiService';
+import StarRating from './StarRating';
+import { useCartDispatch } from '../context/CartContext';
+
+const mockData: Product[] = [
+  {
+    PartitionKey: '1',
+    RowKey: '1',
+    Name: 'Mock Product 1',
+    Price: 10,
+    Stock: 100,
+    Category: 'Mock Category',
+    ImageUrl: 'https://via.placeholder.com/150',
+    quantity: 1,
+    rating: 4, // Add a rating property
+  },
+  {
+    PartitionKey: '2',
+    RowKey: '2',
+    Name: 'Mock Product 2',
+    Price: 20,
+    Stock: 200,
+    Category: 'Mock Category',
+    ImageUrl: 'https://via.placeholder.com/150',
+    quantity: 1,
+    rating: 3, // Add a rating property
+  },
+  // Add more mock products as needed
+];
 
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions();
   const { data, isLoading, error } = useFetchData<Product[]>('https://joart.azurewebsites.net/GetProducts');
 
+  const dispatch = useCartDispatch();
+  const [isVisible,] = useState(false);
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
@@ -40,6 +70,14 @@ const Products: React.FC = () => {
     });
   };
 
+  const incrementQuantity = (productId: string) => {
+    dispatch({ type: 'INCREMENT_QUANTITY', payload: productId });
+  };
+
+  const decrementQuantity = (productId: string) => {
+    dispatch({ type: 'DECREMENT_QUANTITY', payload: productId });
+  };
+
   useEffect(() => {
     if (data) {
       console.log("Fetched data:", data);
@@ -60,19 +98,20 @@ const Products: React.FC = () => {
     return <div>Error: Unexpected data format</div>;
   }
 
+
   return (
     <div className="products-container">
       {data.length > 0 ? (
         data.map((product) => (
-          <div 
-            key={product.RowKey} 
+          <div
+            key={product.RowKey}
             className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
           >
-            <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
+            <div className={`product-card ${isVisible ? 'visible' : ''} ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
                 <>
                   <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;</button>
-                  <img 
+                  <img
                     src={product.ImageUrl}
                     alt={product.Name}
                     className="product-image"
@@ -86,7 +125,7 @@ const Products: React.FC = () => {
               ) : (
                 <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
                   {product.ImageUrl ? (
-                    <img 
+                    <img
                       src={product.ImageUrl}
                       alt={product.Name}
                       className="product-image"
@@ -99,6 +138,9 @@ const Products: React.FC = () => {
                     <div className="no-image">No Image Available</div>
                   )}
                   <div className="product-name">{product.Name}</div>
+                  <div className="product-reviews">
+                    <StarRating rating={product.rating || 0} />
+                  </div>
                 </div>
               )}
               {activeProduct === product.RowKey && (
@@ -107,11 +149,19 @@ const Products: React.FC = () => {
                     <p><strong>Name:</strong> {product.Name}</p>
                     <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
                     <p><strong>Category:</strong> {product.Category}</p>
+                    <div className="quantity-controls">
+                      <button onClick={() => decrementQuantity(product.RowKey)}>-</button>
+                      <span>{product.quantity}</span>
+                      <button onClick={() => incrementQuantity(product.RowKey)}>+</button>
+                    </div>
                   </div>
+                  <div className="product-reviews">
+                      <StarRating rating={product.rating || 0} />
+                    </div>
                   <div className="select-container">
                     <label htmlFor={`size-${product.RowKey}`}>Size:</label>
-                    <select 
-                      id={`size-${product.RowKey}`} 
+                    <select
+                      id={`size-${product.RowKey}`}
                       value={selectedSizes[product.RowKey] || 'A3'}
                       onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
                     >
@@ -121,8 +171,8 @@ const Products: React.FC = () => {
                     </select>
                   </div>
                   <div className="buy-btn-container">
-                    <button 
-                      className="buy-btn" 
+                    <button
+                      className="buy-btn"
                       onClick={() => handleAddToCart(product)}
                     >
                       Add to Cart
@@ -147,6 +197,16 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
+
+
+
+
+
+
+
+
 
 
 

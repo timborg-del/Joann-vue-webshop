@@ -12,6 +12,7 @@ export interface Product {
     ImageUrl: string;
     quantity: number;
     size?: string;
+    rating?: number;
   }
   
 
