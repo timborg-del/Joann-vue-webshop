@@ -47,7 +47,6 @@ interface PaypalStuffProps {
   cart: Product[];
 }
 
-
 function Message({ content }: MessageProps) {
   return <p>{content}</p>;
 }
@@ -204,8 +203,34 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       console.error("Error sending order details to email:", error);
     }
   };
-  
-  
+
+  const handleTestButtonClick = () => {
+    const mockOrderData: OrderData = {
+      id: "MOCK_ORDER_ID",
+      status: "COMPLETED",
+      payer: {
+        name: {
+          given_name: "Mock",
+          surname: "User",
+        },
+        email_address: "mockuser@example.com",
+      },
+      purchase_units: [
+        {
+          payments: {
+            captures: [
+              {
+                id: "MOCK_CAPTURE_ID",
+                status: "COMPLETED",
+              },
+            ],
+          },
+        },
+      ],
+    };
+
+    sendOrderToDeliveryService(mockOrderData, cartRef.current);
+  };
 
   return (
     <div className="App">
@@ -222,11 +247,13 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         />
       </PayPalScriptProvider>
       <Message content={message} />
+      <button onClick={handleTestButtonClick}>Test Send Email</button>
     </div>
   );
 }
 
 export default PaypalStuff;
+
 
 
 
