@@ -10,13 +10,13 @@ import { submitReview } from '../apiService';
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions();
   const { data: products, isLoading, error } = useFetchData<Product[]>('https://joart.azurewebsites.net/GetProducts');
-  const { state } = useCart();
   const [reviews, setReviews] = useState<{ [key: string]: any[] }>({});
   const [newReview, setNewReview] = useState({ user: '', comment: '', rating: 0 });
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
   const dispatch = useCartDispatch();
+  const { state } = useCart();
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
@@ -26,7 +26,6 @@ const Products: React.FC = () => {
 
   useEffect(() => {
     if (products) {
-      console.log('Fetched products:', products);
       products.forEach(product => {
         fetchReviews(product.RowKey);
       });
@@ -65,14 +64,12 @@ const Products: React.FC = () => {
     });
   };
 
-  const incrementQuantity = (itemId: string) => {
-    console.log(`Incrementing quantity for product: ${itemId}`);
-    dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
+  const incrementQuantity = (productId: string) => {
+    dispatch({ type: 'INCREMENT_QUANTITY', payload: productId });
   };
 
-  const decrementQuantity = (itemId: string) => {
-    console.log(`Decrementing quantity for product: ${itemId}`);
-    dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
+  const decrementQuantity = (productId: string) => {
+    dispatch({ type: 'DECREMENT_QUANTITY', payload: productId });
   };
 
   const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -156,7 +153,7 @@ const Products: React.FC = () => {
                     <p><strong>Category:</strong> {product.Category}</p>
                     <div className="quantity-controls">
                       <button onClick={() => decrementQuantity(product.RowKey)}>-</button>
-                      <span>{state.items.find(item => item.RowKey === product.RowKey)?.quantity || 1}</span>
+                      <span>{state.items.find(item => item.RowKey === product.RowKey)?.quantity ?? 0}</span>
                       <button onClick={() => incrementQuantity(product.RowKey)}>+</button>
                     </div>
                   </div>
@@ -232,6 +229,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
