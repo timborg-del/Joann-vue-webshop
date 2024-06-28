@@ -64,14 +64,14 @@ const Products: React.FC = () => {
     });
   };
 
-  const incrementQuantity = (productId: string) => {
-    console.log(`Incrementing quantity for product: ${productId}`);
-    dispatch({ type: 'INCREMENT_QUANTITY', payload: productId });
+  const incrementQuantity = (itemId: string) => {
+    console.log(`Incrementing quantity for product: ${itemId}`);
+    dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
   };
 
-  const decrementQuantity = (productId: string) => {
-    console.log(`Decrementing quantity for product: ${productId}`);
-    dispatch({ type: 'DECREMENT_QUANTITY', payload: productId });
+  const decrementQuantity = (itemId: string) => {
+    console.log(`Decrementing quantity for product: ${itemId}`);
+    dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
   };
 
   const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -231,6 +231,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
