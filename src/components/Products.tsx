@@ -6,22 +6,38 @@ import { Product } from '../apiService';
 import StarRating from './StarRating';
 import { useCartDispatch } from '../context/CartContext';
 
-
-
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions();
-  const { data, isLoading, error } = useFetchData<Product[]>('https://joart.azurewebsites.net/GetProducts');
-
-  const dispatch = useCartDispatch();
-  const [isVisible,] = useState(false);
+  const { data: products, isLoading, error } = useFetchData<Product[]>('https://joart.azurewebsites.net/GetProducts');
+  const [reviews, setReviews] = useState<{ [key: string]: any[] }>({});
+  const [newReview, setNewReview] = useState({ user: '', comment: '', rating: 0 });
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
+  const dispatch = useCartDispatch();
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
     A4: -2,
     A5: -5
+  };
+
+  useEffect(() => {
+    if (products) {
+      products.forEach(product => {
+        fetchReviews(product.RowKey);
+      });
+    }
+  }, [products]);
+
+  const fetchReviews = async (productId: string) => {
+    try {
+      const response = await fetch(`https://joart.azurewebsites.net/GetReviews?productId=${productId}`);
+      const data = await response.json();
+      setReviews(prev => ({ ...prev, [productId]: data }));
+    } catch (error) {
+      console.error('Error fetching reviews:', error);
+    }
   };
 
   const handleSizeChange = (productId: string, size: string) => {
@@ -54,11 +70,30 @@ const Products: React.FC = () => {
     dispatch({ type: 'DECREMENT_QUANTITY', payload: productId });
   };
 
-  useEffect(() => {
-    if (data) {
-      console.log("Fetched data:", data);
+  const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setNewReview(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmitReview = async (productId: string) => {
+    try {
+      const response = await fetch('https://joart.azurewebsites.net/AddReview', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ ...newReview, productId })
+      });
+      if (response.ok) {
+        fetchReviews(productId);
+        setNewReview({ user: '', comment: '', rating: 0 });
+      } else {
+        console.error('Error submitting review:', response.statusText);
+      }
+    } catch (error) {
+      console.error('Error submitting review:', error);
     }
-  }, [data]);
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -69,21 +104,20 @@ const Products: React.FC = () => {
     return <div>Error: {error.message}</div>;
   }
 
-  if (!Array.isArray(data)) {
-    console.error("Unexpected data format:", data);
+  if (!Array.isArray(products)) {
+    console.error("Unexpected data format:", products);
     return <div>Error: Unexpected data format</div>;
   }
 
-
   return (
     <div className="products-container">
-      {data.length > 0 ? (
-        data.map((product) => (
+      {products.length > 0 ? (
+        products.map((product) => (
           <div
             key={product.RowKey}
             className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
           >
-            <div className={`product-card ${isVisible ? 'visible' : ''} ${activeProduct === product.RowKey ? 'active' : ''}`}>
+            <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
                 <>
                   <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;</button>
@@ -132,8 +166,38 @@ const Products: React.FC = () => {
                     </div>
                   </div>
                   <div className="product-reviews">
-                      <StarRating rating={product.rating || 0} />
+                    <StarRating rating={product.rating || 0} />
+                    <h3>Reviews</h3>
+                    {reviews[product.RowKey]?.length > 0 ? (
+                      reviews[product.RowKey].map((review, index) => (
+                        <div key={index} className="review">
+                          <p><strong>User:</strong> {review.user}</p>
+                          <p><strong>Comment:</strong> {review.comment}</p>
+                          <StarRating rating={review.rating} />
+                        </div>
+                      ))
+                    ) : (
+                      <p>No reviews yet.</p>
+                    )}
+                    <div className="review-form">
+                      <h4>Leave a Review</h4>
+                      <input
+                        type="text"
+                        name="user"
+                        placeholder="Your Name"
+                        value={newReview.user}
+                        onChange={handleReviewChange}
+                      />
+                      <textarea
+                        name="comment"
+                        placeholder="Your Comment"
+                        value={newReview.comment}
+                        onChange={handleReviewChange}
+                      />
+                      <StarRating rating={newReview.rating} setRating={(rating) => setNewReview(prev => ({ ...prev, rating }))} />
+                      <button onClick={() => handleSubmitReview(product.RowKey)}>Submit Review</button>
                     </div>
+                  </div>
                   <div className="select-container">
                     <label htmlFor={`size-${product.RowKey}`}>Size:</label>
                     <select
@@ -173,6 +237,9 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
+
 
 
 

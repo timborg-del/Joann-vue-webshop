@@ -1,14 +1,19 @@
 .star-rating {
-    color: #ffd700; /* Gold color for stars */
-    font-size: 1rem;
-    display: inline-block;
-  }
-  
-  .star-rating span {
-    margin-right: 2px;
-  }
-  
-  .star-rating .filled {
-    color: #ffd700;
-  }
-  
+  display: inline-block;
+  color: #ffd700; /* Gold color for stars */
+  font-size: 1.5em; /* Adjust the size as needed */
+}
+
+.star-rating span {
+  cursor: pointer; /* Show pointer cursor if stars are clickable */
+  transition: color 0.2s ease-in-out;
+}
+
+.star-rating span:hover,
+.star-rating span:hover ~ span {
+  color: #ffa500; /* Change to a lighter gold on hover */
+}
+
+.star-rating .filled {
+  color: #ffd700; /* Filled stars in gold */
+}
