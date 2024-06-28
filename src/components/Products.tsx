@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
@@ -64,12 +64,28 @@ const Products: React.FC = () => {
     });
   };
 
-  const incrementQuantity = (productId: string) => {
-    dispatch({ type: 'INCREMENT_QUANTITY', payload: productId });
+  const incrementQuantity = (product: Product) => {
+    const size = selectedSizes[product.RowKey] || 'A3';
+    const uniqueId = `${product.RowKey}-${size}`;
+    const cartItem = state.items.find(item => item.RowKey === uniqueId);
+    if (cartItem) {
+      dispatch({ type: 'INCREMENT_QUANTITY', payload: uniqueId });
+    } else {
+      addItemToCart(product);
+    }
   };
 
-  const decrementQuantity = (productId: string) => {
-    dispatch({ type: 'DECREMENT_QUANTITY', payload: productId });
+  const decrementQuantity = (product: Product) => {
+    const size = selectedSizes[product.RowKey] || 'A3';
+    const uniqueId = `${product.RowKey}-${size}`;
+    const cartItem = state.items.find(item => item.RowKey === uniqueId);
+    if (cartItem) {
+      if (cartItem.quantity > 1) {
+        dispatch({ type: 'DECREMENT_QUANTITY', payload: uniqueId });
+      } else {
+        dispatch({ type: 'REMOVE_ITEM', payload: uniqueId });
+      }
+    }
   };
 
   const handleReviewChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -152,9 +168,9 @@ const Products: React.FC = () => {
                     <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
                     <p><strong>Category:</strong> {product.Category}</p>
                     <div className="quantity-controls">
-                      <button onClick={() => decrementQuantity(product.RowKey)}>-</button>
-                      <span>{state.items.find(item => item.RowKey === product.RowKey)?.quantity ?? 0}</span>
-                      <button onClick={() => incrementQuantity(product.RowKey)}>+</button>
+                      <button onClick={() => decrementQuantity(product)}>-</button>
+                      <span>{state.items.find(item => item.RowKey === `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)?.quantity ?? 0}</span>
+                      <button onClick={() => incrementQuantity(product)}>+</button>
                     </div>
                   </div>
                   <div className="product-reviews">
@@ -229,6 +245,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
