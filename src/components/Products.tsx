@@ -6,31 +6,7 @@ import { Product } from '../apiService';
 import StarRating from './StarRating';
 import { useCartDispatch } from '../context/CartContext';
 
-const mockData: Product[] = [
-  {
-    PartitionKey: '1',
-    RowKey: '1',
-    Name: 'Mock Product 1',
-    Price: 10,
-    Stock: 100,
-    Category: 'Mock Category',
-    ImageUrl: 'https://via.placeholder.com/150',
-    quantity: 1,
-    rating: 4, // Add a rating property
-  },
-  {
-    PartitionKey: '2',
-    RowKey: '2',
-    Name: 'Mock Product 2',
-    Price: 20,
-    Stock: 200,
-    Category: 'Mock Category',
-    ImageUrl: 'https://via.placeholder.com/150',
-    quantity: 1,
-    rating: 3, // Add a rating property
-  },
-  // Add more mock products as needed
-];
+
 
 const Products: React.FC = () => {
   const { addItemToCart } = useCartActions();
