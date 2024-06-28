@@ -34,7 +34,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     console.log('Action dispatched:', action);
     switch (action.type) {
       case 'ADD_ITEM': {
-        const existingItemIndex = state.items.findIndex(item => item.RowKey === action.payload.RowKey && item.size === action.payload.size);
+        const existingItemIndex = state.items.findIndex(item => item.RowKey === action.payload.RowKey);
         if (existingItemIndex !== -1) {
           const updatedItems = [...state.items];
           updatedItems[existingItemIndex].quantity += action.payload.quantity;
@@ -99,6 +99,7 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
 
 
 
