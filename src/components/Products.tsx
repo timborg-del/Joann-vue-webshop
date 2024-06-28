@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
@@ -65,10 +65,12 @@ const Products: React.FC = () => {
   };
 
   const incrementQuantity = (productId: string) => {
+    console.log(`Incrementing quantity for product: ${productId}`);
     dispatch({ type: 'INCREMENT_QUANTITY', payload: productId });
   };
 
   const decrementQuantity = (productId: string) => {
+    console.log(`Decrementing quantity for product: ${productId}`);
     dispatch({ type: 'DECREMENT_QUANTITY', payload: productId });
   };
 
@@ -229,6 +231,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
