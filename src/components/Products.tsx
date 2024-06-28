@@ -25,6 +25,7 @@ const Products: React.FC = () => {
 
   useEffect(() => {
     if (products) {
+      console.log('Fetched products:', products);
       products.forEach(product => {
         fetchReviews(product.RowKey);
       });
@@ -228,6 +229,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 

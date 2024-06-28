@@ -176,14 +176,16 @@ export const getReviews = async (productId: string): Promise<Review[]> => {
   };
   
   // Function to submit a review for a product
-  export const submitReview = async (productId: string, user: string, rating: number, comment: string): Promise<void> => {
+// apiService.ts
+export const submitReview = async (productId: string, user: string, rating: number, comment: string): Promise<void> => {
     const review = {
       user,
       rating,
-      comment
+      comment,
+      productId
     };
   
-    const response = await fetch(`${API_BASE_URL}/products/${productId}/review`, {
+    const response = await fetch(`https://joart.azurewebsites.net/SubmitReview`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -193,9 +195,11 @@ export const getReviews = async (productId: string): Promise<Review[]> => {
   
     if (!response.ok) {
       const errorText = await response.text();
+      console.error('Failed to submit review:', errorText);
       throw new Error(`Failed to submit review: ${errorText}`);
     }
   };
+  
 
 // Utility function to check authentication
 export const isAuthenticated = (): boolean => {
