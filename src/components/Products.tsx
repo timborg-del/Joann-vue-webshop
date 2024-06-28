@@ -15,8 +15,8 @@ const Products: React.FC = () => {
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
-  const dispatch = useCartDispatch();
   const { state } = useCart();
+  const dispatch = useCartDispatch();
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
@@ -229,6 +229,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
