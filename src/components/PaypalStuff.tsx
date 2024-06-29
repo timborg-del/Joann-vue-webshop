@@ -201,10 +201,10 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       name: "Unknown",
       email: "Unknown"
     };
-
+  
     const address = orderData.purchase_units[0]?.shipping?.address;
     const recipient = orderData.purchase_units[0]?.shipping?.name?.full_name;
-
+  
     const cartItems = cart.map((item: Product) => `
       <tr>
         <td>${item.Name}</td>
@@ -213,7 +213,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         <td>${item.size ?? 'N/A'}</td>
       </tr>
     `).join("");
-
+  
     const emailParams = {
       orderID: orderData.id,
       status: orderData.status,
@@ -229,11 +229,11 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         <p><strong>Recipient:</strong> ${recipient}</p>
         <p><strong>Address Line 1:</strong> ${address?.address_line_1}</p>
         <p><strong>Address Line 2:</strong> ${address?.admin_area_2}</p>
-        <p><strong>City:</strong> ${address?.city}</p>
+        <p><strong>City:</strong> ${address?.city ?? 'N/A'}</p>
         <p><strong>Country Code:</strong> ${address?.country_code}</p>
         <p><strong>Postal Code:</strong> ${address?.postal_code}</p>
-        <p><strong>State:</strong> ${address?.state}</p>
-        <p><strong>Phone:</strong> ${address?.phone}</p>
+        <p><strong>State:</strong> ${address?.state ?? 'N/A'}</p>
+        <p><strong>Phone:</strong> ${address?.phone ?? 'N/A'}</p>
         <h2>Items Ordered:</h2>
         <table>
           <thead>
@@ -251,9 +251,9 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         <p>See console for all available details</p>
       `
     };
-
+  
     console.log('Email Parameters:', emailParams);
-
+  
     try {
       const response = await fetch('https://joart.azurewebsites.net/SendEmail', {
         method: 'POST',
@@ -262,7 +262,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         },
         body: JSON.stringify(emailParams),
       });
-
+  
       if (response.ok) {
         console.log("Order details sent to email successfully");
       } else {
@@ -272,6 +272,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       console.error("Error sending order details to email:", error);
     }
   };
+  
 
   return (
     <div className="App">
