@@ -210,6 +210,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         <td>${item.Name}</td>
         <td>${item.quantity}</td>
         <td>${item.Price}</td>
+        <td>${item.size ?? 'N/A'}</td>
       </tr>
     `).join("");
 
@@ -240,6 +241,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
               <th>Product Name</th>
               <th>Quantity</th>
               <th>Price</th>
+              <th>Size</th>
             </tr>
           </thead>
           <tbody>
