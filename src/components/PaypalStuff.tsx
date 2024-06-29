@@ -167,21 +167,45 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
     const payer = orderData.payer ? {
       name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
       email: orderData.payer.email_address,
-      
     } : {
       name: "Unknown",
       email: "Unknown"
     };
   
+    const cartItems = cart.map((item: Product) => `
+      <tr>
+        <td>${item.Name}</td>
+        <td>${item.quantity}</td>
+        <td>${item.Price}</td>
+      </tr>
+    `).join("");
+  
     const emailParams = {
       orderID: orderData.id,
       status: orderData.status,
       payer: payer.name,
-      purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
-      cart: cart.map((item: Product) => ` Product Name: ${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
-      to_email: "jo.salmonart@gmail.com",
+      to_email: "timl@live.se",
       subject: "New Delivery Address and Order Details",
-      message: `You have a new order.`
+      message: `
+        <h1>New Order Received</h1>
+        <p><strong>Order ID:</strong> ${orderData.id}</p>
+        <p><strong>Status:</strong> ${orderData.status}</p>
+        <p><strong>Payer Name:</strong> ${payer.name}</p>
+        <h2>Items Ordered:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${cartItems}
+          </tbody>
+        </table>
+        <p>See console for all available details</p>
+      `
     };
   
     console.log('Email Parameters:', emailParams);
@@ -204,6 +228,8 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       console.error("Error sending order details to email:", error);
     }
   };
+  
+  
 
 /*   // const handleTestButtonClick = () => {
   //   const mockOrderData: OrderData = {
