@@ -14,21 +14,51 @@ type PayPalActions = {
   restart: () => void;
 };
 
+interface Address {
+  address_line_1: string;
+  admin_area_2: string;
+  city: string | null;
+  country_code: string;
+  postal_code: string;
+  state: string | null;
+  phone: string | null;
+  normalization_status: string | null;
+  type: string | null;
+  email_address: string | null;
+  recipient_name: string | null;
+}
+
+interface Name {
+  given_name: string | null;
+  surname: string | null;
+  full_name: string;
+}
+
+interface ShippingDetail {
+  name: Name;
+  address: Address;
+}
+
+interface Capture {
+  id: string;
+  status: string;
+}
+
+interface Payments {
+  captures: Capture[];
+}
+
+interface PurchaseUnit {
+  payments: Payments;
+  shipping: ShippingDetail;
+}
+
 interface Payer {
   name: {
     given_name: string;
     surname: string;
   };
   email_address: string;
-}
-
-interface PurchaseUnit {
-  payments: {
-    captures: {
-      id: string;
-      status: string;
-    }[];
-  };
 }
 
 interface OrderData {
@@ -171,7 +201,10 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       name: "Unknown",
       email: "Unknown"
     };
-  
+
+    const address = orderData.purchase_units[0]?.shipping?.address;
+    const recipient = orderData.purchase_units[0]?.shipping?.name?.full_name;
+
     const cartItems = cart.map((item: Product) => `
       <tr>
         <td>${item.Name}</td>
@@ -179,7 +212,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         <td>${item.Price}</td>
       </tr>
     `).join("");
-  
+
     const emailParams = {
       orderID: orderData.id,
       status: orderData.status,
@@ -191,6 +224,15 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         <p><strong>Order ID:</strong> ${orderData.id}</p>
         <p><strong>Status:</strong> ${orderData.status}</p>
         <p><strong>Payer Name:</strong> ${payer.name}</p>
+        <h2>Shipping Details:</h2>
+        <p><strong>Recipient:</strong> ${recipient}</p>
+        <p><strong>Address Line 1:</strong> ${address?.address_line_1}</p>
+        <p><strong>Address Line 2:</strong> ${address?.admin_area_2}</p>
+        <p><strong>City:</strong> ${address?.city}</p>
+        <p><strong>Country Code:</strong> ${address?.country_code}</p>
+        <p><strong>Postal Code:</strong> ${address?.postal_code}</p>
+        <p><strong>State:</strong> ${address?.state}</p>
+        <p><strong>Phone:</strong> ${address?.phone}</p>
         <h2>Items Ordered:</h2>
         <table>
           <thead>
@@ -207,9 +249,9 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         <p>See console for all available details</p>
       `
     };
-  
+
     console.log('Email Parameters:', emailParams);
-  
+
     try {
       const response = await fetch('https://joart.azurewebsites.net/SendEmail', {
         method: 'POST',
@@ -218,7 +260,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         },
         body: JSON.stringify(emailParams),
       });
-  
+
       if (response.ok) {
         console.log("Order details sent to email successfully");
       } else {
@@ -228,36 +270,6 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       console.error("Error sending order details to email:", error);
     }
   };
-  
-  
-
-/*   // const handleTestButtonClick = () => {
-  //   const mockOrderData: OrderData = {
-  //     id: "MOCK_ORDER_ID",
-  //     status: "COMPLETED",
-  //     payer: {
-  //       name: {
-  //         given_name: "Mock",
-  //         surname: "User",
-  //       },
-  //       email_address: "mockuser@example.com",
-  //     },
-  //     purchase_units: [
-  //       {
-  //         payments: {
-  //           captures: [
-  //             {
-  //               id: "MOCK_CAPTURE_ID",
-  //               status: "COMPLETED",
-  //             },
-  //           ],
-  //         },
-  //       },
-  //     ],
-  //   }; */
-
-  //   sendOrderToDeliveryService(mockOrderData, cartRef.current);
-  // };
 
   return (
     <div className="App">
@@ -274,7 +286,6 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         />
       </PayPalScriptProvider>
       <Message content={message} />
-      
     </div>
   );
 }
