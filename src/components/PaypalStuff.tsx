@@ -55,7 +55,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
   const initialOptions = {
     clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
-    "disable-funding": "",
+    "disable-funding": "card",
     currency: "SEK",
     "data-page-type": "product-details",
     components: "buttons",
@@ -166,7 +166,8 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
   const sendOrderToDeliveryService = async (orderData: OrderData, cart: Product[]) => {
     const payer = orderData.payer ? {
       name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
-      email: orderData.payer.email_address
+      email: orderData.payer.email_address,
+      
     } : {
       name: "Unknown",
       email: "Unknown"
@@ -178,7 +179,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       payer: payer.name,
       purchaseUnits: JSON.stringify(orderData.purchase_units, null, 2),
       cart: cart.map((item: Product) => ` Product Name: ${item.Name} (Quantity: ${item.quantity}, Price: ${item.Price})`).join("\n"),
-      to_email: "timl@live.se",
+      to_email: "jo.salmonart@gmail.com",
       subject: "New Delivery Address and Order Details",
       message: `You have a new order.`
     };
@@ -204,33 +205,33 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
     }
   };
 
-  const handleTestButtonClick = () => {
-    const mockOrderData: OrderData = {
-      id: "MOCK_ORDER_ID",
-      status: "COMPLETED",
-      payer: {
-        name: {
-          given_name: "Mock",
-          surname: "User",
-        },
-        email_address: "mockuser@example.com",
-      },
-      purchase_units: [
-        {
-          payments: {
-            captures: [
-              {
-                id: "MOCK_CAPTURE_ID",
-                status: "COMPLETED",
-              },
-            ],
-          },
-        },
-      ],
-    };
+/*   // const handleTestButtonClick = () => {
+  //   const mockOrderData: OrderData = {
+  //     id: "MOCK_ORDER_ID",
+  //     status: "COMPLETED",
+  //     payer: {
+  //       name: {
+  //         given_name: "Mock",
+  //         surname: "User",
+  //       },
+  //       email_address: "mockuser@example.com",
+  //     },
+  //     purchase_units: [
+  //       {
+  //         payments: {
+  //           captures: [
+  //             {
+  //               id: "MOCK_CAPTURE_ID",
+  //               status: "COMPLETED",
+  //             },
+  //           ],
+  //         },
+  //       },
+  //     ],
+  //   }; */
 
-    sendOrderToDeliveryService(mockOrderData, cartRef.current);
-  };
+  //   sendOrderToDeliveryService(mockOrderData, cartRef.current);
+  // };
 
   return (
     <div className="App">
@@ -247,7 +248,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         />
       </PayPalScriptProvider>
       <Message content={message} />
-      <button onClick={handleTestButtonClick}>Test Send Email</button>
+      
     </div>
   );
 }
