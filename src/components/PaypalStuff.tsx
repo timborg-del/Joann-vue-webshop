@@ -221,20 +221,19 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       to_email: "timl@live.se",
       subject: "New Delivery Address and Order Details",
       message: `
-        <h1>New Order Received</h1>
-        <p><strong>Order ID:</strong> ${orderData.id}</p>
-        <p><strong>Status:</strong> ${orderData.status}</p>
-        <p><strong>Payer Name:</strong> ${payer.name}</p>
-        <h2>Shipping Details:</h2>
-        <p><strong>Recipient:</strong> ${recipient}</p>
-        <p><strong>Address Line 1:</strong> ${address?.address_line_1}</p>
-        <p><strong>Address Line 2:</strong> ${address?.admin_area_2}</p>
-        <p><strong>City:</strong> ${address?.city ?? 'N/A'}</p>
-        <p><strong>Country Code:</strong> ${address?.country_code}</p>
-        <p><strong>Postal Code:</strong> ${address?.postal_code}</p>
-        <p><strong>State:</strong> ${address?.state ?? 'N/A'}</p>
-        <p><strong>Phone:</strong> ${address?.phone ?? 'N/A'}</p>
-        <h2>Items Ordered:</h2>
+      <h1>New Order Received</h1>
+      <p><strong>Order ID:</strong> ${orderData.id}</p>
+      <p><strong>Status:</strong> ${orderData.status}</p>
+      <p><strong>Payer Name:</strong> ${payer.name}</p>
+      <h2>Shipping Details:</h2>
+      <p><strong>Recipient:</strong> ${recipient}</p>
+      <p><strong>Street Address:</strong> ${address?.address_line_1}</p>
+      <p><strong>City:</strong> ${address?.admin_area_2}</p>
+      <p><strong>State/Province:</strong> ${address?.state ?? 'N/A'}</p>
+      <p><strong>Postal Code:</strong> ${address?.postal_code}</p>
+      <p><strong>Country Code:</strong> ${address?.country_code}</p>
+      <p><strong>Phone:</strong> ${address?.phone ?? 'N/A'}</p>
+      <h2>Items Ordered:</h2>
         <table>
           <thead>
             <tr>
