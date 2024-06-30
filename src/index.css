@@ -43,7 +43,7 @@ body {
 .centerLinks {
   display: flex;
   flex: 1;
-  justify-content:flex-start;
+  justify-content: flex-start;
 }
 
 .centerLinks a {
@@ -61,7 +61,6 @@ body {
   border-radius: 5px;
 }
 
-
 .dropdownContent {
   display: none;
   position: absolute;
@@ -73,7 +72,6 @@ body {
   border: 1px solid #ccc;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
-
 
 .dropdownContent.open {
   display: block;
@@ -91,15 +89,14 @@ body {
   background-color: #f4f4f4;
 }
 
-.h1shop{
+.h1shop {
   font-size: 1.5rem;
   font-weight: bold; /* Set font weight to bold */
-  font-weight: normal;/*set a span h1 to fit other font */
-  margin-right:10px;
+  font-weight: normal; /* Set span h1 to fit other font */
+  margin-right: 10px;
   font-family: monospace;
   color: #ffffff;
   cursor: pointer;
-  
 }
 
 .card {
@@ -128,23 +125,27 @@ body {
   border-radius: 5px;
   transition: transform 0.3s ease;
   cursor: pointer;
+  position: relative; /* To position the counter */
 }
 
 .cart-button:hover {
   transform: translateY(-5px) rotateX(5deg) scale(1.05);
 }
 
-
 .cart-counter {
-  display: inline-block;
-  margin-left: 8px; /* Space between icon and counter */
-  background-color: rgb(255, 204, 0);
-  color: rgb(0, 36, 156);
+  position: absolute;
+  top: +30px;
+  right: +27px;
+  background-color: red;
+  color: white;
   padding: 2px 6px;
-  text-decoration: none; /* Remove underline */
   border-radius: 50%;
-  font-size: 14px;
-  line-height: 1; /* Ensures the counter is vertically centered */
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
 }
 
 .buy_btn {
@@ -164,8 +165,6 @@ body {
 .buy_btn:hover {
   background-color: #0069d958;
 }
-
-
 
 .main-content {
   position: relative;
@@ -199,5 +198,4 @@ body {
     width: 100%;
   }
 }
-
 
