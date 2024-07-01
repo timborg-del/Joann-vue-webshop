@@ -4,6 +4,8 @@ import { Product } from '../apiService';
 
 interface CartState {
   items: Product[];
+  selectedCurrency: string;
+  conversionRates: { [key: string]: number };
 }
 
 type Action =
@@ -11,10 +13,14 @@ type Action =
   | { type: 'REMOVE_ITEM'; payload: string }
   | { type: 'CLEAR_CART' }
   | { type: 'INCREMENT_QUANTITY'; payload: string }
-  | { type: 'DECREMENT_QUANTITY'; payload: string };
+  | { type: 'DECREMENT_QUANTITY'; payload: string }
+  | { type: 'SET_CURRENCY'; payload: string }
+  | { type: 'SET_CONVERSION_RATES'; payload: { [key: string]: number } };
 
 const initialState: CartState = {
   items: [],
+  selectedCurrency: 'USD',
+  conversionRates: {},
 };
 
 const CartContext = createContext<{
@@ -31,7 +37,6 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [storedState, setStoredState] = useLocalStorage<CartState>('cart', initialState);
 
   const cartReducer = (state: CartState, action: Action): CartState => {
-    console.log('Action dispatched:', action);
     switch (action.type) {
       case 'ADD_ITEM': {
         const existingItemIndex = state.items.findIndex(item => item.RowKey === action.payload.RowKey && item.size === action.payload.size);
@@ -68,6 +73,12 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
         ).filter(item => item.quantity > 0);
         return { ...state, items: decrementedItems };
       }
+      case 'SET_CURRENCY': {
+        return { ...state, selectedCurrency: action.payload };
+      }
+      case 'SET_CONVERSION_RATES': {
+        return { ...state, conversionRates: action.payload };
+      }
       default:
         return state;
     }
@@ -92,6 +103,7 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
 
 
 
