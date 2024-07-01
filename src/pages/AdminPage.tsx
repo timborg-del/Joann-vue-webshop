@@ -1,7 +1,6 @@
-import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import './AdminPage.css'; // Import CSS file for styling
-import { addProduct, getProducts, Product, updateProduct, deleteProduct } from '../apiService';
-import { uploadShowroomImage, getShowroomImages, deleteShowroomImage } from '../apiService'; // Import new API functions
+import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage } from '../apiService';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -19,13 +18,20 @@ const AdminPage: React.FC = () => {
     size: '', // Default value
   });
   const [, setEditingProduct] = useState<Product | null>(null);
+  const [newShowroomImage, setNewShowroomImage] = useState<ShowroomImage>({
+    PartitionKey: 'showroom',
+    RowKey: '',
+    Title: '',
+    Description: '',
+    ImageUrl: ''
+  });
+  const [showroomImages, setShowroomImages] = useState<ShowroomImage[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit' | 'showroom'>('dashboard');
+  const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit' | 'showroom' | 'addShowroomImage'>('dashboard');
   const [error, setError] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [, setToken] = useLocalStorage<string | null>('token', null);
   const navigate = useNavigate();
-  const [showroomImages, setShowroomImages] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -108,23 +114,21 @@ const AdminPage: React.FC = () => {
     }
 
     try {
-      const imageUrl = await uploadShowroomImage(selectedFile);
-      setShowroomImages([...showroomImages, imageUrl]);
+      const imageToAdd = { ...newShowroomImage, RowKey: Date.now().toString() };
+      await addShowroomImage(imageToAdd, selectedFile);
+      setShowroomImages([...showroomImages, imageToAdd]);
+      setNewShowroomImage({
+        PartitionKey: 'showroom',
+        RowKey: '',
+        Title: '',
+        Description: '',
+        ImageUrl: ''
+      });
       setSelectedFile(null);
       setCurrentView('showroom');
       setError(null);
     } catch (err) {
-      setError('Failed to upload showroom image');
-    }
-  };
-
-  const handleDeleteShowroomImage = async (imageUrl: string) => {
-    try {
-      await deleteShowroomImage(imageUrl);
-      const updatedImages = showroomImages.filter(image => image !== imageUrl);
-      setShowroomImages(updatedImages);
-    } catch (err) {
-      setError('Failed to delete showroom image');
+      setError('Failed to add showroom image');
     }
   };
 
@@ -188,7 +192,6 @@ const AdminPage: React.FC = () => {
       </header>
       <aside>
         <button onClick={() => setCurrentView('products')}>Products</button>
-        <button onClick={() => setCurrentView('showroom')}>Showroom</button>
         <button onClick={() => {
           setEditingProduct(null);
           setNewProduct({
@@ -205,6 +208,18 @@ const AdminPage: React.FC = () => {
           setSelectedFile(null);
           setCurrentView('add');
         }}>Add New Product</button>
+        <button onClick={() => setCurrentView('showroom')}>Showroom</button>
+        <button onClick={() => {
+          setNewShowroomImage({
+            PartitionKey: 'showroom',
+            RowKey: '',
+            Title: '',
+            Description: '',
+            ImageUrl: ''
+          });
+          setSelectedFile(null);
+          setCurrentView('addShowroomImage');
+        }}>Add Showroom Image</button>
       </aside>
       <main>
         {currentView === 'dashboard' && (
@@ -306,22 +321,40 @@ const AdminPage: React.FC = () => {
           </form>
         )}
         {currentView === 'showroom' && (
-          <div className="showroom-upload">
+          <div className="showroom-list">
             <h2>Showroom Images</h2>
-            <form onSubmit={handleAddShowroomImage}>
-              {error && <div className="error">{error}</div>}
-              <input type="file" onChange={handleFileChange} required />
-              <button type="submit">Upload Image</button>
-            </form>
-            <div className="showroom-list">
-              {showroomImages.map((image, index) => (
-                <div key={index} className="showroom-image-item">
-                  <img src={image} alt={`Showroom ${index}`} />
-                  <button onClick={() => handleDeleteShowroomImage(image)}>Delete</button>
-                </div>
-              ))}
-            </div>
+            {showroomImages.map((image) => (
+              <div key={image.RowKey} className="showroom-image">
+                <img src={image.ImageUrl} alt={image.Title} />
+                <h3>{image.Title}</h3>
+                <p>{image.Description}</p>
+              </div>
+            ))}
           </div>
+        )}
+        {currentView === 'addShowroomImage' && (
+          <form className="showroom-form" onSubmit={handleAddShowroomImage}>
+            <h2>Add Showroom Image</h2>
+            {error && <div className="error">{error}</div>}
+            <input
+              type="text"
+              name="Title"
+              value={newShowroomImage.Title}
+              onChange={(e) => setNewShowroomImage({ ...newShowroomImage, Title: e.target.value })}
+              placeholder="Image Title"
+              required
+            />
+            <input
+              type="text"
+              name="Description"
+              value={newShowroomImage.Description}
+              onChange={(e) => setNewShowroomImage({ ...newShowroomImage, Description: e.target.value })}
+              placeholder="Image Description"
+              required
+            />
+            <input type="file" onChange={handleFileChange} required />
+            <button type="submit">Add Showroom Image</button>
+          </form>
         )}
       </main>
       <footer>
@@ -332,6 +365,8 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
+
 
 
 

@@ -39,6 +39,14 @@ export interface FormData {
     postalCode: string;
 }
 
+export interface ShowroomImage {
+    PartitionKey: string;
+    RowKey: string;
+    Title: string;
+    Description: string;
+    ImageUrl: string;
+}
+
 export const addProduct = async (product: Product, file: File): Promise<void> => {
     const formData = new FormData();
     formData.append('product', JSON.stringify(product));
@@ -227,25 +235,23 @@ export const isAuthenticated = (): boolean => {
 };
 
 // Showroom Image Management
-export const uploadShowroomImage = async (file: File): Promise<string> => {
+export const addShowroomImage = async (showroomImage: ShowroomImage, file: File): Promise<void> => {
     const formData = new FormData();
+    formData.append('showroomImage', JSON.stringify(showroomImage));
     formData.append('file', file);
 
-    const response = await fetch(`${API_BASE_URL}/UploadShowroomImage`, {
+    const response = await fetch(`${API_BASE_URL}/AddShowroomImage`, {
         method: 'POST',
         body: formData,
     });
 
     if (!response.ok) {
         const errorText = await response.text();
-        throw new Error(`Failed to upload showroom image: ${errorText}`);
+        throw new Error(`Failed to add showroom image: ${errorText}`);
     }
-
-    const result = await response.json();
-    return result.imageUrl; // Assume the response contains the image URL
 };
 
-export const getShowroomImages = async (): Promise<string[]> => {
+export const getShowroomImages = async (): Promise<ShowroomImage[]> => {
     const response = await fetch(`${API_BASE_URL}/GetShowroomImages`, {
         method: 'GET',
         headers: {
@@ -258,7 +264,7 @@ export const getShowroomImages = async (): Promise<string[]> => {
         throw new Error(`Failed to fetch showroom images: ${errorText}`);
     }
 
-    const images: string[] = await response.json();
+    const images: ShowroomImage[] = await response.json();
     return images;
 };
 
