@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
@@ -13,6 +13,8 @@ const Products: React.FC = () => {
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
   const { state } = useCart();
   const dispatch = useCartDispatch();
+  const [conversionRates, setConversionRates] = useState<{ [key: string]: number }>({});
+  const [selectedCurrency, setSelectedCurrency] = useState<string>('USD');
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
@@ -20,14 +22,35 @@ const Products: React.FC = () => {
     A5: -5
   };
 
+  useEffect(() => {
+    const fetchExchangeRates = async () => {
+      try {
+        const response = await fetch('https://v6.exchangerate-api.com/v6/a1232edc656cf6fb88a4db06/latest/SEK');
+        const data = await response.json();
+        setConversionRates(data.conversion_rates);
+      } catch (error) {
+        console.error('Error fetching exchange rates:', error);
+      }
+    };
+
+    fetchExchangeRates();
+  }, []);
+
   const handleSizeChange = (productId: string, size: string) => {
     setSelectedSizes({ ...selectedSizes, [productId]: size });
+  };
+
+  const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    setSelectedCurrency(event.target.value);
   };
 
   const getPrice = (productId: string, basePrice: number) => {
     const size = selectedSizes[productId] || 'A3';
     const adjustment = priceAdjustments[size] || 0;
-    return basePrice + adjustment;
+    const priceInSek = basePrice + adjustment;
+    const rate = conversionRates[selectedCurrency] || 1;
+    const priceInSelectedCurrency = priceInSek * rate;
+    return priceInSelectedCurrency.toFixed(2);
   };
 
   const handleAddToCart = (product: Product) => {
@@ -36,7 +59,7 @@ const Products: React.FC = () => {
     addItemToCart({
       ...product,
       RowKey: uniqueId,
-      Price: getPrice(product.RowKey, product.Price),
+      Price: parseFloat(getPrice(product.RowKey, product.Price)),
       quantity: 1,
       size: size
     });
@@ -82,6 +105,16 @@ const Products: React.FC = () => {
 
   return (
     <div className="products-container">
+      <div className="currency-selector">
+        <label htmlFor="currency">Select Currency:</label>
+        <select id="currency" value={selectedCurrency} onChange={handleCurrencyChange}>
+          {Object.keys(conversionRates).map((currency) => (
+            <option key={currency} value={currency}>
+              {currency}
+            </option>
+          ))}
+        </select>
+      </div>
       {products.length > 0 ? (
         products.map((product) => (
           <div
@@ -125,7 +158,7 @@ const Products: React.FC = () => {
                 <div className="product-details-dropdown">
                   <div className="product-info">
                     <p><strong>Name:</strong> {product.Name}</p>
-                    <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
+                    <p><strong>Price:</strong> {selectedCurrency} ${getPrice(product.RowKey, product.Price)}</p>
                     <p><strong>Category:</strong> {product.Category}</p>
                     <div className="quantity-controls">
                       <button onClick={() => decrementQuantity(product)}>-</button>
@@ -172,6 +205,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
