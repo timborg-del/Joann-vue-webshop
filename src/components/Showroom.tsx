@@ -9,11 +9,11 @@ interface ShowroomProps {
 
 const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
   const { data: images, isLoading, error } = useFetchData<ShowroomImage[]>('https://joart.azurewebsites.net/GetShowroomImages');
-  const [visible, setVisible] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     if (images && images.length > 0) {
-      setVisible(true);
+      setIsVisible(true);
     }
   }, [images]);
 
@@ -35,7 +35,7 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
     <div className="showroom-container">
       {images.length > 0 ? (
         images.map((image) => (
-          <div key={image.RowKey} className={`showroom-image ${visible ? 'visible' : ''}`}>
+          <div key={image.RowKey} className={`showroom-image ${isVisible ? 'visible' : ''}`}>
             <img
               src={image.ImageUrl}
               alt={image.Title}
@@ -52,6 +52,7 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
 };
 
 export default Showroom;
+
 
 
 
