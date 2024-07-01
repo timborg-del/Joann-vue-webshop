@@ -10,11 +10,11 @@ export const Cart = () => {
     dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
   };
 
-  const incrementQuantity = (itemId: string) => {
+   const incrementQuantity = (itemId: string) => {
     dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
   };
 
-  const removeItem = (itemId: string) => {
+   const removeItem = (itemId: string) => {
     dispatch({ type: 'REMOVE_ITEM', payload: itemId });
   };
 
@@ -30,8 +30,7 @@ export const Cart = () => {
     }));
   };
 
-  const { selectedCurrency, conversionRates } = state;
-  const rate = conversionRates[selectedCurrency] || 1;
+  console.log('Current cart items:', state.items);
 
   return (
     <div className="cart-product-container">
@@ -45,7 +44,7 @@ export const Cart = () => {
               <div className="cart-item-details">
                 <p>{item.Name}</p>
                 <p>{item.size}</p>
-                <p>{selectedCurrency} {(item.Price * rate).toFixed(2)}</p>
+                <p>${item.Price.toFixed(2)}</p>
                 <div className="cart-item-actions">
                   <button onClick={() => decrementQuantity(item.RowKey)}>-</button>
                   <span>{item.quantity}</span>
@@ -62,9 +61,6 @@ export const Cart = () => {
 };
 
 export default Cart;
-
-
-
 
 
 
