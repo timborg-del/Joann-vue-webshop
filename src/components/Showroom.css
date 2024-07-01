@@ -1,13 +1,15 @@
 .showroom-container {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  padding: 20px;
+  flex-direction: column;
+  align-items: center;
+  gap: 40px; /* Increase the gap between images */
+  padding: 40px; /* Increase padding for better spacing */
+  width: 100%;
 }
 
 .showroom-image {
-  width: 300px;
+  width: 80%; /* Make images wider */
+  max-width: 800px; /* Ensure images don't get too large */
   text-align: center;
   transition: transform 0.3s;
 }
@@ -16,7 +18,7 @@
   width: 100%;
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow for more depth */
   transition: transform 0.3s;
 }
 
@@ -25,19 +27,36 @@
 }
 
 .showroom-image:hover {
-  transform: translateY(-5px);
+  transform: translateY(-10px); /* Increase translate for more effect */
 }
 
 .showroom-image h3 {
-  font-size: 1.2rem;
-  margin: 10px 0 5px;
+  font-size: 2rem; /* Increase title size */
+  margin: 20px 0 10px;
   color: #ffffff;
 }
 
 .showroom-image p {
-  font-size: 1rem;
+  font-size: 1.2rem; /* Increase paragraph size */
   color: #ffffff;
+  margin-bottom: 20px;
 }
+
+/* Responsive adjustments */
+@media screen and (max-width: 767px) {
+  .showroom-image {
+    width: 90%; /* Adjust width for smaller screens */
+  }
+
+  .showroom-image h3 {
+    font-size: 1.5rem; /* Adjust title size for smaller screens */
+  }
+
+  .showroom-image p {
+    font-size: 1rem; /* Adjust paragraph size for smaller screens */
+  }
+}
+
 
 
   
