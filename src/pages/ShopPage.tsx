@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Products from '../components/Products'; // Import the Products component
+import Product from '../components/Products'; // Import the Product component
 import './ShopPage.css'; // Import the corresponding CSS file
 
 const ShopPage: React.FC = () => {
@@ -18,7 +18,7 @@ const ShopPage: React.FC = () => {
   return (
     <div className="shop-container">
       <h1>Shop</h1>
-      <Products activeProductName={activeProduct} />
+      <Product activeProductName={activeProduct} />
     </div>
   );
 };

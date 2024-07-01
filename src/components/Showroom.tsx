@@ -12,8 +12,10 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    setVisible(true);
-  }, []);
+    if (images && images.length > 0) {
+      setVisible(true);
+    }
+  }, [images]);
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -30,13 +32,14 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
   }
 
   return (
-    <div className={`showroom-container ${visible ? 'visible' : ''}`}>
+    <div className="showroom-container">
       {images.length > 0 ? (
         images.map((image) => (
-          <div key={image.RowKey} className="showroom-image" onClick={() => onImageClick(image.Title)}>
+          <div key={image.RowKey} className={`showroom-image ${visible ? 'visible' : ''}`}>
             <img
               src={image.ImageUrl}
               alt={image.Title}
+              onClick={() => onImageClick(image.Title)}
             />
             <p>{image.Title}</p>
           </div>
@@ -49,7 +52,6 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
 };
 
 export default Showroom;
-
 
 
 
