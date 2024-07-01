@@ -119,7 +119,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 
     // Calculate total amount in SEK
     const totalAmountSEK = currentCart.reduce((total, item) => {
-      const rate = conversionRates[item.currency] || 1;
+      const rate = conversionRates[selectedCurrency] || 1;
       const priceInSEK = item.Price / rate; // Convert back to SEK
       return total + priceInSEK * item.quantity;
     }, 0).toFixed(2);
@@ -162,7 +162,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         setMessage(`Could not initiate PayPal Checkout: ${String(error)}`);
       }
     }
-  }, [conversionRates]);
+  }, [conversionRates, selectedCurrency]);
 
   const onApprove = useCallback(async (data: PayPalData, actions: PayPalActions) => {
     try {
@@ -316,6 +316,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 

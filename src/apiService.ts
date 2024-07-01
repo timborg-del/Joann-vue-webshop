@@ -11,7 +11,6 @@ export interface Product {
     Category: string;
     ImageUrl: string;
     quantity: number;
-    currency: number;
     size?: string;
   }
   
