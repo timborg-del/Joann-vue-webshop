@@ -174,8 +174,8 @@ const Products: React.FC = () => {
                       <option value="A5">A5</option>
                     </select>
                   </div>
-                  <div className="buy-btn-container">
-                  <div className="quantity-controls">
+                  <div className="controls-container">
+                    <div className="quantity-controls">
                       <button onClick={() => decrementQuantity(product)}>-</button>
                       <span>{state.items.find(item => item.RowKey === `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)?.quantity ?? 0}</span>
                       <button onClick={() => incrementQuantity(product)}>+</button>
