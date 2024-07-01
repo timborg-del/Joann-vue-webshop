@@ -1,44 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import { ShowroomImage, getShowroomImages } from '../apiService';
-import './Showroom.css';
+import { getShowroomImages, ShowroomImage } from '../apiService';
+import './Showroom.css'; // Import the corresponding CSS file
 
 const Showroom: React.FC = () => {
-  const [images, setImages] = useState<ShowroomImage[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const [showroomImages, setShowroomImages] = useState<ShowroomImage[]>([]);
 
   useEffect(() => {
-    const fetchImages = async () => {
+    const fetchShowroomImages = async () => {
       try {
         const images = await getShowroomImages();
-        setImages(images);
-      } catch (err) {
-        setError('Failed to fetch showroom images');
-      } finally {
-        setIsLoading(false);
+        setShowroomImages(images);
+      } catch (error) {
+        console.error('Failed to fetch showroom images:', error);
       }
     };
 
-    fetchImages();
+    fetchShowroomImages();
   }, []);
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
-  }
-
   return (
-    <div className="showroom">
-      {images.map((image) => (
-        <div key={image.RowKey} className="showroom-image-card">
-          <img src={image.ImageUrl} alt={image.Title} className="showroom-image" />
-          <div className="showroom-image-info">
-            <h3>{image.Title}</h3>
-            <p>{image.Description}</p>
-          </div>
+    <div className="showroom-container">
+      {showroomImages.map(image => (
+        <div key={image.RowKey} className="showroom-image">
+          <img src={image.ImageUrl} alt={image.Title} />
+          <h3>{image.Title}</h3>
+          <p>{image.Description}</p>
         </div>
       ))}
     </div>
@@ -46,6 +32,7 @@ const Showroom: React.FC = () => {
 };
 
 export default Showroom;
+
 
 
 

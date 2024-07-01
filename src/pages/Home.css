@@ -76,4 +76,49 @@
   }
 }
 
+/* Showroom styling */
+.showroom-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.showroom-image {
+  width: 300px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.showroom-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+}
+
+.showroom-image:hover img {
+  transform: scale(1.05);
+}
+
+.showroom-image:hover {
+  transform: translateY(-5px);
+}
+
+.showroom-image h3 {
+  font-size: 1.2rem;
+  margin: 10px 0 5px;
+  color: #ffffff;
+}
+
+.showroom-image p {
+  font-size: 1rem;
+  color: #ffffff;
+}
+
+
+
+
   
