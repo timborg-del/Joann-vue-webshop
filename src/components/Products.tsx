@@ -1,18 +1,26 @@
-import { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
 import { Product } from '../apiService';
 import { useCart, useCartDispatch } from '../context/CartContext';
 
-const Products: React.FC = () => {
+interface ProductsProps {
+  activeProduct: string | null;
+}
+
+const Products: React.FC<ProductsProps> = ({ activeProduct: initialActiveProduct }) => {
   const { addItemToCart } = useCartActions();
   const { data: products, isLoading, error } = useFetchData<Product[]>('https://joart.azurewebsites.net/GetProducts');
-  const [activeProduct, setActiveProduct] = useState<string | null>(null);
+  const [activeProduct, setActiveProduct] = useState<string | null>(initialActiveProduct);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
   const { state } = useCart();
   const dispatch = useCartDispatch();
+  
+  useEffect(() => {
+    setActiveProduct(initialActiveProduct);
+  }, [initialActiveProduct]);
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
@@ -179,6 +187,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
