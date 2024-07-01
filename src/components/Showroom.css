@@ -5,13 +5,18 @@
   gap: 20px; /* Space between images */
   padding: 20px;
   margin-top: 60px; /* Add margin to ensure it does not overlap with fixed header */
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+}
+
+.showroom-container.visible {
+  opacity: 1;
 }
 
 .showroom-image {
   width: 80%; /* Adjust width to be responsive */
   max-width: 800px; /* Limit max width for larger screens */
   text-align: center;
-  opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
@@ -47,6 +52,7 @@
     font-size: 1rem; /* Adjust font size for smaller screens */
   }
 }
+
 
 
 

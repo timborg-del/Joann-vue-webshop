@@ -32,7 +32,7 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
   }
 
   return (
-    <div className="showroom-container">
+    <div className={`showroom-container ${isVisible ? 'visible' : ''}`}>
       {images.length > 0 ? (
         images.map((image) => (
           <div key={image.RowKey} className={`showroom-image ${isVisible ? 'visible' : ''}`}>
@@ -52,6 +52,7 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
 };
 
 export default Showroom;
+
 
 
 
