@@ -1,4 +1,3 @@
-import React from 'react';
 import Cart from '../components/Cart';
 import PaypalStuff from '../components/PaypalStuff';
 import './CartPage.css';
@@ -39,6 +38,8 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
 };
 
 export default CartPage;
+
+
 
 
 

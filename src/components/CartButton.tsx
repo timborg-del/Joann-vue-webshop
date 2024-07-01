@@ -1,12 +1,10 @@
-import { Link } from 'react-router-dom';
-import { useCart } from '../context/CartContext'; // Import useCart hook
+import { useCart } from '../context/CartContext';
 
 const CartButton = () => {
-  // Access the cartItemCount from the context
   const { cartItemCount } = useCart();
 
   return (
-    <Link to='/cart' className="cart-button">
+    <div className="cart-button-container">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="icon icon-tabler icon-tabler-shopping-cart"
@@ -26,10 +24,11 @@ const CartButton = () => {
         <path d="M6 5l14 1l-1 7h-13" />
       </svg>
       <span className='cart-counter'>{cartItemCount}</span>
-    </Link>
+    </div>
   );
 };
 
 export default CartButton;
+
 
 
