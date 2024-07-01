@@ -9,11 +9,18 @@ interface ShowroomProps {
 
 const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
   const { data: images, isLoading, error } = useFetchData<ShowroomImage[]>('https://joart.azurewebsites.net/GetShowroomImages');
-  const [isVisible, setIsVisible] = useState(false);
+  const [isContainerVisible, setIsContainerVisible] = useState(false);
+  const [visibleImages, setVisibleImages] = useState<Set<string>>(new Set());
 
   useEffect(() => {
     if (images && images.length > 0) {
-      setIsVisible(true);
+      setIsContainerVisible(true);
+      // Gradually make images visible
+      images.forEach((image, index) => {
+        setTimeout(() => {
+          setVisibleImages(prev => new Set(prev).add(image.RowKey));
+        }, index * 100); // Stagger the fade-in effect
+      });
     }
   }, [images]);
 
@@ -32,10 +39,10 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
   }
 
   return (
-    <div className={`showroom-container ${isVisible ? 'visible' : ''}`}>
+    <div className={`showroom-container ${isContainerVisible ? 'visible' : ''}`}>
       {images.length > 0 ? (
         images.map((image) => (
-          <div key={image.RowKey} className={`showroom-image ${isVisible ? 'visible' : ''}`}>
+          <div key={image.RowKey} className={`showroom-image ${visibleImages.has(image.RowKey) ? 'visible' : ''}`}>
             <img
               src={image.ImageUrl}
               alt={image.Title}
@@ -52,6 +59,7 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
 };
 
 export default Showroom;
+
 
 
 
