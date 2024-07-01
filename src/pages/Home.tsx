@@ -18,13 +18,14 @@ const Home: React.FC = () => {
           This is the homepage of your online store. You can provide a brief introduction to your store,
           showcase featured products, or include any other relevant information here.
         </p>
+        <Showroom /> {/* Add the Showroom component here */}
       </div>
-      <Showroom /> {/* Add the Showroom component here */}
     </div>
   );
 };
 
 export default Home;
+
 
 
 

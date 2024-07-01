@@ -1,6 +1,7 @@
 import React, { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import './AdminPage.css'; // Import CSS file for styling
 import { addProduct, getProducts, Product, updateProduct, deleteProduct } from '../apiService';
+import { uploadShowroomImage, getShowroomImages, deleteShowroomImage } from '../apiService'; // Import new API functions
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -19,11 +20,12 @@ const AdminPage: React.FC = () => {
   });
   const [, setEditingProduct] = useState<Product | null>(null);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit'>('dashboard');
+  const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit' | 'showroom'>('dashboard');
   const [error, setError] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [, setToken] = useLocalStorage<string | null>('token', null);
   const navigate = useNavigate();
+  const [showroomImages, setShowroomImages] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -38,7 +40,18 @@ const AdminPage: React.FC = () => {
         setError('Failed to fetch products');
       }
     };
+
+    const fetchShowroomImages = async () => {
+      try {
+        const images = await getShowroomImages();
+        setShowroomImages(images);
+      } catch (err) {
+        setError('Failed to fetch showroom images');
+      }
+    };
+
     fetchProducts();
+    fetchShowroomImages();
   }, []);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -66,7 +79,7 @@ const AdminPage: React.FC = () => {
 
     try {
       const productToAdd = { ...newProduct, RowKey: Date.now().toString() };
-      await addProduct(productToAdd, selectedFile); // Pass both product and file
+      await addProduct(productToAdd, selectedFile);
       setProducts([...products, productToAdd]);
       setNewProduct({
         PartitionKey: 'product',
@@ -84,6 +97,34 @@ const AdminPage: React.FC = () => {
       setError(null);
     } catch (err) {
       setError('Failed to add product');
+    }
+  };
+
+  const handleAddShowroomImage = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!selectedFile) {
+      setError('Please select a file to upload.');
+      return;
+    }
+
+    try {
+      const imageUrl = await uploadShowroomImage(selectedFile);
+      setShowroomImages([...showroomImages, imageUrl]);
+      setSelectedFile(null);
+      setCurrentView('showroom');
+      setError(null);
+    } catch (err) {
+      setError('Failed to upload showroom image');
+    }
+  };
+
+  const handleDeleteShowroomImage = async (imageUrl: string) => {
+    try {
+      await deleteShowroomImage(imageUrl);
+      const updatedImages = showroomImages.filter(image => image !== imageUrl);
+      setShowroomImages(updatedImages);
+    } catch (err) {
+      setError('Failed to delete showroom image');
     }
   };
 
@@ -147,6 +188,7 @@ const AdminPage: React.FC = () => {
       </header>
       <aside>
         <button onClick={() => setCurrentView('products')}>Products</button>
+        <button onClick={() => setCurrentView('showroom')}>Showroom</button>
         <button onClick={() => {
           setEditingProduct(null);
           setNewProduct({
@@ -263,6 +305,24 @@ const AdminPage: React.FC = () => {
             <button type="submit">{currentView === 'add' ? 'Add Product' : 'Update Product'}</button>
           </form>
         )}
+        {currentView === 'showroom' && (
+          <div className="showroom-upload">
+            <h2>Showroom Images</h2>
+            <form onSubmit={handleAddShowroomImage}>
+              {error && <div className="error">{error}</div>}
+              <input type="file" onChange={handleFileChange} required />
+              <button type="submit">Upload Image</button>
+            </form>
+            <div className="showroom-list">
+              {showroomImages.map((image, index) => (
+                <div key={index} className="showroom-image-item">
+                  <img src={image} alt={`Showroom ${index}`} />
+                  <button onClick={() => handleDeleteShowroomImage(image)}>Delete</button>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </main>
       <footer>
         <p>&copy; 2024 Jo`s Art. All rights reserved.</p>
@@ -272,6 +332,7 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
 
 
 

@@ -5,10 +5,12 @@
   align-items: flex-start; /* Align items to the top */
   position: fixed; /* Fixed position to keep it at the top */
   top: 110px; /* Height of the navbar */
-  height: calc(100vh - 60px); /* Full height of the viewport minus navbar height */
+  height: calc(100vh - 110px); /* Full height of the viewport minus navbar height */
   width: 100vw; /* Full width of the viewport */
   margin: 0; /* Remove any default margin */
   overflow-y: auto;
+  background: url('path/to/your/background-image.jpg') no-repeat center center; /* Background image */
+  background-size: cover; /* Cover the entire container */
 }
 
 .home-container h2 {
@@ -28,11 +30,10 @@
   max-width: 800px;
   width: 100%; /* Ensure content is responsive */
   padding: 20px;
-  background: rgba(0, 0, 0, 0.539);
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(1.1px);
-  -webkit-backdrop-filter: blur(1.1px);
+  backdrop-filter: blur(5px); /* Increased blur for a more pronounced effect */
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
   border: 1px solid rgba(255, 255, 255, 0.13);
@@ -65,15 +66,14 @@
     max-width: 100%;
     font-size: 1rem; /* Adjust font size for smaller screens */
   }
-  
+
   .home-content p {
     font-size: 1rem; /* Adjust font size for smaller screens */
   }
-  
+
   .home-content h2 {
     font-size: 1.5rem; /* Adjust heading size for smaller screens */
   }
 }
-
 
   

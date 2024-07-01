@@ -158,63 +158,46 @@ export const getUser = async (partitionKey: string, rowKey: string): Promise<Use
 // Function to fetch reviews for a product
 export const getReviews = async (productId: string): Promise<Review[]> => {
     const response = await fetch(`${API_BASE_URL}/products/${productId}/reviews`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
-
+  
     if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to fetch reviews: ${errorText}`);
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch reviews: ${errorText}`);
     }
-
+  
     const reviews: Review[] = await response.json();
     return reviews;
-};
-
-// Function to submit a review for a product
+  };
+  
+  // Function to submit a review for a product
+// apiService.ts
 export const submitReview = async (productId: string, user: string, rating: number, comment: string): Promise<void> => {
     const review = {
-        user,
-        rating,
-        comment,
-        productId
+      user,
+      rating,
+      comment,
+      productId
     };
-
-    const response = await fetch(`${API_BASE_URL}/SubmitReview`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(review),
+  
+    const response = await fetch(`https://joart.azurewebsites.net/SubmitReview`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(review),
     });
-
+  
     if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Failed to submit review:', errorText);
-        throw new Error(`Failed to submit review: ${errorText}`);
+      const errorText = await response.text();
+      console.error('Failed to submit review:', errorText);
+      throw new Error(`Failed to submit review: ${errorText}`);
     }
-};
-
-// Function to upload image
-export const uploadImage = async (file: File): Promise<string> => {
-    const formData = new FormData();
-    formData.append('file', file);
-
-    const response = await fetch(`${API_BASE_URL}/upload`, {
-        method: 'POST',
-        body: formData,
-    });
-
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to upload image: ${errorText}`);
-    }
-
-    const data = await response.json();
-    return data.url; // Ensure this matches your API response format
-};
+  };
+  
 
 // Utility function to check authentication
 export const isAuthenticated = (): boolean => {
@@ -242,6 +225,58 @@ export const isAuthenticated = (): boolean => {
         return false;
     }
 };
+
+// Showroom Image Management
+export const uploadShowroomImage = async (file: File): Promise<string> => {
+    const formData = new FormData();
+    formData.append('file', file);
+
+    const response = await fetch(`${API_BASE_URL}/UploadShowroomImage`, {
+        method: 'POST',
+        body: formData,
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to upload showroom image: ${errorText}`);
+    }
+
+    const result = await response.json();
+    return result.imageUrl; // Assume the response contains the image URL
+};
+
+export const getShowroomImages = async (): Promise<string[]> => {
+    const response = await fetch(`${API_BASE_URL}/GetShowroomImages`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch showroom images: ${errorText}`);
+    }
+
+    const images: string[] = await response.json();
+    return images;
+};
+
+export const deleteShowroomImage = async (imageUrl: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/DeleteShowroomImage`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ imageUrl }),
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to delete showroom image: ${errorText}`);
+    }
+};
+
 
 
 
