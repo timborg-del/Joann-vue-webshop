@@ -40,7 +40,6 @@
 }
 
 .home-content.visible {
-  position: fixed;
   opacity: 1;
 }
 
