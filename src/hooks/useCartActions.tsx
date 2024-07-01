@@ -11,11 +11,13 @@ const useCartActions = () => {
     setLoading(true);
     setTimeout(() => {
       const existingItem = state.items.find(cartItem => cartItem.RowKey === item.RowKey && cartItem.size === item.size);
-      
+
       if (existingItem) {
         dispatch({ type: 'INCREMENT_QUANTITY', payload: item.RowKey });
       } else {
-        dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity: 1, Price: item.Price ?? 0 } });
+        const rate = state.conversionRates[state.selectedCurrency] || 1;
+        const priceInSelectedCurrency = item.Price * rate;
+        dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity: 1, Price: priceInSelectedCurrency } });
       }
 
       setLoading(false);
@@ -48,6 +50,7 @@ const useCartActions = () => {
 };
 
 export default useCartActions;
+
 
 
 
