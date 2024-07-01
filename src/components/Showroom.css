@@ -1,64 +1,50 @@
 .showroom-container {
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px; /* Increase the gap between images */
-  padding: 40px; /* Increase padding for better spacing */
-  width: 100%;
+  flex-direction: column; /* Arrange images in a column */
+  align-items: center; /* Center align items */
+  gap: 20px; /* Space between images */
+  padding: 20px;
+  margin-top: 60px; /* Add margin to ensure it does not overlap with fixed header */
 }
 
 .showroom-image {
-  width: 80%; /* Make images wider */
-  max-width: 800px; /* Ensure images don't get too large */
+  width: 80%; /* Adjust width to be responsive */
+  max-width: 800px; /* Limit max width for larger screens */
   text-align: center;
-  transition: transform 0.3s, opacity 0.5s ease-in-out; /* Add opacity transition */
-  opacity: 0; /* Initial opacity set to 0 */
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
 }
 
 .showroom-image img {
   width: 100%;
   height: auto;
   border-radius: 8px;
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow for more depth */
-  transition: transform 0.3s;
-}
-
-.showroom-image.visible {
-  opacity: 1; /* Set opacity to 1 when visible */
-}
-
-.showroom-image:hover img {
-  transform: scale(1.05);
-}
-
-.showroom-image:hover {
-  transform: translateY(-10px); /* Increase translate for more effect */
-}
-
-.showroom-image h3 {
-  font-size: 2rem; /* Increase title size */
-  margin: 20px 0 10px;
-  color: #ffffff;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(5px); /* Added for a more pronounced effect */
+  -webkit-backdrop-filter: blur(5px); /* Added for a more pronounced effect */
+  border: 1px solid rgba(255, 255, 255, 0.13);
 }
 
 .showroom-image p {
-  font-size: 1.2rem; /* Increase paragraph size */
-  color: #ffffff;
-  margin-bottom: 20px;
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #ffffff; /* Ensure the text color is white */
+}
+
+.showroom-image.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* Responsive adjustments */
 @media screen and (max-width: 767px) {
   .showroom-image {
-    width: 90%; /* Adjust width for smaller screens */
-  }
-
-  .showroom-image h3 {
-    font-size: 1.5rem; /* Adjust title size for smaller screens */
+    width: 100%;
   }
 
   .showroom-image p {
-    font-size: 1rem; /* Adjust paragraph size for smaller screens */
+    font-size: 1rem; /* Adjust font size for smaller screens */
   }
 }
 
