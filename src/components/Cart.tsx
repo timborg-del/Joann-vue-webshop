@@ -10,11 +10,11 @@ export const Cart = () => {
     dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
   };
 
-   const incrementQuantity = (itemId: string) => {
+  const incrementQuantity = (itemId: string) => {
     dispatch({ type: 'INCREMENT_QUANTITY', payload: itemId });
   };
 
-   const removeItem = (itemId: string) => {
+  const removeItem = (itemId: string) => {
     dispatch({ type: 'REMOVE_ITEM', payload: itemId });
   };
 
@@ -44,7 +44,7 @@ export const Cart = () => {
               <div className="cart-item-details">
                 <p>{item.Name}</p>
                 <p>{item.size}</p>
-                <p>{item.Price.toFixed(2)}:-</p>
+                <p>{item.Price.toFixed(2)} SEK</p>
                 <div className="cart-item-actions">
                   <button onClick={() => decrementQuantity(item.RowKey)}>-</button>
                   <span>{item.quantity}</span>
@@ -61,6 +61,8 @@ export const Cart = () => {
 };
 
 export default Cart;
+
+
 
 
 
