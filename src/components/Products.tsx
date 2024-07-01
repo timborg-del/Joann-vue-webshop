@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
@@ -6,27 +6,32 @@ import { Product } from '../apiService';
 import { useCart, useCartDispatch } from '../context/CartContext';
 
 interface ProductsProps {
-  activeProduct: string | null;
+  activeProductName: string | null;
 }
 
-const Products: React.FC<ProductsProps> = ({ activeProduct: initialActiveProduct }) => {
+const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const { addItemToCart } = useCartActions();
   const { data: products, isLoading, error } = useFetchData<Product[]>('https://joart.azurewebsites.net/GetProducts');
-  const [activeProduct, setActiveProduct] = useState<string | null>(initialActiveProduct);
+  const [activeProduct, setActiveProduct] = useState<string | null>(activeProductName);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
   const { state } = useCart();
   const dispatch = useCartDispatch();
-  
-  useEffect(() => {
-    setActiveProduct(initialActiveProduct);
-  }, [initialActiveProduct]);
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
     A4: -2,
     A5: -5
   };
+
+  useEffect(() => {
+    if (activeProductName) {
+      const product = products?.find((p) => p.Name === activeProductName);
+      if (product) {
+        setActiveProduct(product.RowKey);
+      }
+    }
+  }, [activeProductName, products]);
 
   const handleSizeChange = (productId: string, size: string) => {
     setSelectedSizes({ ...selectedSizes, [productId]: size });
@@ -187,6 +192,8 @@ const Products: React.FC<ProductsProps> = ({ activeProduct: initialActiveProduct
 };
 
 export default Products;
+
+
 
 
 

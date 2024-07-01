@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import useFetchData from '../hooks/useFetchData';
 import { ShowroomImage } from '../apiService';
 import './Showroom.css'; // Import CSS file for styling
@@ -52,6 +52,9 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
 };
 
 export default Showroom;
+
+
+
 
 
 
