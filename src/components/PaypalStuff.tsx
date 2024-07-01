@@ -85,6 +85,8 @@ function Message({ content }: MessageProps) {
 function PaypalStuff({ cart }: PaypalStuffProps) {
   const { state } = useCart();
   const { selectedCurrency } = state;
+  const [message, setMessage] = useState<string>("");
+  const [key, setKey] = useState<number>(0);
 
   const initialOptions = {
     clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
@@ -96,14 +98,20 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
     "data-sdk-integration-source": "developer-studio",
   };
 
-  const [message, setMessage] = useState<string>("");
-
   const cartRef = useRef(cart);
+  const currencyRef = useRef(selectedCurrency);
 
   useEffect(() => {
     cartRef.current = cart;
     console.log('Updated cart state in ref:', cartRef.current);
   }, [cart]);
+
+  useEffect(() => {
+    if (selectedCurrency !== currencyRef.current) {
+      currencyRef.current = selectedCurrency;
+      setKey((prevKey) => prevKey + 1);
+    }
+  }, [selectedCurrency]);
 
   const createOrder = useCallback(async () => {
     const currentCart = cartRef.current;
@@ -287,6 +295,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
     <div className="App">
       <PayPalScriptProvider options={initialOptions}>
         <PayPalButtons
+          key={key} // This ensures PayPal buttons re-render when key changes
           style={{
             shape: "rect",
             layout: "vertical",
@@ -303,6 +312,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
