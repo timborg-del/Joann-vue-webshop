@@ -24,7 +24,6 @@
 
 /* Ensures the content is well-styled and responsive */
 .home-content {
-  position: fixed;
   display: block;
   max-width: 800px;
   width: 100%; /* Ensure content is responsive */
