@@ -19,8 +19,8 @@ type Action =
 
 const initialState: CartState = {
   items: [],
-  selectedCurrency: 'USD',
-  conversionRates: {},
+  selectedCurrency: 'USD',  // Default to USD
+  conversionRates: { 'USD': 1 },  // Default conversion rates with USD as 1
 };
 
 const CartContext = createContext<{
@@ -103,6 +103,7 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
 
 
 

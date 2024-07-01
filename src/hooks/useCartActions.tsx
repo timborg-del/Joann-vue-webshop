@@ -15,7 +15,7 @@ const useCartActions = () => {
       if (existingItem) {
         dispatch({ type: 'INCREMENT_QUANTITY', payload: item.RowKey });
       } else {
-        const rate = state.conversionRates[state.selectedCurrency] || 1;
+        const rate = state.conversionRates?.[state.selectedCurrency] || 1;
         const priceInSelectedCurrency = item.Price * rate;
         dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity: 1, Price: priceInSelectedCurrency } });
       }
