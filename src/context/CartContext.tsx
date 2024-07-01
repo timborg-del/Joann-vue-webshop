@@ -19,8 +19,8 @@ type Action =
 
 const initialState: CartState = {
   items: [],
-  selectedCurrency: 'USD',  // Default to USD
-  conversionRates: { 'USD': 1 },  // Default conversion rates with USD as 1
+  selectedCurrency: 'USD',
+  conversionRates: { 'USD': 1 },
 };
 
 const CartContext = createContext<{
@@ -45,10 +45,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
           updatedItems[existingItemIndex].quantity += action.payload.quantity;
           return { ...state, items: updatedItems };
         }
-        return { 
-          ...state, 
-          items: [...state.items, action.payload]
-        };
+        return { ...state, items: [...state.items, action.payload] };
       }
       case 'REMOVE_ITEM': {
         const updatedItems = state.items.filter(item => item.RowKey !== action.payload);
@@ -103,6 +100,7 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
 
 
 

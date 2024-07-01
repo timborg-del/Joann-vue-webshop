@@ -28,13 +28,14 @@ const Products: React.FC = () => {
         const response = await fetch('https://v6.exchangerate-api.com/v6/a1232edc656cf6fb88a4db06/latest/SEK');
         const data = await response.json();
         setConversionRates(data.conversion_rates);
+        dispatch({ type: 'SET_CONVERSION_RATES', payload: data.conversion_rates });
       } catch (error) {
         console.error('Error fetching exchange rates:', error);
       }
     };
 
     fetchExchangeRates();
-  }, []);
+  }, [dispatch]);
 
   const handleSizeChange = (productId: string, size: string) => {
     setSelectedSizes({ ...selectedSizes, [productId]: size });
@@ -42,6 +43,7 @@ const Products: React.FC = () => {
 
   const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCurrency(event.target.value);
+    dispatch({ type: 'SET_CURRENCY', payload: event.target.value });
   };
 
   const getPrice = (productId: string, basePrice: number) => {
@@ -153,14 +155,14 @@ const Products: React.FC = () => {
                       <div className="currency-selector">
                         <label htmlFor="currency"><strong>Select Currency:</strong></label>
                         <div className="select-container">
-                        <select id="currency" value={selectedCurrency} onChange={handleCurrencyChange}>
-                          {Object.keys(conversionRates).map((currency) => (
-                            <option key={currency} value={currency}>
-                              {currency}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
+                          <select id="currency" value={selectedCurrency} onChange={handleCurrencyChange}>
+                            {Object.keys(conversionRates).map((currency) => (
+                              <option key={currency} value={currency}>
+                                {currency}
+                              </option>
+                            ))}
+                          </select>
+                        </div>
                       </div>
                       <p><strong>Name:</strong> {product.Name}</p>
                       <p><strong>Price:</strong> {selectedCurrency} {getPrice(product.RowKey, product.Price)}</p>
@@ -213,6 +215,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
