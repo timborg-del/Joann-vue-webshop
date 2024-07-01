@@ -151,7 +151,8 @@ const Products: React.FC = () => {
                   <div className="product-details-dropdown">
                     <div className="product-info">
                       <div className="currency-selector">
-                        <label htmlFor="currency">Select Currency:</label>
+                        <label htmlFor="currency"><strong>Select Currency:</strong></label>
+                        <div className="select-container">
                         <select id="currency" value={selectedCurrency} onChange={handleCurrencyChange}>
                           {Object.keys(conversionRates).map((currency) => (
                             <option key={currency} value={currency}>
@@ -159,6 +160,7 @@ const Products: React.FC = () => {
                             </option>
                           ))}
                         </select>
+                      </div>
                       </div>
                       <p><strong>Name:</strong> {product.Name}</p>
                       <p><strong>Price:</strong> {selectedCurrency} {getPrice(product.RowKey, product.Price)}</p>
