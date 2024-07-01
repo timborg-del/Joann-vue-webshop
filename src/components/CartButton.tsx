@@ -11,7 +11,7 @@ const CartButton = () => {
         xmlns="http://www.w3.org/2000/svg"
         className="icon icon-tabler icon-tabler-shopping-cart"
         width="50"
-        height="65"
+        height="50"
         viewBox="0 0 24 24"
         strokeWidth="1"
         stroke="currentColor"

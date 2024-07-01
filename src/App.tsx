@@ -25,14 +25,14 @@ const App: React.FC = () => {
       <CartProvider>
         <nav className="navbar">
           <div className='centerLinks'>
-            <div className="dropdown" onMouseEnter={() => setIsShopOpen(true)} onMouseLeave={() => setIsShopOpen(false)}>           
-              <h1 className='h1shop'>Shop</h1>
-              <div className={`dropdownContent ${isShopOpen ? 'open' : ''}`}>
-                <Link to="/shoppage">Mugs</Link>
-                <Link to="/shoppage">Paintings</Link>
-                <Link to="/shoppage">Download</Link>
-                <Link to="/shoppage">Pencils</Link>
-              </div>
+          <div className="dropdown" onMouseEnter={() => setIsShopOpen(true)} onMouseLeave={() => setIsShopOpen(false)}>
+      <h1 className='h1shop'>Shop</h1>
+      <div className={`dropdownContent ${isShopOpen ? 'open' : ''}`}>
+        <Link to="/shoppage">Mugs</Link>
+        <Link to="/shoppage">Paintings</Link>
+        <Link to="/shoppage">Download</Link>
+        <Link to="/shoppage">Pencils</Link>
+      </div>
             </div>
             <Link to="/">Home</Link>
             <Link to="/about">About</Link>

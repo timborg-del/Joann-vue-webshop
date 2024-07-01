@@ -160,11 +160,7 @@ const Products: React.FC = () => {
                     <p><strong>Name:</strong> {product.Name}</p>
                     <p><strong>Price:</strong> {selectedCurrency} {getPrice(product.RowKey, product.Price)}</p>
                     <p><strong>Category:</strong> {product.Category}</p>
-                    <div className="quantity-controls">
-                      <button onClick={() => decrementQuantity(product)}>-</button>
-                      <span>{state.items.find(item => item.RowKey === `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)?.quantity ?? 0}</span>
-                      <button onClick={() => incrementQuantity(product)}>+</button>
-                    </div>
+
                   </div>
                   <div className="select-container">
                     <label htmlFor={`size-${product.RowKey}`}>Size:</label>
@@ -178,6 +174,11 @@ const Products: React.FC = () => {
                       <option value="A5">A5</option>
                     </select>
                   </div>
+                  <div className="quantity-controls">
+                      <button onClick={() => decrementQuantity(product)}>-</button>
+                      <span>{state.items.find(item => item.RowKey === `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)?.quantity ?? 0}</span>
+                      <button onClick={() => incrementQuantity(product)}>+</button>
+                    </div>
                   <div className="buy-btn-container">
                     <button
                       className="buy-btn"

@@ -70,11 +70,16 @@ body {
   padding: 10px;
   background-color: #fff;
   border: 1px solid #ccc;
+  overflow: hidden;
+  transition: opacity 2s ease, max-height 2s ease;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .dropdownContent.open {
   display: block;
+  opacity: 1;
+  max-height: 500px; /* Adjust this value based on the content size */
+  border-radius: 5px;
 }
 
 .dropdownContent a {
@@ -134,13 +139,14 @@ body {
 
 .cart-counter {
   position: absolute;
-  top: +30px;
+  top: +22px;
   right: +27px;
-  background-color: red;
-  color: white;
+  background-color: none;
+  color: rgb(217, 255, 2);
   padding: 2px 6px;
   border-radius: 50%;
-  font-size: 15px;
+  font-size: 12px;
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
