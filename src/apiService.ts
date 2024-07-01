@@ -235,6 +235,9 @@ export const isAuthenticated = (): boolean => {
 };
 
 // Showroom Image Management
+// API service functions for showroom images
+
+// Add showroom image
 export const addShowroomImage = async (showroomImage: ShowroomImage, file: File): Promise<void> => {
     const formData = new FormData();
     formData.append('showroomImage', JSON.stringify(showroomImage));
@@ -251,6 +254,7 @@ export const addShowroomImage = async (showroomImage: ShowroomImage, file: File)
     }
 };
 
+// Get showroom images
 export const getShowroomImages = async (): Promise<ShowroomImage[]> => {
     const response = await fetch(`${API_BASE_URL}/GetShowroomImages`, {
         method: 'GET',
@@ -264,9 +268,10 @@ export const getShowroomImages = async (): Promise<ShowroomImage[]> => {
         throw new Error(`Failed to fetch showroom images: ${errorText}`);
     }
 
-    const images: ShowroomImage[] = await response.json();
-    return images;
+    const showroomImages: ShowroomImage[] = await response.json();
+    return showroomImages;
 };
+
 
 export const deleteShowroomImage = async (imageUrl: string): Promise<void> => {
     const response = await fetch(`${API_BASE_URL}/DeleteShowroomImage`, {

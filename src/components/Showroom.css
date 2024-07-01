@@ -1,23 +1,21 @@
 .showroom-container {
-    margin-top: 20px;
-  }
-  
-  .showroom-images {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-  }
-  
-  .showroom-image-item {
-    flex: 1 1 calc(33.333% - 10px);
-    box-sizing: border-box;
-  }
-  
-  .showroom-image-item img {
-    width: 100%;
-    height: auto;
-    display: block;
-    border-radius: 5px;
-  }
-  
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+
+.showroom-image {
+  width: 300px;
+  text-align: center;
+}
+
+.showroom-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
   
