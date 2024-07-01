@@ -71,8 +71,6 @@ const Products: React.FC = () => {
     const cartItem = state.items.find(item => item.RowKey === uniqueId);
     if (cartItem) {
       dispatch({ type: 'INCREMENT_QUANTITY', payload: uniqueId });
-    } else {
-      addItemToCart(product);
     }
   };
 
@@ -106,29 +104,20 @@ const Products: React.FC = () => {
   return (
     <div className="products-container">
       {products.length > 0 ? (
-        products.map((product) => (
-          <div
-            key={product.RowKey}
-            className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
-          >
-            <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
-              {activeProduct === product.RowKey ? (
-                <>
-                  <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;</button>
-                  <img
-                    src={product.ImageUrl}
-                    alt={product.Name}
-                    className="product-image"
-                    onError={(e) => {
-                      e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                      console.error("Image load error", e);
-                    }}
-                    onClick={() => setEnlargedImage(product.ImageUrl)}
-                  />
-                </>
-              ) : (
-                <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
-                  {product.ImageUrl ? (
+        products.map((product) => {
+          const uniqueId = `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`;
+          const cartItem = state.items.find(item => item.RowKey === uniqueId);
+          const quantity = cartItem ? cartItem.quantity : 0;
+          
+          return (
+            <div
+              key={product.RowKey}
+              className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
+            >
+              <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
+                {activeProduct === product.RowKey ? (
+                  <>
+                    <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;</button>
                     <img
                       src={product.ImageUrl}
                       alt={product.Name}
@@ -137,61 +126,77 @@ const Products: React.FC = () => {
                         e.currentTarget.src = '/path/to/placeholder-image.jpg';
                         console.error("Image load error", e);
                       }}
+                      onClick={() => setEnlargedImage(product.ImageUrl)}
                     />
-                  ) : (
-                    <div className="no-image">No Image Available</div>
-                  )}
-                  <div className="product-name">{product.Name}</div>
-                </div>
-              )}
-              {activeProduct === product.RowKey && (
-                <div className="product-details-dropdown">
-                  <div className="product-info">
-                  <div className="currency-selector">
-                    <label htmlFor="currency">Select Currency:</label>
-                    <select id="currency" value={selectedCurrency} onChange={handleCurrencyChange}>
-                      {Object.keys(conversionRates).map((currency) => (
-                        <option key={currency} value={currency}>
-                          {currency}
-                        </option>
-                      ))}
-                    </select>
+                  </>
+                ) : (
+                  <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
+                    {product.ImageUrl ? (
+                      <img
+                        src={product.ImageUrl}
+                        alt={product.Name}
+                        className="product-image"
+                        onError={(e) => {
+                          e.currentTarget.src = '/path/to/placeholder-image.jpg';
+                          console.error("Image load error", e);
+                        }}
+                      />
+                    ) : (
+                      <div className="no-image">No Image Available</div>
+                    )}
+                    <div className="product-name">{product.Name}</div>
                   </div>
-                    <p><strong>Name:</strong> {product.Name}</p>
-                    <p><strong>Price:</strong> {selectedCurrency} {getPrice(product.RowKey, product.Price)}</p>
-                    <p><strong>Category:</strong> {product.Category}</p>
-
-                  </div>
-                  <div className="select-container">
-                    <label htmlFor={`size-${product.RowKey}`}>Size:</label>
-                    <select
-                      id={`size-${product.RowKey}`}
-                      value={selectedSizes[product.RowKey] || 'A3'}
-                      onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
-                    >
-                      <option value="A3">A3</option>
-                      <option value="A4">A4</option>
-                      <option value="A5">A5</option>
-                    </select>
-                  </div>
-                  <div className="controls-container">
-                    <div className="quantity-controls">
-                      <button onClick={() => decrementQuantity(product)}>-</button>
-                      <span>{state.items.find(item => item.RowKey === `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)?.quantity ?? 0}</span>
-                      <button onClick={() => incrementQuantity(product)}>+</button>
+                )}
+                {activeProduct === product.RowKey && (
+                  <div className="product-details-dropdown">
+                    <div className="product-info">
+                      <div className="currency-selector">
+                        <label htmlFor="currency">Select Currency:</label>
+                        <select id="currency" value={selectedCurrency} onChange={handleCurrencyChange}>
+                          {Object.keys(conversionRates).map((currency) => (
+                            <option key={currency} value={currency}>
+                              {currency}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+                      <p><strong>Name:</strong> {product.Name}</p>
+                      <p><strong>Price:</strong> {selectedCurrency} {getPrice(product.RowKey, product.Price)}</p>
+                      <p><strong>Category:</strong> {product.Category}</p>
                     </div>
-                    <button
-                      className="buy-btn"
-                      onClick={() => handleAddToCart(product)}
-                    >
-                      Add to Cart
-                    </button>
+                    <div className="select-container">
+                      <label htmlFor={`size-${product.RowKey}`}>Size:</label>
+                      <select
+                        id={`size-${product.RowKey}`}
+                        value={selectedSizes[product.RowKey] || 'A3'}
+                        onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
+                      >
+                        <option value="A3">A3</option>
+                        <option value="A4">A4</option>
+                        <option value="A5">A5</option>
+                      </select>
+                    </div>
+                    <div className="controls-container">
+                      {quantity > 0 && (
+                        <div className="quantity-controls">
+                          <button onClick={() => decrementQuantity(product)}>-</button>
+                          <span>{quantity}</span>
+                          <button onClick={() => incrementQuantity(product)}>+</button>
+                        </div>
+                      )}
+                      <button
+                        className="buy-btn"
+                        onClick={() => handleAddToCart(product)}
+                      >
+                        Add to Cart
+                      </button>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        ))
+          );
+        })
       ) : (
         <div>No products available</div>
       )}
@@ -206,6 +211,7 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
 
 
 
