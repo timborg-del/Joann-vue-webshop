@@ -11,6 +11,11 @@ interface CartPageProps {
 
 const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
   const { state } = useCart();
+  
+  if (!state || !state.items || !state.conversionRates) {
+    return null; // or show a loading spinner
+  }
+
   const { items, selectedCurrency, conversionRates } = state;
   const rate = conversionRates[selectedCurrency] || 1;
   const totalPrice = items.reduce((total, item) => total + (item.Price * item.quantity * rate), 0);
@@ -34,6 +39,7 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
 };
 
 export default CartPage;
+
 
 
 
