@@ -12,40 +12,40 @@ export interface Product {
     ImageUrl: string;
     quantity: number;
     size?: string;
-}
-
-export interface User {
+  }
+  
+  export interface User {
     PartitionKey: string;
     RowKey: string;
     Name: string;
     Email: string;
     PasswordHash: string;
-}
-
-export interface Review {
+  }
+  
+  export interface Review {
     user: string;
     comment: string;
     rating: number;
     PartitionKey?: string;
     RowKey?: string;
     Timestamp?: string;
-}
-
-export interface FormData {
+  }
+  
+  export interface FormData {
     fullName: string;
     email: string;
     address: string;
     city: string;
     postalCode: string;
-}
-
-export interface ShowroomImage {
+  }
+  
+  export interface ShowroomImage {
     PartitionKey: string;
     RowKey: string;
     Title: string;
     Description: string;
     ImageUrl: string;
-}
+  }
 
 export const addProduct = async (product: Product, file: File): Promise<void> => {
     const formData = new FormData();

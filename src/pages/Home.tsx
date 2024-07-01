@@ -13,7 +13,7 @@ const Home: React.FC = () => {
   }, []);
 
   const handleImageClick = (productName: string) => {
-    navigate(`/shop?product=${productName}`);
+    navigate(`/shoppage?product=${productName}`);
   };
 
   return (
