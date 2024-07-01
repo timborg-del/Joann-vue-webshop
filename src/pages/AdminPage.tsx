@@ -66,7 +66,7 @@ const AdminPage: React.FC = () => {
 
     try {
       const productToAdd = { ...newProduct, RowKey: Date.now().toString() };
-      await addProduct(productToAdd, selectedFile);
+      await addProduct(productToAdd, selectedFile); // Pass both product and file
       setProducts([...products, productToAdd]);
       setNewProduct({
         PartitionKey: 'product',
@@ -272,6 +272,11 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
+
+
+
+
 
 
 

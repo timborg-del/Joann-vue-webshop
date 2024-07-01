@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './Home.css'; // Import CSS file for Home styles
+import Showroom from '../components/Showroom'; // Import the Showroom component
 
 const Home: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -18,11 +19,13 @@ const Home: React.FC = () => {
           showcase featured products, or include any other relevant information here.
         </p>
       </div>
+      <Showroom /> {/* Add the Showroom component here */}
     </div>
   );
 };
 
 export default Home;
+
 
 
 
