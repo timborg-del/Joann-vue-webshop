@@ -12,7 +12,7 @@ interface ProductsProps {
 const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const { addItemToCart } = useCartActions();
   const { data: products, isLoading, error } = useFetchData<Product[]>('https://joart.azurewebsites.net/GetProducts');
-  const [activeProduct, setActiveProduct] = useState<string | null>(activeProductName);
+  const [activeProduct, setActiveProduct] = useState<string | null>(null);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
   const { state } = useCart();
@@ -25,8 +25,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   };
 
   useEffect(() => {
-    if (activeProductName) {
-      const product = products?.find((p) => p.Name === activeProductName);
+    if (activeProductName && products) {
+      const product = products.find((p) => p.Name === activeProductName);
       if (product) {
         setActiveProduct(product.RowKey);
       }
@@ -192,6 +192,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
 
 
 
