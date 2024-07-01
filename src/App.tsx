@@ -17,7 +17,6 @@ const App: React.FC = () => {
   const [isCartVisible, setIsCartVisible] = useState(false);
 
   const toggleCartVisibility = () => {
-    console.log('Toggling cart visibility:', !isCartVisible);
     setIsCartVisible(!isCartVisible);
   };
 
@@ -26,7 +25,7 @@ const App: React.FC = () => {
       <CartProvider>
         <nav className="navbar">
           <div className='centerLinks'>
-            <div className="dropdown" onMouseEnter={() => setIsShopOpen(true)} onMouseLeave={() => setIsShopOpen(false)}>
+            <div className="dropdown" onMouseEnter={() => setIsShopOpen(true)} onMouseLeave={() => setIsShopOpen(false)}>           
               <h1 className='h1shop'>Shop</h1>
               <div className={`dropdownContent ${isShopOpen ? 'open' : ''}`}>
                 <Link to="/shoppage">Mugs</Link>
@@ -62,9 +61,6 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-
-
 
 
 
