@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
@@ -13,8 +13,6 @@ const Products: React.FC = () => {
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
   const { state } = useCart();
   const dispatch = useCartDispatch();
-  const [conversionRates, setConversionRates] = useState<{ [key: string]: number }>({});
-  const [selectedCurrency, setSelectedCurrency] = useState<string>('USD');
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
@@ -22,35 +20,14 @@ const Products: React.FC = () => {
     A5: -5
   };
 
-  useEffect(() => {
-    const fetchExchangeRates = async () => {
-      try {
-        const response = await fetch('https://v6.exchangerate-api.com/v6/a1232edc656cf6fb88a4db06/latest/SEK');
-        const data = await response.json();
-        setConversionRates(data.conversion_rates);
-        dispatch({ type: 'SET_CONVERSION_RATES', payload: data.conversion_rates });
-      } catch (error) {
-        console.error('Error fetching exchange rates:', error);
-      }
-    };
-
-    fetchExchangeRates();
-  }, [dispatch]);
-
   const handleSizeChange = (productId: string, size: string) => {
     setSelectedSizes({ ...selectedSizes, [productId]: size });
   };
 
-  const handleCurrencyChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setSelectedCurrency(event.target.value);
-    dispatch({ type: 'SET_CURRENCY', payload: event.target.value });
-  };
-
-  const getPriceInSelectedCurrency = (basePrice: number, size: string) => {
+  const getPrice = (basePrice: number, size: string) => {
     const adjustment = priceAdjustments[size] || 0;
     const priceInSek = basePrice + adjustment;
-    const rate = conversionRates[selectedCurrency] || 1;
-    return (priceInSek * rate).toFixed(2);
+    return priceInSek.toFixed(2);
   };
 
   const handleAddToCart = (product: Product) => {
@@ -151,20 +128,8 @@ const Products: React.FC = () => {
                 {activeProduct === product.RowKey && (
                   <div className="product-details-dropdown">
                     <div className="product-info">
-                      <div className="currency-selector">
-                        <label htmlFor="currency"><strong>Select Currency:</strong></label>
-                        <div className="select-container">
-                          <select id="currency" value={selectedCurrency} onChange={handleCurrencyChange}>
-                            {Object.keys(conversionRates).map((currency) => (
-                              <option key={currency} value={currency}>
-                                {currency}
-                              </option>
-                            ))}
-                          </select>
-                        </div>
-                      </div>
                       <p><strong>Name:</strong> {product.Name}</p>
-                      <p><strong>Price:</strong> {selectedCurrency} {getPriceInSelectedCurrency(product.Price, size)}</p>
+                      <p><strong>Price:</strong> {getPrice(product.Price, size)} SEK</p>
                       <p><strong>Category:</strong> {product.Category}</p>
                     </div>
                     <div className="select-container">
@@ -214,6 +179,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
