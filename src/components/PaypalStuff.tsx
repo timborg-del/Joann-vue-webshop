@@ -84,13 +84,13 @@ function Message({ content }: MessageProps) {
 
 function PaypalStuff({ cart }: PaypalStuffProps) {
   const { state } = useCart();
-  const { conversionRates } = state;
+  const { selectedCurrency } = state;
 
   const initialOptions = {
     clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
     "disable-funding": "card",
-    currency: "SEK",
+    currency: selectedCurrency, // Use selected currency
     "data-page-type": "product-details",
     components: "buttons",
     "data-sdk-integration-source": "developer-studio",
@@ -109,10 +109,8 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
     const currentCart = cartRef.current;
     console.log('Creating order with cart:', currentCart);
 
-    const cartInSek = currentCart.map(item => ({
-      ...item,
-      Price: item.Price / (conversionRates[state.selectedCurrency] || 1) // Convert price back to SEK
-    }));
+    // Calculate total amount in the selected currency
+    const totalAmount = currentCart.reduce((total, item) => total + item.Price * item.quantity, 0).toFixed(2);
 
     try {
       const response = await fetch("https://joart.azurewebsites.net/orders/create", {
@@ -120,7 +118,11 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Cart: cartInSek }),
+        body: JSON.stringify({
+          Cart: currentCart,
+          currency: selectedCurrency, // Include selected currency in the order creation payload
+          totalAmount, // Include totalAmount in the payload
+        }),
       });
 
       if (!response.ok) {
@@ -148,7 +150,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         setMessage(`Could not initiate PayPal Checkout: ${String(error)}`);
       }
     }
-  }, [conversionRates, state.selectedCurrency]);
+  }, [selectedCurrency]);
 
   const onApprove = useCallback(async (data: PayPalData, actions: PayPalActions) => {
     try {
@@ -280,7 +282,6 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       console.error("Error sending order details to email:", error);
     }
   };
-  
 
   return (
     <div className="App">
@@ -302,6 +303,11 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
+
+
+
+
 
 
 

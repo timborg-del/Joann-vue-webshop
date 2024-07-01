@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
@@ -46,13 +46,11 @@ const Products: React.FC = () => {
     dispatch({ type: 'SET_CURRENCY', payload: event.target.value });
   };
 
-  const getPrice = (productId: string, basePrice: number) => {
-    const size = selectedSizes[productId] || 'A3';
+  const getPriceInSelectedCurrency = (basePrice: number, size: string) => {
     const adjustment = priceAdjustments[size] || 0;
     const priceInSek = basePrice + adjustment;
     const rate = conversionRates[selectedCurrency] || 1;
-    const priceInSelectedCurrency = priceInSek * rate;
-    return priceInSelectedCurrency.toFixed(2);
+    return (priceInSek * rate).toFixed(2);
   };
 
   const handleAddToCart = (product: Product) => {
@@ -61,7 +59,7 @@ const Products: React.FC = () => {
     addItemToCart({
       ...product,
       RowKey: uniqueId,
-      Price: parseFloat(getPrice(product.RowKey, product.Price)),
+      Price: product.Price, // Keep the price in SEK
       quantity: 1,
       size: size
     });
@@ -110,7 +108,8 @@ const Products: React.FC = () => {
           const uniqueId = `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`;
           const cartItem = state.items.find(item => item.RowKey === uniqueId);
           const quantity = cartItem ? cartItem.quantity : 0;
-          
+          const size = selectedSizes[product.RowKey] || 'A3';
+
           return (
             <div
               key={product.RowKey}
@@ -165,7 +164,7 @@ const Products: React.FC = () => {
                         </div>
                       </div>
                       <p><strong>Name:</strong> {product.Name}</p>
-                      <p><strong>Price:</strong> {selectedCurrency} {getPrice(product.RowKey, product.Price)}</p>
+                      <p><strong>Price:</strong> {selectedCurrency} {getPriceInSelectedCurrency(product.Price, size)}</p>
                       <p><strong>Category:</strong> {product.Category}</p>
                     </div>
                     <div className="select-container">
@@ -215,6 +214,8 @@ const Products: React.FC = () => {
 };
 
 export default Products;
+
+
 
 
 
