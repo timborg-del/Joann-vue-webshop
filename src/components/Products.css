@@ -437,17 +437,17 @@
     margin-top: 10px;
     width: 100%;
   }
-
+  
   .select-container label {
     margin-bottom: 5px;
     font-weight: bold;
     font-size: 1rem;
     color: #333; /* Dark text color */
   }
-
+  
   .select-container select {
     width: 100%;
-    padding: 10px;
+    padding: 10px 15px;
     border: 1px solid #ccc;
     border-radius: 8px;
     background-color: #fff;
@@ -456,20 +456,27 @@
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
+    background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" class="bi bi-chevron-down" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/></svg>');
     background-repeat: no-repeat;
-    background-position: right 10px center;
+    background-position: right 15px center;
     background-size: 16px;
-    transition: border-color 0.3s ease;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
   }
-
+  
+  .select-container select:hover {
+    border-color: #007bff;
+  }
+  
   .select-container select:focus {
     border-color: #007bff;
     outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
-
+  
   .select-container select option {
     padding: 10px;
   }
+  
 }
 
 /* Large Desktop View */
