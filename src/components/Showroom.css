@@ -11,7 +11,8 @@
   width: 80%; /* Make images wider */
   max-width: 800px; /* Ensure images don't get too large */
   text-align: center;
-  transition: transform 0.3s;
+  transition: transform 0.3s, opacity 0.5s ease-in-out; /* Add opacity transition */
+  opacity: 0; /* Initial opacity set to 0 */
 }
 
 .showroom-image img {
@@ -20,6 +21,10 @@
   border-radius: 8px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow for more depth */
   transition: transform 0.3s;
+}
+
+.showroom-image.visible {
+  opacity: 1; /* Set opacity to 1 when visible */
 }
 
 .showroom-image:hover img {
@@ -56,6 +61,7 @@
     font-size: 1rem; /* Adjust paragraph size for smaller screens */
   }
 }
+
 
 
 
