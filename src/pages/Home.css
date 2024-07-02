@@ -76,7 +76,7 @@ body {
   width: 55%; /* Adjust width as needed */
   padding-top: 20px; /* Add padding to avoid overlap with intro text */
   overflow-y: auto;
-  height: calc(100vh - 170px); /* Ensure it fills the remaining height */
+  height: calc(100vh - 100px); /* Ensure it fills the remaining height */
 }
 
 /* Responsive adjustments */
@@ -84,7 +84,7 @@ body {
   .home-content {
     flex-direction: column;
     align-items: center;
-    height: calc(100vh - 120px);
+    height: calc(100vh - 100px);
     margin-top: 50px;
   }
 
