@@ -37,6 +37,10 @@
   transition: opacity 0.5s ease-in-out;
 }
 
+.showroom-image img:hover {
+  transform: scale(1.05); /* Slightly enlarge the image */
+}
+
 .showroom-image img.fade-out {
   opacity: 0;
 }
