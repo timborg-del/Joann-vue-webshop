@@ -1,3 +1,7 @@
+body {
+  font-family: 'Arial', sans-serif;
+}
+
 /* Ensures the container is centered on the screen */
 .home-container {
   display: flex; /* Use flexbox for centering */
@@ -24,8 +28,10 @@
 
 /* Ensures the content is well-styled and responsive */
 .home-content {
-  display: block;
-  max-width: 800px;
+  display: flex; /* Changed to flexbox for side-by-side layout */
+  align-items: flex-start; /* Align items to the top */
+  justify-content: space-between; /* Space between text and images */
+  max-width: 1200px;
   width: 100%; /* Ensure content is responsive */
   padding: 20px;
   background: rgba(0, 0, 0, 0.539);
@@ -43,37 +49,61 @@
   opacity: 1;
 }
 
-/* Center align the heading and ensure proper margin */
-.home-content h2 {
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 10px;
-  color: #ffffff; /* Ensure the text color is white */
+/* Introductory text styling */
+.intro-text {
+  max-width: 40%;
+  margin-right: 20px;
+  color: #ffffff;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background for readability */
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
 }
 
-/* Style paragraphs for readability */
-.home-content p {
-  font-size: 1rem; /* Adjust font size for better readability */
+.intro-text h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.intro-text p {
+  font-size: 1.2rem;
   line-height: 1.6;
-  color: #ffffff;
   margin-bottom: 10px; /* Add margin between paragraphs */
+}
+
+/* Ensures the image section is responsive */
+.image-section {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 /* Responsive adjustments */
 @media screen and (max-width: 767px) {
   .home-content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .intro-text {
     max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  .intro-text h1 {
+    font-size: 1.5rem; /* Adjust heading size for smaller screens */
+  }
+
+  .intro-text p {
     font-size: 1rem; /* Adjust font size for smaller screens */
   }
-  
-  .home-content p {
-    font-size: 1rem; /* Adjust font size for smaller screens */
-  }
-  
+
   .home-content h2 {
     font-size: 1.5rem; /* Adjust heading size for smaller screens */
   }
 }
+
 
 
   

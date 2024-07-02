@@ -29,7 +29,7 @@
   max-width: 1200px; /* Adjusted max-width for a larger layout */
   width: 80vw; /* Added width for better fit on large screens */
   padding: 20px;
-  background: rgba(249, 169, 49, 0.395);
+  background: rgba(249, 169, 49, 0.699);
   border-radius: 5px;
   box-shadow: 4px 4px 4px rgba(144, 95, 22, 0.467);
   backdrop-filter: blur(1.1px);
