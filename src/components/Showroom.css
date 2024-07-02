@@ -11,8 +11,8 @@
 }
 
 .showroom-image {
-  flex: 1 1 50%; /* Each image takes up 50% of the container */
-  max-width: 50%; /* Ensure no image exceeds 50% of the container */
+  flex: 1 1 65%; /* Each image takes up 50% of the container */
+  max-width: 65%; /* Ensure no image exceeds 50% of the container */
   text-align: center;
   opacity: 0;
   transform: translateY(20px);

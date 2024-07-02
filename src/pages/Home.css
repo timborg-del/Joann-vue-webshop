@@ -36,13 +36,11 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 90%; /* Adjust the width as needed */
+  width: 100%; /* Adjust the width as needed */
   padding: 20px;
   background: none;
   border-radius: 5px;
   box-shadow: none;
-  backdrop-filter: blur(1.1px);
-  -webkit-backdrop-filter: blur(1.1px);
   border: none;
   height: calc(100vh - 110px);
 }
