@@ -333,14 +333,30 @@ const AdminPage: React.FC = () => {
         {currentView === 'showroom' && (
           <div className="showroom-list">
             <h2>Showroom Images</h2>
-            {showroomImages.map((image) => (
-              <div key={image.RowKey} className="showroom-image">
-                <img src={image.ImageUrl} alt={image.Title} />
-                <h3>{image.Title}</h3>
-                <p>{image.Description}</p>
-                <button onClick={() => handleDeleteShowroomImage(image.PartitionKey, image.RowKey)}>Delete</button>
-              </div>
-            ))}
+            <table>
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Description</th>
+                  <th>Image</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {showroomImages.map((image) => (
+                  <tr key={image.RowKey}>
+                    <td>{image.Title}</td>
+                    <td>{image.Description}</td>
+                    <td>
+                      <img src={image.ImageUrl} alt={image.Title} style={{ width: '100px', borderRadius: '8px' }} />
+                    </td>
+                    <td>
+                      <button onClick={() => handleDeleteShowroomImage(image.PartitionKey, image.RowKey)}>Delete</button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
         {currentView === 'addShowroomImage' && (
@@ -376,6 +392,7 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
 
 
 
