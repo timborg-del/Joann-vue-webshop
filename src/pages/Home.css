@@ -5,11 +5,11 @@ body {
 
 .home-container {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: flex-start;
-  position: relative; /* Changed to relative */
+  position: relative;
   top: 110px;
-  height: calc(100vh - 110px); /* Adjusted to fit within the viewport minus navbar height */
+  height: calc(100vh - 110px);
   width: 100vw;
   margin: 0;
   overflow: hidden; /* Hide overflow on the container */
@@ -30,7 +30,6 @@ body {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  max-width: 1200px;
   width: 100%;
   padding: 20px;
   background: rgba(0, 0, 0, 0.539);
@@ -41,9 +40,7 @@ body {
   transition: opacity 0.5s ease-in-out;
   border: 1px solid rgba(255, 255, 255, 0.13);
   margin-top: 60px;
-  opacity: 0;
-  overflow-y: auto; /* Added for scrolling content */
-  height: calc(100vh - 170px); /* Adjusted height to ensure scrolling area */
+  height: calc(100vh - 170px);
 }
 
 .home-content.visible {
@@ -52,7 +49,8 @@ body {
 
 .intro-text {
   position: fixed; /* Make the intro text fixed */
-  max-width: 40%;
+  width: 40%; /* Fixed width */
+  max-width: 400px; /* Adjust max width as needed */
   margin-right: 20px;
   color: #ffffff;
   background-color: rgba(0, 0, 0, 0.5);
@@ -60,7 +58,7 @@ body {
   border-radius: 8px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
   z-index: 1000;
-  left: 10%; /* Adjust positioning */
+  left: 20px; /* Adjust positioning */
   top: 120px; /* Adjust to be below the fixed header */
 }
 
@@ -76,19 +74,62 @@ body {
 }
 
 .image-section {
-  flex-grow: 1;
-  margin-left: 50%; /* Adjust margin to make space for fixed intro text */
+  margin-left: 45%; /* Adjust margin to make space for fixed intro text */
+  width: 55%; /* Adjust width as needed */
   padding-top: 20px; /* Add padding to avoid overlap with intro text */
+  overflow-y: auto;
+  height: calc(100vh - 170px); /* Ensure it fills the remaining height */
 }
 
-.image-section img {
+.showroom-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }
 
-.image-section img.fade-out {
+.showroom-container.visible {
+  opacity: 1;
+}
+
+.showroom-image {
+  width: 100%; /* Full width of the parent container */
+  max-width: 50%; /* Adjust to 50% of the container width */
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.showroom-image.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.showroom-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(1.1px);
+  -webkit-backdrop-filter: blur(1.1px);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: opacity 0.5s ease-in-out;
+}
+
+.showroom-image img.fade-out {
   opacity: 0;
 }
 
+.showroom-image p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #ffffff;
+}
+
+/* Responsive adjustments */
 @media screen and (max-width: 767px) {
   .home-content {
     flex-direction: column;
@@ -116,37 +157,12 @@ body {
     width: 100%;
     padding-top: 20px;
   }
-}
 
-
-@media screen and (max-width: 767px) {
-  .home-content {
-    flex-direction: column;
-    align-items: center;
-    height: calc(100vh - 120px);
-    margin-top: 50px;
-  }
-
-  .intro-text {
-    max-width: 90%;
-    left: 5%;
-    top: 110px;
-  }
-
-  .intro-text h1 {
-    font-size: 1.5rem;
-  }
-
-  .intro-text p {
-    font-size: 1rem;
-  }
-
-  .image-section {
-    margin-left: 0;
-    width: 100%;
-    padding-top: 20px;
+  .showroom-image {
+    max-width: 100%; /* Full width on smaller screens */
   }
 }
+
 
 
 
