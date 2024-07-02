@@ -1,26 +1,24 @@
 body {
   font-family: 'Arial', sans-serif;
   overflow-x: hidden; /* Prevent horizontal scroll */
-  justify-content: center;
-
 }
 
 .home-container {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center; /* Center children horizontally */
+  align-items: flex-start; /* Align children to the top */
   position: relative;
   top: 110px;
   height: calc(100vh - 110px);
   width: 100vw;
   margin: 0;
   overflow: hidden; /* Hide overflow on the container */
-  opacity: 0;
+  opacity: 0; /* Start with opacity 0 */
   transition: opacity 0.5s ease-in-out; /* Add opacity transition */
 }
 
 .home-container.visible {
-  opacity: 1;
+  opacity: 1; /* Set opacity to 1 when the visible class is applied */
 }
 
 .home-container h2 {
@@ -36,18 +34,17 @@ body {
 
 .home-content {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   justify-content: space-between;
-  width: 100%;
+  width: 90%; /* Adjust the width as needed */
   padding: 20px;
-  background: rgba(0, 0, 0, 0.539);
-  border-radius: 16px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
+  background: none;
+  border-radius: 5px;
+  box-shadow: none;
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  margin-top: 60px;
-  height: calc(100vh - 170px);
+  border: none;
+  height: calc(100vh - 110px);
 }
 
 .intro-text {
