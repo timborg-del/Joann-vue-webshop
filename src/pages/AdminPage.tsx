@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import './AdminPage.css'; // Import CSS file for styling
-import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage } from '../apiService';
+import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage } from '../apiService';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -173,6 +173,16 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const handleDeleteShowroomImage = async (partitionKey: string, rowKey: string) => {
+    try {
+      await deleteShowroomImage(partitionKey, rowKey);
+      const updatedImages = showroomImages.filter(image => image.PartitionKey !== partitionKey || image.RowKey !== rowKey);
+      setShowroomImages(updatedImages);
+    } catch (err) {
+      setError('Failed to delete showroom image');
+    }
+  };
+
   const handleLogout = () => {
     setToken(null); // Clear the token from local storage
     navigate('/login'); // Navigate to the login page
@@ -328,6 +338,7 @@ const AdminPage: React.FC = () => {
                 <img src={image.ImageUrl} alt={image.Title} />
                 <h3>{image.Title}</h3>
                 <p>{image.Description}</p>
+                <button onClick={() => handleDeleteShowroomImage(image.PartitionKey, image.RowKey)}>Delete</button>
               </div>
             ))}
           </div>
@@ -365,6 +376,8 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
+
 
 
 

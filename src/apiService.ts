@@ -12,40 +12,40 @@ export interface Product {
     ImageUrl: string;
     quantity: number;
     size?: string;
-  }
-  
-  export interface User {
+}
+
+export interface User {
     PartitionKey: string;
     RowKey: string;
     Name: string;
     Email: string;
     PasswordHash: string;
-  }
-  
-  export interface Review {
+}
+
+export interface Review {
     user: string;
     comment: string;
     rating: number;
     PartitionKey?: string;
     RowKey?: string;
     Timestamp?: string;
-  }
-  
-  export interface FormData {
+}
+
+export interface FormData {
     fullName: string;
     email: string;
     address: string;
     city: string;
     postalCode: string;
-  }
-  
-  export interface ShowroomImage {
+}
+
+export interface ShowroomImage {
     PartitionKey: string;
     RowKey: string;
     Title: string;
     Description: string;
     ImageUrl: string;
-  }
+}
 
 export const addProduct = async (product: Product, file: File): Promise<void> => {
     const formData = new FormData();
@@ -182,7 +182,6 @@ export const getReviews = async (productId: string): Promise<Review[]> => {
   };
   
   // Function to submit a review for a product
-// apiService.ts
 export const submitReview = async (productId: string, user: string, rating: number, comment: string): Promise<void> => {
     const review = {
       user,
@@ -205,7 +204,6 @@ export const submitReview = async (productId: string, user: string, rating: numb
       throw new Error(`Failed to submit review: ${errorText}`);
     }
   };
-  
 
 // Utility function to check authentication
 export const isAuthenticated = (): boolean => {
@@ -272,14 +270,12 @@ export const getShowroomImages = async (): Promise<ShowroomImage[]> => {
     return showroomImages;
 };
 
-
-export const deleteShowroomImage = async (imageUrl: string): Promise<void> => {
-    const response = await fetch(`${API_BASE_URL}/DeleteShowroomImage`, {
+export const deleteShowroomImage = async (partitionKey: string, rowKey: string): Promise<void> => {
+    const response = await fetch(`${API_BASE_URL}/DeleteShowroomImage/${partitionKey}/${rowKey}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ imageUrl }),
     });
 
     if (!response.ok) {
@@ -287,6 +283,7 @@ export const deleteShowroomImage = async (imageUrl: string): Promise<void> => {
         throw new Error(`Failed to delete showroom image: ${errorText}`);
     }
 };
+
 
 
 

@@ -35,6 +35,12 @@
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.13);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Add transition for hover effect */
+}
+
+.showroom-image img:hover {
+  transform: scale(1.05); /* Scale the image slightly */
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.9); /* Increase the shadow for a more pronounced effect */
 }
 
 .showroom-image p {
@@ -53,6 +59,7 @@
     font-size: 1rem; /* Adjust font size for smaller screens */
   }
 }
+
 
 
 
