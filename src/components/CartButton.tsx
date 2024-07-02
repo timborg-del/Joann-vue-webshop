@@ -1,10 +1,15 @@
+import React from 'react';
 import { useCart } from '../context/CartContext';
 
-const CartButton = () => {
+interface CartButtonProps {
+  onClick: () => void;
+}
+
+const CartButton: React.FC<CartButtonProps> = ({ onClick }) => {
   const { cartItemCount } = useCart();
 
   return (
-    <div className="cart-button-container">
+    <div className="cart-button-container" onClick={onClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="icon icon-tabler icon-tabler-shopping-cart"
@@ -17,7 +22,7 @@ const CartButton = () => {
         strokeLinecap="round"
         strokeLinejoin="round"
       >
-        <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+        <path stroke="none" d="M0 0h24v24H0z" fill="none" />
         <circle cx="6" cy="19" r="2" />
         <circle cx="17" cy="19" r="2" />
         <path d="M17 17h-11v-14h-2" />
@@ -29,6 +34,7 @@ const CartButton = () => {
 };
 
 export default CartButton;
+
 
 
 

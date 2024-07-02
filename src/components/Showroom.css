@@ -1,10 +1,8 @@
 .showroom-container {
   display: flex;
-  flex-direction: column; /* Arrange images in a column */
-  align-items: center; /* Center align items */
-  gap: 20px; /* Space between images */
+  flex-wrap: wrap;
+  gap: 20px;
   padding: 20px;
-  margin-top: 60px; /* Add margin to ensure it does not overlap with fixed header */
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }
@@ -14,8 +12,7 @@
 }
 
 .showroom-image {
-  width: 80%; /* Adjust width to be responsive */
-  max-width: 800px; /* Limit max width for larger screens */
+  width: 30%; /* Adjust width as needed */
   text-align: center;
   opacity: 0;
   transform: translateY(20px);
@@ -35,18 +32,18 @@
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.13);
-  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Add transition for hover effect */
+  cursor: pointer; /* Change cursor to pointer on hover */
+  transition: opacity 0.5s ease-in-out;
 }
 
-.showroom-image img:hover {
-  transform: scale(1.05); /* Scale the image slightly */
-  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.9); /* Increase the shadow for a more pronounced effect */
+.showroom-image img.fade-out {
+  opacity: 0;
 }
 
 .showroom-image p {
   margin-top: 10px;
   font-size: 1.2rem;
-  color: #ffffff; /* Ensure the text color is white */
+  color: #ffffff;
 }
 
 /* Responsive adjustments */
@@ -56,9 +53,10 @@
   }
 
   .showroom-image p {
-    font-size: 1rem; /* Adjust font size for smaller screens */
+    font-size: 1rem;
   }
 }
+
 
 
 

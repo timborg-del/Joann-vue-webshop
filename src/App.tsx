@@ -40,7 +40,7 @@ const App: React.FC = () => {
           </div>
           <div>
             <button className="cart-button" onClick={toggleCartVisibility}>
-              <CartButton />
+              <CartButton onClick={toggleCartVisibility} />
             </button>
           </div>
         </nav>
@@ -61,6 +61,7 @@ const App: React.FC = () => {
 };
 
 export default App;
+
 
 
 

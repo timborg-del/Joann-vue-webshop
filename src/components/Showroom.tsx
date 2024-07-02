@@ -11,6 +11,7 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
   const { data: images, isLoading, error } = useFetchData<ShowroomImage[]>('https://joart.azurewebsites.net/GetShowroomImages');
   const [isContainerVisible, setIsContainerVisible] = useState(false);
   const [visibleImages, setVisibleImages] = useState<Set<string>>(new Set());
+  const [clickedImage, setClickedImage] = useState<string | null>(null);
 
   useEffect(() => {
     if (images && images.length > 0) {
@@ -23,6 +24,13 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
       });
     }
   }, [images]);
+
+  const handleImageClick = (productName: string, rowKey: string) => {
+    setClickedImage(rowKey);
+    setTimeout(() => {
+      onImageClick(productName);
+    }, 500); // Match the duration of the opacity transition
+  };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -46,7 +54,8 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
             <img
               src={image.ImageUrl}
               alt={image.Title}
-              onClick={() => onImageClick(image.Title)}
+              className={clickedImage === image.RowKey ? 'fade-out' : ''}
+              onClick={() => handleImageClick(image.Title, image.RowKey)}
             />
             <p>{image.Title}</p>
           </div>
@@ -59,6 +68,7 @@ const Showroom: React.FC<ShowroomProps> = ({ onImageClick }) => {
 };
 
 export default Showroom;
+
 
 
 

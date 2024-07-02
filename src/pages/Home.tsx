@@ -5,6 +5,7 @@ import Showroom from '../components/Showroom'; // Import the Showroom component
 
 const Home: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
+  const [isTransitioning, setIsTransitioning] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -13,7 +14,10 @@ const Home: React.FC = () => {
   }, []);
 
   const handleImageClick = (productName: string) => {
-    navigate(`/shoppage?product=${productName}`);
+    setIsTransitioning(true);
+    setTimeout(() => {
+      navigate(`/shoppage?product=${productName}`);
+    }, 500); // Match the duration of the opacity transition
   };
 
   return (
@@ -26,7 +30,7 @@ const Home: React.FC = () => {
             Hey there! We're glad you stopped by. At Jo's Art Shop, you'll find a variety of unique and beautiful artworks. Whether you're looking for something to brighten up your home or a special gift for someone, we've got you covered. Take a look around and find something you love!
           </p>
         </div>
-        <div className="image-section">
+        <div className={`image-section ${isTransitioning ? 'fade-out' : ''}`}>
           <Showroom onImageClick={handleImageClick} /> {/* Add the Showroom component here */}
         </div>
       </div>
@@ -35,6 +39,7 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
 
 
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Cart from '../components/Cart';
 import PaypalStuff from '../components/PaypalStuff';
 import './CartPage.css';
@@ -10,28 +10,39 @@ interface CartPageProps {
 }
 
 const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
-    const { state } = useCart();
-    const totalPrice = state.items.reduce((total, item) => total + item.Price * item.quantity, 0);
+  const { state } = useCart();
+  const totalPrice = state.items.reduce((total, item) => total + item.Price * item.quantity, 0);
+  const [isLeaving, setIsLeaving] = useState(false);
 
-    return (
-        <div className={`cart-page-container ${isVisible ? 'active' : ''}`}>
-            <div className='cart-page'>
-                <button className="close-button-cart" onClick={onClose}>&#x2192;</button>
-                <div className='cart-content'>
-                    <div className='cart-container'>
-                        <Cart />
-                    </div>
-                    <div className='form-container'>
-                        <p className='total-price'>Total Price:{totalPrice.toFixed(2)}:-</p>
-                        <PaypalStuff cart={state.items} />
-                    </div>
-                </div>
-            </div>
+  const handleClose = () => {
+    setIsLeaving(true);
+    setTimeout(() => {
+      setIsLeaving(false);
+      onClose();
+    }, 500); // Match the transition duration
+  };
+
+  return (
+    <div className={`cart-page-container ${isVisible ? 'active' : ''} ${isLeaving ? 'leaving' : ''}`}>
+      <div className='cart-page'>
+        <button className="close-button-cart" onClick={handleClose}>&#x2192;</button>
+        <div className='cart-content'>
+          <div className='cart-container'>
+            <Cart />
+          </div>
+          <div className='form-container'>
+            <p className='total-price'>Total Price: {totalPrice.toFixed(2)}:-</p>
+            <PaypalStuff cart={state.items} />
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 };
 
 export default CartPage;
+
+
 
 
 

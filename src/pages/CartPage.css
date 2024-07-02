@@ -1,35 +1,38 @@
 .cart-page-container {
   display: flex;
   justify-content: center;
-  align-items: flex-start; /* Align items to the start to ensure it can grow in height */
+  align-items: flex-start;
   position: fixed;
-  top: 120px; /* Position it under the navbar */
-  right: -100%; /* Start hidden off the screen */
-  height: calc(100vh - 120px); /* Adjust height to fit within the viewport minus the navbar height */
+  top: 120px;
+  right: -100%;
+  height: calc(100vh - 120px);
   width: 100vw;
   margin: 0;
   overflow-y: auto;
-  transition: right 0.5s ease; /* Smooth transition for sliding effect */
-  z-index: 1000; /* Ensure it is above other content */
+  transition: right 0.5s ease;
+  z-index: 1000;
 }
 
 .cart-page-container.active {
-  top: 120px;
-  right: 0; /* Move to the viewable area */
+  right: 0;
+}
+
+.cart-page-container.leaving {
+  right: -100%;
 }
 
 .cart-page {
-  position: relative; /* Added for positioning the close button */
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: auto; /* Ensure height adapts to content */
-  min-height: 80vh; /* Add a minimum height to prevent collapsing */
-  max-width: 1200px; /* Adjusted max-width for a larger layout */
-  width: 80vw; /* Added width for better fit on large screens */
+  height: auto;
+  min-height: 80vh;
+  max-width: 1200px;
+  width: 80vw;
   padding: 20px;
-  background: rgba(249, 169, 49, 0.699);
+  background: rgba(249, 169, 49, 0.855);
   border-radius: 5px;
   box-shadow: 4px 4px 4px rgba(144, 95, 22, 0.467);
   backdrop-filter: blur(1.1px);
@@ -41,8 +44,8 @@
 .close-button-cart {
   position: absolute;
   top: 10px;
-  right: 10px; /* Move the button to the right side */
-  width: 40px; /* Set width and height to make a larger square button */
+  right: 10px;
+  width: 40px;
   height: 40px;
   background: rgba(86, 249, 49, 0.515);
   color: #fff;
@@ -50,12 +53,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  font-size: 25px; /* Increase font size for a larger arrow */
+  font-size: 25px;
   text-align: center;
-  line-height: 40px; /* Adjust line height to match the button height */
+  line-height: 40px;
   text-decoration: none;
   cursor: pointer;
-  z-index: 1001; /* Ensure it is above other content */
+  z-index: 1001;
 }
 
 .cart-content {
@@ -68,7 +71,7 @@
 .cart-container {
   flex: 1;
   margin-right: 20px;
-  max-width: 60%; /* Ensure the cart takes up 60% of the width */
+  max-width: 60%;
 }
 
 .form-container {
@@ -76,12 +79,12 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  max-width: 80%; /* Ensure the form takes up 40% of the width */
+  max-width: 80%;
 }
 
 .form-container .input-text {
   width: 100%;
-  max-width: 300px; /* Set max-width to prevent it from extending too much */
+  max-width: 300px;
   height: auto;
   margin-bottom: 10px;
   padding: 10px;
@@ -94,7 +97,7 @@
 .form-container .input-text input {
   width: 100%;
   margin-top: 1px;
-  max-width: 300px; /* Set max-width to prevent it from extending too much */
+  max-width: 300px;
   height: auto;
   margin-bottom: 10px;
   padding: 20px;
@@ -114,22 +117,22 @@
 .hide-btn {
   display: flex;
   justify-content: center;
-  width: 100%; /* Ensure button takes the full width */
+  width: 100%;
 }
 
 form {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  width: 100%; /* Ensure form takes the full width */
+  width: 100%;
 }
 
 .hideform_btn,
 .cartclear_btn,
 .checkout_btn {
   cursor: pointer;
-  width: 100%; /* Ensure buttons take the full width */
-  margin-top: 10px; /* Adjust the spacing between buttons */
+  width: 100%;
+  margin-top: 10px;
   color: white;
   font-size: larger;
   padding: 15px;
@@ -158,9 +161,8 @@ form {
 }
 
 @media screen and (max-width: 767px) {
-
   .cart-page-container.active {
-    top: 100px; /* Adjust top for smaller screens */
+    top: 100px;
     right: 0;
     width: 100vw;
     height: 100vh;
@@ -171,19 +173,19 @@ form {
   .cart-page {
     max-height: 100%;
     max-width: 100%;
-    padding: 10px; /* Reduce padding for smaller screens */
+    padding: 10px;
   }
 
   .cart-content {
     max-height: fit-content;
-    flex-direction: column; /* Stack cart and form vertically */
-    align-items: center; /* Center items horizontally */
+    flex-direction: column;
+    align-items: center;
   }
 
   .cart-container,
   .form-container {
-    max-width: 100%; /* Take full width */
-    margin: 10px 0; /* Add some margin for spacing */
+    max-width: 100%;
+    margin: 10px 0;
   }
 
   .close-button-cart {
@@ -191,14 +193,15 @@ form {
     right: 10px;
     width: 40px;
     height: 40px;
-    font-size: 30px; /* Increase font size for better visibility on smaller screens */
+    font-size: 30px;
   }
 
   .form-container .input-text,
   .form-container .input-text input {
-    max-width: 100%; /* Ensure inputs take up most of the screen width */
+    max-width: 100%;
   }
 }
+
 
 
 
