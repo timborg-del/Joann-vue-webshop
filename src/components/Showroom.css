@@ -2,7 +2,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  padding: 20px;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
 }
@@ -12,11 +11,13 @@
 }
 
 .showroom-image {
-  width: 30%; /* Adjust width as needed */
+  width: 100%; /* Full width of the parent container */
+  max-width: 50%; /* Adjust to 50% of the container width */
   text-align: center;
   opacity: 0;
   transform: translateY(20px);
   transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
+  box-sizing: border-box;
 }
 
 .showroom-image.visible {
@@ -49,13 +50,14 @@
 /* Responsive adjustments */
 @media screen and (max-width: 767px) {
   .showroom-image {
-    width: 100%;
+    max-width: 100%; /* Full width on smaller screens */
   }
 
   .showroom-image p {
     font-size: 1rem;
   }
 }
+
 
 
 

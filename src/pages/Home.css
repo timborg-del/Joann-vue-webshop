@@ -1,6 +1,8 @@
 body {
   font-family: 'Arial', sans-serif;
   overflow-x: hidden; /* Prevent horizontal scroll */
+  justify-content: center;
+
 }
 
 .home-container {
@@ -13,6 +15,12 @@ body {
   width: 100vw;
   margin: 0;
   overflow: hidden; /* Hide overflow on the container */
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out; /* Add opacity transition */
+}
+
+.home-container.visible {
+  opacity: 1;
 }
 
 .home-container h2 {
@@ -37,14 +45,9 @@ body {
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
-  transition: opacity 0.5s ease-in-out;
   border: 1px solid rgba(255, 255, 255, 0.13);
   margin-top: 60px;
   height: calc(100vh - 170px);
-}
-
-.home-content.visible {
-  opacity: 1;
 }
 
 .intro-text {
@@ -81,54 +84,6 @@ body {
   height: calc(100vh - 170px); /* Ensure it fills the remaining height */
 }
 
-.showroom-container {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  opacity: 0;
-  transition: opacity 0.5s ease-in-out;
-}
-
-.showroom-container.visible {
-  opacity: 1;
-}
-
-.showroom-image {
-  width: 100%; /* Full width of the parent container */
-  max-width: 50%; /* Adjust to 50% of the container width */
-  text-align: center;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.5s ease-in-out, transform 0.5s ease-in-out;
-}
-
-.showroom-image.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.showroom-image img {
-  width: 100%;
-  height: auto;
-  border-radius: 8px;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
-  backdrop-filter: blur(1.1px);
-  -webkit-backdrop-filter: blur(1.1px);
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  cursor: pointer; /* Change cursor to pointer on hover */
-  transition: opacity 0.5s ease-in-out;
-}
-
-.showroom-image img.fade-out {
-  opacity: 0;
-}
-
-.showroom-image p {
-  margin-top: 10px;
-  font-size: 1.2rem;
-  color: #ffffff;
-}
-
 /* Responsive adjustments */
 @media screen and (max-width: 767px) {
   .home-content {
@@ -162,6 +117,8 @@ body {
     max-width: 100%; /* Full width on smaller screens */
   }
 }
+
+
 
 
 
