@@ -2,17 +2,21 @@ import { createContext, useReducer, useContext, ReactNode, Dispatch, useEffect }
 import useLocalStorage from '../hooks/useLocalStorage';
 import { Product } from '../apiService';
 
+interface CartItem extends Product {
+  size: string;
+  quantity: number;
+}
+
 interface CartState {
-  items: Product[];
+  items: CartItem[];
 }
 
 type Action =
-  | { type: 'ADD_ITEM'; payload: Product }
+  | { type: 'ADD_ITEM'; payload: CartItem }
   | { type: 'REMOVE_ITEM'; payload: string }
   | { type: 'CLEAR_CART' }
   | { type: 'INCREMENT_QUANTITY'; payload: string }
   | { type: 'DECREMENT_QUANTITY'; payload: string };
-  
 
 const initialState: CartState = {
   items: [],
@@ -35,7 +39,9 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     console.log('Action dispatched:', action);
     switch (action.type) {
       case 'ADD_ITEM': {
-        const existingItemIndex = state.items.findIndex(item => item.RowKey === action.payload.RowKey && item.size === action.payload.size);
+        const existingItemIndex = state.items.findIndex(
+          item => item.RowKey === action.payload.RowKey && item.size === action.payload.size
+        );
         if (existingItemIndex !== -1) {
           const updatedItems = [...state.items];
           updatedItems[existingItemIndex].quantity += action.payload.quantity;
@@ -93,6 +99,7 @@ export const useCart = () => useContext(CartContext);
 export const useCartDispatch = () => useContext(CartContext).dispatch;
 
 export default CartContext;
+
 
 
 
