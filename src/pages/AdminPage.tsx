@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import './AdminPage.css'; // Import CSS file for styling
-import { addProduct, getProducts, Product, deleteProduct, getShowroomImages, ShowroomImage, deleteShowroomImage } from '../apiService';
+import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage } from '../apiService';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -15,8 +15,8 @@ const AdminPage: React.FC = () => {
     Category: '',
     ImageUrl: '',
     AdditionalImages: [],
-    quantity: 0,
-    size: '',
+    quantity: 0, // Default value
+    size: '', // Default value
   });
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [newShowroomImage, setNewShowroomImage] = useState<ShowroomImage>({
@@ -87,24 +87,9 @@ const AdminPage: React.FC = () => {
       const productToAdd = {
         ...newProduct,
         RowKey: Date.now().toString(),
-        AdditionalImages: [], // Initialize as an empty array
       };
 
-      const formData = new FormData();
-      formData.append('product', JSON.stringify(productToAdd));
-      for (let i = 0; i < selectedFiles.length; i++) {
-        formData.append(`file${i}`, selectedFiles[i]);
-      }
-
-      const response = await fetch('https://joart.azurewebsites.net/AddProduct', {
-        method: 'POST',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to add product: ${errorText}`);
-      }
+      await addProduct(productToAdd, selectedFiles);
 
       setProducts([...products, productToAdd]);
       setNewProduct({
@@ -116,8 +101,8 @@ const AdminPage: React.FC = () => {
         Category: '',
         ImageUrl: '',
         AdditionalImages: [],
-        quantity: 0, // Reset quantity
-        size: '', // Reset size
+        quantity: 0,
+        size: '',
       });
       setSelectedFiles(null);
       setCurrentView('products');
@@ -135,27 +120,8 @@ const AdminPage: React.FC = () => {
 
   const handleUpdateProduct = async (e: FormEvent) => {
     e.preventDefault();
-    if (!selectedFiles || selectedFiles.length === 0) {
-      setError('Please select at least one file to upload.');
-      return;
-    }
-
     try {
-      const formData = new FormData();
-      formData.append('product', JSON.stringify(newProduct));
-      for (let i = 0; i < selectedFiles.length; i++) {
-        formData.append(`file${i}`, selectedFiles[i]);
-      }
-
-      const response = await fetch('https://joart.azurewebsites.net/UpdateProduct', {
-        method: 'PUT',
-        body: formData,
-      });
-
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to update product: ${errorText}`);
-      }
+      await updateProduct(newProduct, selectedFiles);
 
       const updatedProducts = products.map(p => (p.RowKey === newProduct.RowKey ? newProduct : p));
       setProducts(updatedProducts);
@@ -169,8 +135,8 @@ const AdminPage: React.FC = () => {
         Category: '',
         ImageUrl: '',
         AdditionalImages: [],
-        quantity: 0, // Reset quantity
-        size: '', // Reset size
+        quantity: 0,
+        size: '',
       });
       setSelectedFiles(null);
       setCurrentView('products');
@@ -190,10 +156,36 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const handleAddShowroomImage = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!selectedFiles || selectedFiles.length === 0) {
+      setError('Please select at least one file to upload.');
+      return;
+    }
+
+    try {
+      const imageToAdd = { ...newShowroomImage, RowKey: Date.now().toString() };
+      await addShowroomImage(imageToAdd, selectedFiles[0]);
+      setShowroomImages([...showroomImages, imageToAdd]);
+      setNewShowroomImage({
+        PartitionKey: 'showroom',
+        RowKey: '',
+        Title: '',
+        Description: '',
+        ImageUrl: ''
+      });
+      setSelectedFiles(null);
+      setCurrentView('showroom');
+      setError(null);
+    } catch (err) {
+      setError('Failed to add showroom image');
+    }
+  };
+
   const handleDeleteShowroomImage = async (partitionKey: string, rowKey: string) => {
     try {
       await deleteShowroomImage(partitionKey, rowKey);
-      const updatedImages = showroomImages.filter(image => image.PartitionKey !== partitionKey || image.RowKey !== rowKey);
+      const updatedImages = showroomImages.filter(image => image.RowKey !== rowKey);
       setShowroomImages(updatedImages);
     } catch (err) {
       setError('Failed to delete showroom image');
@@ -230,8 +222,8 @@ const AdminPage: React.FC = () => {
             Category: '',
             ImageUrl: '',
             AdditionalImages: [],
-            quantity: 0, // Reset quantity
-            size: '', // Reset size
+            quantity: 0,
+            size: '',
           });
           setSelectedFiles(null);
           setCurrentView('add');
@@ -378,7 +370,7 @@ const AdminPage: React.FC = () => {
           </div>
         )}
         {currentView === 'addShowroomImage' && (
-          <form className="showroom-form" onSubmit={handleAddProduct}>
+          <form className="showroom-form" onSubmit={handleAddShowroomImage}>
             <h2>Add Showroom Image</h2>
             {error && <div className="error">{error}</div>}
             <input
@@ -397,7 +389,7 @@ const AdminPage: React.FC = () => {
               placeholder="Image Description"
               required
             />
-            <input type="file" multiple onChange={handleFileChange} required />
+            <input type="file" onChange={handleFileChange} required />
             <button type="submit">Add Showroom Image</button>
           </form>
         )}
@@ -410,6 +402,8 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
+
 
 
 

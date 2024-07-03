@@ -66,12 +66,14 @@ export const addProduct = async (product: Product, files: FileList): Promise<voi
     }
 };
 
-export const updateProduct = async (product: Product, files: FileList): Promise<void> => {
+export const updateProduct = async (product: Product, files: FileList | null): Promise<void> => {
     const formData = new FormData();
     formData.append('product', JSON.stringify(product));
-    Array.from(files).forEach((file, index) => {
-        formData.append(`file${index}`, file);
-    });
+    if (files) {
+        Array.from(files).forEach((file, index) => {
+            formData.append(`file${index}`, file);
+        });
+    }
 
     const response = await fetch(`${API_BASE_URL}/UpdateProduct`, {
         method: 'PUT',
