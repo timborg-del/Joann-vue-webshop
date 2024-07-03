@@ -2,23 +2,18 @@ import { useState } from 'react';
 import { useCart, useCartDispatch } from '../context/CartContext';
 import { Product } from '../apiService'; // Ensure this path is correct
 
-interface CartItem extends Product {
-  size: string;
-  quantity: number;
-}
-
 const useCartActions = () => {
   const dispatch = useCartDispatch();
   const { state } = useCart();
   const [loading, setLoading] = useState(false);
 
-  const addItemToCart = (item: CartItem) => {
+  const addItemToCart = (item: Product) => {
     setLoading(true);
     setTimeout(() => {
       const existingItem = state.items.find(cartItem => cartItem.RowKey === item.RowKey && cartItem.size === item.size);
       
       if (existingItem) {
-        dispatch({ type: 'INCREMENT_QUANTITY', payload: `${item.RowKey}-${item.size}` });
+        dispatch({ type: 'INCREMENT_QUANTITY', payload: item.RowKey });
       } else {
         dispatch({ type: 'ADD_ITEM', payload: { ...item, quantity: 1, Price: item.Price ?? 0 } });
       }
@@ -53,7 +48,6 @@ const useCartActions = () => {
 };
 
 export default useCartActions;
-
 
 
 

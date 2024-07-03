@@ -2,11 +2,6 @@ import { useCart, useCartDispatch } from '../context/CartContext';
 import './Cart.css';
 import { Product } from '../apiService';
 
-interface CartItem extends Product {
-  size: string;
-  quantity: number;
-}
-
 export const Cart = () => {
   const { state } = useCart();
   const dispatch = useCartDispatch();
@@ -23,13 +18,13 @@ export const Cart = () => {
     dispatch({ type: 'REMOVE_ITEM', payload: itemId });
   };
 
-  const normalizeCartItems = (items: CartItem[]): CartItem[] => {
+  const normalizeCartItems = (items: Product[]): Product[] => {
     return items.map(item => ({
       ...item,
       RowKey: item.RowKey,
       Name: item.Name,
       Price: item.Price ?? 0,
-      AdditionalImages: item.AdditionalImages ?? [],
+      ImageUrl: item.ImageUrl,
       quantity: item.quantity ?? 1,
       size: item.size ?? 'default-size'
     }));
@@ -44,25 +39,17 @@ export const Cart = () => {
       ) : (
         <div className="cart-items-container">
           {normalizeCartItems(state.items).map((item) => (
-            <div key={`${item.RowKey}-${item.size}`} className="cart-item">
-              <img
-                src={item.AdditionalImages[0] || '/path/to/placeholder-image.jpg'}
-                alt={item.Name}
-                className="cart-item-image"
-                onError={(e) => {
-                  e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                  console.error("Image load error", e);
-                }}
-              />
+            <div key={item.RowKey} className="cart-item">
+              <img src={item.ImageUrl} alt={item.Name} className="cart-item-image" />
               <div className="cart-item-details">
                 <p>{item.Name}</p>
                 <p>{item.size}</p>
                 <p>{item.Price.toFixed(2)} SEK</p>
                 <div className="cart-item-actions">
-                  <button onClick={() => decrementQuantity(`${item.RowKey}-${item.size}`)}>-</button>
+                  <button onClick={() => decrementQuantity(item.RowKey)}>-</button>
                   <span>{item.quantity}</span>
-                  <button onClick={() => incrementQuantity(`${item.RowKey}-${item.size}`)}>+</button>
-                  <button onClick={() => removeItem(`${item.RowKey}-${item.size}`)}>Delete</button>
+                  <button onClick={() => incrementQuantity(item.RowKey)}>+</button>
+                  <button onClick={() => removeItem(item.RowKey)}>Delete</button>
                 </div>
               </div>
             </div>
@@ -74,9 +61,6 @@ export const Cart = () => {
 };
 
 export default Cart;
-
-
-
 
 
 

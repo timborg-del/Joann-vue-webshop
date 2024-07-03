@@ -15,7 +15,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const [activeProduct, setActiveProduct] = useState<string | null>(activeProductName);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
-  const [currentImageIndex, setCurrentImageIndex] = useState<{ [key: string]: number }>({});
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const { state } = useCart();
   const dispatch = useCartDispatch();
 
@@ -63,13 +63,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     if (cartItem) {
       dispatch({ type: 'INCREMENT_QUANTITY', payload: uniqueId });
     } else {
-      addItemToCart({
-        ...product,
-        RowKey: uniqueId,
-        Price: getPrice(product.RowKey, product.Price),
-        quantity: 1,
-        size: size
-      });
+      addItemToCart(product);
     }
   };
 
@@ -86,23 +80,21 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     }
   };
 
-  const handleNextImage = (productId: string) => {
-    const product = products?.find((p) => p.RowKey === productId);
-    if (product && product.AdditionalImages.length > 0) {
-      setCurrentImageIndex((prevState) => ({
-        ...prevState,
-        [productId]: (prevState[productId] + 1) % product.AdditionalImages.length,
-      }));
+  const handleNextImage = () => {
+    if (!products) return;
+    const product = products.find((p) => p.RowKey === activeProduct);
+    if (product && product.AdditionalImages && product.AdditionalImages.length > 0) {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.AdditionalImages.length);
     }
   };
 
-  const handlePreviousImage = (productId: string) => {
-    const product = products?.find((p) => p.RowKey === productId);
-    if (product && product.AdditionalImages.length > 0) {
-      setCurrentImageIndex((prevState) => ({
-        ...prevState,
-        [productId]: prevState[productId] === 0 ? product.AdditionalImages.length - 1 : prevState[productId] - 1,
-      }));
+  const handlePreviousImage = () => {
+    if (!products) return;
+    const product = products.find((p) => p.RowKey === activeProduct);
+    if (product && product.AdditionalImages && product.AdditionalImages.length > 0) {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? product.AdditionalImages.length - 1 : prevIndex - 1
+      );
     }
   };
 
@@ -133,25 +125,25 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                 <>
                   <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;</button>
                   <div className="image-gallery-container">
-                    <button className="gallery-nav-button" onClick={() => handlePreviousImage(product.RowKey)}>{"<"}</button>
+                    <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
                     <img
-                      src={product.AdditionalImages[currentImageIndex[product.RowKey]] || '/path/to/placeholder-image.jpg'}
+                      src={product.AdditionalImages && product.AdditionalImages[currentImageIndex] || product.ImageUrl}
                       alt={product.Name}
                       className="product-image"
                       onError={(e) => {
                         e.currentTarget.src = '/path/to/placeholder-image.jpg';
                         console.error("Image load error", e);
                       }}
-                      onClick={() => setEnlargedImage(product.AdditionalImages[currentImageIndex[product.RowKey]] || '/path/to/placeholder-image.jpg')}
+                      onClick={() => setEnlargedImage(product.AdditionalImages && product.AdditionalImages[currentImageIndex] || product.ImageUrl)}
                     />
-                    <button className="gallery-nav-button" onClick={() => handleNextImage(product.RowKey)}>{">"}</button>
+                    <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
                   </div>
                 </>
               ) : (
                 <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
-                  {product.AdditionalImages.length > 0 ? (
+                  {product.ImageUrl ? (
                     <img
-                      src={product.AdditionalImages[0]}
+                      src={product.ImageUrl}
                       alt={product.Name}
                       className="product-image"
                       onError={(e) => {
@@ -216,9 +208,6 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
-
-
-
 
 
 
