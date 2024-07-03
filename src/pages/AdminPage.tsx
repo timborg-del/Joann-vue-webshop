@@ -14,6 +14,7 @@ const AdminPage: React.FC = () => {
     Stock: 0,
     Category: '',
     ImageUrl: '',
+    AdditionalImages:[],
     quantity: 0, // Default value
     size: '', // Default value
   });
@@ -95,6 +96,7 @@ const AdminPage: React.FC = () => {
         Stock: 0,
         Category: '',
         ImageUrl: '',
+        AdditionalImages:[],
         quantity: 0, // Reset quantity
         size: '', // Reset size
       });
@@ -153,6 +155,7 @@ const AdminPage: React.FC = () => {
         Stock: 0,
         Category: '',
         ImageUrl: '',
+        AdditionalImages:[],
         quantity: 0, // Reset quantity
         size: '', // Reset size
       });
@@ -212,6 +215,7 @@ const AdminPage: React.FC = () => {
             Stock: 0,
             Category: '',
             ImageUrl: '',
+            AdditionalImages:[],
             quantity: 0, // Reset quantity
             size: '', // Reset size
           });

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import{ useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Product from '../components/Products'; // Import the Product component
 import './ShopPage.css'; // Import the corresponding CSS file
