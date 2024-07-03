@@ -6,6 +6,12 @@
   padding: 70px 10px 10px 10px; /* Add padding-top to account for navbar height + extra space */
   overflow-y: auto; /* Make the container scrollable */
   box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+  opacity: 0; /* Start with opacity 0 */
+  transition: opacity 0.5s ease-in-out; /* Add opacity transition */
+}
+
+.shop-container.visible {
+  opacity: 1; /* Set opacity to 1 when the visible class is applied */
 }
 
 .shop-container h1 {

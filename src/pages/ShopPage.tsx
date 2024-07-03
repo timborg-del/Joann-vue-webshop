@@ -6,6 +6,7 @@ import './ShopPage.css'; // Import the corresponding CSS file
 const ShopPage: React.FC = () => {
   const location = useLocation();
   const [activeProduct, setActiveProduct] = useState<string | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -13,17 +14,24 @@ const ShopPage: React.FC = () => {
     if (productName) {
       setActiveProduct(productName);
     }
+
+    // Trigger the transition effect after the component mounts
+    setIsVisible(true);
   }, [location]);
 
   return (
-    <div className="shop-container">
+    <div className={`shop-container ${isVisible ? 'visible' : ''}`}>
       <h1>Shop</h1>
-      <Product activeProductName={activeProduct} />
+      <div className="product-list">
+        <Product activeProductName={activeProduct} />
+      </div>
     </div>
   );
 };
 
 export default ShopPage;
+
+
 
 
 
