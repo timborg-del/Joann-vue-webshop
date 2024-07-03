@@ -49,6 +49,10 @@ export const Cart = () => {
                 src={item.AdditionalImages[0] || '/path/to/placeholder-image.jpg'}
                 alt={item.Name}
                 className="cart-item-image"
+                onError={(e) => {
+                  e.currentTarget.src = '/path/to/placeholder-image.jpg';
+                  console.error("Image load error", e);
+                }}
               />
               <div className="cart-item-details">
                 <p>{item.Name}</p>
@@ -70,6 +74,7 @@ export const Cart = () => {
 };
 
 export default Cart;
+
 
 
 
