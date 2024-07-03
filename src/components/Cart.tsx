@@ -29,7 +29,7 @@ export const Cart = () => {
       RowKey: item.RowKey,
       Name: item.Name,
       Price: item.Price ?? 0,
-      AdditionalImages: item.AdditionalImages,
+      AdditionalImages: item.AdditionalImages ?? [],
       quantity: item.quantity ?? 1,
       size: item.size ?? 'default-size'
     }));
@@ -45,7 +45,11 @@ export const Cart = () => {
         <div className="cart-items-container">
           {normalizeCartItems(state.items).map((item) => (
             <div key={`${item.RowKey}-${item.size}`} className="cart-item">
-              <img src={item.AdditionalImages[0]} alt={item.Name} className="cart-item-image" />
+              <img
+                src={item.AdditionalImages[0] || '/path/to/placeholder-image.jpg'}
+                alt={item.Name}
+                className="cart-item-image"
+              />
               <div className="cart-item-details">
                 <p>{item.Name}</p>
                 <p>{item.size}</p>
@@ -66,6 +70,7 @@ export const Cart = () => {
 };
 
 export default Cart;
+
 
 
 
