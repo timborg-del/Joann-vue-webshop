@@ -17,6 +17,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
   const { state } = useCart();
   const dispatch = useCartDispatch();
+  const [isVisible, setIsVisible] = useState(false);
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
@@ -31,6 +32,9 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
         setActiveProduct(product.RowKey);
       }
     }
+
+    // Trigger the transition effect after the component mounts
+    setIsVisible(true);
   }, [activeProductName, products]);
 
   const handleSizeChange = (productId: string, size: string) => {
@@ -92,7 +96,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   }
 
   return (
-    <div className="products-container">
+    <div className={`products-container ${isVisible ? 'visible' : ''}`}>
       {products.length > 0 ? (
         products.map((product) => {
           const uniqueId = `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`;
@@ -192,6 +196,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
 
 
 

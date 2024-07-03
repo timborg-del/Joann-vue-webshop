@@ -7,6 +7,12 @@
   height: calc(100vh - 130px);
   padding: 10px;
   width: 100%;
+  opacity: 0; /* Start with opacity 0 */
+  transition: opacity 0.5s ease-in-out; /* Add opacity transition */
+}
+
+.products-container.visible {
+  opacity: 1; /* Set opacity to 1 when the visible class is applied */
 }
 
 .product-reviews {
