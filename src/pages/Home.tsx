@@ -13,7 +13,14 @@ const Home: React.FC = () => {
   }, []);
 
   const handleImageClick = (productName: string) => {
-    navigate(`/shoppage?product=${productName}`);
+    const imageSection = document.querySelector('.image-section');
+    if (imageSection) {
+      imageSection.classList.add('fade-out');
+    }
+
+    setTimeout(() => {
+      navigate(`/shoppage?product=${productName}`);
+    }, 500); // Match the timeout duration with the CSS transition duration
   };
 
   return (
@@ -35,6 +42,7 @@ const Home: React.FC = () => {
 };
 
 export default Home;
+
 
 
 

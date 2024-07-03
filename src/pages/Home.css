@@ -71,13 +71,23 @@ body {
   margin-bottom: 10px;
 }
 
+/* Existing CSS */
+
+/* New CSS for transition effect */
 .image-section {
   margin-left: 45%; /* Adjust margin to make space for fixed intro text */
   width: 55%; /* Adjust width as needed */
   padding-top: 20px; /* Add padding to avoid overlap with intro text */
   overflow-y: auto;
   height: calc(100vh - 100px); /* Ensure it fills the remaining height */
+  transition: opacity 0.5s ease-in-out; /* Add opacity transition */
+  opacity: 1;
 }
+
+.image-section.fade-out {
+  opacity: 0;
+}
+
 
 /* Responsive adjustments */
 @media screen and (max-width: 767px) {
