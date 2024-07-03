@@ -31,6 +31,7 @@ const AdminPage: React.FC = () => {
   const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit' | 'showroom' | 'addShowroomImage'>('dashboard');
   const [error, setError] = useState<string | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
+  const [imageUrlFile, setImageUrlFile] = useState<File | null>(null);
   const [, setToken] = useLocalStorage<string | null>('token', null);
   const navigate = useNavigate();
 
@@ -63,18 +64,10 @@ const AdminPage: React.FC = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    if (currentView === 'add') {
-      if (name === 'Price' || name === 'Stock' || name === 'quantity') {
-        setNewProduct({ ...newProduct, [name]: parseFloat(value) });
-      } else {
-        setNewProduct({ ...newProduct, [name]: value });
-      }
-    } else if (currentView === 'edit' && editingProduct) {
-      if (name === 'Price' || name === 'Stock' || name === 'quantity') {
-        setEditingProduct({ ...editingProduct, [name]: parseFloat(value) });
-      } else {
-        setEditingProduct({ ...editingProduct, [name]: value });
-      }
+    if (name === 'Price' || name === 'Stock' || name === 'quantity') {
+      setNewProduct({ ...newProduct, [name]: parseFloat(value) });
+    } else {
+      setNewProduct({ ...newProduct, [name]: value });
     }
   };
 
@@ -84,10 +77,16 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const handleImageUrlFileChange = (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      setImageUrlFile(e.target.files[0]);
+    }
+  };
+
   const handleAddProduct = async (e: FormEvent) => {
     e.preventDefault();
-    if (!selectedFiles || selectedFiles.length === 0) {
-      setError('Please select at least one file to upload.');
+    if (!imageUrlFile) {
+      setError('Please select an image file for ImageUrl.');
       return;
     }
 
@@ -95,10 +94,10 @@ const AdminPage: React.FC = () => {
       const productToAdd = {
         ...newProduct,
         RowKey: Date.now().toString(),
+        AdditionalImages: [], // Initialize as an empty array
       };
 
-      await addProduct(productToAdd, selectedFiles);
-
+      await addProduct(productToAdd, imageUrlFile, selectedFiles);
       setProducts([...products, productToAdd]);
       setNewProduct({
         PartitionKey: 'product',
@@ -109,10 +108,11 @@ const AdminPage: React.FC = () => {
         Category: '',
         ImageUrl: '',
         AdditionalImages: [],
-        quantity: 0,
-        size: '',
+        quantity: 0, // Reset quantity
+        size: '', // Reset size
       });
       setSelectedFiles(null);
+      setImageUrlFile(null);
       setCurrentView('products');
       setError(null);
     } catch (err) {
@@ -120,29 +120,40 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  const handleEditProduct = (product: Product) => {
-    setEditingProduct(product);
-    setCurrentView('edit');
-  };
-
   const handleUpdateProduct = async (e: FormEvent) => {
     e.preventDefault();
-    if (!editingProduct) {
-      setError('No product selected for editing.');
-      return;
-    }
-    try {
-      await updateProduct(editingProduct, selectedFiles);
+    if (!editingProduct) return;
 
+    try {
+      await updateProduct(editingProduct, imageUrlFile, selectedFiles);
       const updatedProducts = products.map(p => (p.RowKey === editingProduct.RowKey ? editingProduct : p));
       setProducts(updatedProducts);
       setEditingProduct(null);
+      setNewProduct({
+        PartitionKey: 'product',
+        RowKey: '',
+        Name: '',
+        Price: 0,
+        Stock: 0,
+        Category: '',
+        ImageUrl: '',
+        AdditionalImages: [],
+        quantity: 0, // Reset quantity
+        size: '', // Reset size
+      });
       setSelectedFiles(null);
+      setImageUrlFile(null);
       setCurrentView('products');
       setError(null);
     } catch (err) {
       setError('Failed to update product');
     }
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct(product);
+    setNewProduct(product);
+    setCurrentView('edit');
   };
 
   const handleDeleteProduct = async (partitionKey: string, rowKey: string) => {
@@ -155,17 +166,27 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const handleDeleteShowroomImage = async (partitionKey: string, rowKey: string) => {
+    try {
+      await deleteShowroomImage(partitionKey, rowKey);
+      const updatedImages = showroomImages.filter(image => image.PartitionKey !== partitionKey || image.RowKey !== rowKey);
+      setShowroomImages(updatedImages);
+    } catch (err) {
+      setError('Failed to delete showroom image');
+    }
+  };
+
   const handleAddShowroomImage = async (e: FormEvent) => {
     e.preventDefault();
     if (!selectedFiles || selectedFiles.length === 0) {
-      setError('Please select at least one file to upload.');
+      setError('Please select an image file.');
       return;
     }
 
     try {
-      const imageToAdd = { ...newShowroomImage, RowKey: Date.now().toString() };
-      await addShowroomImage(imageToAdd, selectedFiles[0]);
-      setShowroomImages([...showroomImages, imageToAdd]);
+      const file = selectedFiles[0];
+      await addShowroomImage(newShowroomImage, file);
+      setShowroomImages([...showroomImages, newShowroomImage]);
       setNewShowroomImage({
         PartitionKey: 'showroom',
         RowKey: '',
@@ -178,16 +199,6 @@ const AdminPage: React.FC = () => {
       setError(null);
     } catch (err) {
       setError('Failed to add showroom image');
-    }
-  };
-
-  const handleDeleteShowroomImage = async (partitionKey: string, rowKey: string) => {
-    try {
-      await deleteShowroomImage(partitionKey, rowKey);
-      const updatedImages = showroomImages.filter(image => image.RowKey !== rowKey);
-      setShowroomImages(updatedImages);
-    } catch (err) {
-      setError('Failed to delete showroom image');
     }
   };
 
@@ -221,10 +232,11 @@ const AdminPage: React.FC = () => {
             Category: '',
             ImageUrl: '',
             AdditionalImages: [],
-            quantity: 0,
-            size: '',
+            quantity: 0, // Reset quantity
+            size: '', // Reset size
           });
           setSelectedFiles(null);
+          setImageUrlFile(null);
           setCurrentView('add');
         }}>Add New Product</button>
         <button onClick={() => setCurrentView('showroom')}>Showroom</button>
@@ -253,9 +265,9 @@ const AdminPage: React.FC = () => {
             <h2>Product List</h2>
             <input
               type="text"
-              placeholder="Search products by name"
+              placeholder="Search products"
               value={searchTerm}
-              onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
+              onChange={e => setSearchTerm(e.target.value)}
             />
             <table>
               <thead>
@@ -268,7 +280,7 @@ const AdminPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredProducts.map((product) => (
+                {filteredProducts.map(product => (
                   <tr key={product.RowKey}>
                     <td>{product.Name}</td>
                     <td>{product.Price}</td>
@@ -291,7 +303,7 @@ const AdminPage: React.FC = () => {
             <input
               type="text"
               name="Name"
-              value={currentView === 'add' ? newProduct.Name : editingProduct?.Name || ''}
+              value={newProduct.Name}
               onChange={handleInputChange}
               placeholder="Product Name"
               required
@@ -299,7 +311,7 @@ const AdminPage: React.FC = () => {
             <input
               type="number"
               name="Price"
-              value={currentView === 'add' ? newProduct.Price : editingProduct?.Price || 0}
+              value={newProduct.Price}
               onChange={handleInputChange}
               placeholder="Price"
               required
@@ -307,7 +319,7 @@ const AdminPage: React.FC = () => {
             <input
               type="number"
               name="Stock"
-              value={currentView === 'add' ? newProduct.Stock : editingProduct?.Stock || 0}
+              value={newProduct.Stock}
               onChange={handleInputChange}
               placeholder="Stock"
               required
@@ -315,7 +327,7 @@ const AdminPage: React.FC = () => {
             <input
               type="text"
               name="Category"
-              value={currentView === 'add' ? newProduct.Category : editingProduct?.Category || ''}
+              value={newProduct.Category}
               onChange={handleInputChange}
               placeholder="Category"
               required
@@ -323,7 +335,7 @@ const AdminPage: React.FC = () => {
             <input
               type="number"
               name="quantity"
-              value={currentView === 'add' ? newProduct.quantity : editingProduct?.quantity || 0}
+              value={newProduct.quantity}
               onChange={handleInputChange}
               placeholder="Quantity"
               required
@@ -331,11 +343,12 @@ const AdminPage: React.FC = () => {
             <input
               type="text"
               name="size"
-              value={currentView === 'add' ? newProduct.size : editingProduct?.size || ''}
+              value={newProduct.size}
               onChange={handleInputChange}
               placeholder="Size"
             />
-            <input type="file" multiple onChange={handleFileChange} required={currentView === 'add'} />
+            <input type="file" onChange={handleImageUrlFileChange} required={currentView === 'add'} />
+            <input type="file" multiple onChange={handleFileChange} />
             <button type="submit">{currentView === 'add' ? 'Add Product' : 'Update Product'}</button>
           </form>
         )}
@@ -394,13 +407,15 @@ const AdminPage: React.FC = () => {
         )}
       </main>
       <footer>
-        <p>&copy; 2024 Jo`s Art. All rights reserved.</p>
+        <p>&copy; 2024 Jo's Art. All rights reserved.</p>
       </footer>
     </div>
   );
 };
 
 export default AdminPage;
+
+
 
 
 

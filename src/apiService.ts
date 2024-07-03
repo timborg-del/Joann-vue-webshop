@@ -48,46 +48,54 @@ export interface ShowroomImage {
     ImageUrl: string;
 }
 
-export const addProduct = async (product: Product, files: FileList): Promise<void> => {
+export const addProduct = async (product: Product, imageUrlFile: File, additionalImages: FileList | null): Promise<void> => {
     const formData = new FormData();
     formData.append('product', JSON.stringify(product));
-    Array.from(files).forEach((file, index) => {
-        formData.append(`file${index}`, file);
-    });
-
+    formData.append('imageUrlFile', imageUrlFile);
+    if (additionalImages) {
+      Array.from(additionalImages).forEach((file, index) => {
+        formData.append(`additionalImage${index}`, file);
+      });
+    }
+  
     const response = await fetch(`${API_BASE_URL}/AddProduct`, {
-        method: 'POST',
-        body: formData,
+      method: 'POST',
+      body: formData,
     });
-
+  
     if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to add product: ${errorText}`);
+      const errorText = await response.text();
+      throw new Error(`Failed to add product: ${errorText}`);
     }
-};
-
-export const updateProduct = async (product: Product, files: FileList | null): Promise<void> => {
+  };
+  
+  export const updateProduct = async (product: Product, imageUrlFile: File | null, additionalImages: FileList | null): Promise<void> => {
     const formData = new FormData();
     formData.append('product', JSON.stringify(product));
-    if (files) {
-        Array.from(files).forEach((file, index) => {
-            formData.append(`file${index}`, file);
-        });
+    if (imageUrlFile) {
+      formData.append('imageUrlFile', imageUrlFile);
     }
-
+    if (additionalImages) {
+      Array.from(additionalImages).forEach((file, index) => {
+        formData.append(`additionalImage${index}`, file);
+      });
+    }
+  
     const response = await fetch(`${API_BASE_URL}/UpdateProduct`, {
-        method: 'PUT',
-        body: formData,
+      method: 'PUT',
+      body: formData,
     });
-
+  
     if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Failed to update product:', errorText);
-        throw new Error(`Failed to update product: ${errorText}`);
+      const errorText = await response.text();
+      console.error('Failed to update product:', errorText);
+      throw new Error(`Failed to update product: ${errorText}`);
     }
-
+  
     console.log('Product updated successfully');
-};
+  };
+  
+  
 
 export const getProducts = async (): Promise<Product[]> => {
     const response = await fetch(`${API_BASE_URL}/GetProducts`, {
