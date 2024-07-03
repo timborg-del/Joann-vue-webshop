@@ -161,7 +161,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                 <div className="product-details-dropdown">
                   <div className="product-info">
                     <p><strong>Name:</strong> {product.Name}</p>
-                    <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
+                    <p><strong>Price:</strong> {getPrice(product.RowKey, product.Price).toFixed(2)} SEK</p>
                     <p><strong>Category:</strong> {product.Category}</p>
                     <div className="quantity-controls">
                       <button onClick={() => decrementQuantity(product)}>-</button>
