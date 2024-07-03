@@ -20,12 +20,10 @@ const ShopPage: React.FC = () => {
   }, [location]);
 
   return (
-    <div className={`shop-container ${isVisible ? 'visible' : ''}`}>
+    <div className={`shop-container`}>
       <h1>Shop</h1>
-      <div className="product-list">
         <Product activeProductName={activeProduct} />
       </div>
-    </div>
   );
 };
 

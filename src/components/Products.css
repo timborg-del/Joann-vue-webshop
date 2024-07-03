@@ -3,30 +3,10 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  grid-gap: 10px;
+  gap: 10px;
   height: calc(100vh - 130px);
   padding: 10px;
   width: 100%;
-}
-
-.product-reviews {
-  margin-top: 10px;
-  text-align: left;
-}
-
-.product-reviews p {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.star-rating {
-  color: #ffd700; /* Gold color for stars */
-  font-size: 1rem;
-}
-
-.product-reviews .star-rating {
-  color: #ffd700; /* Gold color for stars */
-  font-size: 1rem;
 }
 
 /* Quantity Controls Styling */
@@ -64,40 +44,6 @@
   padding: 5px 0;
   margin: 0 5px;
   background-color: #f9f9f9;
-}
-
-.product-reviews button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  margin-top: 10px;
-  border-radius: 5px;
-}
-
-.product-reviews button:hover {
-  background-color: #0056b3;
-}
-
-.quantity-buttons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  margin-top: 10px;
-}
-
-.quantity-buttons button {
-  margin: 0 5px;
-  padding: 5px 10px;
-  font-size: 16px;
-  cursor: pointer;
-}
-
-.quantity-buttons span {
-  font-size: 16px;
-  color: #333; /* Dark text color */
-  margin: 0 10px;
 }
 
 .product-wrapper {
@@ -196,7 +142,7 @@
   max-width: 1000px;
   height: 80vh; /* Set a fixed height */
   padding: 20px;
-  background: #ffffff; /* Background color */
+  background: #fffefd; /* Background color */
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Shadow for depth */
   border-radius: 5px;
   overflow: hidden;
@@ -207,28 +153,56 @@
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: transparent;
-  color: gray;
+  background-color: none; /* Tomato color */
+  color: gray; /* Text color */
   border: none;
   font-size: 2rem; /* Increase the size of the "X" */
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 1001; /* Ensure it is on top of other elements */
+  z-index: 1080; /* Ensure it is on top of other elements */
   transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for smooth hover effect */
 }
 
 .close-button-details:hover {
-  background-color: rgba(0, 0, 0, 0.1);
-  transform: scale(1.1); /* Slightly enlarge the button on hover */
+  background-color: gray; /* Darker tomato color on hover */
+  
 }
 
-.product-card.active .product-thumbnail {
-  width: 48%; /* Image takes up 48% of the width */
-  height: 100%; /* Make image fit the height */
-  object-fit: cover;
-  margin-right: 2%; /* Space between the image and the details */
-  transition: transform 0.5s ease;
+.image-gallery-container {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  height: 100vh; /* Always take 48% of the width of product-card.active */
+}
+
+.gallery-nav-button-left{
+  background-color: #9ca4ad; /* Blue color */
+  color: white; /* Text color */
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%; /* Make the button round */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+
+.gallery-nav-button-right {
+  background-color: #9ca4ad; /* Blue color */
+  color: white; /* Text color */
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 50%; /* Make the button round */
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.gallery-nav-button:hover {
+  background-color: #0056b3; /* Darker blue color on hover */
+  color: white; /* Text color */
 }
 
 .product-details-dropdown {
@@ -239,7 +213,7 @@
   padding: 30px;
   background-color: rgba(255, 255, 255, 0.9); /* Light background for contrast */
   border-radius: 5px; /* Rounded corners */
-  width: 48%; /* Details take up 48% of the width */
+  min-width: 35%; /* Details take up 48% of the width */
   max-height: 500px; /* Make details fit the height */
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1); /* Inner shadow for depth */
   transition: opacity 0.5s ease, transform 0.5s ease;
@@ -261,14 +235,6 @@
   text-align: left;
 }
 
-.controls-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  margin-top: 10px;
-}
-
 .quantity-controls {
   display: flex;
   align-items: center;
@@ -280,7 +246,7 @@
 }
 
 .buy-btn {
-  background-color: #007bff;
+  background-color: #14ab37;
   color: #fff;
   border: none;
   padding: 10px 20px;
@@ -290,7 +256,7 @@
 }
 
 .buy-btn:hover {
-  background-color: #0056b3; /* Darker blue on hover */
+  background-color: #218838; /* Darker green on hover */
   transform: scale(1.05); /* Slightly larger on hover */
 }
 
@@ -338,36 +304,37 @@
 /* Phone View */
 @media screen and (max-width: 767px) {
   .product-wrapper {
-    width: calc(50% - 10px); /* 2 cards per row */
+    width: calc(100% - 20px); /* 1 card per row on mobile screens */
+    margin: 10px 0;
   }
 
   .product-card {
-    max-width: 150px; /* Static width for phone view */
-    max-height: 200px; /* Static height for phone view */
+    max-width: 100%; /* Full width for phone view */
+    max-height: auto; /* Auto height for phone view */
   }
 
   .product-thumbnail {
-    width: 150px; /* Fixed width for thumbnails */
-    height: 200px; /* Fixed height for thumbnails */
+    width: 100%; /* Full width for thumbnails */
+    height: auto; /* Auto height for thumbnails */
     object-fit: cover;
   }
 
   .product-image {
-    width: auto;
-    height: 80%; /* Ensure the image fills the thumbnail */
+    width: 100%;
+    height: auto; /* Ensure the image fills the thumbnail */
     object-fit: cover;
   }
 
   .product-card.active {
     flex-direction: column;
-    width: 90%;
+    width: 100%;
     min-height: 100vh; /* Full viewport height */
     padding: 10px;
     z-index: 1004;
     border-radius: 5px; /* Rounded corners */
-    transform: translate(-50%, -50%) scale(1);
-    top: 50%;
-    left: 50%;
+    transform: translate(0, 0) scale(1);
+    top: 0;
+    left: 0;
     overflow: hidden; /* Prevent overflow */
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Shadow for depth */
     background-color: #ffffff; /* Background color */
@@ -378,15 +345,15 @@
   }
 
   .product-card.active .product-image {
-    width: auto;
-    height: 50vh; /* Image takes up 50% of the viewport height */
+    width: 100%;
+    height: auto; /* Image takes up full width */
     object-fit: cover;
     cursor: pointer;
   }
 
   .product-card.active .product-details-dropdown {
     width: 100%;
-    height: calc(50vh - 20px); /* Details take up the remaining 50% of the viewport height minus padding */
+    height: auto; /* Details take up remaining space */
     margin-top: 10px;
     overflow-y: auto; /* Add scroll if needed */
   }
@@ -415,7 +382,7 @@
   }
 
   .buy-btn {
-    background-color: #007bff;
+    background-color: #28a745;
     color: #fff;
     border: none;
     padding: 10px 20px;
@@ -426,7 +393,7 @@
   }
 
   .buy-btn:hover {
-    background-color: #0056b3; /* Darker blue on hover */
+    background-color: #218838; /* Darker green on hover */
     transform: scale(1.05); /* Slightly larger on hover */
   }
 
@@ -468,7 +435,7 @@
   }
   
   .select-container select:focus {
-    border-color: #007bff;
+    border-color: #00ff40;
     outline: none;
     box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
   }
@@ -476,7 +443,6 @@
   .select-container select option {
     padding: 10px;
   }
-  
 }
 
 /* Large Desktop View */
