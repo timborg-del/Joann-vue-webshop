@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import './AdminPage.css'; // Import CSS file for styling
-import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage } from '../apiService';
+import { getProducts, Product, deleteProduct, getShowroomImages, ShowroomImage, deleteShowroomImage } from '../apiService';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -17,7 +17,6 @@ const AdminPage: React.FC = () => {
     quantity: 0, // Default value
     size: '', // Default value
   });
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [newShowroomImage, setNewShowroomImage] = useState<ShowroomImage>({
     PartitionKey: 'showroom',
     RowKey: '',
@@ -89,7 +88,21 @@ const AdminPage: React.FC = () => {
         AdditionalImages: [], // Initialize as an empty array
       };
 
-      await addProduct(productToAdd, Array.from(selectedFiles));
+      const formData = new FormData();
+      formData.append('product', JSON.stringify(productToAdd));
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append(`file${i}`, selectedFiles[i]);
+      }
+
+      const response = await fetch('https://joart.azurewebsites.net/AddProduct', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to add product: ${errorText}`);
+      }
 
       setProducts([...products, productToAdd]);
       setNewProduct({
@@ -113,11 +126,35 @@ const AdminPage: React.FC = () => {
 
   const handleUpdateProduct = async (e: FormEvent) => {
     e.preventDefault();
+    if (!selectedFiles || selectedFiles.length === 0) {
+      setError('Please select at least one file to upload.');
+      return;
+    }
+
     try {
-      await updateProduct(newProduct, selectedFiles ? Array.from(selectedFiles) : []);
-      const updatedProducts = products.map(p => (p.RowKey === newProduct.RowKey ? newProduct : p));
+      const productToUpdate = {
+        ...newProduct,
+        AdditionalImages: [], // Initialize as an empty array
+      };
+
+      const formData = new FormData();
+      formData.append('product', JSON.stringify(productToUpdate));
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append(`file${i}`, selectedFiles[i]);
+      }
+
+      const response = await fetch('https://joart.azurewebsites.net/UpdateProduct', {
+        method: 'PUT',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to update product: ${errorText}`);
+      }
+
+      const updatedProducts = products.map(p => (p.RowKey === newProduct.RowKey ? productToUpdate : p));
       setProducts(updatedProducts);
-      setEditingProduct(null);
       setNewProduct({
         PartitionKey: 'product',
         RowKey: '',
@@ -129,11 +166,17 @@ const AdminPage: React.FC = () => {
         quantity: 0, // Reset quantity
         size: '', // Reset size
       });
+      setSelectedFiles(null);
       setCurrentView('products');
       setError(null);
     } catch (err) {
       setError('Failed to update product');
     }
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setNewProduct(product);
+    setCurrentView('edit');
   };
 
   const handleDeleteProduct = async (partitionKey: string, rowKey: string) => {
@@ -146,18 +189,38 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const handleDeleteShowroomImage = async (partitionKey: string, rowKey: string) => {
+    try {
+      await deleteShowroomImage(partitionKey, rowKey);
+      const updatedImages = showroomImages.filter(image => image.PartitionKey !== partitionKey || image.RowKey !== rowKey);
+      setShowroomImages(updatedImages);
+    } catch (err) {
+      setError('Failed to delete showroom image');
+    }
+  };
+
   const handleAddShowroomImage = async (e: FormEvent) => {
     e.preventDefault();
     if (!selectedFiles || selectedFiles.length === 0) {
-      setError('Please select a file to upload.');
+      setError('Please select at least one file to upload.');
       return;
     }
 
     try {
-      const file = selectedFiles[0]; // Only one file is expected for showroom image
       const imageToAdd = { ...newShowroomImage, RowKey: Date.now().toString() };
+      const formData = new FormData();
+      formData.append('showroomImage', JSON.stringify(imageToAdd));
+      formData.append('file', selectedFiles[0]); // Assuming only one file for showroom image
 
-      await addShowroomImage(imageToAdd, file);
+      const response = await fetch('https://joart.azurewebsites.net/AddShowroomImage', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to add showroom image: ${errorText}`);
+      }
 
       setShowroomImages([...showroomImages, imageToAdd]);
       setNewShowroomImage({
@@ -172,16 +235,6 @@ const AdminPage: React.FC = () => {
       setError(null);
     } catch (err) {
       setError('Failed to add showroom image');
-    }
-  };
-
-  const handleDeleteShowroomImage = async (partitionKey: string, rowKey: string) => {
-    try {
-      await deleteShowroomImage(partitionKey, rowKey);
-      const updatedImages = showroomImages.filter(image => image.PartitionKey !== partitionKey || image.RowKey !== rowKey);
-      setShowroomImages(updatedImages);
-    } catch (err) {
-      setError('Failed to delete showroom image');
     }
   };
 
@@ -205,7 +258,6 @@ const AdminPage: React.FC = () => {
       <aside>
         <button onClick={() => setCurrentView('products')}>Products</button>
         <button onClick={() => {
-          setEditingProduct(null);
           setNewProduct({
             PartitionKey: 'product',
             RowKey: '',
@@ -268,11 +320,7 @@ const AdminPage: React.FC = () => {
                     <td>{product.Stock}</td>
                     <td>{product.Category}</td>
                     <td>
-                      <button onClick={() => {
-                        setEditingProduct(product);
-                        setNewProduct(product);
-                        setCurrentView('edit');
-                      }}>Edit</button>
+                      <button onClick={() => handleEditProduct(product)}>Edit</button>
                       <button onClick={() => handleDeleteProduct(product.PartitionKey, product.RowKey)}>Delete</button>
                     </td>
                   </tr>
@@ -398,6 +446,9 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
+
+
 
 
 
