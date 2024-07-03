@@ -51,7 +51,7 @@ body {
   max-width: 400px; /* Adjust max width as needed */
   margin-right: 20px;
   color: #ffffff;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(242, 157, 0, 0.89);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
@@ -66,7 +66,7 @@ body {
 }
 
 .intro-text p {
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   line-height: 1.6;
   margin-bottom: 10px;
 }

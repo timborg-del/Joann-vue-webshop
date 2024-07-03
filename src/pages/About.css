@@ -28,7 +28,7 @@
   max-width: 800px;
   width: 100%; /* Ensure content is responsive */
   padding: 20px;
-  background: rgba(0, 0, 0, 0.539);
+  background: rgba(84, 11, 81, 0.831);
   border-radius: 16px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
   backdrop-filter: blur(1.1px);
@@ -37,7 +37,6 @@
   transition: opacity 0.5s ease-in-out;
   border: 1px solid rgba(255, 255, 255, 0.13);
   margin-top: 60px; /* Add margin-top to ensure content does not overlap with fixed h2 */
-  
 }
 
 .about-content.visible {
@@ -54,10 +53,24 @@
 
 /* Style paragraphs for readability */
 .about-content p {
-  font-size: 1rem; /* Adjust font size for better readability */
+  font-size: x-large; /* Adjust font size for better readability */
   line-height: 1.6;
   color: #ffffff;
   margin-bottom: 10px; /* Add margin between paragraphs */
+}
+
+/* Style for the YouTube video container */
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px; /* Add some space above the video */
+}
+
+iframe {
+  width: 30rem;
+  height: 30rem;
+  border-radius: 10px;
 }
 
 /* Responsive adjustments */
@@ -65,6 +78,12 @@
   .about-content {
     max-width: 100%;
     font-size: 1rem; /* Adjust font size for smaller screens */
+  }
+
+  iframe {
+    width: auto;
+    height: auto;
+    border-radius: 10px;
   }
   
   .about-content p {
@@ -75,3 +94,4 @@
     font-size: 1.5rem; /* Adjust heading size for smaller screens */
   }
 }
+
