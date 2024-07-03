@@ -63,10 +63,18 @@ const AdminPage: React.FC = () => {
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
-    if (name === 'Price' || name === 'Stock' || name === 'quantity') {
-      setNewProduct({ ...newProduct, [name]: parseFloat(value) });
-    } else {
-      setNewProduct({ ...newProduct, [name]: value });
+    if (currentView === 'add') {
+      if (name === 'Price' || name === 'Stock' || name === 'quantity') {
+        setNewProduct({ ...newProduct, [name]: parseFloat(value) });
+      } else {
+        setNewProduct({ ...newProduct, [name]: value });
+      }
+    } else if (currentView === 'edit' && editingProduct) {
+      if (name === 'Price' || name === 'Stock' || name === 'quantity') {
+        setEditingProduct({ ...editingProduct, [name]: parseFloat(value) });
+      } else {
+        setEditingProduct({ ...editingProduct, [name]: value });
+      }
     }
   };
 
@@ -114,30 +122,21 @@ const AdminPage: React.FC = () => {
 
   const handleEditProduct = (product: Product) => {
     setEditingProduct(product);
-    setNewProduct(product);
     setCurrentView('edit');
   };
 
   const handleUpdateProduct = async (e: FormEvent) => {
     e.preventDefault();
+    if (!editingProduct) {
+      setError('No product selected for editing.');
+      return;
+    }
     try {
-      await updateProduct(newProduct, selectedFiles);
+      await updateProduct(editingProduct, selectedFiles);
 
-      const updatedProducts = products.map(p => (p.RowKey === newProduct.RowKey ? newProduct : p));
+      const updatedProducts = products.map(p => (p.RowKey === editingProduct.RowKey ? editingProduct : p));
       setProducts(updatedProducts);
       setEditingProduct(null);
-      setNewProduct({
-        PartitionKey: 'product',
-        RowKey: '',
-        Name: '',
-        Price: 0,
-        Stock: 0,
-        Category: '',
-        ImageUrl: '',
-        AdditionalImages: [],
-        quantity: 0,
-        size: '',
-      });
       setSelectedFiles(null);
       setCurrentView('products');
       setError(null);
@@ -292,7 +291,7 @@ const AdminPage: React.FC = () => {
             <input
               type="text"
               name="Name"
-              value={newProduct.Name}
+              value={currentView === 'add' ? newProduct.Name : editingProduct?.Name || ''}
               onChange={handleInputChange}
               placeholder="Product Name"
               required
@@ -300,7 +299,7 @@ const AdminPage: React.FC = () => {
             <input
               type="number"
               name="Price"
-              value={newProduct.Price}
+              value={currentView === 'add' ? newProduct.Price : editingProduct?.Price || 0}
               onChange={handleInputChange}
               placeholder="Price"
               required
@@ -308,7 +307,7 @@ const AdminPage: React.FC = () => {
             <input
               type="number"
               name="Stock"
-              value={newProduct.Stock}
+              value={currentView === 'add' ? newProduct.Stock : editingProduct?.Stock || 0}
               onChange={handleInputChange}
               placeholder="Stock"
               required
@@ -316,7 +315,7 @@ const AdminPage: React.FC = () => {
             <input
               type="text"
               name="Category"
-              value={newProduct.Category}
+              value={currentView === 'add' ? newProduct.Category : editingProduct?.Category || ''}
               onChange={handleInputChange}
               placeholder="Category"
               required
@@ -324,7 +323,7 @@ const AdminPage: React.FC = () => {
             <input
               type="number"
               name="quantity"
-              value={newProduct.quantity}
+              value={currentView === 'add' ? newProduct.quantity : editingProduct?.quantity || 0}
               onChange={handleInputChange}
               placeholder="Quantity"
               required
@@ -332,7 +331,7 @@ const AdminPage: React.FC = () => {
             <input
               type="text"
               name="size"
-              value={newProduct.size}
+              value={currentView === 'add' ? newProduct.size : editingProduct?.size || ''}
               onChange={handleInputChange}
               placeholder="Size"
             />
@@ -402,6 +401,7 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
 
 
 
