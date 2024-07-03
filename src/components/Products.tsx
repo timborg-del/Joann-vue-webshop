@@ -15,6 +15,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const [activeProduct, setActiveProduct] = useState<string | null>(activeProductName);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const { state } = useCart();
   const dispatch = useCartDispatch();
 
@@ -37,10 +38,10 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     setSelectedSizes({ ...selectedSizes, [productId]: size });
   };
 
-  const getPrice = (basePrice: number, size: string) => {
+  const getPrice = (productId: string, basePrice: number) => {
+    const size = selectedSizes[productId] || 'A3';
     const adjustment = priceAdjustments[size] || 0;
-    const priceInSek = basePrice + adjustment;
-    return priceInSek.toFixed(2);
+    return basePrice + adjustment;
   };
 
   const handleAddToCart = (product: Product) => {
@@ -49,7 +50,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     addItemToCart({
       ...product,
       RowKey: uniqueId,
-      Price: product.Price, // Keep the price in SEK
+      Price: getPrice(product.RowKey, product.Price),
       quantity: 1,
       size: size
     });
@@ -61,6 +62,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     const cartItem = state.items.find(item => item.RowKey === uniqueId);
     if (cartItem) {
       dispatch({ type: 'INCREMENT_QUANTITY', payload: uniqueId });
+    } else {
+      addItemToCart(product);
     }
   };
 
@@ -74,6 +77,24 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
       } else {
         dispatch({ type: 'REMOVE_ITEM', payload: uniqueId });
       }
+    }
+  };
+
+  const handleNextImage = () => {
+    if (!products) return;
+    const product = products.find((p) => p.RowKey === activeProduct);
+    if (product && product.AdditionalImages) {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.AdditionalImages.length);
+    }
+  };
+
+  const handlePreviousImage = () => {
+    if (!products) return;
+    const product = products.find((p) => p.RowKey === activeProduct);
+    if (product && product.AdditionalImages) {
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? product.AdditionalImages.length - 1 : prevIndex - 1
+      );
     }
   };
 
@@ -94,21 +115,33 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   return (
     <div className="products-container">
       {products.length > 0 ? (
-        products.map((product) => {
-          const uniqueId = `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`;
-          const cartItem = state.items.find(item => item.RowKey === uniqueId);
-          const quantity = cartItem ? cartItem.quantity : 0;
-          const size = selectedSizes[product.RowKey] || 'A3';
-
-          return (
-            <div
-              key={product.RowKey}
-              className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
-            >
-              <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
-                {activeProduct === product.RowKey ? (
-                  <>
-                    <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;</button>
+        products.map((product) => (
+          <div
+            key={product.RowKey}
+            className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
+          >
+            <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
+              {activeProduct === product.RowKey ? (
+                <>
+                  <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;</button>
+                  <div className="image-gallery-container">
+                    <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
+                    <img
+                      src={product.AdditionalImages[currentImageIndex] || product.ImageUrl}
+                      alt={product.Name}
+                      className="product-image"
+                      onError={(e) => {
+                        e.currentTarget.src = '/path/to/placeholder-image.jpg';
+                        console.error("Image load error", e);
+                      }}
+                      onClick={() => setEnlargedImage(product.AdditionalImages[currentImageIndex] || product.ImageUrl)}
+                    />
+                    <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
+                  </div>
+                </>
+              ) : (
+                <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
+                  {product.ImageUrl ? (
                     <img
                       src={product.ImageUrl}
                       alt={product.Name}
@@ -117,67 +150,50 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                         e.currentTarget.src = '/path/to/placeholder-image.jpg';
                         console.error("Image load error", e);
                       }}
-                      onClick={() => setEnlargedImage(product.ImageUrl)}
                     />
-                  </>
-                ) : (
-                  <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
-                    {product.ImageUrl ? (
-                      <img
-                        src={product.ImageUrl}
-                        alt={product.Name}
-                        className="product-image"
-                        onError={(e) => {
-                          e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                          console.error("Image load error", e);
-                        }}
-                      />
-                    ) : (
-                      <div className="no-image">No Image Available</div>
-                    )}
-                    <div className="product-name">{product.Name}</div>
-                  </div>
-                )}
-                {activeProduct === product.RowKey && (
-                  <div className="product-details-dropdown">
-                    <div className="product-info">
-                      <p><strong>Name:</strong> {product.Name}</p>
-                      <p><strong>Price:</strong> {getPrice(product.Price, size)} SEK</p>
-                      <p><strong>Category:</strong> {product.Category}</p>
-                    </div>
-                    <div className="select-container">
-                      <label htmlFor={`size-${product.RowKey}`}>Size:</label>
-                      <select
-                        id={`size-${product.RowKey}`}
-                        value={selectedSizes[product.RowKey] || 'A3'}
-                        onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
-                      >
-                        <option value="A3">A3</option>
-                        <option value="A4">A4</option>
-                        <option value="A5">A5</option>
-                      </select>
-                    </div>
-                    <div className="controls-container">
-                      {quantity > 0 && (
-                        <div className="quantity-controls">
-                          <button onClick={() => decrementQuantity(product)}>-</button>
-                          <span>{quantity}</span>
-                          <button onClick={() => incrementQuantity(product)}>+</button>
-                        </div>
-                      )}
-                      <button
-                        className="buy-btn"
-                        onClick={() => handleAddToCart(product)}
-                      >
-                        Add to Cart
-                      </button>
+                  ) : (
+                    <div className="no-image">No Image Available</div>
+                  )}
+                  <div className="product-name">{product.Name}</div>
+                </div>
+              )}
+              {activeProduct === product.RowKey && (
+                <div className="product-details-dropdown">
+                  <div className="product-info">
+                    <p><strong>Name:</strong> {product.Name}</p>
+                    <p><strong>Price:</strong> ${getPrice(product.RowKey, product.Price).toFixed(2)}</p>
+                    <p><strong>Category:</strong> {product.Category}</p>
+                    <div className="quantity-controls">
+                      <button onClick={() => decrementQuantity(product)}>-</button>
+                      <span>{state.items.find(item => item.RowKey === `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)?.quantity ?? 0}</span>
+                      <button onClick={() => incrementQuantity(product)}>+</button>
                     </div>
                   </div>
-                )}
-              </div>
+                  <div className="select-container">
+                    <label htmlFor={`size-${product.RowKey}`}>Size:</label>
+                    <select
+                      id={`size-${product.RowKey}`}
+                      value={selectedSizes[product.RowKey] || 'A3'}
+                      onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
+                    >
+                      <option value="A3">A3</option>
+                      <option value="A4">A4</option>
+                      <option value="A5">A5</option>
+                    </select>
+                  </div>
+                  <div className="buy-btn-container">
+                    <button
+                      className="buy-btn"
+                      onClick={() => handleAddToCart(product)}
+                    >
+                      Add to Cart
+                    </button>
+                  </div>
+                </div>
+              )}
             </div>
-          );
-        })
+          </div>
+        ))
       ) : (
         <div>No products available</div>
       )}

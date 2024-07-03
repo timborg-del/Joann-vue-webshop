@@ -24,7 +24,10 @@ const App: React.FC = () => {
     <Router>
       <CartProvider>
         <nav className="navbar">
-          <div className='centerLinks'>
+          <div className='centerLinks'>        
+            <Link to="/">Home</Link>
+            <Link to="/about">About</Link>
+            <Link to="/admin"></Link>
             <div className="dropdown" onMouseEnter={() => setIsShopOpen(true)} onMouseLeave={() => setIsShopOpen(false)}>           
               <h1 className='h1shop'>Shop</h1>
               <div className={`dropdownContent ${isShopOpen ? 'open' : ''}`}>
@@ -33,11 +36,8 @@ const App: React.FC = () => {
                 <Link to="/shoppage">Download</Link>
                 <Link to="/shoppage">Pencils</Link>
               </div>
-            </div>
-            <Link to="/">Home</Link>
-            <Link to="/about">About</Link>
-            <Link to="/admin">Admin</Link>
-          </div>
+              </div>
+          </div>            
           <div>
             <button className="cart-button" onClick={toggleCartVisibility}>
               <CartButton onClick={toggleCartVisibility} />

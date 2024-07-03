@@ -10,6 +10,7 @@ export interface Product {
     Stock: number;
     Category: string;
     ImageUrl: string;
+    AdditionalImages: string[];
     quantity: number;
     size?: string;
 }

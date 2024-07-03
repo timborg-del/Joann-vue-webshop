@@ -10,7 +10,7 @@
   margin: 0;
   overflow-y: auto;
   transition: right 0.5s ease;
-  z-index: 1000;
+  z-index: 1005;
 }
 
 .cart-page-container.active {
