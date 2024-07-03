@@ -7,32 +7,6 @@
   height: calc(100vh - 130px);
   padding: 10px;
   width: 100%;
-  opacity: 0; /* Start with opacity 0 */
-  transition: opacity 0.5s ease-in-out; /* Add opacity transition */
-}
-
-.products-container.visible {
-  opacity: 1; /* Set opacity to 1 when the visible class is applied */
-}
-
-.product-reviews {
-  margin-top: 10px;
-  text-align: left;
-}
-
-.product-reviews p {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-.star-rating {
-  color: #ffd700; /* Gold color for stars */
-  font-size: 1rem;
-}
-
-.product-reviews .star-rating {
-  color: #ffd700; /* Gold color for stars */
-  font-size: 1rem;
 }
 
 /* Quantity Controls Styling */
@@ -72,19 +46,6 @@
   background-color: #f9f9f9;
 }
 
-.product-reviews button {
-  background-color: #007bff;
-  color: white;
-  border: none;
-  padding: 5px 10px;
-  cursor: pointer;
-  margin-top: 10px;
-  border-radius: 5px;
-}
-
-.product-reviews button:hover {
-  background-color: #0056b3;
-}
 
 .quantity-buttons {
   display: flex;
