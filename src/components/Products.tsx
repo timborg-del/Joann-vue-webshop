@@ -83,7 +83,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const handleNextImage = () => {
     if (!products) return;
     const product = products.find((p) => p.RowKey === activeProduct);
-    if (product && product.AdditionalImages) {
+    if (product && product.AdditionalImages && product.AdditionalImages.length > 0) {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.AdditionalImages.length);
     }
   };
@@ -91,7 +91,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const handlePreviousImage = () => {
     if (!products) return;
     const product = products.find((p) => p.RowKey === activeProduct);
-    if (product && product.AdditionalImages) {
+    if (product && product.AdditionalImages && product.AdditionalImages.length > 0) {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === 0 ? product.AdditionalImages.length - 1 : prevIndex - 1
       );
@@ -127,14 +127,14 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                   <div className="image-gallery-container">
                     <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
                     <img
-                      src={product.AdditionalImages[currentImageIndex] || product.ImageUrl}
+                      src={product.AdditionalImages && product.AdditionalImages[currentImageIndex] || product.ImageUrl}
                       alt={product.Name}
                       className="product-image"
                       onError={(e) => {
                         e.currentTarget.src = '/path/to/placeholder-image.jpg';
                         console.error("Image load error", e);
                       }}
-                      onClick={() => setEnlargedImage(product.AdditionalImages[currentImageIndex] || product.ImageUrl)}
+                      onClick={() => setEnlargedImage(product.AdditionalImages && product.AdditionalImages[currentImageIndex] || product.ImageUrl)}
                     />
                     <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
                   </div>
