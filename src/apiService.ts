@@ -48,54 +48,41 @@ export interface ShowroomImage {
     ImageUrl: string;
 }
 
-export const addProduct = async (product: Product, imageUrlFile: File, additionalImages: FileList | null): Promise<void> => {
+export const addProduct = async (product: Product, file: File): Promise<void> => {
     const formData = new FormData();
     formData.append('product', JSON.stringify(product));
-    formData.append('imageUrlFile', imageUrlFile);
-    if (additionalImages) {
-      Array.from(additionalImages).forEach((file, index) => {
-        formData.append(`additionalImage${index}`, file);
-      });
-    }
-  
+    formData.append('file', file);
+
     const response = await fetch(`${API_BASE_URL}/AddProduct`, {
-      method: 'POST',
-      body: formData,
+        method: 'POST',
+        body: formData,
     });
-  
+
     if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`Failed to add product: ${errorText}`);
+        const errorText = await response.text();
+        throw new Error(`Failed to add product: ${errorText}`);
     }
-  };
-  
-  export const updateProduct = async (product: Product, imageUrlFile: File | null, additionalImages: FileList | null): Promise<void> => {
-    const formData = new FormData();
-    formData.append('product', JSON.stringify(product));
-    if (imageUrlFile) {
-      formData.append('imageUrlFile', imageUrlFile);
-    }
-    if (additionalImages) {
-      Array.from(additionalImages).forEach((file, index) => {
-        formData.append(`additionalImage${index}`, file);
-      });
-    }
-  
+};
+
+export const updateProduct = async (product: Product): Promise<void> => {
+    console.log('Updating product:', product);
+
     const response = await fetch(`${API_BASE_URL}/UpdateProduct`, {
-      method: 'PUT',
-      body: formData,
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(product),
     });
-  
+
     if (!response.ok) {
-      const errorText = await response.text();
-      console.error('Failed to update product:', errorText);
-      throw new Error(`Failed to update product: ${errorText}`);
+        const errorText = await response.text();
+        console.error('Failed to update product:', errorText);
+        throw new Error(`Failed to update product: ${errorText}`);
     }
-  
+
     console.log('Product updated successfully');
-  };
-  
-  
+};
 
 export const getProducts = async (): Promise<Product[]> => {
     const response = await fetch(`${API_BASE_URL}/GetProducts`, {
@@ -180,44 +167,44 @@ export const getUser = async (partitionKey: string, rowKey: string): Promise<Use
 // Function to fetch reviews for a product
 export const getReviews = async (productId: string): Promise<Review[]> => {
     const response = await fetch(`${API_BASE_URL}/products/${productId}/reviews`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
     });
-
+  
     if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to fetch reviews: ${errorText}`);
+      const errorText = await response.text();
+      throw new Error(`Failed to fetch reviews: ${errorText}`);
     }
-
+  
     const reviews: Review[] = await response.json();
     return reviews;
-};
-
-// Function to submit a review for a product
+  };
+  
+  // Function to submit a review for a product
 export const submitReview = async (productId: string, user: string, rating: number, comment: string): Promise<void> => {
     const review = {
-        user,
-        rating,
-        comment,
-        productId
+      user,
+      rating,
+      comment,
+      productId
     };
-
+  
     const response = await fetch(`https://joart.azurewebsites.net/SubmitReview`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(review),
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(review),
     });
-
+  
     if (!response.ok) {
-        const errorText = await response.text();
-        console.error('Failed to submit review:', errorText);
-        throw new Error(`Failed to submit review: ${errorText}`);
+      const errorText = await response.text();
+      console.error('Failed to submit review:', errorText);
+      throw new Error(`Failed to submit review: ${errorText}`);
     }
-};
+  };
 
 // Utility function to check authentication
 export const isAuthenticated = (): boolean => {
@@ -297,7 +284,6 @@ export const deleteShowroomImage = async (partitionKey: string, rowKey: string):
         throw new Error(`Failed to delete showroom image: ${errorText}`);
     }
 };
-
 
 
 

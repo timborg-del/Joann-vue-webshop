@@ -14,11 +14,11 @@ const AdminPage: React.FC = () => {
     Stock: 0,
     Category: '',
     ImageUrl: '',
-    AdditionalImages: [],
+    AdditionalImages:[],
     quantity: 0, // Default value
     size: '', // Default value
   });
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [, setEditingProduct] = useState<Product | null>(null);
   const [newShowroomImage, setNewShowroomImage] = useState<ShowroomImage>({
     PartitionKey: 'showroom',
     RowKey: '',
@@ -30,8 +30,7 @@ const AdminPage: React.FC = () => {
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit' | 'showroom' | 'addShowroomImage'>('dashboard');
   const [error, setError] = useState<string | null>(null);
-  const [selectedFiles, setSelectedFiles] = useState<FileList | null>(null);
-  const [imageUrlFile, setImageUrlFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [, setToken] = useLocalStorage<string | null>('token', null);
   const navigate = useNavigate();
 
@@ -73,31 +72,21 @@ const AdminPage: React.FC = () => {
 
   const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
-      setSelectedFiles(e.target.files);
-    }
-  };
-
-  const handleImageUrlFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setImageUrlFile(e.target.files[0]);
+      const file = e.target.files[0];
+      setSelectedFile(file);
     }
   };
 
   const handleAddProduct = async (e: FormEvent) => {
     e.preventDefault();
-    if (!imageUrlFile) {
-      setError('Please select an image file for ImageUrl.');
+    if (!selectedFile) {
+      setError('Please select a file to upload.');
       return;
     }
 
     try {
-      const productToAdd = {
-        ...newProduct,
-        RowKey: Date.now().toString(),
-        AdditionalImages: [], // Initialize as an empty array
-      };
-
-      await addProduct(productToAdd, imageUrlFile, selectedFiles);
+      const productToAdd = { ...newProduct, RowKey: Date.now().toString() };
+      await addProduct(productToAdd, selectedFile);
       setProducts([...products, productToAdd]);
       setNewProduct({
         PartitionKey: 'product',
@@ -107,12 +96,11 @@ const AdminPage: React.FC = () => {
         Stock: 0,
         Category: '',
         ImageUrl: '',
-        AdditionalImages: [],
+        AdditionalImages:[],
         quantity: 0, // Reset quantity
         size: '', // Reset size
       });
-      setSelectedFiles(null);
-      setImageUrlFile(null);
+      setSelectedFile(null);
       setCurrentView('products');
       setError(null);
     } catch (err) {
@@ -120,13 +108,43 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  const handleUpdateProduct = async (e: FormEvent) => {
+  const handleAddShowroomImage = async (e: FormEvent) => {
     e.preventDefault();
-    if (!editingProduct) return;
+    if (!selectedFile) {
+      setError('Please select a file to upload.');
+      return;
+    }
 
     try {
-      await updateProduct(editingProduct, imageUrlFile, selectedFiles);
-      const updatedProducts = products.map(p => (p.RowKey === editingProduct.RowKey ? editingProduct : p));
+      const imageToAdd = { ...newShowroomImage, RowKey: Date.now().toString() };
+      await addShowroomImage(imageToAdd, selectedFile);
+      setShowroomImages([...showroomImages, imageToAdd]);
+      setNewShowroomImage({
+        PartitionKey: 'showroom',
+        RowKey: '',
+        Title: '',
+        Description: '',
+        ImageUrl: ''
+      });
+      setSelectedFile(null);
+      setCurrentView('showroom');
+      setError(null);
+    } catch (err) {
+      setError('Failed to add showroom image');
+    }
+  };
+
+  const handleEditProduct = (product: Product) => {
+    setEditingProduct(product);
+    setNewProduct(product);
+    setCurrentView('edit');
+  };
+
+  const handleUpdateProduct = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      await updateProduct(newProduct);
+      const updatedProducts = products.map(p => (p.RowKey === newProduct.RowKey ? newProduct : p));
       setProducts(updatedProducts);
       setEditingProduct(null);
       setNewProduct({
@@ -137,23 +155,15 @@ const AdminPage: React.FC = () => {
         Stock: 0,
         Category: '',
         ImageUrl: '',
-        AdditionalImages: [],
+        AdditionalImages:[],
         quantity: 0, // Reset quantity
         size: '', // Reset size
       });
-      setSelectedFiles(null);
-      setImageUrlFile(null);
       setCurrentView('products');
       setError(null);
     } catch (err) {
       setError('Failed to update product');
     }
-  };
-
-  const handleEditProduct = (product: Product) => {
-    setEditingProduct(product);
-    setNewProduct(product);
-    setCurrentView('edit');
   };
 
   const handleDeleteProduct = async (partitionKey: string, rowKey: string) => {
@@ -173,32 +183,6 @@ const AdminPage: React.FC = () => {
       setShowroomImages(updatedImages);
     } catch (err) {
       setError('Failed to delete showroom image');
-    }
-  };
-
-  const handleAddShowroomImage = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!selectedFiles || selectedFiles.length === 0) {
-      setError('Please select an image file.');
-      return;
-    }
-
-    try {
-      const file = selectedFiles[0];
-      await addShowroomImage(newShowroomImage, file);
-      setShowroomImages([...showroomImages, newShowroomImage]);
-      setNewShowroomImage({
-        PartitionKey: 'showroom',
-        RowKey: '',
-        Title: '',
-        Description: '',
-        ImageUrl: ''
-      });
-      setSelectedFiles(null);
-      setCurrentView('showroom');
-      setError(null);
-    } catch (err) {
-      setError('Failed to add showroom image');
     }
   };
 
@@ -231,12 +215,11 @@ const AdminPage: React.FC = () => {
             Stock: 0,
             Category: '',
             ImageUrl: '',
-            AdditionalImages: [],
+            AdditionalImages:[],
             quantity: 0, // Reset quantity
             size: '', // Reset size
           });
-          setSelectedFiles(null);
-          setImageUrlFile(null);
+          setSelectedFile(null);
           setCurrentView('add');
         }}>Add New Product</button>
         <button onClick={() => setCurrentView('showroom')}>Showroom</button>
@@ -248,7 +231,7 @@ const AdminPage: React.FC = () => {
             Description: '',
             ImageUrl: ''
           });
-          setSelectedFiles(null);
+          setSelectedFile(null);
           setCurrentView('addShowroomImage');
         }}>Add Showroom Image</button>
       </aside>
@@ -265,9 +248,9 @@ const AdminPage: React.FC = () => {
             <h2>Product List</h2>
             <input
               type="text"
-              placeholder="Search products"
+              placeholder="Search products by name"
               value={searchTerm}
-              onChange={e => setSearchTerm(e.target.value)}
+              onChange={(e: ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
             />
             <table>
               <thead>
@@ -280,7 +263,7 @@ const AdminPage: React.FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {filteredProducts.map(product => (
+                {filteredProducts.map((product) => (
                   <tr key={product.RowKey}>
                     <td>{product.Name}</td>
                     <td>{product.Price}</td>
@@ -347,8 +330,7 @@ const AdminPage: React.FC = () => {
               onChange={handleInputChange}
               placeholder="Size"
             />
-            <input type="file" onChange={handleImageUrlFileChange} required={currentView === 'add'} />
-            <input type="file" multiple onChange={handleFileChange} />
+            <input type="file" onChange={handleFileChange} required={currentView === 'add'} />
             <button type="submit">{currentView === 'add' ? 'Add Product' : 'Update Product'}</button>
           </form>
         )}
@@ -407,19 +389,13 @@ const AdminPage: React.FC = () => {
         )}
       </main>
       <footer>
-        <p>&copy; 2024 Jo's Art. All rights reserved.</p>
+        <p>&copy; 2024 Jo`s Art. All rights reserved.</p>
       </footer>
     </div>
   );
 };
 
 export default AdminPage;
-
-
-
-
-
-
 
 
 
