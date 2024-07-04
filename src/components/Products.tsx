@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
-import { Product } from '../apiService';
+import { Product, AdditionalImage, getAdditionalImages } from '../apiService'; // Ensure getAdditionalImages is imported
 import { useCart, useCartDispatch } from '../context/CartContext';
 
 interface ProductsProps {
@@ -12,6 +12,7 @@ interface ProductsProps {
 const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const { addItemToCart } = useCartActions();
   const { data: products, isLoading, error } = useFetchData<Product[]>('https://joart.azurewebsites.net/GetProducts');
+  const [additionalImages, setAdditionalImages] = useState<AdditionalImage[]>([]);
   const [activeProduct, setActiveProduct] = useState<string | null>(activeProductName);
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
@@ -33,6 +34,19 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
       }
     }
   }, [activeProductName, products]);
+
+  useEffect(() => {
+    const fetchAdditionalImages = async () => {
+      if (products && products.length > 0) {
+        const allAdditionalImages = await Promise.all(
+          products.map(product => getAdditionalImages(product.RowKey))
+        );
+        setAdditionalImages(allAdditionalImages.flat());
+      }
+    };
+
+    fetchAdditionalImages();
+  }, [products]);
 
   const handleSizeChange = (productId: string, size: string) => {
     setSelectedSizes({ ...selectedSizes, [productId]: size });
@@ -81,19 +95,17 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   };
 
   const handleNextImage = () => {
-    if (!products) return;
-    const product = products.find((p) => p.RowKey === activeProduct);
-    if (product && product.AdditionalImages && product.AdditionalImages.length > 0) {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % product.AdditionalImages.length);
+    const productImages = additionalImages.filter(image => image.ProductId === activeProduct);
+    if (productImages.length > 0) {
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % productImages.length);
     }
   };
 
   const handlePreviousImage = () => {
-    if (!products) return;
-    const product = products.find((p) => p.RowKey === activeProduct);
-    if (product && product.AdditionalImages && product.AdditionalImages.length > 0) {
+    const productImages = additionalImages.filter(image => image.ProductId === activeProduct);
+    if (productImages.length > 0) {
       setCurrentImageIndex((prevIndex) =>
-        prevIndex === 0 ? product.AdditionalImages.length - 1 : prevIndex - 1
+        prevIndex === 0 ? productImages.length - 1 : prevIndex - 1
       );
     }
   };
@@ -112,6 +124,10 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     return <div>Error: Unexpected data format</div>;
   }
 
+  const getAdditionalImagesForProduct = (productId: string) => {
+    return additionalImages.filter(image => image.ProductId === productId);
+  };
+
   return (
     <div className="products-container">
       {products.length > 0 ? (
@@ -127,14 +143,14 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                   <div className="image-gallery-container">
                     <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
                     <img
-                      src={product.AdditionalImages && product.AdditionalImages[currentImageIndex] || product.ImageUrl}
+                      src={getAdditionalImagesForProduct(product.RowKey)[currentImageIndex]?.ImageUrl || product.ImageUrl}
                       alt={product.Name}
                       className="product-image"
                       onError={(e) => {
                         e.currentTarget.src = '/path/to/placeholder-image.jpg';
                         console.error("Image load error", e);
                       }}
-                      onClick={() => setEnlargedImage(product.AdditionalImages && product.AdditionalImages[currentImageIndex] || product.ImageUrl)}
+                      onClick={() => setEnlargedImage(getAdditionalImagesForProduct(product.RowKey)[currentImageIndex]?.ImageUrl || product.ImageUrl)}
                     />
                     <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
                   </div>
@@ -208,6 +224,9 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
+
+
 
 
 

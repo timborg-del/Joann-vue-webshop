@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import './AdminPage.css'; // Import CSS file for styling
-import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage } from '../apiService';
+import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage, getAdditionalImages, addAdditionalImage, AdditionalImage } from '../apiService';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -14,9 +14,15 @@ const AdminPage: React.FC = () => {
     Stock: 0,
     Category: '',
     ImageUrl: '',
-    AdditionalImages:[],
     quantity: 0, // Default value
     size: '', // Default value
+  });
+  const [additionalImages, setAdditionalImages] = useState<AdditionalImage[]>([]);
+  const [newAdditionalImage, setNewAdditionalImage] = useState<AdditionalImage>({
+    PartitionKey: '',
+    RowKey: '',
+    ImageUrl: '',
+    ProductId: ''
   });
   const [, setEditingProduct] = useState<Product | null>(null);
   const [newShowroomImage, setNewShowroomImage] = useState<ShowroomImage>({
@@ -28,7 +34,7 @@ const AdminPage: React.FC = () => {
   });
   const [showroomImages, setShowroomImages] = useState<ShowroomImage[]>([]);
   const [searchTerm, setSearchTerm] = useState<string>('');
-  const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit' | 'showroom' | 'addShowroomImage'>('dashboard');
+  const [currentView, setCurrentView] = useState<'dashboard' | 'products' | 'add' | 'edit' | 'showroom' | 'addShowroomImage' | 'additionalImages'>('dashboard');
   const [error, setError] = useState<string | null>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [, setToken] = useLocalStorage<string | null>('token', null);
@@ -60,6 +66,19 @@ const AdminPage: React.FC = () => {
     fetchProducts();
     fetchShowroomImages();
   }, []);
+
+  useEffect(() => {
+    const fetchAdditionalImages = async () => {
+      if (products && products.length > 0) {
+        const allAdditionalImages = await Promise.all(
+          products.map(product => getAdditionalImages(product.RowKey))
+        );
+        setAdditionalImages(allAdditionalImages.flat());
+      }
+    };
+
+    fetchAdditionalImages();
+  }, [products]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -96,7 +115,6 @@ const AdminPage: React.FC = () => {
         Stock: 0,
         Category: '',
         ImageUrl: '',
-        AdditionalImages:[],
         quantity: 0, // Reset quantity
         size: '', // Reset size
       });
@@ -108,7 +126,7 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  const handleAddShowroomImage = async (e: FormEvent) => {
+  const handleAddAdditionalImage = async (e: FormEvent) => {
     e.preventDefault();
     if (!selectedFile) {
       setError('Please select a file to upload.');
@@ -116,23 +134,48 @@ const AdminPage: React.FC = () => {
     }
 
     try {
-      const imageToAdd = { ...newShowroomImage, RowKey: Date.now().toString() };
-      await addShowroomImage(imageToAdd, selectedFile);
-      setShowroomImages([...showroomImages, imageToAdd]);
-      setNewShowroomImage({
-        PartitionKey: 'showroom',
+      const additionalImageToAdd = { ...newAdditionalImage, RowKey: Date.now().toString() };
+      await addAdditionalImage(additionalImageToAdd, selectedFile);
+      setAdditionalImages([...additionalImages, additionalImageToAdd]);
+      setNewAdditionalImage({
+        PartitionKey: '',
         RowKey: '',
-        Title: '',
-        Description: '',
-        ImageUrl: ''
+        ImageUrl: '',
+        ProductId: ''
       });
       setSelectedFile(null);
-      setCurrentView('showroom');
+      setCurrentView('additionalImages');
       setError(null);
     } catch (err) {
-      setError('Failed to add showroom image');
+      setError('Failed to add additional image');
     }
   };
+
+  const handleAddShowroomImage = async (e: FormEvent) => {
+    e.preventDefault();
+    if (!selectedFile) {
+        setError('Please select a file to upload.');
+        return;
+    }
+
+    try {
+        const imageToAdd = { ...newShowroomImage, RowKey: Date.now().toString() };
+        await addShowroomImage(imageToAdd, selectedFile);
+        setShowroomImages([...showroomImages, imageToAdd]);
+        setNewShowroomImage({
+            PartitionKey: 'showroom',
+            RowKey: '',
+            Title: '',
+            Description: '',
+            ImageUrl: ''
+        });
+        setSelectedFile(null);
+        setCurrentView('showroom');
+        setError(null);
+    } catch (err) {
+        setError('Failed to add showroom image');
+    }
+};
 
   const handleEditProduct = (product: Product) => {
     setEditingProduct(product);
@@ -155,7 +198,6 @@ const AdminPage: React.FC = () => {
         Stock: 0,
         Category: '',
         ImageUrl: '',
-        AdditionalImages:[],
         quantity: 0, // Reset quantity
         size: '', // Reset size
       });
@@ -195,6 +237,10 @@ const AdminPage: React.FC = () => {
     product.Name.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const matchAdditionalImages = (product: Product) => {
+    return additionalImages.filter(img => img.ProductId === product.RowKey || img.ImageUrl.includes(product.Name));
+  };
+
   return (
     <div className="admin-container">
       <h1>Admin Page</h1>
@@ -215,7 +261,6 @@ const AdminPage: React.FC = () => {
             Stock: 0,
             Category: '',
             ImageUrl: '',
-            AdditionalImages:[],
             quantity: 0, // Reset quantity
             size: '', // Reset size
           });
@@ -234,6 +279,7 @@ const AdminPage: React.FC = () => {
           setSelectedFile(null);
           setCurrentView('addShowroomImage');
         }}>Add Showroom Image</button>
+        <button onClick={() => setCurrentView('additionalImages')}>Additional Images</button>
       </aside>
       <main>
         {currentView === 'dashboard' && (
@@ -387,6 +433,38 @@ const AdminPage: React.FC = () => {
             <button type="submit">Add Showroom Image</button>
           </form>
         )}
+        {currentView === 'additionalImages' && (
+          <form className="additional-image-form" onSubmit={handleAddAdditionalImage}>
+            <h2>Add Additional Image</h2>
+            {error && <div className="error">{error}</div>}
+            <input
+              type="text"
+              name="ProductId"
+              value={newAdditionalImage.ProductId}
+              onChange={(e) => setNewAdditionalImage({ ...newAdditionalImage, ProductId: e.target.value })}
+              placeholder="Product ID"
+              required
+            />
+            <input type="file" onChange={handleFileChange} required />
+            <button type="submit">Add Additional Image</button>
+          </form>
+        )}
+        {currentView === 'products' && (
+          <div className="product-gallery">
+            <h2>Product Gallery</h2>
+            {products.map(product => (
+              <div key={product.RowKey} className="product-gallery-item">
+                <h3>{product.Name}</h3>
+                <img src={product.ImageUrl} alt={product.Name} />
+                <div className="additional-images">
+                  {matchAdditionalImages(product).map(img => (
+                    <img key={img.RowKey} src={img.ImageUrl} alt={`${product.Name} additional`} />
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </main>
       <footer>
         <p>&copy; 2024 Jo`s Art. All rights reserved.</p>
@@ -396,6 +474,9 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
+
+
 
 
 
