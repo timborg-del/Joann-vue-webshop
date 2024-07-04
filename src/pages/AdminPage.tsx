@@ -46,6 +46,7 @@ const AdminPage: React.FC = () => {
         const products = await getProducts();
         if (Array.isArray(products)) {
           setProducts(products);
+          console.log('Fetched products:', products);
         } else {
           setError('Unexpected data format');
         }
@@ -58,6 +59,7 @@ const AdminPage: React.FC = () => {
       try {
         const images = await getShowroomImages();
         setShowroomImages(images);
+        console.log('Fetched showroom images:', images);
       } catch (err) {
         setError('Failed to fetch showroom images');
       }
@@ -74,6 +76,7 @@ const AdminPage: React.FC = () => {
           products.map(product => getAdditionalImages(product.Name))
         );
         setAdditionalImages(allAdditionalImages.flat());
+        console.log('Fetched additional images:', allAdditionalImages.flat());
       }
     };
 
@@ -121,6 +124,7 @@ const AdminPage: React.FC = () => {
       setSelectedFile(null);
       setCurrentView('products');
       setError(null);
+      console.log('Product added successfully:', productToAdd);
     } catch (err) {
       setError('Failed to add product');
     }
@@ -150,6 +154,7 @@ const AdminPage: React.FC = () => {
       setSelectedFile(null);
       setCurrentView('additionalImages');
       setError(null);
+      console.log('Additional image added successfully:', additionalImageToAdd);
     } catch (err) {
       setError('Failed to add additional image');
     }
@@ -176,6 +181,7 @@ const AdminPage: React.FC = () => {
         setSelectedFile(null);
         setCurrentView('showroom');
         setError(null);
+        console.log('Showroom image added successfully:', imageToAdd);
     } catch (err) {
         setError('Failed to add showroom image');
     }
@@ -207,6 +213,7 @@ const AdminPage: React.FC = () => {
       });
       setCurrentView('products');
       setError(null);
+      console.log('Product updated successfully:', newProduct);
     } catch (err) {
       setError('Failed to update product');
     }
@@ -217,6 +224,7 @@ const AdminPage: React.FC = () => {
       await deleteProduct(partitionKey, rowKey);
       const updatedProducts = products.filter(product => product.RowKey !== rowKey);
       setProducts(updatedProducts);
+      console.log('Product deleted successfully:', partitionKey, rowKey);
     } catch (err) {
       setError('Failed to delete product');
     }
@@ -227,6 +235,7 @@ const AdminPage: React.FC = () => {
       await deleteShowroomImage(partitionKey, rowKey);
       const updatedImages = showroomImages.filter(image => image.PartitionKey !== partitionKey || image.RowKey !== rowKey);
       setShowroomImages(updatedImages);
+      console.log('Showroom image deleted successfully:', partitionKey, rowKey);
     } catch (err) {
       setError('Failed to delete showroom image');
     }
@@ -242,7 +251,9 @@ const AdminPage: React.FC = () => {
   );
 
   const matchAdditionalImages = (product: Product) => {
-    return additionalImages.filter(img => img.ProductId === product.Name);
+    const matchedImages = additionalImages.filter(img => img.ProductId === product.Name);
+    console.log(`Matched images for ${product.Name}:`, matchedImages);
+    return matchedImages;
   };
 
   return (
@@ -478,6 +489,8 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
+
 
 
 
