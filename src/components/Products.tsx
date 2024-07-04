@@ -94,8 +94,12 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     }
   };
 
+  const matchAdditionalImages = (product: Product) => {
+    return additionalImages.filter(img => img.ProductId === product.RowKey || img.ImageUrl.includes(product.Name));
+  };
+
   const getGalleryImages = (product: Product) => {
-    const additionalImagesForProduct = additionalImages.filter(image => image.ProductId === product.RowKey);
+    const additionalImagesForProduct = matchAdditionalImages(product);
     return [product.ImageUrl, ...additionalImagesForProduct.map(image => image.ImageUrl)];
   };
 
@@ -229,6 +233,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
 
 
 
