@@ -42,6 +42,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
           products.map(product => getAdditionalImages(product.RowKey))
         );
         setAdditionalImages(allAdditionalImages.flat());
+        console.log('Fetched additional images:', allAdditionalImages.flat());
       }
     };
 
@@ -94,14 +95,11 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     }
   };
 
-  const matchAdditionalImages = (product: Product) => {
-    return additionalImages.filter(img => img.ProductId === product.RowKey || img.ImageUrl.includes(product.Name));
-  };
-
   const getGalleryImages = (product: Product) => {
-    const additionalImagesForProduct = matchAdditionalImages(product);
-    console.log(`Gallery images for ${product.Name}:`, [product.ImageUrl, ...additionalImagesForProduct.map(image => image.ImageUrl)]);
-    return [product.ImageUrl, ...additionalImagesForProduct.map(image => image.ImageUrl)];
+    const additionalImagesForProduct = additionalImages.filter(image => image.ProductId === product.RowKey);
+    const galleryImages = [product.ImageUrl, ...additionalImagesForProduct.map(image => image.ImageUrl)];
+    console.log(`Gallery images for ${product.Name}:`, galleryImages);
+    return galleryImages;
   };
 
   const handleNextImage = () => {
@@ -234,6 +232,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
 
 
 
