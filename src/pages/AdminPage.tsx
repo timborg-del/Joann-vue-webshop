@@ -22,7 +22,7 @@ const AdminPage: React.FC = () => {
     PartitionKey: '',
     RowKey: '',
     ImageUrl: '',
-    ProductId: ''
+    ProductName: '' // Add ProductName here
   });
   const [, setEditingProduct] = useState<Product | null>(null);
   const [newShowroomImage, setNewShowroomImage] = useState<ShowroomImage>({
@@ -71,7 +71,7 @@ const AdminPage: React.FC = () => {
     const fetchAdditionalImages = async () => {
       if (products && products.length > 0) {
         const allAdditionalImages = await Promise.all(
-          products.map(product => getAdditionalImages(product.RowKey))
+          products.map(product => getAdditionalImages(product.Name))
         );
         setAdditionalImages(allAdditionalImages.flat());
       }
@@ -134,14 +134,18 @@ const AdminPage: React.FC = () => {
     }
 
     try {
-      const additionalImageToAdd = { ...newAdditionalImage, RowKey: Date.now().toString() };
+      const additionalImageToAdd = { 
+        ...newAdditionalImage, 
+        RowKey: Date.now().toString(),
+        PartitionKey: newAdditionalImage.ProductName // Ensure PartitionKey is set to ProductName or some unique identifier
+      };
       await addAdditionalImage(additionalImageToAdd, selectedFile);
       setAdditionalImages([...additionalImages, additionalImageToAdd]);
       setNewAdditionalImage({
         PartitionKey: '',
         RowKey: '',
         ImageUrl: '',
-        ProductId: ''
+        ProductName: ''
       });
       setSelectedFile(null);
       setCurrentView('additionalImages');
@@ -175,7 +179,7 @@ const AdminPage: React.FC = () => {
     } catch (err) {
         setError('Failed to add showroom image');
     }
-};
+  };
 
   const handleEditProduct = (product: Product) => {
     setEditingProduct(product);
@@ -238,7 +242,7 @@ const AdminPage: React.FC = () => {
   );
 
   const matchAdditionalImages = (product: Product) => {
-    return additionalImages.filter(img => img.ProductId === product.RowKey || img.ImageUrl.includes(product.Name));
+    return additionalImages.filter(img => img.ProductName === product.Name);
   };
 
   return (
@@ -439,10 +443,10 @@ const AdminPage: React.FC = () => {
             {error && <div className="error">{error}</div>}
             <input
               type="text"
-              name="ProductId"
-              value={newAdditionalImage.ProductId}
-              onChange={(e) => setNewAdditionalImage({ ...newAdditionalImage, ProductId: e.target.value })}
-              placeholder="Product ID"
+              name="ProductName"
+              value={newAdditionalImage.ProductName}
+              onChange={(e) => setNewAdditionalImage({ ...newAdditionalImage, ProductName: e.target.value })}
+              placeholder="Product Name"
               required
             />
             <input type="file" onChange={handleFileChange} required />
@@ -474,6 +478,7 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+
 
 
 

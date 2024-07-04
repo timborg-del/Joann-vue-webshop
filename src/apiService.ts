@@ -18,7 +18,7 @@ export interface AdditionalImage {
     PartitionKey: string; // Typically the product ID
     RowKey: string; // Unique ID for the image
     ImageUrl: string;
-    ProductId: string;
+    ProductName: string;
 }
 
 export interface User {

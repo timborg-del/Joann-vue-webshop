@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
-import { Product, AdditionalImage, getAdditionalImages } from '../apiService'; // Ensure getAdditionalImages is imported
+import { Product, AdditionalImage, getAdditionalImages } from '../apiService';
 import { useCart, useCartDispatch } from '../context/CartContext';
 
 interface ProductsProps {
@@ -39,7 +39,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     const fetchAdditionalImages = async () => {
       if (products && products.length > 0) {
         const allAdditionalImages = await Promise.all(
-          products.map(product => getAdditionalImages(product.RowKey))
+          products.map(product => getAdditionalImages(product.Name))
         );
         setAdditionalImages(allAdditionalImages.flat());
       }
@@ -95,14 +95,14 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   };
 
   const handleNextImage = () => {
-    const productImages = additionalImages.filter(image => image.ProductId === activeProduct);
+    const productImages = additionalImages.filter(image => image.ProductName === activeProduct);
     if (productImages.length > 0) {
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % productImages.length);
     }
   };
 
   const handlePreviousImage = () => {
-    const productImages = additionalImages.filter(image => image.ProductId === activeProduct);
+    const productImages = additionalImages.filter(image => image.ProductName === activeProduct);
     if (productImages.length > 0) {
       setCurrentImageIndex((prevIndex) =>
         prevIndex === 0 ? productImages.length - 1 : prevIndex - 1
@@ -125,7 +125,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   }
 
   const getAdditionalImagesForProduct = (productId: string) => {
-    return additionalImages.filter(image => image.ProductId === productId);
+    return additionalImages.filter(image => image.ProductName === productId);
   };
 
   return (
@@ -224,6 +224,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
 
 
 
