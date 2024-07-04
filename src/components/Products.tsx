@@ -124,8 +124,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     return <div>Error: Unexpected data format</div>;
   }
 
-  const getAdditionalImagesForProduct = (productId: string) => {
-    return additionalImages.filter(image => image.ProductName === productId);
+  const getAdditionalImagesForProduct = (productName: string) => {
+    return additionalImages.filter(image => image.ProductName === productName);
   };
 
   return (
@@ -143,14 +143,14 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                   <div className="image-gallery-container">
                     <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
                     <img
-                      src={getAdditionalImagesForProduct(product.RowKey)[currentImageIndex]?.ImageUrl || product.ImageUrl}
+                      src={getAdditionalImagesForProduct(product.Name)[currentImageIndex]?.ImageUrl || product.ImageUrl}
                       alt={product.Name}
                       className="product-image"
                       onError={(e) => {
                         e.currentTarget.src = '/path/to/placeholder-image.jpg';
                         console.error("Image load error", e);
                       }}
-                      onClick={() => setEnlargedImage(getAdditionalImagesForProduct(product.RowKey)[currentImageIndex]?.ImageUrl || product.ImageUrl)}
+                      onClick={() => setEnlargedImage(getAdditionalImagesForProduct(product.Name)[currentImageIndex]?.ImageUrl || product.ImageUrl)}
                     />
                     <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
                   </div>
@@ -224,6 +224,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
 
 
 

@@ -171,8 +171,8 @@ export const getUser = async (partitionKey: string, rowKey: string): Promise<Use
 };
 
 // Function to fetch additional images for a product
-export const getAdditionalImages = async (productId: string): Promise<AdditionalImage[]> => {
-    const response = await fetch(`${API_BASE_URL}/GetAdditionalImages?productId=${productId}`, {
+export const getAdditionalImages = async (productName: string): Promise<AdditionalImage[]> => {
+    const response = await fetch(`${API_BASE_URL}/GetAdditionalImages?productName=${productName}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -187,6 +187,7 @@ export const getAdditionalImages = async (productId: string): Promise<Additional
     const additionalImages: AdditionalImage[] = await response.json();
     return additionalImages;
 };
+
 
 // Function to add an additional image to a product
 export const addAdditionalImage = async (additionalImage: AdditionalImage, file: File): Promise<void> => {
