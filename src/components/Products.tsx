@@ -151,7 +151,10 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
             <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
               {activeProduct === product.RowKey ? (
                 <>
-                  <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;</button>
+                  <div className="close-button-details-container">
+                  <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;
+                  </button>
+                  </div>
                   <div className="image-gallery-container">
                     <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
                     <img

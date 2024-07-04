@@ -109,7 +109,7 @@ export const mockedProducts: Product[] = [
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 11,
     quantity: 1,
-    AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg' ]
+    AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
   {
     PartitionKey: 'partition10',
@@ -123,4 +123,4 @@ export const mockedProducts: Product[] = [
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   }
 ];
-
+export default mockedProducts;
