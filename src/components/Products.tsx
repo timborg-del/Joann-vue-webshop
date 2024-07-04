@@ -100,6 +100,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 
   const getGalleryImages = (product: Product) => {
     const additionalImagesForProduct = matchAdditionalImages(product);
+    console.log(`Gallery images for ${product.Name}:`, [product.ImageUrl, ...additionalImagesForProduct.map(image => image.ImageUrl)]);
     return [product.ImageUrl, ...additionalImagesForProduct.map(image => image.ImageUrl)];
   };
 
@@ -107,7 +108,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     const product = products?.find((p) => p.RowKey === activeProduct);
     if (product) {
       const galleryImages = getGalleryImages(product);
-      console.log('Next Image:', currentImageIndex + 1, 'of', galleryImages.length);
+      console.log('Next Image:', (currentImageIndex + 1) % galleryImages.length, 'of', galleryImages.length, galleryImages);
       setCurrentImageIndex((prevIndex) => (prevIndex + 1) % galleryImages.length);
     }
   };
@@ -116,7 +117,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     const product = products?.find((p) => p.RowKey === activeProduct);
     if (product) {
       const galleryImages = getGalleryImages(product);
-      console.log('Previous Image:', currentImageIndex - 1, 'of', galleryImages.length);
+      console.log('Previous Image:', currentImageIndex === 0 ? galleryImages.length - 1 : currentImageIndex - 1, 'of', galleryImages.length, galleryImages);
       setCurrentImageIndex((prevIndex) =>
         prevIndex === 0 ? galleryImages.length - 1 : prevIndex - 1
       );
@@ -233,6 +234,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
 
 
 
