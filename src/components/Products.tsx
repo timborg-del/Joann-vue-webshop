@@ -143,88 +143,93 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   return (
     <div className="products-container">
       {products.length > 0 ? (
-        products.map((product) => (
-          <div
-            key={product.RowKey}
-            className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
-          >
-            <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
-              {activeProduct === product.RowKey ? (
-                <>
-                  <div className="close-button-details-container">
-                  <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;
-                  </button>
+        products.map((product) => {
+          const size = selectedSizes[product.RowKey] || 'A3';
+          const uniqueId = `${product.RowKey}-${size}`;
+          const quantity = state.items.find((item) => item.RowKey === uniqueId)?.quantity ?? 0;
+          
+          return (
+            <div
+              key={product.RowKey}
+              className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
+            >
+              <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
+                {activeProduct === product.RowKey ? (
+                  <>
+                    <div className="close-button-details-container">
+                      <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;
+                      </button>
+                    </div>
+                    <div className="image-gallery-container">
+                      <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
+                      <img
+                        src={getGalleryImages(product)[currentImageIndex]}
+                        alt={product.Name}
+                        className="product-image"
+                        onError={(e) => {
+                          e.currentTarget.src = '/path/to/placeholder-image.jpg';
+                          console.error("Image load error", e);
+                        }}
+                        onClick={() => setEnlargedImage(getGalleryImages(product)[currentImageIndex])}
+                      />
+                      <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
+                    </div>
+                  </>
+                ) : (
+                  <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
+                    {product.ImageUrl ? (
+                      <img
+                        src={product.ImageUrl}
+                        alt={product.Name}
+                        className="product-image"
+                        onError={(e) => {
+                          e.currentTarget.src = '/path/to/placeholder-image.jpg';
+                          console.error("Image load error", e);
+                        }}
+                      />
+                    ) : (
+                      <div className="no-image">No Image Available</div>
+                    )}
+                    <div className="product-name">{product.Name}</div>
                   </div>
-                  <div className="image-gallery-container">
-                    <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
-                    <img
-                      src={getGalleryImages(product)[currentImageIndex]}
-                      alt={product.Name}
-                      className="product-image"
-                      onError={(e) => {
-                        e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                        console.error("Image load error", e);
-                      }}
-                      onClick={() => setEnlargedImage(getGalleryImages(product)[currentImageIndex])}
-                    />
-                    <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
-                  </div>
-                </>
-              ) : (
-                <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
-                  {product.ImageUrl ? (
-                    <img
-                      src={product.ImageUrl}
-                      alt={product.Name}
-                      className="product-image"
-                      onError={(e) => {
-                        e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                        console.error("Image load error", e);
-                      }}
-                    />
-                  ) : (
-                    <div className="no-image">No Image Available</div>
-                  )}
-                  <div className="product-name">{product.Name}</div>
-                </div>
-              )}
-              {activeProduct === product.RowKey && (
-                <div className="product-details-dropdown">
-                  <div className="product-info">
-                    <p><strong>Name:</strong> {product.Name}</p>
-                    <p><strong>Price:</strong> {getPrice(product.RowKey, product.Price).toFixed(2)} SEK</p>
-                    <p><strong>Category:</strong> {product.Category}</p>
-                    <div className="quantity-controls">
-                      <button onClick={() => decrementQuantity(product)}>-</button>
-                      <span>{state.items.find(item => item.RowKey === `${product.RowKey}-${selectedSizes[product.RowKey] || 'A3'}`)?.quantity ?? 0}</span>
-                      <button onClick={() => incrementQuantity(product)}>+</button>
+                )}
+                {activeProduct === product.RowKey && (
+                  <div className="product-details-dropdown">
+                    <div className="product-info">
+                      <p><strong>Name:</strong> {product.Name}</p>
+                      <p><strong>Price:</strong> {getPrice(product.RowKey, product.Price).toFixed(2)} SEK</p>
+                      <p><strong>Category:</strong> {product.Category}</p>
+                    </div>
+                    <div className="select-container">
+                      <label htmlFor={`size-${product.RowKey}`}>Size:</label>
+                      <select
+                        id={`size-${product.RowKey}`}
+                        value={selectedSizes[product.RowKey] || 'A3'}
+                        onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
+                      >
+                        <option value="A3">A3</option>
+                        <option value="A4">A4</option>
+                        <option value="A5">A5</option>
+                      </select>
+                    </div>
+                    <div className="quantity-buy-container">
+                      <div className={`quantity-controls ${quantity > 0 ? '' : 'hidden'}`}>
+                        <button onClick={() => decrementQuantity(product)}>-</button>
+                        <span>{quantity}</span>
+                        <button onClick={() => incrementQuantity(product)}>+</button>
+                      </div>
+                      <div className="buy-btn-container">
+                        <button className="buy-btn" onClick={() => handleAddToCart(product)}>
+                          Add to Cart
+                        </button>
+                      </div>
                     </div>
                   </div>
-                  <div className="select-container">
-                    <label htmlFor={`size-${product.RowKey}`}>Size:</label>
-                    <select
-                      id={`size-${product.RowKey}`}
-                      value={selectedSizes[product.RowKey] || 'A3'}
-                      onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
-                    >
-                      <option value="A3">A3</option>
-                      <option value="A4">A4</option>
-                      <option value="A5">A5</option>
-                    </select>
-                  </div>
-                  <div className="buy-btn-container">
-                    <button
-                      className="buy-btn"
-                      onClick={() => handleAddToCart(product)}
-                    >
-                      Add to Cart
-                    </button>
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          </div>
-        ))
+          );
+        })
       ) : (
         <div>No products available</div>
       )}
@@ -239,6 +244,86 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
