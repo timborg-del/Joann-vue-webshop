@@ -59,22 +59,47 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
-  background-color: #fff; /* Ensure the background color makes text readable */
+  background-color: #fff;
   border-radius: 5px;
   transition: box-shadow 0.1s ease, border 0.1s ease;
   position: relative;
   overflow: hidden;
-  opacity: 1; /* Ensure opacity is set to fully visible */
-  width: 100%; /* Ensure width adapts */
-  max-width: 200px; /* Adjust as needed */
+  opacity: 1;
+  width: 100%;
+  max-width: 200px;
   min-height: auto;
 }
 
 .product-card:hover {
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6); /* Add shadow effect */
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.6);
   transition: all 0.1s ease;
-  border: 1px outset rgb(253, 253, 253); /* Add subtle border effect */
-  z-index: 1; /* Bring the card to the front */
+  border: 1px outset rgb(253, 253, 253);
+  z-index: 1;
+}
+
+.product-card.active {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  transform: translate(-50%, -50%) scale(1.05);
+  z-index: 1004;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 1000px;
+  height: 80vh;
+  padding: 20px;
+  background: #fffefd;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+/* Remove hover effect for active product card */
+.product-card.active:hover {
+  box-shadow: none;
+  border: none;
 }
 
 .product-thumbnail {
@@ -90,8 +115,8 @@
   -webkit-backdrop-filter: blur(1.1px);
   padding: 10px;
   cursor: pointer;
-  min-width: 100%; /* Fixed width for thumbnails */
-  min-height: auto; /* Fixed height for thumbnails */
+  min-width: 100%;
+  min-height: auto;
 }
 
 .product-image {
@@ -129,45 +154,26 @@
   color: #333;
 }
 
-.product-card.active {
-  display: flex;
-  flex-direction: row; /* Image on the left, details on the right */
-  justify-content: space-between;
-  transform: translate(-50%, -50%) scale(1.05);
-  z-index: 1004;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 90%;
-  max-width: 1000px;
-  height: 80vh; /* Set a fixed height */
-  padding: 20px;
-  background: #fffefd; /* Background color */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3); /* Shadow for depth */
-  border-radius: 5px;
-  overflow: hidden;
-}
-
 /* Close button styles */
 .close-button-details {
   position: absolute;
   top: 10px;
   left: 10px;
-  background-color: none; /* Tomato color */
-  color: gray; /* Text color */
+  background-color: none;
+  color: gray;
   border: none;
-  font-size: 2rem; /* Increase the size of the "X" */
+  font-size: 2rem;
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
-  z-index: 1080; /* Ensure it is on top of other elements */
-  transition: background-color 0.3s ease, transform 0.3s ease; /* Add transition for smooth hover effect */
+  z-index: 1080;
+  transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 .close-button-details:hover {
-  background-color: gray; /* Darker tomato color on hover */
-  
+  background-color: gray;
 }
+
 
 .image-gallery-container {
   display: flex;
