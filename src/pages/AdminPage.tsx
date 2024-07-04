@@ -22,7 +22,7 @@ const AdminPage: React.FC = () => {
     PartitionKey: '',
     RowKey: '',
     ImageUrl: '',
-    ProductName: '' // Add ProductName here
+    ProductId: '' // Add ProductName here
   });
   const [, setEditingProduct] = useState<Product | null>(null);
   const [newShowroomImage, setNewShowroomImage] = useState<ShowroomImage>({
@@ -137,7 +137,7 @@ const AdminPage: React.FC = () => {
       const additionalImageToAdd = { 
         ...newAdditionalImage, 
         RowKey: Date.now().toString(),
-        PartitionKey: newAdditionalImage.ProductName // Ensure PartitionKey is set to ProductName or some unique identifier
+        PartitionKey: newAdditionalImage.ProductId // Ensure PartitionKey is set to ProductName or some unique identifier
       };
       await addAdditionalImage(additionalImageToAdd, selectedFile);
       setAdditionalImages([...additionalImages, additionalImageToAdd]);
@@ -145,7 +145,7 @@ const AdminPage: React.FC = () => {
         PartitionKey: '',
         RowKey: '',
         ImageUrl: '',
-        ProductName: ''
+        ProductId: ''
       });
       setSelectedFile(null);
       setCurrentView('additionalImages');
@@ -242,7 +242,7 @@ const AdminPage: React.FC = () => {
   );
 
   const matchAdditionalImages = (product: Product) => {
-    return additionalImages.filter(img => img.ProductName === product.Name);
+    return additionalImages.filter(img => img.ProductId === product.Name);
   };
 
   return (
@@ -444,8 +444,8 @@ const AdminPage: React.FC = () => {
             <input
               type="text"
               name="ProductName"
-              value={newAdditionalImage.ProductName}
-              onChange={(e) => setNewAdditionalImage({ ...newAdditionalImage, ProductName: e.target.value })}
+              value={newAdditionalImage.ProductId}
+              onChange={(e) => setNewAdditionalImage({ ...newAdditionalImage, ProductId: e.target.value })}
               placeholder="Product Name"
               required
             />

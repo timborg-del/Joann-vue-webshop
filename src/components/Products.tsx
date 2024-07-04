@@ -39,7 +39,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     const fetchAdditionalImages = async () => {
       if (products && products.length > 0) {
         const allAdditionalImages = await Promise.all(
-          products.map(product => getAdditionalImages(product.Name))
+          products.map(product => getAdditionalImages(product.RowKey))
         );
         setAdditionalImages(allAdditionalImages.flat());
       }
@@ -94,19 +94,30 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     }
   };
 
+  const getGalleryImages = (product: Product) => {
+    const additionalImagesForProduct = additionalImages.filter(image => image.ProductId === product.RowKey);
+    return [product.ImageUrl, ...additionalImagesForProduct.map(image => image.ImageUrl)];
+  };
+
   const handleNextImage = () => {
-    const productImages = additionalImages.filter(image => image.ProductName === activeProduct);
-    if (productImages.length > 0) {
-      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % productImages.length);
+    if (products) {
+      const product = products.find((p) => p.RowKey === activeProduct);
+      if (product) {
+        const galleryImages = getGalleryImages(product);
+        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % galleryImages.length);
+      }
     }
   };
 
   const handlePreviousImage = () => {
-    const productImages = additionalImages.filter(image => image.ProductName === activeProduct);
-    if (productImages.length > 0) {
-      setCurrentImageIndex((prevIndex) =>
-        prevIndex === 0 ? productImages.length - 1 : prevIndex - 1
-      );
+    if (products) {
+      const product = products.find((p) => p.RowKey === activeProduct);
+      if (product) {
+        const galleryImages = getGalleryImages(product);
+        setCurrentImageIndex((prevIndex) =>
+          prevIndex === 0 ? galleryImages.length - 1 : prevIndex - 1
+        );
+      }
     }
   };
 
@@ -124,10 +135,6 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     return <div>Error: Unexpected data format</div>;
   }
 
-  const getAdditionalImagesForProduct = (productName: string) => {
-    return additionalImages.filter(image => image.ProductName === productName);
-  };
-
   return (
     <div className="products-container">
       {products.length > 0 ? (
@@ -143,14 +150,14 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                   <div className="image-gallery-container">
                     <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
                     <img
-                      src={getAdditionalImagesForProduct(product.Name)[currentImageIndex]?.ImageUrl || product.ImageUrl}
+                      src={getGalleryImages(product)[currentImageIndex]}
                       alt={product.Name}
                       className="product-image"
                       onError={(e) => {
                         e.currentTarget.src = '/path/to/placeholder-image.jpg';
                         console.error("Image load error", e);
                       }}
-                      onClick={() => setEnlargedImage(getAdditionalImagesForProduct(product.Name)[currentImageIndex]?.ImageUrl || product.ImageUrl)}
+                      onClick={() => setEnlargedImage(getGalleryImages(product)[currentImageIndex])}
                     />
                     <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
                   </div>
@@ -224,6 +231,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
+
 
 
 
