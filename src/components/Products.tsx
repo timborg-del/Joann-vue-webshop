@@ -100,24 +100,22 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   };
 
   const handleNextImage = () => {
-    if (products) {
-      const product = products.find((p) => p.RowKey === activeProduct);
-      if (product) {
-        const galleryImages = getGalleryImages(product);
-        setCurrentImageIndex((prevIndex) => (prevIndex + 1) % galleryImages.length);
-      }
+    const product = products?.find((p) => p.RowKey === activeProduct);
+    if (product) {
+      const galleryImages = getGalleryImages(product);
+      console.log('Next Image:', currentImageIndex + 1, 'of', galleryImages.length);
+      setCurrentImageIndex((prevIndex) => (prevIndex + 1) % galleryImages.length);
     }
   };
 
   const handlePreviousImage = () => {
-    if (products) {
-      const product = products.find((p) => p.RowKey === activeProduct);
-      if (product) {
-        const galleryImages = getGalleryImages(product);
-        setCurrentImageIndex((prevIndex) =>
-          prevIndex === 0 ? galleryImages.length - 1 : prevIndex - 1
-        );
-      }
+    const product = products?.find((p) => p.RowKey === activeProduct);
+    if (product) {
+      const galleryImages = getGalleryImages(product);
+      console.log('Previous Image:', currentImageIndex - 1, 'of', galleryImages.length);
+      setCurrentImageIndex((prevIndex) =>
+        prevIndex === 0 ? galleryImages.length - 1 : prevIndex - 1
+      );
     }
   };
 
@@ -231,6 +229,9 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
+
+
 
 
 
