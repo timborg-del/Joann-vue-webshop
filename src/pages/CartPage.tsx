@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Cart from '../components/Cart';
 import PaypalStuff from '../components/PaypalStuff';
 import './CartPage.css';
 import { useCart } from '../context/CartContext';
+import { CurrencyContext } from '../components/CurrencyDetector';
 
 interface CartPageProps {
   isVisible: boolean;
@@ -11,6 +12,7 @@ interface CartPageProps {
 
 const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
   const { state } = useCart();
+  const { currency } = useContext(CurrencyContext); // Use the currency from context
   const totalPrice = state.items.reduce((total, item) => total + item.Price * item.quantity, 0);
   const [isLeaving, setIsLeaving] = useState(false);
 
@@ -22,6 +24,19 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
     }, 500); // Match the transition duration
   };
 
+  const getCurrencySymbol = (currency: string) => {
+    const symbols: { [key: string]: string } = {
+      'USD': '$',
+      'GBP': '£',
+      'EUR': '€',
+      'SEK': 'kr',
+      // Add more symbols as needed
+    };
+    return symbols[currency] || '';
+  };
+
+  const currencySymbol = getCurrencySymbol(currency);
+
   return (
     <div className={`cart-page-container ${isVisible ? 'active' : ''} ${isLeaving ? 'leaving' : ''}`}>
       <div className='cart-page'>
@@ -31,7 +46,7 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
             <Cart />
           </div>
           <div className='form-container'>
-            <p className='total-price'>Total Price: {totalPrice.toFixed(2)}:-</p>
+            <p className='total-price'>Total Price: {currencySymbol}{totalPrice.toFixed(2)}</p>
             <PaypalStuff cart={state.items} />
           </div>
         </div>
@@ -41,6 +56,7 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
 };
 
 export default CartPage;
+
 
 
 

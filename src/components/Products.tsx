@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import useCartActions from '../hooks/useCartActions';
 import './Products.css';
 import useFetchData from '../hooks/useFetchData';
 import { Product, AdditionalImage, getAdditionalImages } from '../apiService';
 import { useCart, useCartDispatch } from '../context/CartContext';
+import { CurrencyContext } from '../components/CurrencyDetector';
 
 interface ProductsProps {
   activeProductName: string | null;
@@ -19,6 +20,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const { state } = useCart();
   const dispatch = useCartDispatch();
+  const { currency } = useContext(CurrencyContext); // Use currency from context
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
@@ -126,6 +128,19 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     }
   };
 
+  const getCurrencySymbol = (currency: string) => {
+    const symbols: { [key: string]: string } = {
+      'USD': '$',
+      'GBP': '£',
+      'EUR': '€',
+      'SEK': 'kr',
+      // Add more symbols as needed
+    };
+    return symbols[currency] || '';
+  };
+
+  const currencySymbol = getCurrencySymbol(currency);
+
   if (isLoading) {
     return <div>Loading...</div>;
   }
@@ -197,7 +212,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                   <div className="product-details-dropdown">
                     <div className="product-info">
                       <p><strong>Name:</strong> {product.Name}</p>
-                      <p><strong>Price:</strong> {getPrice(product.RowKey, product.Price).toFixed(2)} SEK</p>
+                      <p><strong>Price:</strong> {currencySymbol}{getPrice(product.RowKey, product.Price).toFixed(2)}</p>
                       <p><strong>Category:</strong> {product.Category}</p>
                     </div>
                     <div className="select-container">
@@ -244,6 +259,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
 
 
 

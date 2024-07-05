@@ -1,6 +1,7 @@
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback, useRef, useContext } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 import { Product } from "../apiService"; // Ensure this path is correct
+import { CurrencyContext } from "../components/CurrencyDetector";
 
 type MessageProps = {
   content: string;
@@ -83,16 +84,16 @@ function Message({ content }: MessageProps) {
 
 function PaypalStuff({ cart }: PaypalStuffProps) {
   const initialOptions = {
-    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
+    clientId: "YOUR_PAYPAL_CLIENT_ID", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
-    "disable-funding": "card",
-    currency: "SEK",
+    currency: "USD", // Default currency
     "data-page-type": "product-details",
     components: "buttons",
     "data-sdk-integration-source": "developer-studio",
   };
 
   const [message, setMessage] = useState<string>("");
+  const { currency } = useContext(CurrencyContext); // Use currency from context
 
   const cartRef = useRef(cart);
 
@@ -111,7 +112,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Cart: currentCart }),
+        body: JSON.stringify({ Cart: currentCart, Currency: currency }), // Include currency in payload
       });
 
       if (!response.ok) {
@@ -139,7 +140,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         setMessage(`Could not initiate PayPal Checkout: ${String(error)}`);
       }
     }
-  }, []);
+  }, [currency]);
 
   const onApprove = useCallback(async (data: PayPalData, actions: PayPalActions) => {
     try {
@@ -275,7 +276,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 
   return (
     <div className="App">
-      <PayPalScriptProvider options={initialOptions}>
+      <PayPalScriptProvider options={{ ...initialOptions, currency }}>
         <PayPalButtons
           style={{
             shape: "rect",
@@ -293,6 +294,8 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
+
 
 
 

@@ -1,10 +1,13 @@
+import { useContext } from 'react';
 import { useCart, useCartDispatch } from '../context/CartContext';
 import './Cart.css';
 import { Product } from '../apiService';
+import { CurrencyContext } from '../components/CurrencyDetector';
 
 export const Cart = () => {
   const { state } = useCart();
   const dispatch = useCartDispatch();
+  const { currency } = useContext(CurrencyContext); // Use currency from context
 
   const decrementQuantity = (itemId: string) => {
     dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
@@ -30,6 +33,19 @@ export const Cart = () => {
     }));
   };
 
+  const getCurrencySymbol = (currency: string) => {
+    const symbols: { [key: string]: string } = {
+      'USD': '$',
+      'GBP': '£',
+      'EUR': '€',
+      'SEK': 'kr',
+      // Add more symbols as needed
+    };
+    return symbols[currency] || '';
+  };
+
+  const currencySymbol = getCurrencySymbol(currency);
+
   console.log('Current cart items:', state.items);
 
   return (
@@ -44,7 +60,7 @@ export const Cart = () => {
               <div className="cart-item-details">
                 <p>{item.Name}</p>
                 <p>{item.size}</p>
-                <p>{item.Price.toFixed(2)} SEK</p>
+                <p>{currencySymbol}{item.Price.toFixed(2)}</p>
                 <div className="cart-item-actions">
                   <button onClick={() => decrementQuantity(item.RowKey)}>-</button>
                   <span>{item.quantity}</span>
@@ -61,6 +77,7 @@ export const Cart = () => {
 };
 
 export default Cart;
+
 
 
 
