@@ -4,6 +4,7 @@ import PaypalStuff from '../components/PaypalStuff';
 import './CartPage.css';
 import { useCart } from '../context/CartContext';
 import { CurrencyContext } from '../components/CurrencyDetector';
+import CartButton from '../components/CartButton';
 
 interface CartPageProps {
   isVisible: boolean;
@@ -23,6 +24,13 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
       setIsLeaving(false);
       onClose();
     }, 500); // Match the transition duration
+  };
+
+   
+  const [isCartVisible, setIsCartVisible] = useState(false);
+
+  const toggleCartVisibility = () => {
+    setIsCartVisible(!isCartVisible);
   };
 
   const getCurrencySymbol = (currency: string) => {
@@ -49,6 +57,13 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
           <div className='form-container'>
             <p className='total-price'>Total Price: {currencySymbol}{totalPrice.toFixed(2)}</p>
             <PaypalStuff cart={state.items} />
+            <div className='cart-button-container'>
+              
+            </div>
+            
+            <button  className="cart-button" onClick={toggleCartVisibility}>
+                     <CartButton onClick={toggleCartVisibility} />
+                    </button>
           </div>
         </div>
       </div>
@@ -57,6 +72,7 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
 };
 
 export default CartPage;
+
 
 
 

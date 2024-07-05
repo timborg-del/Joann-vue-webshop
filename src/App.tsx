@@ -41,9 +41,7 @@ const App: React.FC = () => {
               </div>
             </div>            
             <div>
-              <button className="cart-button" onClick={toggleCartVisibility}>
-                <CartButton onClick={toggleCartVisibility} />
-              </button>
+
             </div>
           </nav>
 
