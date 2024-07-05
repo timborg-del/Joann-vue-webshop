@@ -6,7 +6,7 @@ interface CurrencyContextProps {
 }
 
 export const CurrencyContext = createContext<CurrencyContextProps>({
-  currency: 'USD',
+  currency: 'SEK',
   setCurrency: () => {},
 });
 
@@ -15,7 +15,7 @@ interface CurrencyProviderProps {
 }
 
 export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) => {
-  const [currency, setCurrency] = useState<string>('USD');
+  const [currency, setCurrency] = useState<string>('SEK');
 
   useEffect(() => {
     const fetchCurrency = async () => {
@@ -35,11 +35,11 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
           // Add more mappings as needed
         };
 
-        const detectedCurrency = countryCurrencyMap[countryCode] || 'USD';
+        const detectedCurrency = countryCurrencyMap[countryCode] || 'SEK';
         setCurrency(detectedCurrency);
       } catch (error) {
         console.error('Error fetching location data:', error);
-        setCurrency('USD'); // Default to USD on error
+        setCurrency('SEK'); // Default to USD on error
       }
     };
 
