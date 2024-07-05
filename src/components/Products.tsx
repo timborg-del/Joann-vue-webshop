@@ -5,7 +5,6 @@ import useFetchData from '../hooks/useFetchData';
 import { Product, AdditionalImage, getAdditionalImages } from '../apiService';
 import { useCart, useCartDispatch } from '../context/CartContext';
 import { CurrencyContext } from '../components/CurrencyDetector';
-import CartButton from './CartButton';
 
 interface ProductsProps {
   activeProductName: string | null;
@@ -155,13 +154,6 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     console.error("Unexpected data format:", products);
     return <div>Error: Unexpected data format</div>;
   }
-
- 
-  const [isCartVisible, setIsCartVisible] = useState(false);
-
-  const toggleCartVisibility = () => {
-    setIsCartVisible(!isCartVisible);
-  };
 
   return (
     <div className="products-container">

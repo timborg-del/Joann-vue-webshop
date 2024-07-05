@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import { useContext, useState } from 'react';
 import { useCart, useCartDispatch } from '../context/CartContext';
 import './Cart.css';
 import { Product } from '../apiService';
@@ -81,9 +81,11 @@ export const Cart = () => {
           })}
         </div>
       )}
-      <button className="cart-button" onClick={toggleCartVisibility}>
-        <CartButton onClick={toggleCartVisibility} />
-      </button>
+      <div>
+        <button className="cart-button" onClick={toggleCartVisibility}>
+          <CartButton onClick={toggleCartVisibility} />
+        </button>
+      </div>
     </div>
   );
 };
