@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef, useContext } from "react";
 import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
-import { Product } from "../apiService"; // Ensure this path is correct
+import { Product } from "../apiService";
 import { CurrencyContext } from "../components/CurrencyDetector";
 
 type MessageProps = {
@@ -83,18 +83,17 @@ function Message({ content }: MessageProps) {
 }
 
 function PaypalStuff({ cart }: PaypalStuffProps) {
+  const { currency } = useContext(CurrencyContext); // Get currency from context
   const initialOptions = {
     clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
-    currency: "USD", // Default currency
+    currency, // Pass the currency dynamically
     "data-page-type": "product-details",
     components: "buttons",
     "data-sdk-integration-source": "developer-studio",
   };
 
   const [message, setMessage] = useState<string>("");
-  const { currency } = useContext(CurrencyContext); // Use currency from context
-
   const cartRef = useRef(cart);
 
   useEffect(() => {
@@ -112,7 +111,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Cart: currentCart, Currency: currency }), // Include currency in payload
+        body: JSON.stringify({ Cart: currentCart, Currency: currency }), // Ensure currency is passed
       });
 
       if (!response.ok) {
@@ -202,10 +201,10 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       name: "Unknown",
       email: "Unknown"
     };
-  
+
     const address = orderData.purchase_units[0]?.shipping?.address;
     const recipient = orderData.purchase_units[0]?.shipping?.name?.full_name;
-  
+
     const cartItems = cart.map((item: Product) => `
       <tr>
         <td>${item.Name}</td>
@@ -214,7 +213,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         <td>${item.size ?? 'N/A'}</td>
       </tr>
     `).join("");
-  
+
     const emailParams = {
       orderID: orderData.id,
       status: orderData.status,
@@ -251,9 +250,9 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         <p>See console for all available details</p>
       `
     };
-  
+
     console.log('Email Parameters:', emailParams);
-  
+
     try {
       const response = await fetch('https://joart.azurewebsites.net/SendEmail', {
         method: 'POST',
@@ -262,7 +261,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         },
         body: JSON.stringify(emailParams),
       });
-  
+
       if (response.ok) {
         console.log("Order details sent to email successfully");
       } else {
@@ -272,11 +271,10 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       console.error("Error sending order details to email:", error);
     }
   };
-  
 
   return (
     <div className="App">
-      <PayPalScriptProvider options={{ ...initialOptions, currency }}>
+      <PayPalScriptProvider options={initialOptions}>
         <PayPalButtons
           style={{
             shape: "rect",
@@ -294,6 +292,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
