@@ -251,6 +251,46 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       `
     };
 
+    const customerEmailParams = {
+      orderID: orderData.id,
+      status: orderData.status,
+      payer: payer.name,
+      to_email: payer.email,
+      subject: "Thank You for Your Purchase",
+      message: `
+      <h1>Thank You for Your Purchase</h1>
+      <p><strong>Order ID:</strong> ${orderData.id}</p>
+      <p><strong>Status:</strong> ${orderData.status}</p>
+      <p>Dear ${payer.name},</p>
+      <p>Thank you for your purchase. We will process your order soon.</p>
+      <h2>Shipping Details:</h2>
+      <p><strong>Recipient:</strong> ${recipient}</p>
+      <p><strong>Street Address:</strong> ${address?.address_line_1}</p>
+      <p><strong>City:</strong> ${address?.admin_area_2}</p>
+      <p><strong>State/Province:</strong> ${address?.state ?? 'N/A'}</p>
+      <p><strong>Postal Code:</strong> ${address?.postal_code}</p>
+      <p><strong>Country Code:</strong> ${address?.country_code}</p>
+      <p><strong>Phone:</strong> ${address?.phone ?? 'N/A'}</p>
+      <h2>Items Ordered:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${cartItems}
+          </tbody>
+        </table>
+        <p>Thank you for shopping with us!</p>
+      `
+    };
+
+    console.log('Customer Email Parameters:', customerEmailParams)
+
     console.log('Email Parameters:', emailParams);
 
     try {
