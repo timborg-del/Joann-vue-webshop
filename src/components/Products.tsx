@@ -20,7 +20,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const { state } = useCart();
   const dispatch = useCartDispatch();
-  const { currency } = useContext(CurrencyContext); // Use currency from context
+  const { currency, convertPrice } = useContext(CurrencyContext); // Use currency and convertPrice from context
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
@@ -162,7 +162,9 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
           const size = selectedSizes[product.RowKey] || 'A3';
           const uniqueId = `${product.RowKey}-${size}`;
           const quantity = state.items.find((item) => item.RowKey === uniqueId)?.quantity ?? 0;
-          
+
+          const displayPrice = convertPrice(getPrice(product.RowKey, product.Price));
+
           return (
             <div
               key={product.RowKey}
@@ -212,7 +214,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                   <div className="product-details-dropdown">
                     <div className="product-info">
                       <p><strong>Name:</strong> {product.Name}</p>
-                      <p><strong>Price:</strong> {currencySymbol}{getPrice(product.RowKey, product.Price).toFixed(2)}</p>
+                      <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>
                       <p><strong>Category:</strong> {product.Category}</p>
                     </div>
                     <div className="select-container">
@@ -259,175 +261,3 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
