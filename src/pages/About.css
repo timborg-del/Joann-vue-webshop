@@ -39,6 +39,7 @@
   transition: opacity 0.5s ease-in-out;
   border: 1px solid rgba(255, 255, 255, 0.13);
   margin-top: 60px; /* Add margin-top to ensure content does not overlap with fixed h2 */
+  overflow-y: auto;
 }
 
 .about-content.visible {
@@ -101,3 +102,36 @@ iframe {
   }
 }
 
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .about-content {
+    padding: 15px; /* Adjust padding for medium screens */
+  }
+
+  .about-content p {
+    font-size: 1.1rem; /* Adjust font size for medium screens */
+  }
+  
+  .about-content h2 {
+    font-size: 1.75rem; /* Adjust heading size for medium screens */
+  }
+
+  iframe {
+    max-width: 80%; /* Adjust iframe width for medium screens */
+    height: auto; /* Maintain aspect ratio */
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .about-content p {
+    font-size: 1.25rem; /* Font size for larger screens */
+  }
+
+  .about-content h2 {
+    font-size: 2rem; /* Heading size for larger screens */
+  }
+
+  iframe {
+    max-width: 70%; /* Adjust iframe width for larger screens */
+    height: auto; /* Maintain aspect ratio */
+  }
+}
