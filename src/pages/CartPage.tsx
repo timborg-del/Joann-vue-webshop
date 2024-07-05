@@ -46,7 +46,7 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
             <Cart />
           </div>
           <div className='form-container'>
-            <p className='total-price'>Total Price: {currencySymbol}{totalPrice.toFixed(2)}</p>
+            <p className='total-price'>Total Price: {currencySymbol} {totalPrice.toFixed(2)}</p>
             <PaypalStuff cart={state.items} />
           </div>
         </div>
