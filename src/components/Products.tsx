@@ -5,6 +5,7 @@ import useFetchData from '../hooks/useFetchData';
 import { Product, AdditionalImage, getAdditionalImages } from '../apiService';
 import { useCart, useCartDispatch } from '../context/CartContext';
 import { CurrencyContext } from '../components/CurrencyDetector';
+import CartButton from './CartButton';
 
 interface ProductsProps {
   activeProductName: string | null;
@@ -128,6 +129,12 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     }
   };
 
+  const [isCartVisible, setIsCartVisible] = useState(false);
+
+  const toggleCartVisibility = () => {
+    setIsCartVisible(!isCartVisible);
+  };
+
   const getCurrencySymbol = (currency: string) => {
     const symbols: { [key: string]: string } = {
       'USD': '$',
@@ -212,6 +219,11 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                 )}
                 {activeProduct === product.RowKey && (
                   <div className="product-details-dropdown">
+                    <div>
+                      <button className="cart-button" onClick={toggleCartVisibility}>
+                        <CartButton onClick={toggleCartVisibility} />
+                      </button>
+                    </div>
                     <div className="product-info">
                       <p><strong>Name:</strong> {product.Name}</p>
                       <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>

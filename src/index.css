@@ -124,7 +124,7 @@ body {
   max-width: 100%;
   margin: 0;
   padding: 10px;
-  color: rgb(255, 255, 255);
+  color: rgb(0, 221, 18);
   background: none;
   border: none;
   border-radius: 5px;
@@ -135,6 +135,7 @@ body {
 
 .cart-button:hover {
   transform: translateY(-5px) rotateX(5deg) scale(1.05);
+  
 }
 
 .cart-counter {
