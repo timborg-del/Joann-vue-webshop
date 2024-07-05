@@ -7,7 +7,7 @@ import { CurrencyContext } from '../components/CurrencyDetector';
 export const Cart = () => {
   const { state } = useCart();
   const dispatch = useCartDispatch();
-  const { currency } = useContext(CurrencyContext); // Use currency from context
+  const { currency, convertPrice } = useContext(CurrencyContext); // Use currency and convertPrice from context
 
   const decrementQuantity = (itemId: string) => {
     dispatch({ type: 'DECREMENT_QUANTITY', payload: itemId });
@@ -54,22 +54,25 @@ export const Cart = () => {
         <p>Your cart is empty</p>
       ) : (
         <div className="cart-items-container">
-          {normalizeCartItems(state.items).map((item) => (
-            <div key={item.RowKey} className="cart-item">
-              <img src={item.ImageUrl} alt={item.Name} className="cart-item-image" />
-              <div className="cart-item-details">
-                <p>{item.Name}</p>
-                <p>{item.size}</p>
-                <p>{currencySymbol}{item.Price.toFixed(2)}</p>
-                <div className="cart-item-actions">
-                  <button onClick={() => decrementQuantity(item.RowKey)}>-</button>
-                  <span>{item.quantity}</span>
-                  <button onClick={() => incrementQuantity(item.RowKey)}>+</button>
-                  <button onClick={() => removeItem(item.RowKey)}>Delete</button>
+          {normalizeCartItems(state.items).map((item) => {
+            const convertedPrice = convertPrice(item.Price); // Convert price to the user's currency
+            return (
+              <div key={item.RowKey} className="cart-item">
+                <img src={item.ImageUrl} alt={item.Name} className="cart-item-image" />
+                <div className="cart-item-details">
+                  <p>{item.Name}</p>
+                  <p>{item.size}</p>
+                  <p>{currencySymbol}{convertedPrice.toFixed(2)}</p>
+                  <div className="cart-item-actions">
+                    <button onClick={() => decrementQuantity(item.RowKey)}>-</button>
+                    <span>{item.quantity}</span>
+                    <button onClick={() => incrementQuantity(item.RowKey)}>+</button>
+                    <button onClick={() => removeItem(item.RowKey)}>Delete</button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </div>
@@ -77,6 +80,7 @@ export const Cart = () => {
 };
 
 export default Cart;
+
 
 
 

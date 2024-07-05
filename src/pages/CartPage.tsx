@@ -12,8 +12,9 @@ interface CartPageProps {
 
 const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
   const { state } = useCart();
-  const { currency } = useContext(CurrencyContext); // Use the currency from context
-  const totalPrice = state.items.reduce((total, item) => total + item.Price * item.quantity, 0);
+  const { currency, convertPrice } = useContext(CurrencyContext); // Use the currency and convertPrice from context
+  const totalPriceInSEK = state.items.reduce((total, item) => total + item.Price * item.quantity, 0);
+  const totalPrice = convertPrice(totalPriceInSEK); // Convert the total price to the user's currency
   const [isLeaving, setIsLeaving] = useState(false);
 
   const handleClose = () => {
@@ -46,7 +47,7 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
             <Cart />
           </div>
           <div className='form-container'>
-            <p className='total-price'>Total Price: {currencySymbol} {totalPrice.toFixed(2)}</p>
+            <p className='total-price'>Total Price: {currencySymbol}{totalPrice.toFixed(2)}</p>
             <PaypalStuff cart={state.items} />
           </div>
         </div>
@@ -56,6 +57,7 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
 };
 
 export default CartPage;
+
 
 
 

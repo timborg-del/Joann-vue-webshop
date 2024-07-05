@@ -366,7 +366,7 @@
     justify-content: center;
     width: 100%;
     gap: 10px;
-    height: auto; /* Adjust height to fit content */
+    height: 50%; /* Adjust height to fit content */
   }
 
   .gallery-nav-button {
