@@ -302,6 +302,7 @@
 }
 
 /* Phone View */
+/* Phone View */
 @media screen and (max-width: 767px) {
   .product-wrapper {
     width: calc(100% - 20px); /* 1 card per row on mobile screens */
@@ -356,6 +357,35 @@
     height: auto; /* Details take up remaining space */
     margin-top: 10px;
     overflow-y: auto; /* Add scroll if needed */
+  }
+
+  .image-gallery-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 10px;
+    height: auto; /* Adjust height to fit content */
+  }
+
+  .gallery-nav-button {
+    width: 100%;
+    max-width: 50px;
+    height: auto;
+    background-color: #9ca4ad; /* Blue color */
+    color: white; /* Text color */
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px; /* Make the button round */
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+
+  .gallery-nav-button:hover {
+    background-color: #f6f8f9af; /* Darker blue color on hover */
+    color: white; /* Text color */
   }
 
   .product-info {
@@ -444,6 +474,7 @@
     padding: 10px;
   }
 }
+
 
 /* Large Desktop View */
 @media screen and (min-width: 768px) {
