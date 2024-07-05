@@ -85,7 +85,7 @@ function Message({ content }: MessageProps) {
 function PaypalStuff({ cart }: PaypalStuffProps) {
   const { currency } = useContext(CurrencyContext); // Get currency from context
   const initialOptions = {
-    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
+    clientId: "", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
     currency, // Pass the currency dynamically
     "data-page-type": "product-details",
@@ -182,6 +182,8 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 
         // Send order details to the delivery service via email
         await sendOrderToDeliveryService(orderData, cartRef.current);
+        // Send thank you email to the customer
+        await sendThankYouEmailToCustomer(orderData, cartRef.current);
       }
     } catch (error) {
       console.error("Error occurred during transaction:", error);
@@ -218,7 +220,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       orderID: orderData.id,
       status: orderData.status,
       payer: payer.name,
-      to_email: "timl@live.se", //production@dpiprinters.com
+      to_email: "timl@live.se", // Replace with actual delivery email
       subject: "New Delivery Address and Order Details",
       message: `
       <h1>New Order Received</h1>
@@ -250,6 +252,48 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         <p>See console for all available details</p>
       `
     };
+
+    console.log('Email Parameters:', emailParams);
+
+    try {
+      const response = await fetch('https://joart.azurewebsites.net/SendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailParams),
+      });
+
+      if (response.ok) {
+        console.log("Order details sent to email successfully");
+      } else {
+        console.error("Failed to send order details to email");
+      }
+    } catch (error) {
+      console.error("Error sending order details to email:", error);
+    }
+  };
+
+  const sendThankYouEmailToCustomer = async (orderData: OrderData, cart: Product[]) => {
+    const payer = orderData.payer ? {
+      name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
+      email: orderData.payer.email_address,
+    } : {
+      name: "Unknown",
+      email: "Unknown"
+    };
+
+    const address = orderData.purchase_units[0]?.shipping?.address;
+    const recipient = orderData.purchase_units[0]?.shipping?.name?.full_name;
+
+    const cartItems = cart.map((item: Product) => `
+      <tr>
+        <td>${item.Name}</td>
+        <td>${item.quantity}</td>
+        <td>${item.Price}</td>
+        <td>${item.size ?? 'N/A'}</td>
+      </tr>
+    `).join("");
 
     const customerEmailParams = {
       orderID: orderData.id,
@@ -289,9 +333,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       `
     };
 
-    console.log('Customer Email Parameters:', customerEmailParams)
-
-    console.log('Email Parameters:', emailParams);
+    console.log('Customer Email Parameters:', customerEmailParams);
 
     try {
       const response = await fetch('https://joart.azurewebsites.net/SendEmail', {
@@ -299,16 +341,16 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(emailParams),
+        body: JSON.stringify(customerEmailParams),
       });
 
       if (response.ok) {
-        console.log("Order details sent to email successfully");
+        console.log("Customer thank you email sent successfully");
       } else {
-        console.error("Failed to send order details to email");
+        console.error("Failed to send customer thank you email");
       }
     } catch (error) {
-      console.error("Error sending order details to email:", error);
+      console.error("Error sending customer thank you email:", error);
     }
   };
 
@@ -332,6 +374,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
 
 
 
