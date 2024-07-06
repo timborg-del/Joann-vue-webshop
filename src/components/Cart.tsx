@@ -1,9 +1,8 @@
-import { useContext, useState } from 'react';
+import { useContext } from 'react';
 import { useCart, useCartDispatch } from '../context/CartContext';
 import './Cart.css';
 import { Product } from '../apiService';
 import { CurrencyContext } from '../components/CurrencyDetector';
-import CartButton from './CartButton';
 
 export const Cart = () => {
   const { state } = useCart();
@@ -48,11 +47,6 @@ export const Cart = () => {
   const currencySymbol = getCurrencySymbol(currency);
 
   console.log('Current cart items:', state.items);
-  const [isCartVisible, setIsCartVisible] = useState(false);
-
-  const toggleCartVisibility = () => {
-    setIsCartVisible(!isCartVisible);
-  };
 
   return (
     <div className="cart-product-container">
@@ -81,16 +75,46 @@ export const Cart = () => {
           })}
         </div>
       )}
-      <div>
-        <button className="cart-button" onClick={toggleCartVisibility}>
-          <CartButton onClick={toggleCartVisibility} />
-        </button>
-      </div>
     </div>
   );
 };
 
 export default Cart;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

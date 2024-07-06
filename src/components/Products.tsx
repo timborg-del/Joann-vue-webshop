@@ -5,7 +5,8 @@ import useFetchData from '../hooks/useFetchData';
 import { Product, AdditionalImage, getAdditionalImages } from '../apiService';
 import { useCart, useCartDispatch } from '../context/CartContext';
 import { CurrencyContext } from '../components/CurrencyDetector';
-import CartButton from './CartButton';
+import CartPage from 'src/pages/CartPage';
+import CartButton from '../components/CartButton';
 
 interface ProductsProps {
   activeProductName: string | null;
@@ -21,7 +22,13 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const { state } = useCart();
   const dispatch = useCartDispatch();
-  const { currency, convertPrice } = useContext(CurrencyContext); // Use currency and convertPrice from context
+  const { currency, convertPrice } = useContext(CurrencyContext);
+
+  const [isCartVisible, setIsCartVisible] = useState(false);
+
+  const toggleCartVisibility = () => {
+    setIsCartVisible(!isCartVisible);
+  };
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
@@ -129,12 +136,6 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     }
   };
 
-  const [isCartVisible, setIsCartVisible] = useState(false);
-
-  const toggleCartVisibility = () => {
-    setIsCartVisible(!isCartVisible);
-  };
-
   const getCurrencySymbol = (currency: string) => {
     const symbols: { [key: string]: string } = {
       'USD': '$',
@@ -219,11 +220,9 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                 )}
                 {activeProduct === product.RowKey && (
                   <div className="product-details-dropdown">
-                    <div>
-                      <button className="cart-button" onClick={toggleCartVisibility}>
-                        <CartButton onClick={toggleCartVisibility} />
-                      </button>
-                    </div>
+                    <button className="cart-button" onClick={toggleCartVisibility}>
+                      <CartButton onClick={toggleCartVisibility} />
+                    </button>
                     <div className="product-info">
                       <p><strong>Name:</strong> {product.Name}</p>
                       <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>
@@ -268,8 +267,14 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
           <img src={enlargedImage} alt="Enlarged" className="enlarged-image" />
         </div>
       )}
+
+
+
+      <CartPage isVisible={isCartVisible} onClose={toggleCartVisibility} />
     </div>
   );
 };
 
 export default Products;
+
+
