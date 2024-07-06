@@ -259,6 +259,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                       </button>
                     </div>
                     <div className={`scrollable-container ${showScrollable ? 'show-scrollable-container' : ''}`}>
+                      <button className="close-button-scrollable" onClick={toggleScrollable}>&times;</button>
                       <p>Giclée Art Print of a Gouache illustration.</p>
                       <hr/>
                       <p>Each print is printed on 230gsm archival matt paper. A super heavyweight premium matt coated paper with a card like feel.</p>

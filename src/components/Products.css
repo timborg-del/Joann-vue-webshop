@@ -10,6 +10,10 @@
   color: #333; /* Text color */
   box-sizing: border-box; /* Ensure padding doesn't overflow */
   display: none; /* Hide by default */
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 2000;
 }
 
 .scrollable-container p {
@@ -25,6 +29,56 @@
 .show-scrollable-container {
   display: block !important; /* Show when the button is clicked */
 }
+
+/* Phone View */
+@media screen and (max-width: 767px) {
+  .scrollable-container-button {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .toggle-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .toggle-button:hover {
+    background-color: #0056b3;
+  }
+
+  .scrollable-container {
+    height: 100vh;
+    display: none;
+  }
+
+  .close-button-scrollable {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 2001;
+  }
+
+  .close-button-scrollable:hover {
+    background-color: #0056b3;
+  }
+}
+
+/* Other CSS remains unchanged */
+
 
 /* Other CSS remains unchanged */
 
@@ -331,20 +385,54 @@
 
 /* Phone View */
 @media screen and (max-width: 767px) {
+  .scrollable-container-button {
+    margin-top: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .toggle-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+  }
+
+  .toggle-button:hover {
+    background-color: #0056b3;
+  }
 
   .scrollable-container {
-    height: 300px; /* Increase the height for phone view */
+    height: 100vh;
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    overflow-y: auto;
   }
 
-  .product-info {
-    margin-bottom: 10px; /* Reduce margin between product info */
+  .close-button-scrollable {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    font-size: 1.5rem;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    z-index: 2001;
   }
 
-  .select-container,
-  .quantity-buy-container {
-    margin-top: 10px; /* Reduce margin between elements */
+  .close-button-scrollable:hover {
+    background-color: #0056b3;
   }
-
 
   .product-wrapper {
     width: calc(100% - 20px);
@@ -516,6 +604,7 @@
     padding: 10px;
   }
 }
+
 
 /* Large Desktop View */
 @media screen and (min-width: 768px) {
