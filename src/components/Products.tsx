@@ -139,7 +139,6 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
       GBP: '£',
       EUR: '€',
       SEK: 'kr',
-      // Add more symbols as needed
     };
     return symbols[currency] || '';
   };
@@ -151,12 +150,12 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   }
 
   if (error) {
-    console.error('Error fetching products:', error);
+    console.error("Error fetching products:", error);
     return <div>Error: {error.message}</div>;
   }
 
   if (!Array.isArray(products)) {
-    console.error('Unexpected data format:', products);
+    console.error("Unexpected data format:", products);
     return <div>Error: Unexpected data format</div>;
   }
 
@@ -167,6 +166,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
           const size = selectedSizes[product.RowKey] || 'A3';
           const uniqueId = `${product.RowKey}-${size}`;
           const quantity = state.items.find((item) => item.RowKey === uniqueId)?.quantity ?? 0;
+
           const displayPrice = convertPrice(getPrice(product.RowKey, product.Price));
 
           return (
@@ -178,27 +178,22 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                 {activeProduct === product.RowKey ? (
                   <>
                     <div className="close-button-details-container">
-                      <button className="close-button-details" onClick={() => setActiveProduct(null)}>
-                        &times;
+                      <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;
                       </button>
                     </div>
                     <div className="image-gallery-container">
-                      <button className="gallery-nav-button" onClick={handlePreviousImage}>
-                        {'<'}
-                      </button>
+                      <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
                       <img
                         src={getGalleryImages(product)[currentImageIndex]}
                         alt={product.Name}
                         className="product-image"
                         onError={(e) => {
                           e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                          console.error('Image load error', e);
+                          console.error("Image load error", e);
                         }}
                         onClick={() => setEnlargedImage(getGalleryImages(product)[currentImageIndex])}
                       />
-                      <button className="gallery-nav-button" onClick={handleNextImage}>
-                        {'>'}
-                      </button>
+                      <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
                     </div>
                   </>
                 ) : (
@@ -210,7 +205,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                         className="product-image"
                         onError={(e) => {
                           e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                          console.error('Image load error', e);
+                          console.error("Image load error", e);
                         }}
                       />
                     ) : (
@@ -225,16 +220,9 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                       <CartButton onClick={toggleCartVisibility} />
                     </button>
                     <div className="product-info">
-                      <p>
-                        <strong>Name:</strong> {product.Name}
-                      </p>
-                      <p>
-                        <strong>Price:</strong> {currencySymbol}
-                        {displayPrice.toFixed(2)}
-                      </p>
-                      <p>
-                        <strong>Category:</strong> {product.Category}
-                      </p>
+                      <p><strong>Name:</strong> {product.Name}</p>
+                      <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>
+                      <p><strong>Category:</strong> {product.Category}</p>
                     </div>
                     <div className="select-container">
                       <label htmlFor={`size-${product.RowKey}`}>Size:</label>
@@ -262,26 +250,14 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                     </div>
                     <div className="scrollable-container">
                       <p>Giclée Art Print of a Gouache illustration.</p>
-                      <hr />
-                      <p>
-                        Each print is printed on 230gsm archival matt paper. A super heavyweight premium matt coated
-                        paper with a card like feel.
-                      </p>
+                      <hr/>
+                      <p>Each print is printed on 230gsm archival matt paper. A super heavyweight premium matt coated paper with a card like feel.</p>
                       <p>Prints come in A4 and A5.</p>
-                      <p>
-                        Prints are posted in a a hardbacked kraft postage envelope. Including a recycled card backing
-                        board and a compostable cello bag. I try to be as environmentally conscious as I can.
-                      </p>
-                      <p>
-                        Please note that colours may vary slightly from what is seen on screen. I did my best to match
-                        the photos to the print.
-                      </p>
+                      <p>Prints are posted in a a hardbacked kraft postage envelope. Including a recycled card backing board and a compostable cello bag. I try to be as environmentally conscious as I can.</p>
+                      <p>Please note that colours may vary slightly from what is seen on screen. I did my best to match the photos to the print.</p>
                       <p>Frames and props are not included - this listing is for the print only.</p>
-                      <hr />
-                      <p>
-                        Thank you so much for stopping by and for your support! I hope these prints bring you joy.
-                        Please don't hesitate to get in touch if you have any questions regarding any of the prints.
-                      </p>
+                      <hr/>
+                      <p>Thank you so much for stopping by and for your support! I hope these prints bring you joy. Please don't hesitate to get in touch if you have any questions regarding any of the prints.</p>
                       <p>Best wishes,</p>
                       <p>Jo</p>
                     </div>
@@ -307,3 +283,4 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
