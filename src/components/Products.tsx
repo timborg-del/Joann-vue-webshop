@@ -20,6 +20,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const [selectedSizes, setSelectedSizes] = useState<{ [key: string]: string }>({});
   const [enlargedImage, setEnlargedImage] = useState<string | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [showScrollable, setShowScrollable] = useState<boolean>(false);
   const { state } = useCart();
   const dispatch = useCartDispatch();
   const { currency, convertPrice } = useContext(CurrencyContext);
@@ -27,6 +28,10 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 
   const toggleCartVisibility = () => {
     setIsCartVisible(!isCartVisible);
+  };
+
+  const toggleScrollable = () => {
+    setShowScrollable(!showScrollable);
   };
 
   const priceAdjustments: { [key: string]: number } = {
@@ -248,7 +253,12 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                         </button>
                       </div>
                     </div>
-                    <div className="scrollable-container">
+                    <div className="scrollable-container-button">
+                      <button className="toggle-button" onClick={toggleScrollable}>
+                        {showScrollable ? 'Hide Details' : 'Show Details'}
+                      </button>
+                    </div>
+                    <div className={`scrollable-container ${showScrollable ? 'show-scrollable-container' : ''}`}>
                       <p>Giclée Art Print of a Gouache illustration.</p>
                       <hr/>
                       <p>Each print is printed on 230gsm archival matt paper. A super heavyweight premium matt coated paper with a card like feel.</p>
@@ -283,4 +293,3 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
-
