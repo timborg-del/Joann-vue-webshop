@@ -23,7 +23,6 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const { state } = useCart();
   const dispatch = useCartDispatch();
   const { currency, convertPrice } = useContext(CurrencyContext);
-
   const [isCartVisible, setIsCartVisible] = useState(false);
 
   const toggleCartVisibility = () => {
@@ -33,7 +32,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
     A4: -2,
-    A5: -5
+    A5: -5,
   };
 
   useEffect(() => {
@@ -49,7 +48,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     const fetchAdditionalImages = async () => {
       if (products && products.length > 0) {
         const allAdditionalImages = await Promise.all(
-          products.map(product => getAdditionalImages(product.Name))
+          products.map((product) => getAdditionalImages(product.Name))
         );
         setAdditionalImages(allAdditionalImages.flat());
         console.log('Fetched additional images:', allAdditionalImages.flat());
@@ -77,14 +76,14 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
       RowKey: uniqueId,
       Price: getPrice(product.RowKey, product.Price),
       quantity: 1,
-      size: size
+      size,
     });
   };
 
   const incrementQuantity = (product: Product) => {
     const size = selectedSizes[product.RowKey] || 'A3';
     const uniqueId = `${product.RowKey}-${size}`;
-    const cartItem = state.items.find(item => item.RowKey === uniqueId);
+    const cartItem = state.items.find((item) => item.RowKey === uniqueId);
     if (cartItem) {
       dispatch({ type: 'INCREMENT_QUANTITY', payload: uniqueId });
     } else {
@@ -95,7 +94,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const decrementQuantity = (product: Product) => {
     const size = selectedSizes[product.RowKey] || 'A3';
     const uniqueId = `${product.RowKey}-${size}`;
-    const cartItem = state.items.find(item => item.RowKey === uniqueId);
+    const cartItem = state.items.find((item) => item.RowKey === uniqueId);
     if (cartItem) {
       if (cartItem.quantity > 1) {
         dispatch({ type: 'DECREMENT_QUANTITY', payload: uniqueId });
@@ -106,8 +105,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   };
 
   const getGalleryImages = (product: Product) => {
-    const additionalImagesForProduct = additionalImages.filter(image => image.ProductId === product.Name);
-    const galleryImages = [product.ImageUrl, ...additionalImagesForProduct.map(image => image.ImageUrl)];
+    const additionalImagesForProduct = additionalImages.filter((image) => image.ProductId === product.Name);
+    const galleryImages = [product.ImageUrl, ...additionalImagesForProduct.map((image) => image.ImageUrl)];
     console.log(`Gallery images for ${product.Name}:`, galleryImages);
     return galleryImages;
   };
@@ -129,19 +128,17 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
       if (product) {
         const galleryImages = getGalleryImages(product);
         console.log(`Previous Image: ${currentImageIndex - 1} of ${galleryImages.length}`, galleryImages);
-        setCurrentImageIndex((prevIndex) =>
-          prevIndex === 0 ? galleryImages.length - 1 : prevIndex - 1
-        );
+        setCurrentImageIndex((prevIndex) => (prevIndex === 0 ? galleryImages.length - 1 : prevIndex - 1));
       }
     }
   };
 
   const getCurrencySymbol = (currency: string) => {
     const symbols: { [key: string]: string } = {
-      'USD': '$',
-      'GBP': '£',
-      'EUR': '€',
-      'SEK': 'kr',
+      USD: '$',
+      GBP: '£',
+      EUR: '€',
+      SEK: 'kr',
       // Add more symbols as needed
     };
     return symbols[currency] || '';
@@ -154,12 +151,12 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   }
 
   if (error) {
-    console.error("Error fetching products:", error);
+    console.error('Error fetching products:', error);
     return <div>Error: {error.message}</div>;
   }
 
   if (!Array.isArray(products)) {
-    console.error("Unexpected data format:", products);
+    console.error('Unexpected data format:', products);
     return <div>Error: Unexpected data format</div>;
   }
 
@@ -170,7 +167,6 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
           const size = selectedSizes[product.RowKey] || 'A3';
           const uniqueId = `${product.RowKey}-${size}`;
           const quantity = state.items.find((item) => item.RowKey === uniqueId)?.quantity ?? 0;
-
           const displayPrice = convertPrice(getPrice(product.RowKey, product.Price));
 
           return (
@@ -182,22 +178,27 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                 {activeProduct === product.RowKey ? (
                   <>
                     <div className="close-button-details-container">
-                      <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;
+                      <button className="close-button-details" onClick={() => setActiveProduct(null)}>
+                        &times;
                       </button>
                     </div>
                     <div className="image-gallery-container">
-                      <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
+                      <button className="gallery-nav-button" onClick={handlePreviousImage}>
+                        {'<'}
+                      </button>
                       <img
                         src={getGalleryImages(product)[currentImageIndex]}
                         alt={product.Name}
                         className="product-image"
                         onError={(e) => {
                           e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                          console.error("Image load error", e);
+                          console.error('Image load error', e);
                         }}
                         onClick={() => setEnlargedImage(getGalleryImages(product)[currentImageIndex])}
                       />
-                      <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
+                      <button className="gallery-nav-button" onClick={handleNextImage}>
+                        {'>'}
+                      </button>
                     </div>
                   </>
                 ) : (
@@ -209,7 +210,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                         className="product-image"
                         onError={(e) => {
                           e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                          console.error("Image load error", e);
+                          console.error('Image load error', e);
                         }}
                       />
                     ) : (
@@ -224,9 +225,16 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                       <CartButton onClick={toggleCartVisibility} />
                     </button>
                     <div className="product-info">
-                      <p><strong>Name:</strong> {product.Name}</p>
-                      <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>
-                      <p><strong>Category:</strong> {product.Category}</p>
+                      <p>
+                        <strong>Name:</strong> {product.Name}
+                      </p>
+                      <p>
+                        <strong>Price:</strong> {currencySymbol}
+                        {displayPrice.toFixed(2)}
+                      </p>
+                      <p>
+                        <strong>Category:</strong> {product.Category}
+                      </p>
                     </div>
                     <div className="select-container">
                       <label htmlFor={`size-${product.RowKey}`}>Size:</label>
@@ -252,6 +260,31 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                         </button>
                       </div>
                     </div>
+                    <div className="scrollable-container">
+                      <p>Giclée Art Print of a Gouache illustration.</p>
+                      <hr />
+                      <p>
+                        Each print is printed on 230gsm archival matt paper. A super heavyweight premium matt coated
+                        paper with a card like feel.
+                      </p>
+                      <p>Prints come in A4 and A5.</p>
+                      <p>
+                        Prints are posted in a a hardbacked kraft postage envelope. Including a recycled card backing
+                        board and a compostable cello bag. I try to be as environmentally conscious as I can.
+                      </p>
+                      <p>
+                        Please note that colours may vary slightly from what is seen on screen. I did my best to match
+                        the photos to the print.
+                      </p>
+                      <p>Frames and props are not included - this listing is for the print only.</p>
+                      <hr />
+                      <p>
+                        Thank you so much for stopping by and for your support! I hope these prints bring you joy.
+                        Please don't hesitate to get in touch if you have any questions regarding any of the prints.
+                      </p>
+                      <p>Best wishes,</p>
+                      <p>Jo</p>
+                    </div>
                   </div>
                 )}
               </div>
@@ -268,13 +301,9 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
         </div>
       )}
 
-
-
       <CartPage isVisible={isCartVisible} onClose={toggleCartVisibility} />
     </div>
   );
 };
 
 export default Products;
-
-
