@@ -63,10 +63,18 @@
 
 .cart-content {
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  justify-content: center;
+  align-items: flex-end;
   width: 100%;
 }
+
+.cart-content .total-price {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  width: 100%;
+}
+
 
 .cart-container {
   flex: 1;
@@ -74,13 +82,31 @@
   max-width: 60%;
 }
 
+/* Ensure the form-container and its children take the full width */
 .form-container {
   flex: 1;
-  display: flex;
-  flex-direction: column;
+  display: table-column;
+  flex-direction: flex-end;
   align-items: center;
   max-width: 80%;
+  width: 100%; /* Ensure the form container takes full width */
 }
+
+.paypal-buttons-container {
+  width: 100%; /* Ensure the PayPal buttons take full width */
+  display: flex;
+  justify-content: center;
+}
+
+.paypal-buttons-container > div {
+  width: 100%; /* Ensure the inner container of PayPal buttons takes full width */
+}
+
+.paypal-button {
+  width: 100% !important; /* Ensure each PayPal button takes full width */
+  max-width: none !important; /* Remove max-width restriction */
+}
+
 
 .form-container .input-text {
   width: 100%;
@@ -94,19 +120,6 @@
   background-color: rgba(99, 0, 134, 0.766);
 }
 
-.form-container .input-text input {
-  width: 100%;
-  margin-top: 1px;
-  max-width: 300px;
-  height: auto;
-  margin-bottom: 10px;
-  padding: 20px;
-  border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.024);
-  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.467);
-  color: white;
-  background-color: rgba(2, 0, 6, 0.743);
-}
 
 .form-container p {
   font-size: 20px;
@@ -146,7 +159,9 @@ form {
 }
 
 .total-price {
+  position: relative;
   text-align: center;
+  padding: 50px;
   color: rgb(255, 255, 255);
 }
 

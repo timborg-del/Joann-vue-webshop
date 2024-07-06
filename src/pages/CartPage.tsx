@@ -48,7 +48,9 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
           </div>
           <div className='form-container'>
             <p className='total-price'>Total Price: {currencySymbol}{totalPrice.toFixed(2)}</p>
-            <PaypalStuff cart={state.items} />
+            <div className='paypal-buttons-container'>
+              <PaypalStuff cart={state.items} />
+            </div>
           </div>
         </div>
       </div>
@@ -57,42 +59,4 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
 };
 
 export default CartPage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

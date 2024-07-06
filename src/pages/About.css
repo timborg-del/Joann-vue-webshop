@@ -67,13 +67,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%; /* Ensure the video container takes full width */
   margin-top: 20px; /* Add some space above the video */
 }
 
 iframe {
   width: 100%; /* Make the iframe responsive */
-  height: auto;
-  max-width: 600px; /* Set a max-width for larger screens */
+  max-width: 800px; /* Set a max-width for larger screens */
+  aspect-ratio: 16/9; /* Maintain aspect ratio */
   border-radius: 10px;
 }
 
@@ -135,3 +136,4 @@ iframe {
     height: auto; /* Maintain aspect ratio */
   }
 }
+
