@@ -619,7 +619,7 @@
     position: relative;
     top: auto;
     left: auto;
-    overflow-y: visible;
+    overflow-y: scroll;
   }
 
   .close-button-scrollable {
