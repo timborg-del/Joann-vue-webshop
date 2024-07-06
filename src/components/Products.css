@@ -52,6 +52,7 @@
   max-height: auto;
   box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
   transition: opacity 0.5s ease, transform 0.5s ease;
+  overflow-y: auto;
 }
 
 .product-info {
