@@ -221,7 +221,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                 )}
                 {activeProduct === product.RowKey && (
                   <div className="product-details-dropdown">
-                    <button className="cart-button" onClick={toggleCartVisibility}>
+                    <button className="cart-button-detail" onClick={toggleCartVisibility}>
                       <CartButton onClick={toggleCartVisibility} />
                     </button>
                     <div className="product-info">
