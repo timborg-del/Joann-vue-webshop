@@ -222,61 +222,64 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                   </div>
                 )}
                 {activeProduct === product.RowKey && (
-  <div className="product-details-dropdown">
-    <div className="products-cart-button">
-      <CartButton onClick={toggleCartVisibility} />
-    </div>
-    <div className="product-info">
-      <p><strong>Name:</strong> {product.Name}</p>
-      <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>
-      <p><strong>Category:</strong> {product.Category}</p>
-    </div>
-    <div className="select-container">
-      <label htmlFor={`size-${product.RowKey}`}>Size:</label>
-      <select
-        id={`size-${product.RowKey}`}
-        value={selectedSizes[product.RowKey] || 'A3'}
-        onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
-      >
-        <option value="A3">A3</option>
-        <option value="A4">A4</option>
-        <option value="A5">A5</option>
-      </select>
-    </div>
-    <div className="quantity-buy-container">
-      <div className={`quantity-controls ${quantity > 0 ? '' : 'hidden'}`}>
-        <button onClick={() => decrementQuantity(product)}>-</button>
-        <span>{quantity}</span>
-        <button onClick={() => incrementQuantity(product)}>+</button>
-      </div>
-      <div className="buy-btn-container">
-        <button className="buy-btn" onClick={() => handleAddToCart(product)}>
-          Add to Cart
-        </button>
-      </div>
-    </div>
-    <div className="scrollable-container-button">
-      <button className="toggle-button" onClick={toggleScrollable}>
-        {showScrollable ? 'Hide Details' : 'Show Details'}
-      </button>
-    </div>
-    <div className={`scrollable-container ${showScrollable ? 'show-scrollable-container' : ''}`}>
-      <button className="close-button-scrollable" onClick={toggleScrollable}>&times;</button>
-      <p>Giclée Art Print of a Gouache illustration.</p>
-      <hr/>
-      <p>Each print is printed on 230gsm archival matt paper. A super heavyweight premium matt coated paper with a card like feel.</p>
-      <p>prints come in sizes, A3, A4 and A5</p>
-      <p>Prints are posted in a a hardbacked kraft postage envelope. Including a recycled card backing board and a compostable cello bag. I try to be as environmentally conscious as I can.</p>
-      <p>Please note that colours may vary slightly from what is seen on screen. I did my best to match the photos to the print.</p>
-      <p>Frames and props are not included - this listing is for the print only.</p>
-      <hr/>
-      <p>Thank you so much for stopping by and for your support! I hope these prints bring you joy. Please don't hesitate to get in touch if you have any questions regarding any of the prints.</p>
-      <p>Best wishes,</p>
-      <p>Jo</p>
-    </div>
-  </div>
-)}
-
+                  <div className="product-details-dropdown">
+                    <div className="products-cart-button-container" onClick={toggleCartVisibility}>
+                      <span className="go-to-cart-text">Go to Cart</span>
+                      <div className="products-cart-button">
+                        <CartButton onClick={toggleCartVisibility} className="cart-button" />
+                      </div>
+                      <span className="right-arrow"></span>
+                    </div>
+                    <div className="product-info">
+                      <p><strong>Name:</strong> {product.Name}</p>
+                      <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>
+                      <p><strong>Category:</strong> {product.Category}</p>
+                    </div>
+                    <div className="select-container">
+                      <label htmlFor={`size-${product.RowKey}`}>Size:</label>
+                      <select
+                        id={`size-${product.RowKey}`}
+                        value={selectedSizes[product.RowKey] || 'A3'}
+                        onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
+                      >
+                        <option value="A3">A3</option>
+                        <option value="A4">A4</option>
+                        <option value="A5">A5</option>
+                      </select>
+                    </div>
+                    <div className="quantity-buy-container">
+                      <div className={`quantity-controls ${quantity > 0 ? '' : 'hidden'}`}>
+                        <button onClick={() => decrementQuantity(product)}>-</button>
+                        <span>{quantity}</span>
+                        <button onClick={() => incrementQuantity(product)}>+</button>
+                      </div>
+                      <div className="buy-btn-container">
+                        <button className="buy-btn" onClick={() => handleAddToCart(product)}>
+                          Add to Cart
+                        </button>
+                      </div>
+                    </div>
+                    <div className="scrollable-container-button">
+                      <button className="toggle-button" onClick={toggleScrollable}>
+                        {showScrollable ? 'Hide Details' : 'Show Details'}
+                      </button>
+                    </div>
+                    <div className={`scrollable-container ${showScrollable ? 'show-scrollable-container' : ''}`}>
+                      <button className="close-button-scrollable" onClick={toggleScrollable}>&times;</button>
+                      <p>Giclée Art Print of a Gouache illustration.</p>
+                      <hr/>
+                      <p>Each print is printed on 230gsm archival matt paper. A super heavyweight premium matt coated paper with a card like feel.</p>
+                      <p>prints come in sizes, A3, A4 and A5</p>
+                      <p>Prints are posted in a a hardbacked kraft postage envelope. Including a recycled card backing board and a compostable cello bag. I try to be as environmentally conscious as I can.</p>
+                      <p>Please note that colours may vary slightly from what is seen on screen. I did my best to match the photos to the print.</p>
+                      <p>Frames and props are not included - this listing is for the print only.</p>
+                      <hr/>
+                      <p>Thank you so much for stopping by and for your support! I hope these prints bring you joy. Please don't hesitate to get in touch if you have any questions regarding any of the prints.</p>
+                      <p>Best wishes,</p>
+                      <p>Jo</p>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
           );

@@ -122,6 +122,7 @@
   justify-content: center;
   padding: 10px;
   border-radius: 5px;
+  transition: background-color 0.3s ease; /* Smooth transition */
 }
 
 .products-cart-button:hover{
@@ -141,6 +142,23 @@
   top: 30px;
   right: 34px;
   transform: translate(50%, -50%);
+}
+
+.go-to-cart-text {
+  margin-right: 10px;
+  font-size: 1rem;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+
+.right-arrow {
+  display: inline-block;
+  margin-left: 5px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  padding: 3px;
+  transform: rotate(-45deg);
 }
 
 
