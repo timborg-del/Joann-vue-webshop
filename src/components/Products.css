@@ -299,7 +299,7 @@
 }
 
 .gallery-nav-button {
-  background-color: #9ca4ad;
+  background-color: #9ca4ad72;
   color: white;
   border: none;
   font-size: 24px;
@@ -310,8 +310,7 @@
 }
 
 .gallery-nav-button:hover {
-  background-color: #f6f8f9af;
-  color: white;
+  background-color: #9ca4ad;
 }
 
 .quantity-buy-container {
@@ -412,6 +411,7 @@
     position: fixed;
     top: 0;
     left: 0;
+    top: 5px;
     z-index: 2000;
     overflow-y: auto;
   }
@@ -503,7 +503,7 @@
     width: 100%;
     max-width: 50px;
     height: auto;
-    background-color: #9ca4ad;
+    background-color: #8d8e9095;
     color: white;
     border: none;
     font-size: 15px;
