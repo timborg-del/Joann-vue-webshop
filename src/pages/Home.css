@@ -143,6 +143,7 @@ body {
     width: 100%;
     height: auto; /* Adjust height to fit content */
     padding-top: 0;
+    z-index: 1200;
   }
 
   .showroom-image {
