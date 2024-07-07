@@ -145,11 +145,15 @@
 }
 
 .go-to-cart-text {
-  margin-right: 10px;
-  font-size: 1rem;
-  color: white;
+  margin-right: 200px;
+  font-size: 1.3rem;
+  color: rgb(60, 59, 59);
   display: flex;
   align-items: center;
+}
+
+.products-cart-button .cart-svg {
+  stroke: white; /* Set the SVG stroke color to white */
 }
 
 .right-arrow {

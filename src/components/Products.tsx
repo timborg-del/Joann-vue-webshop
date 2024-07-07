@@ -223,12 +223,12 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                 )}
                 {activeProduct === product.RowKey && (
                   <div className="product-details-dropdown">
-                    <div className="products-cart-button-container" onClick={toggleCartVisibility}>
-                      <span className="go-to-cart-text">Go to Cart</span>
-                      <div className="products-cart-button">
-                        <CartButton onClick={toggleCartVisibility} className="cart-button" />
-                      </div>
-                      <span className="right-arrow"></span>
+                    <div className="products-cart-button-container">
+                      <span className="go-to-cart-text">Go to cart</span>
+                      <button className="products-cart-button" onClick={toggleCartVisibility}>
+                        <CartButton onClick={toggleCartVisibility} />
+                        <span className="right-arrow"></span>
+                      </button>
                     </div>
                     <div className="product-info">
                       <p><strong>Name:</strong> {product.Name}</p>
