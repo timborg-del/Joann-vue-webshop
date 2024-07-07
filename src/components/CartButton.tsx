@@ -3,13 +3,14 @@ import { useCart } from '../context/CartContext';
 
 interface CartButtonProps {
   onClick: () => void;
+  className?: string; // Add a className prop for custom styling
 }
 
-const CartButton: React.FC<CartButtonProps> = ({ onClick }) => {
+const CartButton: React.FC<CartButtonProps> = ({ onClick, className }) => {
   const { cartItemCount } = useCart();
 
   return (
-    <div className="cart-button-container" onClick={onClick}>
+    <div className={`cart-button-container ${className}`} onClick={onClick}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         className="icon icon-tabler icon-tabler-shopping-cart"
@@ -34,6 +35,7 @@ const CartButton: React.FC<CartButtonProps> = ({ onClick }) => {
 };
 
 export default CartButton;
+
 
 
 
