@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import './Home.css'; // Import CSS file for Home styles
 import Showroom from '../components/Showroom'; // Import the Showroom component
 import CommentsComponent from '../components/CommentsComponent'; // Import the CommentsComponent
-import margo from '../assets/Margo_Gif_01.gif'; // Import the GIF file
+import margo from '../assets/Margo_Gif_02.gif'; // Import the GIF file
 
 const Home: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
