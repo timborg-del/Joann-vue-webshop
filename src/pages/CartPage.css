@@ -181,6 +181,7 @@ form {
   .cart-page-container {
     top: 0; /* Ensure it starts at the top */
     height: 100vh; /* Full viewport height */
+    width: 100vw;
     align-items: flex-start; /* Align content at the top */
   }
 
@@ -191,21 +192,24 @@ form {
   }
 
   .cart-page {
-    max-height: 100%;
+    min-height: 100vh; /* Full viewport height */
+    width: 100vw; /* Full viewport width */
     max-width: 100%;
     padding: 10px;
+    overflow-y: auto; /* Make it scrollable */
   }
 
   .cart-content {
-    max-height: fit-content;
     flex-direction: column;
     align-items: center;
+    width: 100%; /* Full width */
   }
 
   .cart-container,
   .form-container {
     max-width: 100%;
     margin: 10px 0;
+    width: 100%; /* Ensure full width */
   }
 
   .close-button-cart {
@@ -221,3 +225,4 @@ form {
     max-width: 100%;
   }
 }
+
