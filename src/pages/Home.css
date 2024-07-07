@@ -96,7 +96,6 @@ body {
   left: 0; /* Position at the left */
   width: 45%; /* Take up 30% of the width */
   height: auto; /* Maintain aspect ratio */
-  padding: 10px;
   box-sizing: border-box;
   border: none; /* Red border to match the red square in the provided image */
 }
