@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './Home.css'; // Import CSS file for Home styles
 import Showroom from '../components/Showroom'; // Import the Showroom component
+import margo from '../assets/Margo_Gif_01.gif'; // Import the GIF file
 
 const Home: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -36,12 +37,18 @@ const Home: React.FC = () => {
         <div className="image-section">
           <Showroom onImageClick={handleImageClick} /> {/* Add the Showroom component here */}
         </div>
+        <div className="gif-container">
+          <img src={margo} alt="Margo Gif" />
+        </div>
       </div>
     </div>
   );
 };
 
 export default Home;
+
+
+
 
 
 

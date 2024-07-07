@@ -82,12 +82,28 @@ body {
   height: calc(100vh - 100px); /* Ensure it fills the remaining height */
   transition: opacity 0.5s ease-in-out; /* Add opacity transition */
   opacity: 1;
+  position: relative;
 }
 
 .image-section.fade-out {
   opacity: 0;
 }
 
+.gif-container {
+  position: absolute;
+  bottom: 0; /* Position at the bottom */
+  left: 0; /* Position at the left */
+  width: 45%; /* Take up 30% of the width */
+  height: auto; /* Maintain aspect ratio */
+  padding: 10px;
+  box-sizing: border-box;
+  border: none; /* Red border to match the red square in the provided image */
+}
+
+.gif-container img {
+  width: 100%;
+  height: auto;
+}
 
 /* Responsive adjustments */
 @media screen and (max-width: 767px) {
@@ -101,6 +117,7 @@ body {
     height: auto;
     margin-top: 1px;
     padding: 0 10px;
+    position: relative; /* Ensure this is relative for the fixed gif-container */
   }
 
   .intro-text {
@@ -131,12 +148,23 @@ body {
   .showroom-image {
     max-width: 100%; /* Full width on smaller screens */
   }
+
+  .gif-container {
+    position: fixed; /* Make it fixed at the bottom */
+    bottom: 0;
+    width: 100%; /* Take up the full width */
+    left: 0;
+    padding: 0; /* Remove padding */
+    box-sizing: border-box;
+    background: none; /* Add background to match intro text */
+    z-index: 1000; /* Ensure it is above other content */
+  }
+
+  .gif-container img {
+    width: 100%;
+    height: auto;
+  }
 }
 
 
 
-
-
-
-
-  
