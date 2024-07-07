@@ -224,7 +224,9 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                 {activeProduct === product.RowKey && (
                   <div className="product-details-dropdown">
                     <div className="products-cart-button-container">
+                      <div className="go-to-cart-text-container">
                       <span className="go-to-cart-text">Go to cart</span>
+                      </div>
                       <button className="products-cart-button" onClick={toggleCartVisibility}>
                         <CartButton onClick={toggleCartVisibility} />
                         <span className="right-arrow"></span>
@@ -300,3 +302,4 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 };
 
 export default Products;
+
