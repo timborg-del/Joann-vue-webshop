@@ -11,7 +11,7 @@ const comments: Comment[] = [
   { text: 'Good quality, fast shipping.', stars: 4 },
   { text: 'Excellent customer service.', stars: 5 },
   { text: 'Item as described, very satisfied.', stars: 4 },
-  { text: 'Not what I expected, but okay.', stars: 3 },
+  { text: 'Very nice thank you for your service. My home is now complited, but okay.', stars: 5 },
 ];
 
 const getRandomComments = (): Comment[] => {
