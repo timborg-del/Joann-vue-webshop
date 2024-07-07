@@ -1,66 +1,45 @@
 .comments-container {
-    position: fixed;
-    top: 50%;
-    left: 20px;
-    transform: translateY(-50%);
-    width: 90%;
-    max-width: 350px; /* Max width for larger screens */
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.7);
-    color: white;
-    text-align: center;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    overflow: hidden; /* Hide overflow for smooth transitions */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    width: 100%; /* Use the full width of the parent container */
+    margin-top: 20px;
+    padding: 10px;
+    border: 1px solid #36353571;
+    border-radius: 5px;
+    background-color: #0067a8a9;
+    box-shadow: 0 4px 7px rgba(0, 0, 0, 0.6);
+    overflow: hidden; /* Ensure no overflow */
+    transition: opacity 1s ease-in-out; /* Smooth transition for opacity */
   }
   
   .comment {
-    opacity: 0;
-    animation: fade-in-out 12s infinite;
+    margin-bottom: 10px;
+    transition: opacity 1s ease-in-out; /* Smooth transition for opacity */
   }
   
-  .comment-1 {
-    animation-delay: 0s;
-  }
-  
-  .comment-2 {
-    animation-delay: 6s; /* Delay for the second comment */
-  }
-  
-  @keyframes fade-in-out {
-    0%, 33.33%, 100% {
-      opacity: 0;
-      transform: translateY(-20px); /* Move up */
-    }
-    16.67%, 83.33% {
-      opacity: 1;
-      transform: translateY(0); /* Move to original position */
-    }
+  .comment p {
+    font-size: 1.2rem;
+    margin: 0;
+    padding: 5px 0;
   }
   
   .stars {
-    margin-top: 10px;
-    font-size: 1.5rem;
+    font-size: 1rem;
     color: gold;
   }
   
-  /* Responsive adjustments */
-  @media screen and (max-width: 767px) {
-    .comments-container {
-      width: 90%;
-      left: 10%;
-      padding: 15px;
-    }
+  .comment:nth-child(1) {
+    animation: fadeInOut 12s ease-in-out infinite;
+  }
   
-    .stars {
-      font-size: 1.2rem;
-    }
+  .comment:nth-child(2) {
+    animation: fadeInOut 12s ease-in-out infinite 6s;
+  }
   
-    .comment p {
-      font-size: 0.9rem;
+  @keyframes fadeInOut {
+    0%, 50%, 100% {
+      opacity: 0;
+    }
+    10%, 40% {
+      opacity: 1;
     }
   }
   
