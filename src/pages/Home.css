@@ -82,6 +82,7 @@ body {
   height: calc(100vh - 100px); /* Ensure it fills the remaining height */
   transition: opacity 0.5s ease-in-out; /* Add opacity transition */
   opacity: 1;
+  z-index: 1000;
   position: relative;
 }
 

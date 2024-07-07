@@ -1,3 +1,8 @@
+body {
+  font-family: 'Arial', sans-serif;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 .cart-page-container {
   display: flex;
   justify-content: center;
@@ -75,7 +80,6 @@
   width: 100%;
 }
 
-
 .cart-container {
   flex: 1;
   margin-right: 20px;
@@ -107,7 +111,6 @@
   max-width: none !important; /* Remove max-width restriction */
 }
 
-
 .form-container .input-text {
   width: 100%;
   max-width: 300px;
@@ -119,7 +122,6 @@
   color: white;
   background-color: rgba(99, 0, 134, 0.766);
 }
-
 
 .form-container p {
   font-size: 20px;
@@ -176,13 +178,16 @@ form {
 }
 
 @media screen and (max-width: 767px) {
+  .cart-page-container {
+    top: 0; /* Ensure it starts at the top */
+    height: 100vh; /* Full viewport height */
+    align-items: flex-start; /* Align content at the top */
+  }
+
   .cart-page-container.active {
-    top: 100px;
     right: 0;
     width: 100vw;
     height: 100vh;
-    max-height: 100%;
-    align-items: flex-start;
   }
 
   .cart-page {
@@ -216,11 +221,3 @@ form {
     max-width: 100%;
   }
 }
-
-
-
-
-
-
-
-
