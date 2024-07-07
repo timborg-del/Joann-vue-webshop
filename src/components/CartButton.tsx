@@ -18,7 +18,7 @@ const CartButton: React.FC<CartButtonProps> = ({ onClick, className }) => {
         height="50"
         viewBox="0 0 24 24"
         strokeWidth="1"
-        stroke="currentColor"
+        stroke="white"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
