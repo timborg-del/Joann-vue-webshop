@@ -36,8 +36,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
 
   const priceAdjustments: { [key: string]: number } = {
     A3: 0,
-    A4: -2,
-    A5: -5,
+    A4: -200,
+    A5: -311,
   };
 
   useEffect(() => {
