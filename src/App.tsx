@@ -29,8 +29,8 @@ const App: React.FC = () => {
           <nav className="navbar">
             <div className='centerLinks'>        
               <Link to="/">Home</Link>
-              <Link to="/about">About</Link>
-              <Link to="/admin"></Link>
+              <Link to="/about">About</Link>            
+              <Link to="/contact" className="contact-link">Contact</Link>
               <div className="dropdown" onMouseEnter={() => setIsShopOpen(true)} onMouseLeave={() => setIsShopOpen(false)}>           
                 <h1 className='h1shop'>Shop</h1>
                 <div className={`dropdownContent ${isShopOpen ? 'open' : ''}`}>
@@ -39,8 +39,9 @@ const App: React.FC = () => {
                   <Link to="/shoppage">Download</Link>
                   <Link to="/shoppage">Pencils</Link>
                 </div>
+                <Link to="/admin"></Link>
               </div>
-              <Link to="/contact" className="contact-link">Contact</Link>
+              
             </div>            
             <div>
               <button className="cart-button" onClick={toggleCartVisibility}>
@@ -67,28 +68,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-
-
-
-
-
-
-
-
-
-
-
-
-
-{/*  <Route path="/admin" element={<AdminPage />} /> */}
-
-
-
-
-
-
-
-
-
-
-
