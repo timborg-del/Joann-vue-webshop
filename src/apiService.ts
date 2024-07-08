@@ -1,8 +1,6 @@
 import { jwtDecode } from 'jwt-decode';
 
 const API_BASE_URL = "https://joart.azurewebsites.net";
-const ETSY_API_KEY = 'h0r8567shhkiwyp53w6sg0q2';
-const ETSY_SHOP_ID = 'i7g0i7sugf';
 
 export interface Product {
     PartitionKey: string;
@@ -55,25 +53,6 @@ export interface ShowroomImage {
     Description: string;
     ImageUrl: string;
 }
-
-// Function to fetch Etsy reviews
-export const fetchEtsyReviews = async (): Promise<Review[]> => {
-    if (!ETSY_SHOP_ID) {
-        throw new Error('Etsy shop ID not set');
-    }
-
-    const response = await fetch(`https://openapi.etsy.com/v2/shops/${ETSY_SHOP_ID}/reviews?api_key=${ETSY_API_KEY}`);
-    if (!response.ok) {
-        throw new Error('Failed to fetch reviews from Etsy');
-    }
-    const data = await response.json();
-    return data.results.map((review: any) => ({
-        user: review.user_id, // or review.user_name if available
-        comment: review.message,
-        rating: review.rating,
-    }));
-};
-
 
 export const addProduct = async (product: Product, file: File): Promise<void> => {
     const formData = new FormData();
@@ -361,3 +340,10 @@ export const deleteShowroomImage = async (partitionKey: string, rowKey: string):
         throw new Error(`Failed to delete showroom image: ${errorText}`);
     }
 };
+
+
+
+
+
+
+
