@@ -461,7 +461,7 @@ const AdminPage: React.FC = () => {
               required
             />
             <input type="file" onChange={handleFileChange} required />
-            <button type="submit">Add Additional Image</button>
+            <button type="submit">Add Gallery Image</button>
           </form>
         )}
         {currentView === 'products' && (

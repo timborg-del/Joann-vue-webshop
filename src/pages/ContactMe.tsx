@@ -13,7 +13,7 @@ const ContactMe = () => {
     <div className="contact-container">
       <h2>Contact Me</h2>
       <div className={`contact-content ${isVisible ? 'visible' : ''}`}>
-        <p>If you have any questions or inquiries, please feel free to reach out to me via the contact form below or just copy this email adress and send to: jo.salmonart@gmail.com</p>
+        <p>If you have any questions or inquiries, please feel free to reach out to me via E-mail adress and send to: jo.salmonart@gmail.com</p>
       </div>
     </div>
   );

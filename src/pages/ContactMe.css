@@ -19,7 +19,6 @@
     left: 50%;
     transform: translateX(-50%);
     font-size: 2rem;
-    margin-left: 20px;
     z-index: 1000; /* Ensure the header is on top */
     color: #ffffff; /* Ensure the text color is white */
   }
