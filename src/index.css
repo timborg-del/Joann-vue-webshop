@@ -205,7 +205,7 @@ body {
 
   .centerLinks {
     justify-content: center;
-    margin-top: 20px;
+    margin-top: 70px;
     flex-wrap: wrap; /* Allows links to wrap to the next line if needed */
   }
 
