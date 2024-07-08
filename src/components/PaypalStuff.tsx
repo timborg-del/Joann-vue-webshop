@@ -62,16 +62,18 @@ interface Payer {
   email_address: string;
 }
 
+interface ErrorDetail {
+  issue: string;
+  description: string;
+  debug_id: string;
+}
+
 interface OrderData {
   id: string;
   status: string;
   payer: Payer;
   purchase_units: PurchaseUnit[];
-  details?: {
-    issue?: string;
-    description?: string;
-    debug_id?: string;
-  }[];
+  details?: ErrorDetail[];
 }
 
 interface PaypalStuffProps {
@@ -83,11 +85,11 @@ function Message({ content }: MessageProps) {
 }
 
 function PaypalStuff({ cart }: PaypalStuffProps) {
-  const { currency } = useContext(CurrencyContext); // Get currency from context
+  const { currency } = useContext(CurrencyContext);
   const initialOptions = {
     clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
-    currency, // Pass the currency dynamically
+    currency,
     "data-page-type": "product-details",
     components: "buttons",
     "data-sdk-integration-source": "developer-studio",
@@ -111,7 +113,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Cart: currentCart, Currency: currency }), // Ensure currency is passed
+        body: JSON.stringify({ Cart: currentCart, Currency: currency }),
       });
 
       if (!response.ok) {
@@ -150,6 +152,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({ orderId: data.orderID, emailParams: { /* Your email params here */ } }) // Ensure email params are passed
         }
       );
 
@@ -160,7 +163,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         return;
       }
 
-      const orderData = await response.json();
+      const orderData: OrderData = await response.json();
       console.log("Capture result", orderData);
 
       if (!orderData.purchase_units) {
@@ -174,7 +177,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
         return actions.restart();
       } else if (errorDetail) {
-        throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
+        throw new Error(`${errorDetail.description} (${errorDetail.debug_id})`);
       } else {
         const transaction = orderData.purchase_units[0].payments.captures[0];
         setMessage(`Transaction ${transaction.status}: ${transaction.id}. See console for all available details`);
@@ -212,25 +215,4 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
