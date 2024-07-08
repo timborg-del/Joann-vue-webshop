@@ -1,3 +1,4 @@
+/* General reset and background settings */
 * {
   box-sizing: border-box;
   padding: 0;
@@ -18,8 +19,6 @@ body {
   color: white;
 }
 
-
-
 .container {
   display: flex;
   justify-content: space-between;
@@ -36,10 +35,10 @@ body {
   left: 0;
   width: 100%;
   padding: 10px;
-  background-color: none; /* Navbar background color */
-  color: #fff; /* Navbar text color */
-  position: fixed; /* Fixed position to stay at the top */
-  z-index: 1002; /* Ensure it stays above other content */
+  background-color: none;
+  color: #fff;
+  position: fixed;
+  z-index: 1002;
 }
 
 .centerLinks {
@@ -48,16 +47,16 @@ body {
   justify-content: flex-start;
 }
 
-.centerLinks .contact-link {
-  margin-left: 30px; /* Move Contact link 30px to the right from the previous link */
-}
-
 .centerLinks a {
   text-decoration: none;
   font-family: monospace;
   font-size: 1.5rem;
-  margin: 0 10px;
+  margin: 0 15px; /* Adjusted to ensure links are 15px apart */
   color: white;
+}
+
+.contact-link {
+  margin-left: 30px; /* Ensure Contact link is 30px to the right of the Shop link */
 }
 
 .dropdown {
@@ -65,6 +64,7 @@ body {
   display: inline-block;
   font-family: monospace;
   border-radius: 5px;
+  margin-right: 5px;
 }
 
 .dropdownContent {
@@ -72,7 +72,7 @@ body {
   position: absolute;
   top: 100%;
   left: 0;
-  width: auto; /* Adjust width as needed */
+  width: auto;
   padding: 10px;
   background-color: #fff;
   border: 1px solid #ccc;
@@ -84,7 +84,7 @@ body {
 .dropdownContent.open {
   display: block;
   opacity: 1;
-  max-height: 500px; /* Adjust this value based on the content size */
+  max-height: 500px;
   border-radius: 5px;
 }
 
@@ -102,11 +102,12 @@ body {
 
 .h1shop {
   font-size: 1.5rem;
-  font-weight: bold; /* Set font weight to bold */
-  font-weight: normal; /* Set span h1 to fit other font */
+  font-weight: bold;
+  font-weight: normal;
   font-family: monospace;
   color: #ffffff;
   cursor: pointer;
+  margin-right: 20px;
 }
 
 .card {
@@ -135,18 +136,17 @@ body {
   border-radius: 5px;
   transition: transform 0.3s ease;
   cursor: pointer;
-  position: relative; /* To position the counter */
+  position: relative;
 }
 
 .cart-button:hover {
   transform: translateY(-5px) rotateX(5deg) scale(1.05);
-  
 }
 
 .cart-counter {
   position: absolute;
-  top: +22px;
-  right: +27px;
+  top: 22px;
+  right: 27px;
   background-color: none;
   color: rgb(0, 175, 12);
   padding: 2px 6px;
@@ -210,4 +210,3 @@ body {
     width: 100%;
   }
 }
-
