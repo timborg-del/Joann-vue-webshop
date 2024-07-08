@@ -12,6 +12,7 @@ import ChangePassword from './components/ChangePassword';
 import PrivateRoute from './components/PrivateRoute';
 import CartPage from './pages/CartPage';
 import { CurrencyProvider } from './components/CurrencyDetector';
+import ContactMe from './pages/ContactMe'; // Make sure to import ContactMe
 
 const App: React.FC = () => {
   const [isShopOpen, setIsShopOpen] = useState(false);
@@ -39,9 +40,10 @@ const App: React.FC = () => {
                   <Link to="/shoppage">Pencils</Link>
                 </div>
               </div>
+              <Link to="/contact" className="contact-link">Contact</Link>
             </div>            
             <div>
-              <button  className="cart-button" onClick={toggleCartVisibility}>
+              <button className="cart-button" onClick={toggleCartVisibility}>
                 <CartButton onClick={toggleCartVisibility} />
               </button>
             </div>
@@ -56,6 +58,7 @@ const App: React.FC = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/change-password" element={<PrivateRoute component={ChangePassword} />} />
             <Route path="/admin" element={<PrivateRoute component={AdminPage} />} />
+            <Route path="/contact" element={<ContactMe />} />
           </Routes>
         </CartProvider>
       </CurrencyProvider>
@@ -64,6 +67,8 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+
 
 
 
