@@ -37,7 +37,7 @@ body {
   max-width: 1200px;
   width: 80vw;
   padding: 20px;
-  background: rgba(249, 169, 49, 0.855);
+  background: rgba(113, 0, 147, 0.976);
   border-radius: 5px;
   box-shadow: 4px 4px 4px rgba(144, 95, 22, 0.467);
   backdrop-filter: blur(1.1px);
@@ -120,7 +120,7 @@ body {
   border-radius: 5px;
   border: none;
   color: white;
-  background-color: rgba(99, 0, 134, 0.766);
+  background-color: rgb(98, 0, 134);
 }
 
 .form-container p {

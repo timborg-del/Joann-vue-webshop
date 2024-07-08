@@ -48,10 +48,10 @@ body {
 .intro-text {
   position: fixed; /* Make the intro text fixed */
   width: 40%; /* Fixed width */
-  max-width: 400px; /* Adjust max width as needed */
+  max-width: 450px; /* Adjust max width as needed */
   margin-right: 20px;
   color: #ffffff;
-  background-color: rgba(242, 157, 0, 0.89);
+  background-color: rgba(242, 157, 0, 0.952);
   padding: 20px;
   border-radius: 8px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.8);
