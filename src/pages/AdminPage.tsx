@@ -294,7 +294,7 @@ const AdminPage: React.FC = () => {
           setSelectedFile(null);
           setCurrentView('addShowroomImage');
         }}>Add Showroom Image</button>
-        <button onClick={() => setCurrentView('additionalImages')}>Additional Images</button>
+        <button onClick={() => setCurrentView('additionalImages')}>Gallery Images</button>
       </aside>
       <main>
         {currentView === 'dashboard' && (
@@ -447,10 +447,10 @@ const AdminPage: React.FC = () => {
             <input type="file" onChange={handleFileChange} required />
             <button type="submit">Add Showroom Image</button>
           </form>
-        )}
+        )}1
         {currentView === 'additionalImages' && (
           <form className="additional-image-form" onSubmit={handleAddAdditionalImage}>
-            <h2>Add Additional Image</h2>
+            <h2>Add Gallery Image</h2>
             {error && <div className="error">{error}</div>}
             <input
               type="text"
