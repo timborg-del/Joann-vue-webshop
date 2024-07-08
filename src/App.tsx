@@ -34,10 +34,7 @@ const App: React.FC = () => {
               <div className="dropdown" onMouseEnter={() => setIsShopOpen(true)} onMouseLeave={() => setIsShopOpen(false)}>           
                 <h1 className='h1shop'>Shop</h1>
                 <div className={`dropdownContent ${isShopOpen ? 'open' : ''}`}>
-                  <Link to="/shoppage">Mugs</Link>
-                  <Link to="/shoppage">Paintings</Link>
-                  <Link to="/shoppage">Download</Link>
-                  <Link to="/shoppage">Pencils</Link>
+                  <Link to="/shoppage">Art-Prints</Link>
                 </div>
                 <Link to="/admin"></Link>
               </div>
