@@ -62,18 +62,16 @@ interface Payer {
   email_address: string;
 }
 
-interface ErrorDetail {
-  issue: string;
-  description: string;
-  debug_id: string;
-}
-
 interface OrderData {
   id: string;
   status: string;
   payer: Payer;
   purchase_units: PurchaseUnit[];
-  details?: ErrorDetail[];
+  details?: {
+    issue?: string;
+    description?: string;
+    debug_id?: string;
+  }[];
 }
 
 interface PaypalStuffProps {
@@ -85,11 +83,11 @@ function Message({ content }: MessageProps) {
 }
 
 function PaypalStuff({ cart }: PaypalStuffProps) {
-  const { currency } = useContext(CurrencyContext);
+  const { currency } = useContext(CurrencyContext); // Get currency from context
   const initialOptions = {
     clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
-    currency,
+    currency, // Pass the currency dynamically
     "data-page-type": "product-details",
     components: "buttons",
     "data-sdk-integration-source": "developer-studio",
@@ -113,7 +111,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ Cart: currentCart, Currency: currency }),
+        body: JSON.stringify({ Cart: currentCart, Currency: currency }), // Ensure currency is passed
       });
 
       if (!response.ok) {
@@ -152,7 +150,6 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ orderId: data.orderID, emailParams: { /* Your email params here */ } }) // Ensure email params are passed
         }
       );
 
@@ -163,7 +160,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
         return;
       }
 
-      const orderData: OrderData = await response.json();
+      const orderData = await response.json();
       console.log("Capture result", orderData);
 
       if (!orderData.purchase_units) {
@@ -177,13 +174,16 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       if (errorDetail?.issue === "INSTRUMENT_DECLINED") {
         return actions.restart();
       } else if (errorDetail) {
-        throw new Error(`${errorDetail.description} (${errorDetail.debug_id})`);
+        throw new Error(`${errorDetail.description} (${orderData.debug_id})`);
       } else {
         const transaction = orderData.purchase_units[0].payments.captures[0];
         setMessage(`Transaction ${transaction.status}: ${transaction.id}. See console for all available details`);
         console.log("Capture result", orderData, JSON.stringify(orderData, null, 2));
 
-        // Backend will handle sending order details and thank you emails
+        // Send order details to the delivery service via email
+        await sendOrderToDeliveryService(orderData, cartRef.current);
+        // Send thank you email to the customer
+        await sendThankYouEmailToCustomer(orderData, cartRef.current);
       }
     } catch (error) {
       console.error("Error occurred during transaction:", error);
@@ -194,6 +194,165 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       }
     }
   }, []);
+
+  const sendOrderToDeliveryService = async (orderData: OrderData, cart: Product[]) => {
+    const payer = orderData.payer ? {
+      name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
+      email: orderData.payer.email_address,
+    } : {
+      name: "Unknown",
+      email: "Unknown"
+    };
+
+    const address = orderData.purchase_units[0]?.shipping?.address;
+    const recipient = orderData.purchase_units[0]?.shipping?.name?.full_name;
+
+    const cartItems = cart.map((item: Product) => `
+      <tr>
+        <td>${item.Name}</td>
+        <td>${item.quantity}</td>
+        <td>${item.Price}</td>
+        <td>${item.size ?? 'N/A'}</td>
+      </tr>
+    `).join("");
+
+    const emailParams = {
+      orderID: orderData.id,
+      status: orderData.status,
+      payer: payer.name,
+      to_email: "timl@live.se", // Replace with actual delivery email
+      subject: "New Delivery Address and Order Details",
+      message: `
+      <h1>New Order Received</h1>
+      <p><strong>Order ID:</strong> ${orderData.id}</p>
+      <p><strong>Status:</strong> ${orderData.status}</p>
+      <p><strong>Payer Name:</strong> ${payer.name}</p>
+      <h2>Shipping Details:</h2>
+      <p><strong>Recipient:</strong> ${recipient}</p>
+      <p><strong>Street Address:</strong> ${address?.address_line_1}</p>
+      <p><strong>City:</strong> ${address?.admin_area_2}</p>
+      <p><strong>State/Province:</strong> ${address?.state ?? 'N/A'}</p>
+      <p><strong>Postal Code:</strong> ${address?.postal_code}</p>
+      <p><strong>Country Code:</strong> ${address?.country_code}</p>
+      <p><strong>Phone:</strong> ${address?.phone ?? 'N/A'}</p>
+      <h2>Items Ordered:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${cartItems}
+          </tbody>
+        </table>
+        <p>See console for all available details</p>
+      `
+    };
+
+    console.log('Email Parameters:', emailParams);
+
+    try {
+      const response = await fetch('https://joart.azurewebsites.net/SendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(emailParams),
+      });
+
+      if (response.ok) {
+        console.log("Order details sent to email successfully");
+      } else {
+        console.error("Failed to send order details to email");
+      }
+    } catch (error) {
+      console.error("Error sending order details to email:", error);
+    }
+  };
+
+  const sendThankYouEmailToCustomer = async (orderData: OrderData, cart: Product[]) => {
+    const payer = orderData.payer ? {
+      name: `${orderData.payer.name.given_name} ${orderData.payer.name.surname}`,
+      email: orderData.payer.email_address,
+    } : {
+      name: "Unknown",
+      email: "Unknown"
+    };
+
+    const address = orderData.purchase_units[0]?.shipping?.address;
+    const recipient = orderData.purchase_units[0]?.shipping?.name?.full_name;
+
+    const cartItems = cart.map((item: Product) => `
+      <tr>
+        <td>${item.Name}</td>
+        <td>${item.quantity}</td>
+        <td>${item.Price}</td>
+        <td>${item.size ?? 'N/A'}</td>
+      </tr>
+    `).join("");
+
+    const customerEmailParams = {
+      orderID: orderData.id,
+      status: orderData.status,
+      payer: payer.name,
+      to_email: payer.email,
+      subject: "Thank You for Your Purchase",
+      message: `
+      <h1>Thank You for Your Purchase</h1>
+      <p><strong>Order ID:</strong> ${orderData.id}</p>
+      <p><strong>Status:</strong> ${orderData.status}</p>
+      <p>Dear ${payer.name},</p>
+      <p>Thank you for your purchase. We will process your order soon.</p>
+      <h2>Shipping Details:</h2>
+      <p><strong>Recipient:</strong> ${recipient}</p>
+      <p><strong>Street Address:</strong> ${address?.address_line_1}</p>
+      <p><strong>City:</strong> ${address?.admin_area_2}</p>
+      <p><strong>State/Province:</strong> ${address?.state ?? 'N/A'}</p>
+      <p><strong>Postal Code:</strong> ${address?.postal_code}</p>
+      <p><strong>Country Code:</strong> ${address?.country_code}</p>
+      <p><strong>Phone:</strong> ${address?.phone ?? 'N/A'}</p>
+      <h2>Items Ordered:</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Product Name</th>
+              <th>Quantity</th>
+              <th>Price</th>
+              <th>Size</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${cartItems}
+          </tbody>
+        </table>
+        <p>Thank you for shopping with us!</p>
+      `
+    };
+
+    console.log('Customer Email Parameters:', customerEmailParams);
+
+    try {
+      const response = await fetch('https://joart.azurewebsites.net/SendEmail', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(customerEmailParams),
+      });
+
+      if (response.ok) {
+        console.log("Customer thank you email sent successfully");
+      } else {
+        console.error("Failed to send customer thank you email");
+      }
+    } catch (error) {
+      console.error("Error sending customer thank you email:", error);
+    }
+  };
 
   return (
     <div className="App">
@@ -215,4 +374,25 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
 }
 
 export default PaypalStuff;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
