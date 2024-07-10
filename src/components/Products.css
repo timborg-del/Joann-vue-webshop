@@ -85,6 +85,8 @@
   background: #5fcc00;
 }
 
+
+
 .products-cart-button .cart-counter {
   background-color: none;
   color: white;
@@ -99,6 +101,12 @@
   right: 0;
   transform: translate(50%, -50%);
 }
+
+.cart-counter{
+  right: 20px;
+  top: 20px;
+}
+
 
 .go-to-cart-text-container {
   justify-content: center;
