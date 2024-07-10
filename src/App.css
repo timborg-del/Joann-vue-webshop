@@ -2,11 +2,36 @@
 
 /* Styles for the header/navigation bar */
 
+@font-face {
+  font-family: 'Roboto';
+  src: url('/path/to/your/fonts/Roboto-BoldItalic.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
 
+
+
+
+html,
+
+
+body {
+  overflow-x: hidden;
+  background-image: url('/src/assets/backround.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  height: 100%;
+  width: 100%;
+  font-family: 'Roboto', sans-serif;
+  color: white;
+}
 
 
 .centerLinks {
   display: flex;
+  font-family: 'Roboto', sans-serif;
   flex: 1; /* Add this line */
   justify-content: center;
   align-items: center;

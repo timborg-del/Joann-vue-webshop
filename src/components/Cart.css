@@ -1,3 +1,6 @@
+
+
+
 .cart-product-container {
   display: flex;
   flex-direction: column;
@@ -25,11 +28,11 @@
   display: flex;
   align-items: center; /* Align items to the center */
   justify-content: flex-start; /* Align items to the start */
-  width: 100%;
+  width: 90%;
   margin-bottom: 20px;
-  padding: 10px;
+  padding: 15px;
   border-radius: 5px;
-  background-color: rgba(101, 1, 124, 0.486);
+  background-color: rgb(101, 1, 124);
   border: 1px solid rgba(162, 3, 206, 0.312);
   box-shadow: 4px 4px 4px rgba(48, 48, 48, 0.5);
   backdrop-filter: blur(1.1px);
@@ -37,11 +40,11 @@
 }
 
 .cart-item-image {
-  height: 100px; /* Adjust the height as needed */
-  width: 100px; /* Ensure the image remains square */
+  height: 140px; /* Adjust the height as needed */
+  width: 140px; /* Ensure the image remains square */
   border-radius: 5px;
   object-fit: cover;
-  margin-right: 20px; /* Add space between image and details */
+  margin-right: 25px; /* Add space between image and details */
 }
 
 .cart-item-details {
@@ -52,7 +55,7 @@
 }
 
 .cart-item-details p {
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin: 5px 0;
 }
 
@@ -65,17 +68,24 @@
 }
 
 .cart-item-actions button {
-  padding: 5px;
-  margin: 5px;
-  font-family: monospace;
+  padding: 10px;
+  
+  font-size: larger;
+  font-family: 'Roboto', sans-serif;
   color: white;
-  background: rgba(69, 115, 253, 0.608);
+  background: rgba(8, 7, 70, 0.934);
   border-radius: 5px;
-  box-shadow: 0 0px 5px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0px 5px #0000001a;
   backdrop-filter: blur(1.1px);
   -webkit-backdrop-filter: blur(1.1px);
   border: 1px solid rgba(255, 255, 255, 0.13);
   transition: transform 0.3s ease;
+  cursor: pointer;
+}
+
+.cart-item-actions button:hover {
+  transition: transform 0.3s ease;
+  background-color: rgb(168, 43, 226);
 }
 
 /* Add responsive styles for larger screens */
@@ -96,11 +106,6 @@
   }
 
   .cart-item-actions button {
-    margin: 0 5px;
+    margin: 10px 20px; /* Maintain the increased margin for larger screens */
   }
 }
-
-
-
-
-  
