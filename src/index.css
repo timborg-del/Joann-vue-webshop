@@ -45,20 +45,20 @@ body {
   display: flex;
   flex: 1;
   justify-content: flex-start;
-  align-items: center; /* Ensure all items are aligned vertically */
+  align-items: center;
 }
 
 .centerLinks a {
   text-decoration: none;
   font-family: monospace;
   font-size: 1.5rem;
-  margin: 0 15px; /* Adjusted to ensure links are 15px apart */
+  margin: 0 15px;
   color: white;
 }
 
 .dropdown {
   position: relative;
-  display:flex;
+  display: flex;
   font-family: monospace;
   border-radius: 5px;
 }
@@ -105,7 +105,7 @@ body {
   font-family: monospace;
   color: #ffffff;
   cursor: pointer;
-  margin: 15px 15px; /* Ensure it aligns with other links */
+  margin: 15px 15px;
 }
 
 .contact-link {
@@ -185,6 +185,68 @@ body {
   padding: 20px;
 }
 
+/* Hamburger menu styles */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-around;
+  width: 24px;
+  height: 24px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  z-index: 1003;
+  transition: transform 0.3s ease;
+}
+
+.hamburger.open {
+  transform: rotate(45deg);
+}
+
+.hamburger-bar {
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  transition: all 0.3s ease;
+}
+
+.hamburger.open .hamburger-bar:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+
+.hamburger.open .hamburger-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger.open .hamburger-bar:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.menu.open {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  padding: 20px;
+  z-index: 1001;
+}
+
+.menu a {
+  padding: 10px 0;
+  text-align: center;
+  width: 100%;
+}
+
 @media screen and (max-width: 768px) {
   .container {
     flex-direction: column;
@@ -192,17 +254,15 @@ body {
   }
 
   .centerLinks {
-    justify-content: center;
-    margin-top: 20px;
-    flex-wrap: wrap; /* Allows links to wrap to the next line if needed */
+    justify-content:flex-start;
+    margin-top: 0px;
+    flex-wrap: wrap;
   }
 
   .centerLinks a, .h1shop {
     font-size: 1.2rem;
-    margin: 0px 5px; /* Adjusted margin for better spacing on small screens */
+    margin: 0px 5px;
   }
-
- 
 
   .card {
     max-width: 100%;
@@ -210,5 +270,13 @@ body {
 
   .shop-container {
     width: 100%;
+  }
+
+  .hamburger {
+    display: flex;
+  }
+
+  .menu {
+    display: none;
   }
 }
