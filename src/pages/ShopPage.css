@@ -1,11 +1,22 @@
+body {
+  font-family: 'Arial', sans-serif;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 .shop-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   min-height: calc(100vh - 130px); /* Adjust height based on your navbar height */
-  padding: 70px 10px 10px 10px; /* Add padding-top to account for navbar height + extra space */
+  padding: 100px 10px 10px 10px; /* Add padding-top to account for navbar height + extra space */
   overflow-y: auto; /* Make the container scrollable */
   box-sizing: border-box; /* Ensure padding is included in the element's total width and height */
+  opacity: 0; /* Start with opacity 0 */
+  transition: opacity 0.5s ease-in-out; /* Add opacity transition */
+}
+
+.shop-container.visible {
+  opacity: 1; /* Set opacity to 1 when the visible class is applied */
 }
 
 .shop-container h1 {
@@ -15,10 +26,28 @@
   transform: translateX(-50%);
   font-size: 2rem;
   margin: 0;
-  z-index: 800; /* Ensure the header is on top */
+  z-index: 1002; /* Ensure the header is on top */
 }
 
+/* Responsive adjustments */
+@media screen and (max-width: 767px) {
+  .shop-container {
+    padding-top: 70px; /* Adjust padding-top for smaller screens */
+  }
 
+  .shop-container h1 {
+    font-size: 1.5rem; /* Adjust heading size for smaller screens */
+  }
+}
 
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+  .shop-container h1 {
+    font-size: 1.75rem; /* Adjust heading size for medium screens */
+  }
+}
 
-  
+@media screen and (min-width: 1024px) {
+  .shop-container h1 {
+    font-size: 2rem; /* Heading size for larger screens */
+  }
+}

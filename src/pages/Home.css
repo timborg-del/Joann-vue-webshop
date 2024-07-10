@@ -8,8 +8,8 @@ body {
   justify-content: center; /* Center children horizontally */
   align-items: flex-start; /* Align children to the top */
   position: relative;
-  top: 110px;
-  height: calc(100vh - 110px);
+  top: 100px; /* Start below the navbar */
+  height: calc(100vh - 70px);
   width: 100vw;
   margin: 0;
   overflow: hidden; /* Hide overflow on the container */
@@ -28,7 +28,7 @@ body {
   transform: translateX(-50%);
   font-size: 2rem;
   margin: 0;
-  z-index: 1000;
+  z-index: 1002;
   color: #ffffff;
 }
 
@@ -42,7 +42,8 @@ body {
   border-radius: 5px;
   box-shadow: none;
   border: none;
-  height: calc(100vh - 110px);
+  height: calc(100vh - 70px);
+  overflow-y: auto; /* Ensure content can scroll */
 }
 
 .intro-text {
@@ -123,7 +124,7 @@ body {
   .intro-text {
     position: relative; /* Make it part of the normal flow */
     width: 90%;
-    left: 0;
+    left: 10px;
     top: 0;
     max-width: 100%;
     margin-bottom: 20px;
@@ -165,6 +166,3 @@ body {
     height: auto;
   }
 }
-
-
-
