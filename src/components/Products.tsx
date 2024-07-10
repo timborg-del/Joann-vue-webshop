@@ -232,6 +232,11 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                         <span className="right-arrow"></span>
                       </button>
                     </div>
+                    <div className="scrollable-container-button">
+                      <button className="toggle-button" onClick={toggleScrollable}>
+                        {showScrollable ? 'Hide Details' : 'Show Details'}
+                      </button>
+                    </div>
                     <div className="product-info">
                       <p><strong>Name:</strong> {product.Name}</p>
                       <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>
@@ -261,11 +266,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                         </button>
                       </div>
                     </div>
-                    <div className="scrollable-container-button">
-                      <button className="toggle-button" onClick={toggleScrollable}>
-                        {showScrollable ? 'Hide Details' : 'Show Details'}
-                      </button>
-                    </div>
+
                     <div className={`scrollable-container ${showScrollable ? 'show-scrollable-container' : ''}`}>
                       <button className="close-button-scrollable" onClick={toggleScrollable}>&times;</button>
                       <p>Giclée Art Print of a Gouache illustration.</p>
