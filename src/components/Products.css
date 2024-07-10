@@ -69,6 +69,7 @@
 }
 
 .products-cart-button {
+  position: relative;
   background: #5fcc009e;
   border: none;
   cursor: pointer;
@@ -88,14 +89,14 @@
   background-color: none;
   color: white;
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 20px;
+  height: 20px;
   display: flex;
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 30px;
-  right: 44px;
+  top: 0;
+  right: 0;
   transform: translate(50%, -50%);
 }
 

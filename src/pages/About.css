@@ -77,6 +77,7 @@ body {
 /* Responsive adjustments */
 @media screen and (max-width: 767px) {
   .about-container {
+    height: auto;
     top: 50px; /* Adjust top position for smaller screens */
   }
 
