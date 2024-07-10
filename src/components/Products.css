@@ -1,14 +1,14 @@
 /* General Styles */
 .scrollable-container {
-  border-radius: 5px; /* Blue border to represent the red square */
-  width: 100%; /* Full width of the parent */
-  height: 100%; /* Full height of the parent */
-  overflow-y: auto; /* Enable vertical scrolling */
-  padding: 10px; /* Padding inside the container */
-  font-size: 1rem; /* Adjust font size as needed */
-  color: #333; /* Text color */
-  box-sizing: border-box; /* Ensure padding doesn't overflow */
-  display: none; /* Hide by default */
+  border-radius: 5px;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  padding: 10px;
+  font-size: 1rem;
+  color: #333;
+  box-sizing: border-box;
+  display: none;
   border-style: outset;
   border: 1px;
   position: fixed;
@@ -22,73 +22,18 @@
 }
 
 .scrollable-container p {
-  margin-bottom: 10px; /* Space between paragraphs */
+  margin-bottom: 10px;
 }
 
 .scrollable-container hr {
-  margin: 20px 0; /* Space around horizontal rules */
-  border: none; /* Remove default border */
-  border-top: 1px solid #ddd; /* Custom horizontal rule */
+  margin: 20px 0;
+  border: none;
+  border-top: 1px solid #ddd;
 }
 
 .show-scrollable-container {
-  display: block !important; /* Show when the button is clicked */
+  display: block !important;
 }
-
-/* Phone View */
-@media screen and (max-width: 767px) {
-  .scrollable-container-button {
-    margin-top: 10px;
-    width: 100%;
-    text-align: center;
-  }
-
-  .toggle-button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-    font-size: 1rem;
-    transition: background-color 0.3s ease;
-  }
-
-  .toggle-button:hover {
-    background-color: #0056b3;
-  }
-
-  .scrollable-container {
-    height: 100vh;
-    display: none;
-    padding: 10px;
-  }
-
-  .close-button-scrollable {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-    transition: opacity 0.5s ease, transform 0.5s ease;
-    color: white;
-    border: none;
-    font-size: 1.5rem;
-    padding: 10px;
-    border-radius: 5px;
-    cursor: pointer;
-    z-index: 2001;
-  }
-
-  .close-button-scrollable:hover {
-    background-color: #0056b3;
-  }
-}
-
-/* Other CSS remains unchanged */
-
-
-/* Other CSS remains unchanged */
-
 
 .products-container {
   display: flex;
@@ -102,11 +47,11 @@
 }
 
 .product-details-dropdown {
-  position: relative; /* Ensure it contains the absolutely positioned cart button */
+  position: relative;
   display: flex;
-  flex-direction: column; /* Ensure elements are aligned vertically */
-  justify-content: flex-start; /* Align items at the top */
-  align-items: flex-start; /* Align items at the start */
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
   padding: 30px;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
@@ -117,11 +62,14 @@
   overflow-y: auto;
 }
 
+.products-cart-button-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px; /* Ensure there's some space between cart button and details button */
+}
+
 .products-cart-button {
-  position: absolute;
-  top: 10px;
-  right: 10px; /* Adjusted to make sure it is within the visible area */
-  background: #5fcc009e; /* Example background color */
+  background: #5fcc009e;
   border: none;
   cursor: pointer;
   display: flex;
@@ -129,19 +77,19 @@
   justify-content: center;
   padding: 10px;
   border-radius: 5px;
-  transition: background-color 0.3s ease; /* Smooth transition */
+  transition: background-color 0.3s ease;
 }
 
-.products-cart-button:hover{
+.products-cart-button:hover {
   background: #5fcc00;
 }
 
 .products-cart-button .cart-counter {
-  background-color: none; /* Custom background color for the cart counter in Products component */
-  color: white; /* Custom text color */
+  background-color: none;
+  color: white;
   border-radius: 50%;
-  width: 30px; /* Define width */
-  height: 30px; /* Define height */
+  width: 30px;
+  height: 30px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -151,26 +99,24 @@
   transform: translate(50%, -50%);
 }
 
-.go-to-cart-text-container{
+.go-to-cart-text-container {
   justify-content: center;
   align-items: center;
 }
 
 .go-to-cart-text {
-  
-  margin-left: auto; /* Ensure the text is 15px away from the button */
+  margin-left: auto;
   font-size: 1.3rem;
   background-color: white;
   float: left;
   color: rgb(60, 59, 59);
   display: flex;
   align-items: center;
-  white-space: nowrap; /* Prevent text from wrapping */
+  white-space: nowrap;
 }
 
-
 .products-cart-button .cart-svg {
-  stroke: rgb(255, 21, 21); /* Set the SVG stroke color to white */
+  stroke: rgb(255, 21, 21);
 }
 
 .right-arrow {
@@ -182,9 +128,6 @@
   padding: 3px;
   transform: rotate(-45deg);
 }
-
-
-
 
 .product-info {
   display: flex;
@@ -363,9 +306,6 @@
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
-/* Custom styles for the cart button within Products */
-
-
 .close-button-details:hover {
   background-color: none;
 }
@@ -426,7 +366,7 @@
 .cart-button-detail {
   position: absolute;
   top: 10px;
-  right: 10px; /* Align to the right side */
+  right: 10px;
   background: none;
   border: none;
   color: rgb(0, 221, 18);
@@ -508,7 +448,6 @@
     position: fixed;
     top: 0;
     left: 0;
-    top: 5px;
     z-index: 2000;
     overflow-y: auto;
   }
@@ -632,6 +571,17 @@
     color: #333;
   }
 
+  .products-cart-button-container {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+
+  .products-cart-button-container .toggle-button {
+    margin-top: 10px;
+  }
+
   .buy-btn-container {
     display: flex;
     justify-content: flex-end;
@@ -702,10 +652,8 @@
   }
 }
 
-
 /* Large Desktop View */
 @media screen and (min-width: 768px) {
-
   .scrollable-container-button {
     display: none;
   }
@@ -722,7 +670,6 @@
   .close-button-scrollable {
     display: none;
   }
-
 
   .product-wrapper {
     width: calc(20% - 20px);
