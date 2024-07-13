@@ -21,7 +21,6 @@ const AdminPage: React.FC = () => {
     quantity: 0, // Default value
     size: '', // Default value
   });
-  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [additionalImages, setAdditionalImages] = useState<AdditionalImage[]>([]);
   const [newAdditionalImage, setNewAdditionalImage] = useState<AdditionalImage>({
     PartitionKey: '',
@@ -192,7 +191,6 @@ const AdminPage: React.FC = () => {
   };
 
   const handleEditProduct = (product: Product) => {
-    setEditingProduct(product);
     setNewProduct(product);
     setCurrentView('edit');
   };
@@ -203,7 +201,6 @@ const AdminPage: React.FC = () => {
       await updateProduct(newProduct);
       const updatedProducts = products.map(p => (p.RowKey === newProduct.RowKey ? newProduct : p));
       setProducts(updatedProducts);
-      setEditingProduct(null);
       setNewProduct({
         PartitionKey: 'product',
         RowKey: '',
@@ -271,7 +268,6 @@ const AdminPage: React.FC = () => {
       <aside>
         <button onClick={() => setCurrentView('products')}>Products</button>
         <button onClick={() => {
-          setEditingProduct(null);
           setNewProduct({
             PartitionKey: 'product',
             RowKey: '',
