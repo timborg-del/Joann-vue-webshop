@@ -220,7 +220,7 @@ function PaypalStuff({ cart }: PaypalStuffProps) {
       orderID: orderData.id,
       status: orderData.status,
       payer: payer.name,
-      to_email: "timl@live.se", // Replace with actual delivery email
+      to_email: "production@dpiprinters.com", // Replace with actual delivery email
       subject: "New Delivery Address and Order Details",
       message: `
       <h1>New Order Received</h1>
