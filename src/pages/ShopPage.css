@@ -29,25 +29,84 @@ body {
   z-index: 1002; /* Ensure the header is on top */
 }
 
-/* Responsive adjustments */
+.categories-container {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto; /* Allow horizontal scrolling for categories */
+  width: 100%;
+}
+
+.category-section {
+  display: flex;
+  flex-direction: column;
+  margin-right: 20px; /* Space between categories */
+  min-width: 300px; /* Minimum width for each category section */
+}
+
+.category-title {
+  font-size: 2rem; /* Adjust the font size */
+  font-weight: bold;
+  margin-bottom: 20px; /* Adjust margin as needed */
+  text-align: center; /* Center the category title */
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust column layout */
+  gap: 20px; /* Adjust gap between products */
+  justify-items: center; /* Center items horizontally */
+}
+
+.product-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  background-color: #fff;
+  border-radius: 5px;
+  box-shadow: 0 4px 5px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  width: 100%;
+  max-width: 200px; /* Adjust the max-width to fit 5 cards per row */
+  padding: 20px;
+  box-sizing: border-box;
+  transition: box-shadow 0.1s ease, border 0.1s ease;
+}
+
+.product-card img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  border-radius: 5px;
+}
+
+.product-card h3 {
+  margin: 10px 0;
+  font-size: 1.25rem;
+}
+
+.product-card p {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #666;
+}
+
+/* Media Queries for Responsive Design */
+@media screen and (max-width: 1200px) {
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Adjust for medium screens */
+  }
+}
+
 @media screen and (max-width: 767px) {
-  .shop-container {
-    padding-top: 70px; /* Adjust padding-top for smaller screens */
-  }
-
-  .shop-container h1 {
-    font-size: 1.5rem; /* Adjust heading size for smaller screens */
-  }
-}
-
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-  .shop-container h1 {
-    font-size: 1.75rem; /* Adjust heading size for medium screens */
-  }
-}
-
-@media screen and (min-width: 1024px) {
-  .shop-container h1 {
-    font-size: 2rem; /* Heading size for larger screens */
+  .products-grid {
+    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr)); /* Adjust for small screens */
   }
 }

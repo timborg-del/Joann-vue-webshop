@@ -176,7 +176,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   }, {});
 
   return (
-    <div className="products-container">
+    <div className="categories-container">
       {Object.entries(groupedProducts).map(([category, products]) => (
         <div key={category} className="category-section">
           <h2 className="category-title">{category}</h2>
