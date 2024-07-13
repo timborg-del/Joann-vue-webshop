@@ -179,7 +179,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     <div className="products-container">
       {Object.entries(groupedProducts).map(([category, products]) => (
         <div key={category} className="category-section">
-          <h2>{category}</h2>
+          <h2 className="category-title">{category}</h2>
           <div className="products-grid">
             {products.map((product) => {
               const size = selectedSizes[product.RowKey] || 'A3';
