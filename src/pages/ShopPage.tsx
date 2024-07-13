@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Product from '../components/Products'; // Ensure the correct path and file name for the Product component
+import Products from '../components/Products'; // Ensure the correct path and file name for the Products component
 import './ShopPage.css'; // Import the corresponding CSS file
 
 const ShopPage: React.FC = () => {
@@ -24,7 +24,7 @@ const ShopPage: React.FC = () => {
   return (
     <div className={`shop-container ${isVisible ? 'visible' : ''}`}>
       <h1>Shop</h1>
-      <Product activeProductName={activeProduct} />
+      <Products activeProductName={activeProduct} />
     </div>
   );
 };
