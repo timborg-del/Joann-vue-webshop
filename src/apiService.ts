@@ -70,15 +70,17 @@ export const addProduct = async (product: Product, file: File): Promise<void> =>
     }
 };
 
-export const updateProduct = async (product: Product): Promise<void> => {
-    console.log('Updating product:', product);
+export const updateProduct = async (product: Product, file?: File): Promise<void> => {
+    const formData = new FormData();
+    formData.append('product', JSON.stringify(product));
+
+    if (file) {
+        formData.append('file', file);
+    }
 
     const response = await fetch(`${API_BASE_URL}/UpdateProduct`, {
         method: 'PUT',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(product),
+        body: formData,
     });
 
     if (!response.ok) {
@@ -89,6 +91,7 @@ export const updateProduct = async (product: Product): Promise<void> => {
 
     console.log('Product updated successfully');
 };
+
 
 export const getProducts = async (): Promise<Product[]> => {
     const response = await fetch(`${API_BASE_URL}/GetProducts`, {

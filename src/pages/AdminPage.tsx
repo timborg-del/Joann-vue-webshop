@@ -1,10 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
-import './AdminPage.css'; // Import CSS file for styling
-import {
-  addProduct, getProducts, Product, updateProduct, deleteProduct,
-  addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage,
-  getAdditionalImages, addAdditionalImage, AdditionalImage
-} from '../apiService';
+import './AdminPage.css';
+import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage, getAdditionalImages, addAdditionalImage, AdditionalImage } from '../apiService';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -18,15 +14,15 @@ const AdminPage: React.FC = () => {
     Stock: 0,
     Category: '',
     ImageUrl: '',
-    quantity: 0, // Default value
-    size: '', // Default value
+    quantity: 0,
+    size: '',
   });
   const [additionalImages, setAdditionalImages] = useState<AdditionalImage[]>([]);
   const [newAdditionalImage, setNewAdditionalImage] = useState<AdditionalImage>({
     PartitionKey: '',
     RowKey: '',
     ImageUrl: '',
-    ProductId: '' // Add ProductName here
+    ProductId: ''
   });
   const [newShowroomImage, setNewShowroomImage] = useState<ShowroomImage>({
     PartitionKey: 'showroom',
@@ -121,8 +117,8 @@ const AdminPage: React.FC = () => {
         Stock: 0,
         Category: '',
         ImageUrl: '',
-        quantity: 0, // Reset quantity
-        size: '', // Reset size
+        quantity: 0,
+        size: '',
       });
       setSelectedFile(null);
       setCurrentView('products');
@@ -144,7 +140,7 @@ const AdminPage: React.FC = () => {
       const additionalImageToAdd = { 
         ...newAdditionalImage, 
         RowKey: Date.now().toString(),
-        PartitionKey: newAdditionalImage.ProductId // Ensure PartitionKey is set to ProductName or some unique identifier
+        PartitionKey: newAdditionalImage.ProductId 
       };
       await addAdditionalImage(additionalImageToAdd, selectedFile);
       setAdditionalImages([...additionalImages, additionalImageToAdd]);
@@ -198,7 +194,8 @@ const AdminPage: React.FC = () => {
   const handleUpdateProduct = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      await updateProduct(newProduct);
+      // Pass the selected file to the updateProduct function
+      await updateProduct(newProduct, selectedFile ?? undefined);
       const updatedProducts = products.map(p => (p.RowKey === newProduct.RowKey ? newProduct : p));
       setProducts(updatedProducts);
       setNewProduct({
@@ -209,8 +206,8 @@ const AdminPage: React.FC = () => {
         Stock: 0,
         Category: '',
         ImageUrl: '',
-        quantity: 0, // Reset quantity
-        size: '', // Reset size
+        quantity: 0, 
+        size: '', 
       });
       setCurrentView('products');
       setError(null);
@@ -276,8 +273,8 @@ const AdminPage: React.FC = () => {
             Stock: 0,
             Category: '',
             ImageUrl: '',
-            quantity: 0, // Reset quantity
-            size: '', // Reset size
+            quantity: 0,
+            size: '',
           });
           setSelectedFile(null);
           setCurrentView('add');
