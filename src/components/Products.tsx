@@ -166,141 +166,149 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     return <div>Error: Unexpected data format</div>;
   }
 
+  // Group products by category
+  const groupedProducts = products.reduce((acc: { [key: string]: Product[] }, product) => {
+    if (!acc[product.Category]) {
+      acc[product.Category] = [];
+    }
+    acc[product.Category].push(product);
+    return acc;
+  }, {});
+
   return (
     <div className="products-container">
-      {products.length > 0 ? (
-        products.map((product) => {
-          const size = selectedSizes[product.RowKey] || 'A3';
-          const uniqueId = `${product.RowKey}-${size}`;
-          const quantity = state.items.find((item) => item.RowKey === uniqueId)?.quantity ?? 0;
+      {Object.entries(groupedProducts).map(([category, products]) => (
+        <div key={category} className="category-section">
+          <h2>{category}</h2>
+          <div className="products-grid">
+            {products.map((product) => {
+              const size = selectedSizes[product.RowKey] || 'A3';
+              const uniqueId = `${product.RowKey}-${size}`;
+              const quantity = state.items.find((item) => item.RowKey === uniqueId)?.quantity ?? 0;
+              const displayPrice = convertPrice(getPrice(product.RowKey, product.Price));
 
-          const displayPrice = convertPrice(getPrice(product.RowKey, product.Price));
-
-          return (
-            <div
-              key={product.RowKey}
-              className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
-            >
-              <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
-                {activeProduct === product.RowKey ? (
-                  <>
-                    <div className="close-button-details-container">
-                      <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;
-                      </button>
-                    </div>
-                    <div className="image-gallery-container">
-                      <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
-                      <img
-                        src={getGalleryImages(product)[currentImageIndex]}
-                        alt={product.Name}
-                        className="product-image"
-                        onError={(e) => {
-                          e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                          console.error("Image load error", e);
-                        }}
-                        onClick={() => setEnlargedImage(getGalleryImages(product)[currentImageIndex])}
-                      />
-                      <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
-                    </div>
-                  </>
-                ) : (
-                  <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
-                    {product.ImageUrl ? (
-                      <img
-                        src={product.ImageUrl}
-                        alt={product.Name}
-                        className="product-image"
-                        onError={(e) => {
-                          e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                          console.error("Image load error", e);
-                        }}
-                      />
+              return (
+                <div
+                  key={product.RowKey}
+                  className={`product-wrapper ${activeProduct === product.RowKey ? 'active' : ''}`}
+                >
+                  <div className={`product-card ${activeProduct === product.RowKey ? 'active' : ''}`}>
+                    {activeProduct === product.RowKey ? (
+                      <>
+                        <div className="close-button-details-container">
+                          <button className="close-button-details" onClick={() => setActiveProduct(null)}>&times;
+                          </button>
+                        </div>
+                        <div className="image-gallery-container">
+                          <button className="gallery-nav-button" onClick={handlePreviousImage}>{"<"}</button>
+                          <img
+                            src={getGalleryImages(product)[currentImageIndex]}
+                            alt={product.Name}
+                            className="product-image"
+                            onError={(e) => {
+                              e.currentTarget.src = '/path/to/placeholder-image.jpg';
+                              console.error("Image load error", e);
+                            }}
+                            onClick={() => setEnlargedImage(getGalleryImages(product)[currentImageIndex])}
+                          />
+                          <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
+                        </div>
+                      </>
                     ) : (
-                      <div className="no-image">No Image Available</div>
+                      <div className="product-thumbnail" onClick={() => setActiveProduct(product.RowKey)}>
+                        {product.ImageUrl ? (
+                          <img
+                            src={product.ImageUrl}
+                            alt={product.Name}
+                            className="product-image"
+                            onError={(e) => {
+                              e.currentTarget.src = '/path/to/placeholder-image.jpg';
+                              console.error("Image load error", e);
+                            }}
+                          />
+                        ) : (
+                          <div className="no-image">No Image Available</div>
+                        )}
+                        <div className="product-name">{product.Name}</div>
+                      </div>
                     )}
-                    <div className="product-name">{product.Name}</div>
-                  </div>
-                )}
-                {activeProduct === product.RowKey && (
-                  <div className="product-details-dropdown">
-                    <div className="products-cart-button-container">
-                      <div className="go-to-cart-text-container">
-                      <span className="go-to-cart-text">Go to cart</span>
-                      </div>
-                      <button className="products-cart-button" onClick={toggleCartVisibility}>
-                        <CartButton onClick={toggleCartVisibility} />
-                        <span className="right-arrow"></span>
-                      </button>
-                    </div>
-                    <div className="scrollable-container-button">
-                      <button className="toggle-button" onClick={toggleScrollable}>
-                        {showScrollable ? 'Hide Details' : 'Show Details'}
-                      </button>
-                    </div>
-                    <div className="product-info">
-                      <p><strong>Name:</strong> {product.Name}</p>
-                      <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>
-                      <p><strong>Category:</strong> {product.Category}</p>
-                    </div>
-                    <div className="select-container">
-                      <label htmlFor={`size-${product.RowKey}`}>Size:</label>
-                      <select
-                        id={`size-${product.RowKey}`}
-                        value={selectedSizes[product.RowKey] || 'A3'}
-                        onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
-                      >
-                        <option value="A3">A3</option>
-                        <option value="A4">A4</option>
-                        <option value="A5">A5</option>
-                      </select>
-                    </div>
-                    <div className="quantity-buy-container">
-                      <div className={`quantity-controls ${quantity > 0 ? '' : 'hidden'}`}>
-                        <button onClick={() => decrementQuantity(product)}>-</button>
-                        <span>{quantity}</span>
-                        <button onClick={() => incrementQuantity(product)}>+</button>
-                      </div>
-                      <div className="buy-btn-container">
-                        <button className="buy-btn" onClick={() => handleAddToCart(product)}>
-                          Add to Cart
-                        </button>
-                      </div>
-                    </div>
+                    {activeProduct === product.RowKey && (
+                      <div className="product-details-dropdown">
+                        <div className="products-cart-button-container">
+                          <div className="go-to-cart-text-container">
+                            <span className="go-to-cart-text">Go to cart</span>
+                          </div>
+                          <button className="products-cart-button" onClick={toggleCartVisibility}>
+                            <CartButton onClick={toggleCartVisibility} />
+                            <span className="right-arrow"></span>
+                          </button>
+                        </div>
+                        <div className="scrollable-container-button">
+                          <button className="toggle-button" onClick={toggleScrollable}>
+                            {showScrollable ? 'Hide Details' : 'Show Details'}
+                          </button>
+                        </div>
+                        <div className="product-info">
+                          <p><strong>Name:</strong> {product.Name}</p>
+                          <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>
+                          <p><strong>Category:</strong> {product.Category}</p>
+                        </div>
+                        <div className="select-container">
+                          <label htmlFor={`size-${product.RowKey}`}>Size:</label>
+                          <select
+                            id={`size-${product.RowKey}`}
+                            value={selectedSizes[product.RowKey] || 'A3'}
+                            onChange={(e) => handleSizeChange(product.RowKey, e.target.value)}
+                          >
+                            <option value="A3">A3</option>
+                            <option value="A4">A4</option>
+                            <option value="A5">A5</option>
+                          </select>
+                        </div>
+                        <div className="quantity-buy-container">
+                          <div className={`quantity-controls ${quantity > 0 ? '' : 'hidden'}`}>
+                            <button onClick={() => decrementQuantity(product)}>-</button>
+                            <span>{quantity}</span>
+                            <button onClick={() => incrementQuantity(product)}>+</button>
+                          </div>
+                          <div className="buy-btn-container">
+                            <button className="buy-btn" onClick={() => handleAddToCart(product)}>
+                              Add to Cart
+                            </button>
+                          </div>
+                        </div>
 
-                    <div className={`scrollable-container ${showScrollable ? 'show-scrollable-container' : ''}`}>
-                      <button className="close-button-scrollable" onClick={toggleScrollable}>&times;</button>
-                      <p>Giclée Art Print of a Gouache illustration.</p>
-                      <hr/>
-                      <p>Each print is printed on 230gsm archival matt paper. A super heavyweight premium matt coated paper with a card like feel.</p>
-                      <p>prints come in sizes, A3, A4 and A5</p>
-                      <p>Prints are posted in a a hardbacked kraft postage envelope. Including a recycled card backing board and a compostable cello bag. I try to be as environmentally conscious as I can.</p>
-                      <p>Please note that colours may vary slightly from what is seen on screen. I did my best to match the photos to the print.</p>
-                      <p>Frames and props are not included - this listing is for the print only.</p>
-                      <hr/>
-                      <p>Thank you so much for stopping by and for your support! I hope these prints bring you joy. Please don't hesitate to get in touch if you have any questions regarding any of the prints.</p>
-                      <p>Best wishes,</p>
-                      <p>Jo</p>
-                    </div>
+                        <div className={`scrollable-container ${showScrollable ? 'show-scrollable-container' : ''}`}>
+                          <button className="close-button-scrollable" onClick={toggleScrollable}>&times;</button>
+                          <p>Giclée Art Print of a Gouache illustration.</p>
+                          <hr/>
+                          <p>Each print is printed on 230gsm archival matt paper. A super heavyweight premium matt coated paper with a card like feel.</p>
+                          <p>prints come in sizes, A3, A4 and A5</p>
+                          <p>Prints are posted in a a hardbacked kraft postage envelope. Including a recycled card backing board and a compostable cello bag. I try to be as environmentally conscious as I can.</p>
+                          <p>Please note that colours may vary slightly from what is seen on screen. I did my best to match the photos to the print.</p>
+                          <p>Frames and props are not included - this listing is for the print only.</p>
+                          <hr/>
+                          <p>Thank you so much for stopping by and for your support! I hope these prints bring you joy. Please don't hesitate to get in touch if you have any questions regarding any of the prints.</p>
+                          <p>Best wishes,</p>
+                          <p>Jo</p>
+                        </div>
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
-            </div>
-          );
-        })
-      ) : (
-        <div>No products available</div>
-      )}
-
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ))}
       {enlargedImage && (
         <div className="enlarged-image-overlay" onClick={() => setEnlargedImage(null)}>
           <img src={enlargedImage} alt="Enlarged" className="enlarged-image" />
         </div>
       )}
-
       <CartPage isVisible={isCartVisible} onClose={toggleCartVisibility} />
     </div>
   );
 };
 
 export default Products;
-

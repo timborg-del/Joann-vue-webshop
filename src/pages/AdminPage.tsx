@@ -1,6 +1,10 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import './AdminPage.css'; // Import CSS file for styling
-import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage, getAdditionalImages, addAdditionalImage, AdditionalImage } from '../apiService';
+import {
+  addProduct, getProducts, Product, updateProduct, deleteProduct,
+  addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage,
+  getAdditionalImages, addAdditionalImage, AdditionalImage
+} from '../apiService';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -17,6 +21,7 @@ const AdminPage: React.FC = () => {
     quantity: 0, // Default value
     size: '', // Default value
   });
+  const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [additionalImages, setAdditionalImages] = useState<AdditionalImage[]>([]);
   const [newAdditionalImage, setNewAdditionalImage] = useState<AdditionalImage>({
     PartitionKey: '',
@@ -24,7 +29,6 @@ const AdminPage: React.FC = () => {
     ImageUrl: '',
     ProductId: '' // Add ProductName here
   });
-  const [, setEditingProduct] = useState<Product | null>(null);
   const [newShowroomImage, setNewShowroomImage] = useState<ShowroomImage>({
     PartitionKey: 'showroom',
     RowKey: '',
@@ -447,7 +451,7 @@ const AdminPage: React.FC = () => {
             <input type="file" onChange={handleFileChange} required />
             <button type="submit">Add Showroom Image</button>
           </form>
-        )}1
+        )}
         {currentView === 'additionalImages' && (
           <form className="additional-image-form" onSubmit={handleAddAdditionalImage}>
             <h2>Add Gallery Image</h2>
@@ -489,23 +493,3 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
