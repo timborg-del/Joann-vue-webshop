@@ -12,11 +12,12 @@ export interface Product {
 }
 
 export const mockedProducts: Product[] = [
+  // Christmas
   {
     PartitionKey: 'partition1',
     RowKey: '1',
-    Name: 'Art Print 1',
-    Category: 'Abstract',
+    Name: 'Christmas Art Print 1',
+    Category: 'Christmas',
     Price: 20.00,
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 10,
@@ -24,21 +25,22 @@ export const mockedProducts: Product[] = [
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
   {
-    PartitionKey: 'partition2',
+    PartitionKey: 'partition1',
     RowKey: '2',
-    Name: 'Art Print 2',
-    Category: 'Landscape',
+    Name: 'Christmas Art Print 2',
+    Category: 'Christmas',
     Price: 25.00,
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 15,
     quantity: 1,
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
+  // Autumnal
   {
-    PartitionKey: 'partition3',
+    PartitionKey: 'partition2',
     RowKey: '3',
-    Name: 'Art Print 3',
-    Category: 'Portrait',
+    Name: 'Autumnal Art Print 1',
+    Category: 'Autumnal',
     Price: 30.00,
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 5,
@@ -46,21 +48,22 @@ export const mockedProducts: Product[] = [
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
   {
-    PartitionKey: 'partition4',
+    PartitionKey: 'partition2',
     RowKey: '4',
-    Name: 'Art Print 4',
-    Category: 'Still Life',
+    Name: 'Autumnal Art Print 2',
+    Category: 'Autumnal',
     Price: 15.00,
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 8,
     quantity: 1,
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
+  // Summer
   {
-    PartitionKey: 'partition5',
+    PartitionKey: 'partition3',
     RowKey: '5',
-    Name: 'Art Print 5',
-    Category: 'Modern',
+    Name: 'Summer Art Print 1',
+    Category: 'Summer',
     Price: 22.00,
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 12,
@@ -68,21 +71,22 @@ export const mockedProducts: Product[] = [
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
   {
-    PartitionKey: 'partition6',
+    PartitionKey: 'partition3',
     RowKey: '6',
-    Name: 'Art Print 6',
-    Category: 'Abstract',
+    Name: 'Summer Art Print 2',
+    Category: 'Summer',
     Price: 28.00,
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 7,
     quantity: 1,
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
+  // Mermaid Legends
   {
-    PartitionKey: 'partition7',
+    PartitionKey: 'partition4',
     RowKey: '7',
-    Name: 'Art Print 7',
-    Category: 'Landscape',
+    Name: 'Mermaid Legends Art Print 1',
+    Category: 'Mermaid Legends',
     Price: 18.00,
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 9,
@@ -90,21 +94,22 @@ export const mockedProducts: Product[] = [
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
   {
-    PartitionKey: 'partition8',
+    PartitionKey: 'partition4',
     RowKey: '8',
-    Name: 'Art Print 8',
-    Category: 'Portrait',
+    Name: 'Mermaid Legends Art Print 2',
+    Category: 'Mermaid Legends',
     Price: 35.00,
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 6,
     quantity: 1,
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
+  // Digital
   {
-    PartitionKey: 'partition9',
+    PartitionKey: 'partition5',
     RowKey: '9',
-    Name: 'Art Print 9',
-    Category: 'Still Life',
+    Name: 'Digital Art Print 1',
+    Category: 'Digital',
     Price: 19.00,
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 11,
@@ -112,10 +117,10 @@ export const mockedProducts: Product[] = [
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
   {
-    PartitionKey: 'partition10',
+    PartitionKey: 'partition5',
     RowKey: '10',
-    Name: 'Art Print 10',
-    Category: 'Modern',
+    Name: 'Digital Art Print 2',
+    Category: 'Digital',
     Price: 27.00,
     ImageUrl: 'src/assets/joann.jpg',
     Stock: 13,
@@ -123,4 +128,3 @@ export const mockedProducts: Product[] = [
     AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   }
 ];
-export default mockedProducts;
