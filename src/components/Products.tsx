@@ -23,7 +23,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
   const [showScrollable, setShowScrollable] = useState<boolean>(false);
   const { state } = useCart();
   const dispatch = useCartDispatch();
-  const { currency, convertPrice } = useContext(CurrencyContext);
+  const { currency, setCurrency, convertPrice } = useContext(CurrencyContext);
   const [isCartVisible, setIsCartVisible] = useState(false);
 
   const toggleCartVisibility = () => {
@@ -250,7 +250,18 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                         </div>
                         <div className="product-info">
                           <p><strong>Name:</strong> {product.Name}</p>
-                          <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}</p>
+                          <p><strong>Price:</strong> {currencySymbol}{displayPrice.toFixed(2)}
+                            <select
+                              value={currency}
+                              onChange={(e) => setCurrency(e.target.value)}
+                              className="currency-selector"
+                            >
+                              <option value="USD">USD</option>
+                              <option value="GBP">GBP</option>
+                              <option value="EUR">EUR</option>
+                              <option value="SEK">SEK</option>
+                            </select>
+                          </p>
                           <p><strong>Category:</strong> {product.Category}</p>
                         </div>
                         <div className="select-container">
@@ -277,7 +288,6 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                             </button>
                           </div>
                         </div>
-
                         <div className={`scrollable-container ${showScrollable ? 'show-scrollable-container' : ''}`}>
                           <button className="close-button-scrollable" onClick={toggleScrollable}>&times;</button>
                           <p>Giclée Art Print of a Gouache illustration.</p>
