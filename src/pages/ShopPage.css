@@ -39,16 +39,19 @@ body {
 .category-section {
   display: flex;
   flex-direction: column;
-  align-items: center;
   margin-bottom: 40px; /* Space between category sections */
   width: 100%;
 }
 
 .category-title {
-  font-size: 2rem; /* Adjust the font size */
+  display: flex;
+  justify-content: flex-start;
+  font-size: 4rem; /* Adjust the font size */
   font-weight: bold;
   margin-bottom: 20px; /* Adjust margin as needed */
-  text-align: center; /* Center the category title */
+  text-align: left; /* Align text to the left */
+  width: 100%; /* Ensure it takes full width */
+  padding-left: 10px; /* Optional: Add some padding for better alignment */
 }
 
 .products-grid {
@@ -85,9 +88,9 @@ body {
 
 .product-card img {
   width: 100%;
-  height: auto;
+  height: 90%;
   object-fit: cover;
-  border-radius: 5px;
+  border-radius: 0px;
 }
 
 .product-card h3 {
@@ -110,6 +113,9 @@ body {
 }
 
 @media screen and (max-width: 767px) {
+  .category-title {
+    font-size: 2rem; /* Adjust the font size */
+  }
   .products-grid {
     flex-direction: column; /* Stack products vertically on small screens */
     align-items: center;

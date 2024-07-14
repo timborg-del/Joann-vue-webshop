@@ -19,10 +19,10 @@ export const mockedProducts: Product[] = [
     Name: 'Christmas Art Print 1',
     Category: 'Christmas',
     Price: 20.00,
-    ImageUrl: 'src/assets/joann.jpg',
+    ImageUrl: 'src/assets/moon.jpg',
     Stock: 10,
     quantity: 1,
-    AdditionalImages: ['src/assets/joann1.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
+    AdditionalImages: ['src/assets/moon.jpg', 'src/assets/moon.jpg', 'src/assets/moon1.jpg']
   },
   {
     PartitionKey: 'partition1',

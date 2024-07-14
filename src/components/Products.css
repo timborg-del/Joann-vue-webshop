@@ -97,20 +97,15 @@
   align-items: center;
   justify-content: center;
   position: absolute;
-  top: 0;
-  right: 0;
+  top: 30px;
+  right: 47px;
   transform: translate(50%, -50%);
 }
-
-.cart-counter{
-  right: 20px;
-  top: 20px;
-}
-
 
 .go-to-cart-text-container {
   justify-content: center;
   align-items: center;
+  margin-right: 10px;
 }
 
 .go-to-cart-text {
@@ -290,13 +285,14 @@
   max-height: 90%;
   object-fit: contain;
   border: 2px solid #fff;
-  border-radius: 5px;
+  border-radius: 0px;
 }
 
 .product-name {
   margin-top: 10px;
   margin-bottom: 10px;
-  font-size: 1rem;
+  font-family: monospace;
+  font-size: 1.2rem;
   color: #333;
 }
 
