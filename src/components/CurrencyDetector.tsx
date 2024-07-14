@@ -44,7 +44,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
 
         // Fetch the conversion rate if the detected currency is not SEK
         if (detectedCurrency !== 'SEK') {
-          const rateResponse = await fetch(`https://v6.exchangerate-api.com/v6/YOUR_API_KEY/latest/SEK`);
+          const rateResponse = await fetch(`https://v6.exchangerate-api.com/v6/a1232edc656cf6fb88a4db06/latest/SEK`);
           if (!rateResponse.ok) {
             throw new Error('Rate response was not ok');
           }
