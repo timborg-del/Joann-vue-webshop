@@ -1,4 +1,4 @@
-import React, { createContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useState, useEffect, ReactNode } from 'react';
 
 interface CurrencyContextProps {
   currency: string;
@@ -23,12 +23,13 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
   useEffect(() => {
     const fetchCurrency = async () => {
       try {
-        const response = await fetch('https://ipapi.co/json/');
-        if (!response.ok) {
+        // Fetch the user's location based on their IP address
+        const locationResponse = await fetch('https://ipapi.co/json/');
+        if (!locationResponse.ok) {
           throw new Error('Network response was not ok');
         }
-        const data = await response.json();
-        const countryCode = data.country_code;
+        const locationData = await locationResponse.json();
+        const countryCode = locationData.country_code;
 
         const countryCurrencyMap: { [key: string]: string } = {
           'US': 'USD',
@@ -41,8 +42,12 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
         const detectedCurrency = countryCurrencyMap[countryCode] || 'SEK';
         setCurrency(detectedCurrency);
 
+        // Fetch the conversion rate if the detected currency is not SEK
         if (detectedCurrency !== 'SEK') {
-          const rateResponse = await fetch(`https://v6.exchangerate-api.com/v6/a1232edc656cf6fb88a4db06/latest/SEK`);
+          const rateResponse = await fetch(`https://v6.exchangerate-api.com/v6/YOUR_API_KEY/latest/SEK`);
+          if (!rateResponse.ok) {
+            throw new Error('Rate response was not ok');
+          }
           const rateData = await rateResponse.json();
           setConversionRate(rateData.conversion_rates[detectedCurrency]);
         } else {
@@ -66,6 +71,7 @@ export const CurrencyProvider: React.FC<CurrencyProviderProps> = ({ children }) 
     </CurrencyContext.Provider>
   );
 };
+
 
 
 
