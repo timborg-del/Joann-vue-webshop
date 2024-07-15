@@ -298,7 +298,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                           <p>Giclée Art Print of a Gouache illustration.</p>
                           <hr/>
                           <p>Each print is printed on 230gsm archival matt paper. A super heavyweight premium matt coated paper with a card like feel.</p>
-                          <p>prints come in sizes, A3, A4 and A5</p>
+                          <p>prints come in sizes Large 21cm x 21cm and Small 15cm x 15cm.</p>
                           <p>Prints are posted in a a hardbacked kraft postage envelope. Including a recycled card backing board and a compostable cello bag. I try to be as environmentally conscious as I can.</p>
                           <p>Please note that colours may vary slightly from what is seen on screen. I did my best to match the photos to the print.</p>
                           <p>Frames and props are not included - this listing is for the print only.</p>
