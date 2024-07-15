@@ -38,6 +38,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
     A3: 0,
     A4: -200,
     A5: -311,
+    Large: -198,
+    Small: -307,
   };
 
   useEffect(() => {
@@ -256,7 +258,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                               onChange={(e) => setCurrency(e.target.value)}
                               className="currency-selector"
                             >
-                              <option value="USD">USD</option>
+                              
+                            <option value="USD">USD</option>
                               <option value="GBP">GBP</option>
                               <option value="EUR">EUR</option>
                               <option value="SEK">SEK</option>
@@ -274,6 +277,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                             <option value="A3">A3</option>
                             <option value="A4">A4</option>
                             <option value="A5">A5</option>
+                            <option value="Large">Large 25*25cm</option>
+                            <option value="Small">Small 15*15cm</option>
                           </select>
                         </div>
                         <div className="quantity-buy-container">

@@ -53,10 +53,17 @@ const CartPage: React.FC<CartPageProps> = ({ isVisible, onClose }) => {
             </div>
           </div>
         </div>
+        <div className='information-section'>
+          <h3>Brief on Shopping from Companies Outside the EU</h3>
+          <p>You are required to pay customs duties and VAT on goods ordered from countries outside the EU. Additionally, the shipping company may charge a fee for handling your package and processing your customs declaration.</p>
+          <p>When shopping from a country outside the EU, you are not always protected by EU consumer legislation. However, if the company targets Swedish consumers, Swedish laws often apply.</p>
+          <p>If you have a dispute with a company outside the EU that targets Swedish consumers, the Swedish National Board for Consumer Disputes (ARN) may be able to handle your case.</p>
+          <p>Keep in mind that goods permitted for sale in other countries may be prohibited in Sweden and that online goods may be counterfeit.</p>
+          <p>Consumer legislation in the UK is very similar to the EU's, but you now need to pay import VAT and customs duties for goods over 124.12 GPB.</p>
+        </div>
       </div>
     </div>
   );
 };
 
 export default CartPage;
-
