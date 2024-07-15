@@ -277,7 +277,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                             <option value="A3">A3</option>
                             <option value="A4">A4</option>
                             <option value="A5">A5</option>
-                            <option value="Large">Large 25*25cm</option>
+                            <option value="Large">Large 21*21cm</option>
                             <option value="Small">Small 15*15cm</option>
                           </select>
                         </div>
