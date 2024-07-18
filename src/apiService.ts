@@ -59,25 +59,6 @@ export interface ShowroomImage {
     ImageUrl: string;
 }
 
-
-export const getVisitCount = async (): Promise<number> => {
-    const response = await fetch(`${API_BASE_URL}/VisitCounter`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    });
-
-    if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Failed to fetch visit count: ${errorText}`);
-    }
-
-    const data = await response.json();
-    return data.count;
-};
-
-
 export const addProduct = async (product: Product, file: File): Promise<void> => {
     const formData = new FormData();
     formData.append('product', JSON.stringify(product));
