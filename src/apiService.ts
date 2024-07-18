@@ -2,6 +2,11 @@ import { jwtDecode } from 'jwt-decode';
 
 const API_BASE_URL = "https://joart.azurewebsites.net";
 
+// Token Retrieval Function
+const getToken = (): string | null => {
+    return localStorage.getItem('token');
+};
+
 export interface Product {
     PartitionKey: string;
     RowKey: string;
@@ -59,8 +64,12 @@ export const addProduct = async (product: Product, file: File): Promise<void> =>
     formData.append('product', JSON.stringify(product));
     formData.append('file', file);
 
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/AddProduct`, {
         method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
         body: formData,
     });
 
@@ -78,8 +87,12 @@ export const updateProduct = async (product: Product, file?: File): Promise<void
         formData.append('file', file);
     }
 
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/UpdateProduct`, {
         method: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
         body: formData,
     });
 
@@ -92,12 +105,13 @@ export const updateProduct = async (product: Product, file?: File): Promise<void
     console.log('Product updated successfully');
 };
 
-
 export const getProducts = async (): Promise<Product[]> => {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/GetProducts`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -111,10 +125,12 @@ export const getProducts = async (): Promise<Product[]> => {
 };
 
 export const deleteProduct = async (partitionKey: string, rowKey: string): Promise<void> => {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/DeleteProduct/${partitionKey}/${rowKey}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -125,10 +141,12 @@ export const deleteProduct = async (partitionKey: string, rowKey: string): Promi
 };
 
 export const addUser = async (user: User): Promise<void> => {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/AddUser`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(user),
     });
@@ -140,10 +158,12 @@ export const addUser = async (user: User): Promise<void> => {
 };
 
 export const getUsers = async (): Promise<User[]> => {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/GetUsers`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -157,10 +177,12 @@ export const getUsers = async (): Promise<User[]> => {
 };
 
 export const getUser = async (partitionKey: string, rowKey: string): Promise<User> => {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/GetUser?partitionKey=${partitionKey}&rowKey=${rowKey}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -175,10 +197,12 @@ export const getUser = async (partitionKey: string, rowKey: string): Promise<Use
 
 // Function to fetch additional images for a product
 export const getAdditionalImages = async (productId: string): Promise<AdditionalImage[]> => {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/GetAdditionalImages?productId=${productId}`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -197,8 +221,12 @@ export const addAdditionalImage = async (additionalImage: AdditionalImage, file:
     formData.append('additionalImage', JSON.stringify(additionalImage));
     formData.append('file', file);
 
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/AddAdditionalImage`, {
         method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
         body: formData,
     });
 
@@ -210,10 +238,12 @@ export const addAdditionalImage = async (additionalImage: AdditionalImage, file:
 
 // Function to delete an additional image
 export const deleteAdditionalImage = async (partitionKey: string, rowKey: string): Promise<void> => {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/DeleteAdditionalImage/${partitionKey}/${rowKey}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -225,10 +255,12 @@ export const deleteAdditionalImage = async (partitionKey: string, rowKey: string
 
 // Function to fetch reviews for a product
 export const getReviews = async (productId: string): Promise<Review[]> => {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/products/${productId}/reviews`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -250,10 +282,12 @@ export const submitReview = async (productId: string, user: string, rating: numb
         productId
     };
 
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/SubmitReview`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
         body: JSON.stringify(review),
     });
@@ -301,8 +335,12 @@ export const addShowroomImage = async (showroomImage: ShowroomImage, file: File)
     formData.append('showroomImage', JSON.stringify(showroomImage));
     formData.append('file', file);
 
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/AddShowroomImage`, {
         method: 'POST',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+        },
         body: formData,
     });
 
@@ -314,10 +352,12 @@ export const addShowroomImage = async (showroomImage: ShowroomImage, file: File)
 
 // Get showroom images
 export const getShowroomImages = async (): Promise<ShowroomImage[]> => {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/GetShowroomImages`, {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -331,10 +371,12 @@ export const getShowroomImages = async (): Promise<ShowroomImage[]> => {
 };
 
 export const deleteShowroomImage = async (partitionKey: string, rowKey: string): Promise<void> => {
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/DeleteShowroomImage/${partitionKey}/${rowKey}`, {
         method: 'DELETE',
         headers: {
             'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`,
         },
     });
 
@@ -343,10 +385,3 @@ export const deleteShowroomImage = async (partitionKey: string, rowKey: string):
         throw new Error(`Failed to delete showroom image: ${errorText}`);
     }
 };
-
-
-
-
-
-
-
