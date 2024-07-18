@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import './AdminPage.css';
-import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage, getAdditionalImages, addAdditionalImage, AdditionalImage } from '../apiService';
+import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage, getAdditionalImages, addAdditionalImage, AdditionalImage, getVisitCount } from '../apiService';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -41,6 +41,15 @@ const AdminPage: React.FC = () => {
   const [visitCount, setVisitCount] = useState<number | null>(null);
 
   useEffect(() => {
+    const fetchVisitCount = async () => {
+      try {
+        const count = await getVisitCount();
+        setVisitCount(count);
+      } catch (error) {
+        console.error("Error fetching visit count:", error);
+      }
+    };
+
     const fetchProducts = async () => {
       try {
         const products = await getProducts();
@@ -65,6 +74,7 @@ const AdminPage: React.FC = () => {
       }
     };
 
+    fetchVisitCount();
     fetchProducts();
     fetchShowroomImages();
   }, []);
@@ -82,15 +92,6 @@ const AdminPage: React.FC = () => {
 
     fetchAdditionalImages();
   }, [products]);
-
-  useEffect(() => {
-    if (currentView === 'dashboard') {
-      const count = sessionStorage.getItem('visitCount');
-      if (count) {
-        setVisitCount(parseInt(count));
-      }
-    }
-  }, [currentView]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -496,3 +497,4 @@ const AdminPage: React.FC = () => {
 };
 
 export default AdminPage;
+

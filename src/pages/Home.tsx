@@ -4,31 +4,14 @@ import './Home.css'; // Import CSS file for Home styles
 import Showroom from '../components/Showroom'; // Import the Showroom component
 import CommentsComponent from '../components/CommentsComponent'; // Import the CommentsComponent
 import margo from '../assets/Margo_Gif_02.gif'; // Import the GIF file
-import { incrementVisitCount } from '../apiService'; // Import the incrementVisitCount function
 
 const Home: React.FC = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [, setVisitCount] = useState<number | null>(null);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Trigger the transition after the component mounts
     setIsVisible(true);
-
-    const hasVisited = sessionStorage.getItem('hasVisitedHomePage');
-    if (!hasVisited) {
-      const incrementAndFetchVisitCount = async () => {
-        try {
-          const count = await incrementVisitCount();
-          setVisitCount(count);
-          sessionStorage.setItem('hasVisitedHomePage', 'true');
-        } catch (error) {
-          console.error("Error incrementing visit count:", error);
-        }
-      };
-
-      incrementAndFetchVisitCount();
-    }
   }, []);
 
   const handleImageClick = (productName: string) => {
