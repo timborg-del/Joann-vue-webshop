@@ -23,6 +23,12 @@
       "headers": {
         "Content-Type": "application/javascript"
       }
+    },
+    {
+      "route": "/*.css",
+      "headers": {
+        "Content-Type": "text/css"
+      }
     }
   ],
   "navigationFallback": {
@@ -30,4 +36,5 @@
     "exclude": ["/static/*"]
   }
 }
+
 
