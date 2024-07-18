@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import './AdminPage.css';
-import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage, getAdditionalImages, addAdditionalImage, AdditionalImage } from '../apiService';
+import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage, getAdditionalImages, addAdditionalImage, AdditionalImage, getVisitCount } from '../apiService';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -38,8 +38,18 @@ const AdminPage: React.FC = () => {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [, setToken] = useLocalStorage<string | null>('token', null);
   const navigate = useNavigate();
+  const [visitCount, setVisitCount] = useState<number | null>(null);
 
   useEffect(() => {
+    const fetchVisitCount = async () => {
+      try {
+        const count = await getVisitCount();
+        setVisitCount(count);
+      } catch (error) {
+        console.error("Error fetching visit count:", error);
+      }
+    };
+
     const fetchProducts = async () => {
       try {
         const products = await getProducts();
@@ -64,6 +74,7 @@ const AdminPage: React.FC = () => {
       }
     };
 
+    fetchVisitCount();
     fetchProducts();
     fetchShowroomImages();
   }, []);
@@ -194,7 +205,6 @@ const AdminPage: React.FC = () => {
   const handleUpdateProduct = async (e: FormEvent) => {
     e.preventDefault();
     try {
-      // Pass the selected file to the updateProduct function
       await updateProduct(newProduct, selectedFile ?? undefined);
       const updatedProducts = products.map(p => (p.RowKey === newProduct.RowKey ? newProduct : p));
       setProducts(updatedProducts);
@@ -299,6 +309,7 @@ const AdminPage: React.FC = () => {
             <h2>Dashboard</h2>
             <p>Total Products: {products.length}</p>
             <p>Low Stock Alerts: {products.filter(product => product.Stock < 5).length}</p>
+            <p>Page Visits: {visitCount}</p>
           </div>
         )}
         {currentView === 'products' && (
