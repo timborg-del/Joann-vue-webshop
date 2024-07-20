@@ -225,7 +225,7 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                             className="product-image"
                             onError={(e) => {
                               e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                              console.error("Image load error", e);
+                              //console.error("Image load error", e);
                             }}
                           />
                         ) : (
