@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { isAuthenticated } from '../apiService';
 
 interface PrivateRouteProps {
-    component: ComponentType;
+    component: ComponentType<any>;
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component }) => {
@@ -11,6 +11,3 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ component: Component }) => 
 };
 
 export default PrivateRoute;
-
-
-

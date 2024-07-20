@@ -208,9 +208,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                             alt={product.Name}
                             className="product-image"
                             onError={(e) => {
-                              e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Placeholder image URL
+                              e.currentTarget.src = '/path/to/placeholder-image.jpg';
                               console.error("Image load error", e);
-                              console.error("Failed image URL:", e.currentTarget.src);
                             }}
                             onClick={() => setEnlargedImage(getGalleryImages(product)[currentImageIndex])}
                           />
@@ -225,9 +224,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                             alt={product.Name}
                             className="product-image"
                             onError={(e) => {
-                              e.currentTarget.src = '/path/to/placeholder-image.jpg'; // Placeholder image URL
+                              e.currentTarget.src = '/path/to/placeholder-image.jpg';
                               console.error("Image load error", e);
-                              console.error("Failed image URL:", e.currentTarget.src);
                             }}
                           />
                         ) : (
@@ -260,7 +258,8 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                               onChange={(e) => setCurrency(e.target.value)}
                               className="currency-selector"
                             >
-                              <option value="USD">USD</option>
+                              
+                            <option value="USD">USD</option>
                               <option value="GBP">GBP</option>
                               <option value="EUR">EUR</option>
                               <option value="SEK">SEK</option>

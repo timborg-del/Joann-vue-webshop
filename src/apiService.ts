@@ -59,6 +59,25 @@ export interface ShowroomImage {
     ImageUrl: string;
 }
 
+
+export const getVisitCount = async (): Promise<number> => {
+    const response = await fetch(`${API_BASE_URL}/VisitCounter`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Failed to fetch visit count: ${errorText}`);
+    }
+
+    const data = await response.json();
+    return data.count;
+};
+
+
 export const addProduct = async (product: Product, file: File): Promise<void> => {
     const formData = new FormData();
     formData.append('product', JSON.stringify(product));
@@ -335,17 +354,11 @@ export const addShowroomImage = async (showroomImage: ShowroomImage, file: File)
     formData.append('showroomImage', JSON.stringify(showroomImage));
     formData.append('file', file);
 
-    const token = localStorage.getItem('token');  // Ensure this is the correct token
-    if (!token) {
-        throw new Error('No token found');
-    }
-    const functionKey = 'hes6OzThpfgg6kx4o6W_rpJD-16OeAbc_nobHrIeUPuLAzFuh5MyaA=='; // Ensure this is correct
-
+    const token = getToken();
     const response = await fetch(`${API_BASE_URL}/AddShowroomImage`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
-            'x-functions-key': functionKey,
         },
         body: formData,
     });
@@ -355,9 +368,6 @@ export const addShowroomImage = async (showroomImage: ShowroomImage, file: File)
         throw new Error(`Failed to add showroom image: ${errorText}`);
     }
 };
-
-
-
 
 // Get showroom images
 export const getShowroomImages = async (): Promise<ShowroomImage[]> => {
