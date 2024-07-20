@@ -223,10 +223,10 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                             src={product.ImageUrl}
                             alt={product.Name}
                             className="product-image"
-                            onError={(e) => {
+/*                             onError={(e) => {
                               e.currentTarget.src = '/path/to/placeholder-image.jpg';
                               //console.error("Image load error", e);
-                            }}
+                            }} */
                           />
                         ) : (
                           <div className="no-image">No Image Available</div>
