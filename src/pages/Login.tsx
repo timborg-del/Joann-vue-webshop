@@ -8,21 +8,21 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [, setToken] = useLocalStorage<string | null>('token', null);
+    const [, setToken] = useLocalStorage<string | null>('token', null); // Adjust the path as necessary
     const navigate = useNavigate();
 
     const handleLogin = async () => {
         console.log('Attempting to login with', { username, password });
-    
+
         if (!username || !password) {
             console.log('Username or password is missing');
             setError('Username and password are required');
             return;
         }
-    
+
         setIsLoading(true);
         setError('');
-    
+
         try {
             const response = await fetch('https://joart.azurewebsites.net/auth/login', {
                 method: 'POST',
@@ -31,23 +31,23 @@ const Login = () => {
                 },
                 body: JSON.stringify({ username, password }),
             });
-    
+
             console.log('Response status:', response.status);
-    
+
             if (!response.ok) {
                 console.log('Login failed:', response.statusText);
                 throw new Error('Invalid username or password');
             }
-    
+
             const responseData = await response.json();
             console.log('Response data:', responseData);
-    
+
             const { token } = responseData;
             console.log('Received token:', token);
-            localStorage.setItem('token', token);  // Store the token in localStorage
-    
+            setToken(token);  // Store the token using useLocalStorage
+
             console.log('Token stored in localStorage');
-    
+
             navigate('/admin');
         } catch (error) {
             console.error('Error logging in:', error);
@@ -56,7 +56,6 @@ const Login = () => {
             setIsLoading(false);
         }
     };
-    
 
     return (
         <div className="login-container">
