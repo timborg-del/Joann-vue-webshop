@@ -335,14 +335,17 @@ export const addShowroomImage = async (showroomImage: ShowroomImage, file: File)
     formData.append('showroomImage', JSON.stringify(showroomImage));
     formData.append('file', file);
 
-    const token = getToken();
-    const functionKey = 'hes6OzThpfgg6kx4o6W_rpJD-16OeAbc_nobHrIeUPuLAzFuh5MyaA=='; // Add your function key here
+    const token = localStorage.getItem('token');  // Ensure this is the correct token
+    if (!token) {
+        throw new Error('No token found');
+    }
+    const functionKey = 'hes6OzThpfgg6kx4o6W_rpJD-16OeAbc_nobHrIeUPuLAzFuh5MyaA=='; // Ensure this is correct
 
     const response = await fetch(`${API_BASE_URL}/AddShowroomImage`, {
         method: 'POST',
         headers: {
             'Authorization': `Bearer ${token}`,
-            'x-functions-key': functionKey, // Include the function key in the headers
+            'x-functions-key': functionKey,
         },
         body: formData,
     });
@@ -352,6 +355,8 @@ export const addShowroomImage = async (showroomImage: ShowroomImage, file: File)
         throw new Error(`Failed to add showroom image: ${errorText}`);
     }
 };
+
+
 
 
 // Get showroom images

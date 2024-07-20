@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import useLocalStorage from '../hooks/useLocalStorage'; // Adjust the path as necessary
+import useLocalStorage from '../hooks/useLocalStorage';
 import './Login.css';
 
 const Login = () => {
@@ -8,12 +8,12 @@ const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [, setToken] = useLocalStorage<string | null>('token', null); // Destructure to avoid unused variable warning
+    const [, setToken] = useLocalStorage<string | null>('token', null);
     const navigate = useNavigate();
 
     const handleLogin = async () => {
         console.log('Attempting to login with', { username, password });
-
+    
         if (!username || !password) {
             console.log('Username or password is missing');
             setError('Username and password are required');
@@ -31,23 +31,23 @@ const Login = () => {
                 },
                 body: JSON.stringify({ username, password }),
             });
-
+    
             console.log('Response status:', response.status);
-
+    
             if (!response.ok) {
                 console.log('Login failed:', response.statusText);
                 throw new Error('Invalid username or password');
             }
-
+    
             const responseData = await response.json();
             console.log('Response data:', responseData);
-
+    
             const { token } = responseData;
             console.log('Received token:', token);
-            setToken(token);  // Store the token using useLocalStorage
-
+            localStorage.setItem('token', token);  // Store the token in localStorage
+    
             console.log('Token stored in localStorage');
-
+    
             navigate('/admin');
         } catch (error) {
             console.error('Error logging in:', error);
@@ -88,6 +88,3 @@ const Login = () => {
 };
 
 export default Login;
-
-
-
