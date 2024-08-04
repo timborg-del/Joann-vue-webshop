@@ -175,6 +175,33 @@ main {
   background-color: #c82333;
 }
 
+.product-gallery {
+  margin-top: 20px;
+}
+
+.product-gallery-item {
+  margin-bottom: 20px;
+}
+
+.additional-images {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.additional-image-item {
+  display: inline-block;
+  margin: 5px;
+}
+
+.product-gallery img,
+.showroom-list img,
+.additional-images img {
+  width: 150px; /* Set the desired width */
+  height: 150px; /* Set the desired height */
+  object-fit: cover; /* Ensure the image covers the specified area */
+  border-radius: 8px; /* Optional: Add rounded corners */
+}
+
 footer {
   margin-top: 20px;
   text-align: center;
@@ -184,5 +211,3 @@ footer {
 footer p {
   margin: 0;
 }
-
-  

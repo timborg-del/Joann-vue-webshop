@@ -1,6 +1,6 @@
 import React, { useState, useEffect, ChangeEvent, FormEvent } from 'react';
 import './AdminPage.css';
-import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage, getAdditionalImages, addAdditionalImage, AdditionalImage } from '../apiService';
+import { addProduct, getProducts, Product, updateProduct, deleteProduct, addShowroomImage, getShowroomImages, ShowroomImage, deleteShowroomImage, getAdditionalImages, addAdditionalImage, AdditionalImage, deleteAdditionalImage } from '../apiService';
 import { useNavigate } from 'react-router-dom';
 import useLocalStorage from '../hooks/useLocalStorage';
 
@@ -239,6 +239,17 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  const handleDeleteAdditionalImage = async (partitionKey: string, rowKey: string) => {
+    try {
+      await deleteAdditionalImage(partitionKey, rowKey);
+      const updatedImages = additionalImages.filter(image => image.PartitionKey !== partitionKey || image.RowKey !== rowKey);
+      setAdditionalImages(updatedImages);
+      console.log('Additional image deleted successfully:', partitionKey, rowKey);
+    } catch (err) {
+      setError('Failed to delete additional image');
+    }
+  };
+
   const handleLogout = () => {
     setToken(null); // Clear the token from local storage
     navigate('/login'); // Navigate to the login page
@@ -410,7 +421,7 @@ const AdminPage: React.FC = () => {
                     <td>{image.Title}</td>
                     <td>{image.Description}</td>
                     <td>
-                      <img src={image.ImageUrl} alt={image.Title} style={{ width: '100px', borderRadius: '8px' }} />
+                      <img src={image.ImageUrl} alt={image.Title} />
                     </td>
                     <td>
                       <button onClick={() => handleDeleteShowroomImage(image.PartitionKey, image.RowKey)}>Delete</button>
@@ -470,7 +481,10 @@ const AdminPage: React.FC = () => {
                 <img src={product.ImageUrl} alt={product.Name} />
                 <div className="additional-images">
                   {matchAdditionalImages(product).map(img => (
-                    <img key={img.RowKey} src={img.ImageUrl} alt={`${product.Name} additional`} />
+                    <div key={img.RowKey} className="additional-image-item">
+                      <img src={img.ImageUrl} alt={`${product.Name} additional`} />
+                      <button onClick={() => handleDeleteAdditionalImage(img.PartitionKey, img.RowKey)}>Delete</button>
+                    </div>
                   ))}
                 </div>
               </div>
