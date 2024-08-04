@@ -4,7 +4,8 @@ const API_BASE_URL = "https://joart.azurewebsites.net";
 
 // Token Retrieval Function
 const getToken = (): string | null => {
-    return localStorage.getItem('token');
+    const token = localStorage.getItem('token');
+    return token ? token.replace(/"/g, '') : null;
 };
 
 export interface Product {
@@ -84,6 +85,15 @@ export const addProduct = async (product: Product, file: File): Promise<void> =>
     formData.append('file', file);
 
     const token = getToken();
+
+    if (!token) {
+        throw new Error('Token is not available');
+    }
+
+    console.log('Token:', token); 
+
+
+
     const response = await fetch(`${API_BASE_URL}/AddProduct`, {
         method: 'POST',
         headers: {
