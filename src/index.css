@@ -272,12 +272,12 @@ body {
 
 .applebee-text {
   font-size: 12px; /* Adjust font size as needed */
-  color: rgba(0, 0, 0, 0.6); /* Adjust color and transparency */
+  color: rgba(255, 255, 255, 0.719); /* Adjust color and transparency */
   font-family: Arial, sans-serif; /* Adjust font as needed */
 }
 
 .applebee-button:hover .applebee-text {
-  color: rgba(0, 0, 0, 0.8); /* Adjust hover effect */
+  color: rgba(255, 255, 255, 0.8); /* Adjust hover effect */
 }
 
 .applebee-button:hover .applebee-logo {
