@@ -473,15 +473,17 @@ const AdminPage: React.FC = () => {
           </form>
         )}
         {currentView === 'products' && (
-          <div className="product-gallery">
+            <div className="product-gallery">
             <h2>Product Gallery</h2>
             {products.map(product => (
               <div key={product.RowKey} className="product-gallery-item">
                 <h3>{product.Name}</h3>
                 <img src={product.ImageUrl} alt={product.Name} />
                 <div className="additional-images">
+                  <h4>Gallery Images</h4>
                   {matchAdditionalImages(product).map(img => (
                     <div key={img.RowKey} className="additional-image-item">
+                      <h5>Gallery Image for {product.Name}</h5>
                       <img src={img.ImageUrl} alt={`${product.Name} additional`} />
                       <button onClick={() => handleDeleteAdditionalImage(img.PartitionKey, img.RowKey)}>Delete</button>
                     </div>

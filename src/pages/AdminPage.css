@@ -183,9 +183,27 @@ main {
   margin-bottom: 20px;
 }
 
+/* Style for the delete button within additional-image-item */
+.additional-image-item button {
+  padding: 5px 10px;
+  background-color: #dc3545;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-top: 5px;
+}
+
+.additional-image-item button:hover {
+  background-color: #c82333;
+}
+
+/* Style for the additional-images div */
 .additional-images {
   display: flex;
   flex-wrap: wrap;
+  background: rgba(0, 0, 0, 0.5); /* Transparent black background */
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .additional-image-item {
@@ -201,6 +219,8 @@ main {
   object-fit: cover; /* Ensure the image covers the specified area */
   border-radius: 8px; /* Optional: Add rounded corners */
 }
+
+
 
 footer {
   margin-top: 20px;
