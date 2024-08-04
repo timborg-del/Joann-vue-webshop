@@ -302,7 +302,7 @@ const AdminPage: React.FC = () => {
           setSelectedFile(null);
           setCurrentView('addShowroomImage');
         }}>Add Showroom Image</button>
-        <button onClick={() => setCurrentView('additionalImages')}>Gallery Images</button>
+        <button onClick={() => setCurrentView('additionalImages')}>Add Gallery Images</button>
       </aside>
       <main>
         {currentView === 'dashboard' && (
