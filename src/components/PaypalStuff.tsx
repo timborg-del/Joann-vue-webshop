@@ -85,7 +85,7 @@ function Message({ content }: MessageProps) {
 function PaypalStuff({ cart }: PaypalStuffProps) {
   const { currency } = useContext(CurrencyContext); // Get currency from context
   const initialOptions = {
-    clientId: "Ae0Eij5luUZwEf84_pZ3l5F7Jz_InbCqBGntP-nsQZPZIjXQ9McXuY0AtPWUsZCCSf96TeSniMih1eId", // Replace with your PayPal Client ID
+    clientId: "", // Replace with your PayPal Client ID
     "enable-funding": "venmo",
     currency, // Pass the currency dynamically
     "data-page-type": "product-details",

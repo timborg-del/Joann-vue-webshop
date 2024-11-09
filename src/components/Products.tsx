@@ -207,10 +207,10 @@ const Products: React.FC<ProductsProps> = ({ activeProductName }) => {
                             src={getGalleryImages(product)[currentImageIndex]}
                             alt={product.Name}
                             className="product-image"
-                            onError={(e) => {
+/*                             onError={(e) => {
                               e.currentTarget.src = '/path/to/placeholder-image.jpg';
-                              console.error("Image load error", e);
-                            }}
+                              //console.error("Image load error", e);
+                            }} */
                             onClick={() => setEnlargedImage(getGalleryImages(product)[currentImageIndex])}
                           />
                           <button className="gallery-nav-button" onClick={handleNextImage}>{">"}</button>
