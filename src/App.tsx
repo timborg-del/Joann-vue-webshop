@@ -15,7 +15,7 @@ import { CurrencyProvider } from './components/CurrencyDetector';
 import ContactMe from './pages/ContactMe'; // Ensure you have this import
 
 const App: React.FC = () => {
-  const isShopOpen = false; // Set to true when you want to reopen the shop
+  const [isShopOpen, setIsShopOpen] = useState(false);
   const [isCartVisible, setIsCartVisible] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
@@ -27,19 +27,6 @@ const App: React.FC = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  if (!isShopOpen) {
-    // Display this message when the shop is closed
-    return (
-      <div className="closed-message-container">
-        <h1>Our webshop is currently closed.</h1>
-        <p>We hope to get it up soon!</p>
-        <p>Thank you for visiting!</p>
-      </div>
-    );
-  }
-
-  /* Commented out code for the full application */
-  /*
   return (
     <Router>
       <CurrencyProvider>
@@ -90,7 +77,6 @@ const App: React.FC = () => {
       </CurrencyProvider>
     </Router>
   );
-  */
 };
 
 export default App;
